@@ -22,19 +22,19 @@ export default function Dashboard() {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
+      <Card className="p-3 shadow-sm">
+        <Card.Body >
+          <h2 className="text-center mb-4">{currentUser.email} {currentUser.displayName}</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <strong>Email:</strong> {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
+          <Link to="/update-profile" id="update-profile-button" className="btn btn-success rounded-pill p-2 w-100 mt-3">
+            UPPDATERA PROFIL
           </Link>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
-          Log Out
+        <Button  variant="link" onClick={handleLogout}>
+          Logga ut
         </Button>
       </div>
     </>

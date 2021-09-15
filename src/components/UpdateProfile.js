@@ -5,10 +5,11 @@ import { Link, useHistory } from "react-router-dom"
 import "../styles/update-profile.css"
 
 export default function UpdateProfile() {
+  const usernameRef = useRef()
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { currentUser, updatePassword, updateEmail } = useAuth()
+  const { currentUser, updatePassword, updateEmail, updateProfile } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -22,6 +23,10 @@ export default function UpdateProfile() {
     const promises = []
     setLoading(true)
     setError("")
+
+    if (usernameRef.current.value) {
+      promises.push(updateProfile(usernameRef.current.value))
+    }
 
     if (emailRef.current.value !== currentUser.email) {
       promises.push(updateEmail(emailRef.current.value))
@@ -44,38 +49,53 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <Card>
+      <Card className="p-5 shadow-sm">
         <Card.Body>
-          <h2 className="text-center mb-4">Update Profile</h2>
+          <h2 className="text-center mb-5">Uppdatera profil</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
+
+          <Form.Group className="mt-4" id="username">
+          <Form.Label>username</Form.Label>
+          <Form.Control
+            className="rounded-pill p-3"
+            type="text"
+            ref={usernameRef}
+            required
+            defaultValue={currentUser.displayName}
+          />
+        </Form.Group>
+
+            <Form.Group className="mt-4" id="email">
+              <Form.Label>E-postadress</Form.Label>
               <Form.Control
+                className="rounded-pill p-3"
                 type="email"
                 ref={emailRef}
                 required
                 defaultValue={currentUser.email}
               />
             </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
+            <Form.Group className="mt-4" id="password">
+              <Form.Label>Lösenord</Form.Label>
               <Form.Control
+                className="rounded-pill p-3"
                 type="password"
                 ref={passwordRef}
-                placeholder="Leave blank to keep the same"
+                placeholder="Lämna blankt för att behålla lösenord"
               />
             </Form.Group>
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
+            <Form.Group className="mt-4" id="password-confirm">
+              <Form.Label>Upprepa lösenord</Form.Label>
               <Form.Control
+                className="rounded-pill p-3"
                 type="password"
                 ref={passwordConfirmRef}
-                placeholder="Leave blank to keep the same"
+                placeholder="Lämna blankt för att behålla lösenord"
               />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
-              Update
+            <Button disabled={loading} className="w-100 btn-success p-3 mt-5 rounded-pill" id="update-button" type="submit">
+              UPPDATERA
             </Button>
           </Form>
         </Card.Body>

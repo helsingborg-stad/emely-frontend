@@ -30,17 +30,17 @@ export default function ForgotPassword() {
   return (
     <>
       <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4" id="password-reset">Password Reset</h2>
+        <Card.Body className="shadow-sm p-5">
+          <h2 className="text-center mb-5" id="password-reset">Återställ ditt lösenord</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Label>E-postadress</Form.Label>
+              <Form.Control placeholder="Skriv din e-postadress för att återställa lösenord" className="p-3 rounded-pill" type="email" ref={emailRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
-              Reset Password
+            <Button disabled={loading} className="w-100 mt-3 p-3 rounded-pill btn-success" id="reset-password-button" type="submit">
+              ÅTERSTÄLL LÖSENORD
             </Button>
           </Form>
           <div className="w-100 text-center mt-3">
@@ -49,7 +49,7 @@ export default function ForgotPassword() {
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
+        Behöver ett konto? <Link to="/signup">Registrera dig</Link>
       </div>
     </>
   )

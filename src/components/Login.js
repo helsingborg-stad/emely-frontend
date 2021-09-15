@@ -29,30 +29,30 @@ export default function Login() {
 
   return (
     <>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4" id="login-header">Log In</h2>
+      <Card >
+        <Card.Body className="shadow-sm p-5" id="login-card">
+          <h2 className="text-center mb-4" id="login-header">Logga in för att fortsätta</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
-            <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+            <Form.Group id="email" className="mt-5">
+              <Form.Label>E-postadress</Form.Label>
+              <Form.Control className="rounded-pill p-3" placeholder="E-postadress" type="email" ref={emailRef} required />
             </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+            <Form.Group id="password" className="mt-4">
+              <Form.Label>Lösenord</Form.Label>
+              <Form.Control className="rounded-pill p-3" type="password" placeholder="Lösenord" ref={passwordRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100 mt-5" type="submit">
-              Log In
+            <Button disabled={loading} className="w-100 mt-5 btn-success rounded-pill p-3" id="login-button" type="submit">
+            <i className="fa fa-user-circle"></i> LOGGA IN
             </Button>
           </Form>
           <div className="w-100 text-center mt-3">
-            <Link to="/forgot-password">Forgot Password?</Link>
+            <Link to="/forgot-password">Glömt lösenord?</Link>
           </div>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Need an account? <Link to="/signup">Sign Up</Link>
+        Behöver ett konto? <Link to="/signup">Registrera dig</Link>
       </div>
     </>
   )

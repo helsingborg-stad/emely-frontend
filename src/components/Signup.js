@@ -35,30 +35,31 @@ export default function Signup() {
   return (
     <>
       <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
+        <Card.Body className="p-5 shadow-sm">
+          <h2 className="text-center mb-5">Registrera dig för att börja prata med Emely.</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
+  
             <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Label><i className="fa fa-envelope"></i> Vad är din e-postadress?</Form.Label>
+              <Form.Control className="rounded-pill p-3" placeholder="Ange din e-postadress." type="email" ref={emailRef} required />
             </Form.Group>
-            <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+            <Form.Group id="password" className="mt-4">
+              <Form.Label>Skapa ett lösenord</Form.Label>
+              <Form.Control className="rounded-pill p-3" placeholder="Skapa ett lösenord." type="password" ref={passwordRef} required />
             </Form.Group>
-            <Form.Group id="password-confirm">
-              <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required />
+            <Form.Group id="password-confirm" className="mt-4">
+              <Form.Label>Upprepa lösenord</Form.Label>
+              <Form.Control className="rounded-pill p-3" type="password" placeholder="Upprepa ditt valda lösenord." ref={passwordConfirmRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100 mt-5" type="submit">
-              Sign Up
+            <Button disabled={loading} className="w-100 mt-5 p-3 btn-success rounded-pill" id="signup-button" type="submit">
+            <i className="fa fa-user-plus"></i> REGISTRERA DIG
             </Button>
           </Form>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-3">
-        Already have an account? <Link to="/login">Log In</Link>
+        Har du ett konto? <Link to="/login">Logga In</Link>
       </div>
     </>
   )
