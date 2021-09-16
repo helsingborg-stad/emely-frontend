@@ -25,8 +25,8 @@ export default function Signup() {
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
       history.push("/")
-    } catch {
-      setError("Failed to create an account")
+    } catch (error){
+      setError(error.message)
     }
 
     setLoading(false)
@@ -41,7 +41,7 @@ export default function Signup() {
           <Form onSubmit={handleSubmit}>
   
             <Form.Group id="email">
-              <Form.Label><i className="fa fa-envelope"></i> Vad är din e-postadress?</Form.Label>
+              <Form.Label>Vad är din e-postadress?</Form.Label>
               <Form.Control className="rounded-pill p-3" placeholder="Ange din e-postadress." type="email" ref={emailRef} required />
             </Form.Group>
             <Form.Group id="password" className="mt-4">
@@ -53,7 +53,7 @@ export default function Signup() {
               <Form.Control className="rounded-pill p-3" type="password" placeholder="Upprepa ditt valda lösenord." ref={passwordConfirmRef} required />
             </Form.Group>
             <Button disabled={loading} className="w-100 mt-5 p-3 btn-success rounded-pill" id="signup-button" type="submit">
-            <i className="fa fa-user-plus"></i> REGISTRERA DIG
+             REGISTRERA DIG
             </Button>
           </Form>
         </Card.Body>
