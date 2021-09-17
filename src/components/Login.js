@@ -28,7 +28,7 @@ export default function Login() {
 
   return (
     <>
-      <Card >
+      <Card className="mt-5">
         <Card.Body className="shadow-sm p-5" id="login-card">
           <h2 className="text-center mb-4" id="login-header">Logga in för att fortsätta</h2>
           {error && <Alert variant="danger">{error}</Alert>}
@@ -55,7 +55,7 @@ export default function Login() {
             </div>
             </Card.Body>
             </Card>
-      <div className="w-100 text-center mt-2">
+      <div className="w-100 text-center mt-3 mb-4">
         Behöver du ett konto? <Link to="/signup">Registrera dig</Link>
       </div>
     </>

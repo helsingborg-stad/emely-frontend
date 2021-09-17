@@ -33,7 +33,7 @@ export default function Signup() {
 
   return (
     <>
-      <Card>
+      <Card className="mt-5">
         <Card.Body className="p-5 shadow-sm">
           <h2 className="text-center mb-5">Registrera dig för att börja prata med Emely.</h2>
           {error && <Alert variant="danger">{error}</Alert>}
