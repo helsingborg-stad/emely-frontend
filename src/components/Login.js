@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
-import "../styles/login.css"
 
 export default function Login() {
   const emailRef = useRef()
@@ -45,14 +44,19 @@ export default function Login() {
             <Button disabled={loading} className="w-100 mt-5 btn-success rounded-pill p-3" id="login-button" type="submit">
             <i className="fa fa-user-circle"></i> LOGGA IN
             </Button>
-          </Form>
-          <div className="w-100 text-center mt-3">
+            </Form>
+            <div className="w-100 text-center mt-3">
             <Link to="/forgot-password">Glömt lösenord?</Link>
-          </div>
-        </Card.Body>
-      </Card>
+            <hr/>
+            <h4 className="text-center mb-4 mt-5" id="eller">ELLER</h4>
+            <Button disabled={loading} className="w-100 mt-2 btn-secondary rounded-pill p-3" id="guest-button" type="submit">
+            <i className="fa fa-user-circle"></i> LOGGA IN SOM GÄST
+            </Button>
+            </div>
+            </Card.Body>
+            </Card>
       <div className="w-100 text-center mt-2">
-        Behöver ett konto? <Link to="/signup">Registrera dig</Link>
+        Behöver du ett konto? <Link to="/signup">Registrera dig</Link>
       </div>
     </>
   )

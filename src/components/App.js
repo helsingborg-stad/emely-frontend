@@ -8,7 +8,7 @@ import Login from "./Login"
 import PrivateRoute from "./PrivateRoute"
 import ForgotPassword from "./ForgotPassword"
 import UpdateProfile from "./UpdateProfile"
-import "../styles/app.css"
+import "../css/app.css"
 
 function App() {
   return (
