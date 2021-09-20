@@ -23,7 +23,7 @@ export default function ForgotPassword() {
 			await resetPassword(emailRef.current.value);
 			setMessage('Check your inbox for further instructions');
 
-		/* Catch error and print out in alert (in english) */
+			/* Catch error and print out in alert (in english) */
 		} catch (error) {
 			setError(error.message);
 		}
@@ -55,10 +55,14 @@ export default function ForgotPassword() {
 						</Form.Group>
 
 						{/* Submit button & send instructions to mail */}
-						<Button disabled={loading} className="w-100 mt-3 p-3 rounded-pill btn-success" id="reset-password-button" type="submit">
+						<Button
+							disabled={loading}
+							className="w-100 mt-3 p-3 rounded-pill btn-success"
+							id="reset-password-button"
+							type="submit"
+						>
 							ÅTERSTÄLL LÖSENORD
 						</Button>
-						
 					</Form>
 					<div className="w-100 text-center mt-3">
 						<Link to="/login">Login</Link>
