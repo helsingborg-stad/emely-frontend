@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
+/* Variable declaration */
 export default function Signup() {
   const emailRef = useRef()
   const passwordRef = useRef()
@@ -19,11 +20,16 @@ export default function Signup() {
       return setError("Passwords do not match")
     }
 
+    
     try {
       setError("")
       setLoading(true)
+
+      /* Run signup firebase-auth function from AuthContext.js */
       await signup(emailRef.current.value, passwordRef.current.value)
       history.push("/")
+
+      /* Catch error and print out in alert (in english) */
     } catch (error){
       setError(error.message)
     }
@@ -39,6 +45,7 @@ export default function Signup() {
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
   
+          {/* Register new user form */}
             <Form.Group id="email">
               <Form.Label>Vad är din e-postadress?</Form.Label>
               <Form.Control className="rounded-pill p-3" placeholder="Ange din e-postadress." type="email" ref={emailRef} required />
@@ -51,9 +58,12 @@ export default function Signup() {
               <Form.Label>Upprepa lösenord</Form.Label>
               <Form.Control className="rounded-pill p-3" type="password" placeholder="Upprepa ditt valda lösenord." ref={passwordConfirmRef} required />
             </Form.Group>
+
+            {/* Submit button */}
             <Button disabled={loading} className="w-100 mt-5 p-3 btn-success rounded-pill" id="signup-button" type="submit">
              REGISTRERA DIG
             </Button>
+
           </Form>
         </Card.Body>
       </Card>
