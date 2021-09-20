@@ -7,34 +7,43 @@ export function useAuth() {
   return useContext(AuthContext)
 }
 
+/* Variable declaration */
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
 
+  /* Firebase functions used when handling users */
+  /* Sign up with email and password */
   function signup(email, password) {
     return auth.createUserWithEmailAndPassword(email, password)
   }
 
+  /* Log in with email and password */
   function login(email, password) {
     return auth.signInWithEmailAndPassword(email, password)
   }
 
+  /* Log out current authenticated user */
   function logout() {
     return auth.signOut()
   }
 
+  /* Reset the password with email */
   function resetPassword(email) {
     return auth.sendPasswordResetEmail(email)
   }
 
+  /* Update email */
   function updateEmail(email) {
     return currentUser.updateEmail(email)
   }
 
+  /* Update username */
   function updateProfile(username) {
     return currentUser.updateProfile({displayName: username})
   }
 
+  /* Update password */
   function updatePassword(password) {
     return currentUser.updatePassword(password)
   }

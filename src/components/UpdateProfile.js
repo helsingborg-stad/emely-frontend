@@ -3,6 +3,7 @@ import { Form, Button, Card, Alert } from "react-bootstrap"
 import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
+/* Variable declaration */
 export default function UpdateProfile() {
   const usernameRef = useRef()
   const emailRef = useRef()
@@ -23,6 +24,7 @@ export default function UpdateProfile() {
     setLoading(true)
     setError("")
 
+    /* Run updateProfile (username), email & password functions form AuthContext.js */
     if (usernameRef.current.value) {
       promises.push(updateProfile(usernameRef.current.value))
     }
@@ -54,6 +56,8 @@ export default function UpdateProfile() {
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
 
+
+          {/* Update different user attribute forms */}
           <Form.Group className="mt-4" id="username">
           <Form.Label>username</Form.Label>
           <Form.Control
@@ -93,9 +97,12 @@ export default function UpdateProfile() {
                 placeholder="Lämna blankt för att behålla lösenord"
               />
             </Form.Group>
+
+            {/* Submit changes & update user-profile */}
             <Button disabled={loading} className="w-100 btn-success p-3 mt-5 rounded-pill" id="update-button" type="submit">
               UPPDATERA
             </Button>
+
           </Form>
         </Card.Body>
       </Card>

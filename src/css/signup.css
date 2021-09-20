@@ -1,3 +1,6 @@
-#email, #password, #password-confirm, #signup-button{
-    font-weight: bold;
+#email,
+#password,
+#password-confirm,
+#signup-button {
+	font-weight: bold;
 }
