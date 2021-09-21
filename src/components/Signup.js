@@ -39,9 +39,9 @@ export default function Signup() {
 
   return (
     <>
-      <Card className="mt-5">
-        <Card.Body className="p-5 shadow-sm">
-          <h2 className="text-center mb-5">Registrera dig för att börja prata med Emely.</h2>
+      <Card className="mt-5 shadow" id="main-card">
+        <Card.Body className="p-5">
+          <h2 className="text-center mb-5 fw-bold">Registrera dig för att börja prata med Emely.</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
   
@@ -60,14 +60,14 @@ export default function Signup() {
             </Form.Group>
 
             {/* Submit button */}
-            <Button disabled={loading} className="w-100 mt-5 p-3 btn-success rounded-pill" id="signup-button" type="submit">
+            <Button disabled={loading} className="w-100 mt-5 p-3 btn-primary rounded-pill" id="signup-button" type="submit">
              REGISTRERA DIG
             </Button>
 
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-3">
+      <div className="w-100 text-center mt-3 fw-bold">
         Har du ett konto? <Link to="/login">Logga In</Link>
       </div>
     </>
