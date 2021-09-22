@@ -59,7 +59,7 @@ export default function Signup() {
               <Form.Control className="rounded-pill p-3" type="password" placeholder="Upprepa ditt valda lösenord." ref={passwordConfirmRef} required />
             </Form.Group>
 
-            {/* Submit button */}
+            {/* Submit buttons */}
             <Button disabled={loading} className="w-100 mt-5 p-3 btn-primary rounded-pill" id="button-main" type="submit">
              REGISTRERA DIG
             </Button>
