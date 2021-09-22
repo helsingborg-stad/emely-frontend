@@ -33,8 +33,10 @@ export default function Login() {
 
 	return (
 		<>
+
+		<div className="w-100 mt-3 mb-4">
 			<Card className="mt-5 shadow" id="main-card">
-				<Card.Body className="p-5" id="login-card">
+				<Card.Body className="p-5 justify-content-center" id="login-card">
 					<h2 className="text-center mb-4 fw-bold" id="login-header">
 						Logga in för att fortsätta
 					</h2>
@@ -44,15 +46,15 @@ export default function Login() {
 						{/* Login form */}
 						<Form.Group id="email" className="mt-5">
 							<Form.Label>E-postadress</Form.Label>
-							<Form.Control className="rounded-pill p-3 fw-bold" placeholder="E-postadress" type="email" ref={emailRef} required />
+							<Form.Control className="rounded-pill p-3" placeholder="E-postadress" type="email" ref={emailRef} required />
 						</Form.Group>
 						<Form.Group id="password" className="mt-4">
 							<Form.Label>Lösenord</Form.Label>
-							<Form.Control className="rounded-pill p-3 fw-bold" type="password" placeholder="Lösenord" ref={passwordRef} required />
+							<Form.Control className="rounded-pill p-3" type="password" placeholder="Lösenord" ref={passwordRef} required />
 						</Form.Group>
 
 						{/* Submit button & Log in */}
-						<Button disabled={loading} className="w-100 mt-5 btn-primary rounded-pill p-3" id="login-button" type="submit">
+						<Button disabled={loading} className="w-100 mt-5 btn-primary rounded-pill p-3" id="button-main" type="submit">
 							<i className="fa fa-user-circle"></i> LOGGA IN
 						</Button>
 					</Form>
@@ -64,12 +66,13 @@ export default function Login() {
 						</h4>
 
 						{/* Guest login */}
-						<Button disabled={loading} className="w-100 mt-2 btn-secondary rounded-pill p-3" id="guest-button" type="submit">
+						<Button disabled={loading} className="w-100 mt-2 btn-secondary rounded-pill p-3" id="button-main" type="submit">
 							<i className="fa fa-user-circle"></i> LOGGA IN SOM GÄST
 						</Button>
 					</div>
 				</Card.Body>
 			</Card>
+			</div>
 
 			<div className="w-100 text-center mt-3 mb-4 fw-bold">
 				Behöver du ett konto? <Link to="/signup">Registrera dig</Link>

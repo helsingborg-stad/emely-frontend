@@ -4,11 +4,17 @@
 @import 'login.css';
 @import 'signup.css';
 @import 'update-profile.css';
+@import 'buttons.css';
+@import 'forms.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
 
 * {
 	font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+}
+
+.link{
+	text-decoration: none;
 }
 
 

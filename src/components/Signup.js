@@ -60,7 +60,7 @@ export default function Signup() {
             </Form.Group>
 
             {/* Submit button */}
-            <Button disabled={loading} className="w-100 mt-5 p-3 btn-primary rounded-pill" id="signup-button" type="submit">
+            <Button disabled={loading} className="w-100 mt-5 p-3 btn-primary rounded-pill" id="button-main" type="submit">
              REGISTRERA DIG
             </Button>
 

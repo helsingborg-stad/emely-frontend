@@ -33,9 +33,9 @@ export default function ForgotPassword() {
 
 	return (
 		<>
-			<Card>
-				<Card.Body className="shadow-sm p-5">
-					<h2 className="text-center mb-5" id="password-reset">
+			<Card className="shadow" id="main-card">
+				<Card.Body className="p-5">
+					<h2 className="text-center mb-5 fw-bold" id="password-reset">
 						Återställ ditt lösenord
 					</h2>
 					{error && <Alert variant="danger">{error}</Alert>}
@@ -57,19 +57,19 @@ export default function ForgotPassword() {
 						{/* Submit button & send instructions to mail */}
 						<Button
 							disabled={loading}
-							className="w-100 mt-3 p-3 rounded-pill btn-success"
-							id="reset-password-button"
+							className="w-100 mt-3 p-3 rounded-pill btn-primary mt-5"
+							id="button-main"
 							type="submit"
 						>
 							ÅTERSTÄLL LÖSENORD
 						</Button>
 					</Form>
-					<div className="w-100 text-center mt-3">
+					<div className="w-100 text-center mt-3 fw-bold">
 						<Link to="/login">Login</Link>
 					</div>
 				</Card.Body>
 			</Card>
-			<div className="w-100 text-center mt-2">
+			<div className="w-100 text-center mt-2 fw-bold">
 				Behöver ett konto? <Link to="/signup">Registrera dig</Link>
 			</div>
 		</>

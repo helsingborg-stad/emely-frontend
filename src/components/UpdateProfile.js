@@ -50,22 +50,23 @@ export default function UpdateProfile() {
 
   return (
     <>
-      <Card className="p-5 shadow-sm">
-        <Card.Body>
-          <h2 className="text-center mb-5">Uppdatera profil</h2>
+      <Card className="shadow" id="main-card">
+        <Card.Body className="p-5">
+          <h2 className="text-center mb-5 fw-bold">Uppdatera profil</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
 
 
           {/* Update different user attribute forms */}
           <Form.Group className="mt-4" id="username">
-          <Form.Label>username</Form.Label>
+          <Form.Label className="fw-bold">Användarnamn</Form.Label>
           <Form.Control
             className="rounded-pill p-3"
             type="text"
             ref={usernameRef}
             required
             defaultValue={currentUser.displayName}
+            placeholder="Vad ska vi kalla dig?"
           />
         </Form.Group>
 
@@ -99,14 +100,14 @@ export default function UpdateProfile() {
             </Form.Group>
 
             {/* Submit changes & update user-profile */}
-            <Button disabled={loading} className="w-100 btn-success p-3 mt-5 rounded-pill" id="update-button" type="submit">
+            <Button disabled={loading} className="w-100 btn-primary p-3 mt-5 rounded-pill" id="button-main" type="submit">
               UPPDATERA
             </Button>
 
           </Form>
         </Card.Body>
       </Card>
-      <div className="w-100 text-center mt-2">
+      <div className="w-100 text-center mt-2 fw-bold">
         <Link to="/">Cancel</Link>
       </div>
     </>
