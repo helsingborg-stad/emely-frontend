@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Alert } from 'react-bootstrap';
+import { Card, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -25,6 +25,7 @@ export default function UserMenu() {
 
 	return (
 		<>
+		<Card className="p-4">
 		<div className="">
 		<h2 className="text-center mb-4">
 		{currentUser.email} 
@@ -33,28 +34,29 @@ export default function UserMenu() {
 		<strong>Email:</strong> {currentUser.email}
 		
 		{/* Go to update profile page */}
-					<Link
-					to="/update-profile"
-					id="button-main"
-						className="btn btn-primary rounded-pill p-3 w-100 mt-5"
-						>
-						UPPDATERA PROFIL
-					</Link>
-					
-					{/* Log out user */}
-					<div className="w-100 text-center mt-2">
-					<Button
-					className="btn btn-secondary rounded-pill p-3 w-100 mt-2"
+		<Link
+		to="/update-profile"
+		id="button-main"
+		className="btn btn-primary rounded-pill p-3 w-100 mt-5"
+		>
+		UPPDATERA PROFIL
+		</Link>
+		
+		{/* Log out user */}
+		<div className="w-100 text-center mt-2">
+		<Button
+		className="btn btn-secondary rounded-pill p-3 w-100 mt-2"
 					id="button-main"
 					variant="link"
 					onClick={handleLogout}
-						>
-						LOGGA UT
-						</Button>
-						</div>
-						
-						</div>
-						</>
+					>
+					LOGGA UT
+					</Button>
+					</div>
+					
+					</div>
+					</Card>
+					</>
 						);
 					}
 					

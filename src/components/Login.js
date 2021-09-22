@@ -33,45 +33,65 @@ export default function Login() {
 
 	return (
 		<>
+			<div className="w-100 mt-3 mb-4">
+				<Card className="mt-5 shadow" id="main-card">
+					<Card.Body className="p-5 justify-content-center" id="login-card">
+						<h2 className="text-center mb-4 fw-bold" id="login-header">
+							Logga in för att fortsätta
+						</h2>
+						{error && <Alert variant="danger">{error}</Alert>}
+						<Form onSubmit={handleSubmit}>
+							{/* Login form */}
+							<Form.Group id="email" className="mt-5">
+								<Form.Label>E-postadress</Form.Label>
+								<Form.Control
+									className="rounded-pill p-3"
+									placeholder="E-postadress"
+									type="email"
+									ref={emailRef}
+									required
+								/>
+							</Form.Group>
+							<Form.Group id="password" className="mt-4">
+								<Form.Label>Lösenord</Form.Label>
+								<Form.Control
+									className="rounded-pill p-3"
+									type="password"
+									placeholder="Lösenord"
+									ref={passwordRef}
+									required
+								/>
+							</Form.Group>
 
-		<div className="w-100 mt-3 mb-4">
-			<Card className="mt-5 shadow" id="main-card">
-				<Card.Body className="p-5 justify-content-center" id="login-card">
-					<h2 className="text-center mb-4 fw-bold" id="login-header">
-						Logga in för att fortsätta
-					</h2>
-					{error && <Alert variant="danger">{error}</Alert>}
-					<Form onSubmit={handleSubmit}>
-					
-						{/* Login form */}
-						<Form.Group id="email" className="mt-5">
-							<Form.Label>E-postadress</Form.Label>
-							<Form.Control className="rounded-pill p-3" placeholder="E-postadress" type="email" ref={emailRef} required />
-						</Form.Group>
-						<Form.Group id="password" className="mt-4">
-							<Form.Label>Lösenord</Form.Label>
-							<Form.Control className="rounded-pill p-3" type="password" placeholder="Lösenord" ref={passwordRef} required />
-						</Form.Group>
+							{/* Submit button & Log in */}
+							<Button
+								disabled={loading}
+								className="w-100 mt-5 btn-primary rounded-pill p-3"
+								id="button-main"
+								type="submit"
+							>
+								<i className="fa fa-user-circle"></i> LOGGA IN
+							</Button>
+						</Form>
+						<div className="w-100 text-center mt-3 fw-bold">
+							<Link to="/forgot-password">Glömt lösenord?</Link>
+							<hr />
+							<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
+								ELLER
+							</h4>
 
-						{/* Submit button & Log in */}
-						<Button disabled={loading} className="w-100 mt-5 btn-primary rounded-pill p-3" id="button-main" type="submit">
-							<i className="fa fa-user-circle"></i> LOGGA IN
-						</Button>
-					</Form>
-					<div className="w-100 text-center mt-3 fw-bold">
-						<Link to="/forgot-password">Glömt lösenord?</Link>
-						<hr />
-						<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
-							ELLER
-						</h4>
-
-						{/* Guest login */}
-						<Button disabled={loading} className="w-100 mt-2 btn-secondary rounded-pill p-3" id="button-main" type="submit">
-							<i className="fa fa-user-circle"></i> LOGGA IN SOM GÄST
-						</Button>
-					</div>
-				</Card.Body>
-			</Card>
+							{/* Guest login */}
+							<Button
+								disabled={loading}
+								className="w-100 mt-2 btn-secondary rounded-pill p-3"
+								id="button-main"
+								type="submit"
+							>
+								<i className="fa fa-user-circle"></i> LOGGA IN SOM GÄST
+							</Button>
+						</div>
+					</Card.Body>
+				</Card>
 			</div>
 
 			<div className="w-100 text-center mt-3 mb-4 fw-bold">
