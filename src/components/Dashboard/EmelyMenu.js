@@ -5,7 +5,7 @@ export default function EmelyMenu() {
     return (
         <>
            <Card>
-            <h3 className="m-2">Menu</h3>
+            <h3 className="p-3 text-center">Menu</h3>
            </Card> 
         </>
     )
