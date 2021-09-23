@@ -1,12 +1,17 @@
-import React from 'react'
-import { Card } from 'react-bootstrap'
+import React from 'react';
+import { Button } from 'react-bootstrap';
 
 export default function EmelyMenu() {
-    return (
-        <>
-           <Card>
-            <h3 className="p-3 text-center">Menu</h3>
-           </Card> 
-        </>
-    )
+	return (
+		<>
+			<div className="fixed-top">
+				<Button className="rounded-circle" variant="light">
+					<i className="fa fa-home p-3 text-center"></i>
+				</Button>
+				<Button className="m-2 rounded-circle" variant="light">
+					<i className="fa fa-volume-up p-3 text-center"></i>
+				</Button>
+			</div>
+		</>
+	);
 }

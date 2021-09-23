@@ -1,26 +1,26 @@
 import React from 'react';
 import UserMenu from './UserMenu';
-import Choices from './Choices';
+import PersonaChoices from './PersonaChoices';
 import EmelyDialogue from './EmelyDialogue';
-import EmelyMenu from './EmelyMenu';
 import { Container, Row, Col } from 'react-bootstrap';
 
 /* Variable declaration */
 export default function Dashboard() {
 	return (
 		<>
-			<Container>
+			<Container id="dashboard-card">
 				<Row>
-					<Col className="m-3"><EmelyMenu /></Col>
-					<Col className="item-align-right">
-						<UserMenu />
+					<UserMenu />
+				</Row>
+				<Row>
+					<Col className="text-center">
+						<EmelyDialogue className="m-0"/>
 					</Col>
 				</Row>
 				<Row>
-					<Col className="text-center mt-5"><EmelyDialogue /></Col>
-				</Row>
-				<Row>
-					<Col className="text-center mt-5"><Choices /></Col>
+					<Col className="text-center mt-5">
+						<PersonaChoices />
+					</Col>
 				</Row>
 			</Container>
 		</>

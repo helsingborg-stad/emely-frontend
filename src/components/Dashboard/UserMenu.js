@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Card, Button, Alert } from 'react-bootstrap';
+import { Container, Navbar, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
-
+import { FiHome } from 'react-icons/fi';
+import { HiOutlineVolumeUp } from 'react-icons/hi';
 
 /* Variable declaration */
 export default function UserMenu() {
@@ -25,38 +26,55 @@ export default function UserMenu() {
 
 	return (
 		<>
-		<Card className="p-4">
-		<div className="">
-		<h2 className="text-center mb-4">
-		{currentUser.email} 
-		</h2>
-		{error && <Alert variant="danger">{error}</Alert>}
-		<strong>Email:</strong> {currentUser.email}
-		
-		{/* Go to update profile page */}
-		<Link
-		to="/update-profile"
-		id="button-main"
-		className="btn btn-primary rounded-pill p-3 w-100 mt-5"
-		>
-		UPPDATERA PROFIL
-		</Link>
-		
-		{/* Log out user */}
-		<div className="w-100 text-center mt-2">
-		<Button
-		className="btn btn-secondary rounded-pill p-3 w-100 mt-2"
-					id="button-main"
-					variant="link"
-					onClick={handleLogout}
-					>
-					LOGGA UT
-					</Button>
-					</div>
-					
-					</div>
-					</Card>
-					</>
-						);
-					}
-					
+			<Navbar className="fixed-top">
+				<Container>
+					<Navbar.Brand>
+						<Button
+							className="rounded-circle shadow-sm p-3"
+							variant="outline-primary"
+						>
+							<FiHome size={30} />
+						</Button>
+						<Button
+							className="m-2 rounded-circle shadow-sm p-3"
+							variant="outline-info"
+						>
+							<HiOutlineVolumeUp size={30} />
+						</Button>
+					</Navbar.Brand>
+					<Navbar.Toggle />
+					<Navbar.Collapse className="justify-content-end">
+						<Navbar.Text>
+							<p>
+								<Button
+									className="rounded-pill m-3 p-3 shadow-sm"
+									variant="primary"
+								>
+									{currentUser.email}
+								</Button>
+
+								<Link to="/update-profile">
+									<Button
+										className="rounded-pill m-3 p-3 shadow-sm fw-bold"
+										variant="outline-primary"
+										onClick={handleLogout}
+									>
+										UPPDATERA PROFIL
+									</Button>
+								</Link>
+								<Button
+									className="rounded-pill m-3 p-3 shadow-sm fw-bold"
+									variant="outline-primary"
+									onClick={handleLogout}
+								>
+									LOGGA UT
+								</Button>
+							</p>
+						</Navbar.Text>
+					</Navbar.Collapse>
+				</Container>
+			</Navbar>
+			{error && <Alert variant="danger">{error}</Alert>}
+		</>
+	);
+}

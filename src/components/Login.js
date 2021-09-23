@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+import { HiOutlineMail } from 'react-icons/hi'
+import { RiLockPasswordLine } from 'react-icons/ri'
+import { RiLoginCircleLine } from 'react-icons/ri'
 
 /* Variable declaration */
 export default function Login() {
@@ -33,7 +36,7 @@ export default function Login() {
 
 	return (
 		<>
-			<div className="w-100 mt-3 mb-4">
+			<div className="mt-3 mb-4">
 				<Card className="mt-5 shadow" id="main-card">
 					<Card.Body className="p-5 justify-content-center" id="login-card">
 						<h2 className="text-center mb-4 fw-bold" id="login-header">
@@ -41,9 +44,10 @@ export default function Login() {
 						</h2>
 						{error && <Alert variant="danger">{error}</Alert>}
 						<Form onSubmit={handleSubmit}>
+
 							{/* Login form */}
 							<Form.Group id="email" className="mt-5">
-								<Form.Label>E-postadress</Form.Label>
+								<Form.Label><HiOutlineMail size={20} /> E-postadress</Form.Label>
 								<Form.Control
 									className="rounded-pill p-3"
 									placeholder="E-postadress"
@@ -53,7 +57,7 @@ export default function Login() {
 								/>
 							</Form.Group>
 							<Form.Group id="password" className="mt-4">
-								<Form.Label>Lösenord</Form.Label>
+								<Form.Label><RiLockPasswordLine size={20} />Lösenord</Form.Label>
 								<Form.Control
 									className="rounded-pill p-3"
 									type="password"
@@ -70,7 +74,7 @@ export default function Login() {
 								id="button-main"
 								type="submit"
 							>
-								<i className="fa fa-user-circle"></i> LOGGA IN
+								<RiLoginCircleLine size={25} /> LOGGA IN
 							</Button>
 						</Form>
 						<div className="w-100 text-center mt-3 fw-bold">
@@ -83,11 +87,11 @@ export default function Login() {
 							{/* Guest login */}
 							<Button
 								disabled={loading}
-								className="w-100 mt-2 btn-secondary rounded-pill p-3"
-								id="button-main"
+								className="w-100 mt-2 rounded-pill p-3 fw-bold"
 								type="submit"
+								variant="outline-primary"
 							>
-								<i className="fa fa-user-circle"></i> LOGGA IN SOM GÄST
+								LOGGA IN SOM GÄST
 							</Button>
 						</div>
 					</Card.Body>
