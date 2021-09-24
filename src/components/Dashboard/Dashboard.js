@@ -13,7 +13,7 @@ export default function Dashboard() {
 					<UserMenu />
 				</Row>
 				<Row>
-					<Col className="text-center">
+					<Col id="emely-dialogue-col" className="text-center">
 						<EmelyDialogue className="m-0"/>
 					</Col>
 				</Row>

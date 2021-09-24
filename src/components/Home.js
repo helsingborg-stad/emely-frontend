@@ -3,14 +3,14 @@ import { Button } from 'react-bootstrap';
 import { AiOutlineUser } from 'react-icons/ai';
 import { RiLoginCircleLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-import emely from './emely.png';
+import emely from '../images/emely.png';
 
 export default function Home() {
 	return (
 		<>
-			<div className="mt-3 mb-4 text-center" id="container-home">
+			<div className="text-center" id="container-home">
 				<img id="emely-image" className="items-align-center" src={emely} alt="" />
-				<h1 className="mt-5 text-center fw-bold">Emely</h1>
+				<h1 className="text-center fw-bold" style={{fontSize: 72}}>Emely</h1>
                 <hr/>
 				<h3 className="mt-1 text-center fw-normal">
 					Samtalsförande språkrobot

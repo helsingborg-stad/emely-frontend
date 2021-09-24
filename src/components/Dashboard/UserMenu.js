@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Navbar, Button, Alert } from 'react-bootstrap';
+import { Container, Navbar, Nav, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
-import { FiHome } from 'react-icons/fi';
-import { HiOutlineVolumeUp } from 'react-icons/hi';
+// import { FiHome } from 'react-icons/fi';
+//import { HiOutlineVolumeUp } from 'react-icons/hi';
 
 /* Variable declaration */
 export default function UserMenu() {
@@ -26,51 +26,33 @@ export default function UserMenu() {
 
 	return (
 		<>
-			<Navbar className="fixed-top">
-				<Container>
-					<Navbar.Brand>
+			{/* Emely - sound and home button
 						<Button
-							className="rounded-circle shadow-sm p-3"
-							variant="success"
+						className="rounded-circle shadow-sm p-3"
+						variant="success"
 						>
-							<FiHome size={30} />
+						<FiHome size={30} />
 						</Button>
 						<Button
-							className="m-2 rounded-circle shadow-sm p-3"
-							variant="success"
+						className="m-2 rounded-circle shadow-sm p-3"
+						variant="success"
 						>
-							<HiOutlineVolumeUp size={30} />
+						<HiOutlineVolumeUp size={30} />
 						</Button>
-					</Navbar.Brand>
-					<Navbar.Toggle />
-					<Navbar.Collapse className="justify-content-end">
-						<Navbar.Text>
-							<p>
-								<Button
-									className="rounded-pill m-3 p-3 shadow-sm fw-bold"
-									variant="success"
-								>
-									{currentUser.email}
-								</Button>
+					*/}
 
-								<Link to="/update-profile">
-									<Button
-										className="rounded-pill m-3 p-3 shadow-sm fw-bold"
-										variant="success"
-									
-									>
-										UPPDATERA PROFIL
-									</Button>
-								</Link>
-								<Button
-									className="rounded-pill m-3 p-3 shadow-sm fw-bold"
-									variant="success"
-									onClick={handleLogout}
-								>
-									LOGGA UT
-								</Button>
-							</p>
-						</Navbar.Text>
+			<Navbar fixed="top" bg="none" expand="lg">
+				<Container>
+					<Navbar.Brand></Navbar.Brand>
+					<Navbar.Toggle aria-controls="basic-navbar-nav" />
+					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
+						<Nav className="ms-auto">
+							<Nav.Item className="m-3">{currentUser.email}</Nav.Item>
+
+							<Nav.Item className="m-3"><Link to="/update-profile">Uppdatera profil</Link></Nav.Item>
+
+							<Button className="rounded-pill" variant="outline-success" onClick={handleLogout}>Logga ut</Button>
+						</Nav>
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>

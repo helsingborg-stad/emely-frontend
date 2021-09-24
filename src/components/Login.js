@@ -48,7 +48,7 @@ export default function Login() {
 							<Form.Group id="email" className="mt-5">
 								<Form.Label className="mt-3"><HiOutlineMail size={30} /> E-postadress</Form.Label>
 								<Form.Control
-									className="rounded-pill p-3"
+									className="rounded-pill p-3 shadow-sm"
 									placeholder="E-postadress"
 									type="email"
 									ref={emailRef}
@@ -58,7 +58,7 @@ export default function Login() {
 							<Form.Group id="password" className="mt-4">
 								<Form.Label className="mt-3"><RiLockPasswordLine size={30} /> Lösenord</Form.Label>
 								<Form.Control
-									className="rounded-pill p-3"
+									className="rounded-pill p-3 shadow-sm"
 									type="password"
 									placeholder="Lösenord"
 									ref={passwordRef}
@@ -69,7 +69,7 @@ export default function Login() {
 							{/* Submit button & Log in */}
 							<Button
 								disabled={loading}
-								className="w-100 mt-5 btn-success rounded-pill p-3 fw-bold"
+								className="w-100 mt-5 btn-success rounded-pill p-3 fw-bold shadow-sm"
 								type="submit"
 							>
 								<RiLoginCircleLine size={30} /> LOGGA IN
@@ -85,7 +85,7 @@ export default function Login() {
 							{/* Guest login */}
 							<Button
 								disabled={loading}
-								className="w-100 mt-2 rounded-pill p-3 fw-bold"
+								className="w-100 mt-2 rounded-pill p-3 fw-bold shadow-sm"
 								type="submit"
 								variant="outline-success"
 							>

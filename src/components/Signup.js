@@ -48,12 +48,12 @@ export default function Signup() {
 				{error && <Alert variant="danger">{error}</Alert>}
 				<Form onSubmit={handleSubmit}>
 					{/* Register new user form */}
-					<Form.Group id="email">
-						<Form.Label>
-							<HiOutlineMail size={25} /> Vad är din e-postadress?
+					<Form.Group  id="email">
+						<Form.Label className="mt-5">
+							<HiOutlineMail size={30} /> Vad är din e-postadress?
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3"
+							className="rounded-pill p-3 shadow-sm"
 							placeholder="Ange din e-postadress."
 							type="email"
 							ref={emailRef}
@@ -62,10 +62,10 @@ export default function Signup() {
 					</Form.Group>
 					<Form.Group id="password" className="mt-4">
 						<Form.Label className="mt-3">
-							<RiLockPasswordLine size={25} /> Skapa ett lösenord
+							<RiLockPasswordLine size={30} /> Skapa ett lösenord
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3"
+							className="rounded-pill p-3 shadow-sm"
 							placeholder="Skapa ett lösenord."
 							type="password"
 							ref={passwordRef}
@@ -74,10 +74,10 @@ export default function Signup() {
 					</Form.Group>
 					<Form.Group id="password-confirm" className="mt-4">
 						<Form.Label className="mt-3">
-							<RiLockPasswordLine size={25} /> Upprepa lösenord
+							<RiLockPasswordLine size={30} /> Upprepa lösenord
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3"
+							className="rounded-pill p-3 shadow-sm"
 							type="password"
 							placeholder="Upprepa ditt valda lösenord."
 							ref={passwordConfirmRef}
@@ -88,12 +88,11 @@ export default function Signup() {
 					{/* Submit buttons */}
 					<Button
 						disabled={loading}
-						className="w-100 mt-5 p-3 btn-success rounded-pill fw-bold"
-						id="button-main"
+						className="w-100 mt-5 p-3 btn-success rounded-pill fw-bold shadow-sm"
 						type="submit"
 					>
-						<AiOutlineUserAdd size={25} />
-						REGISTRERA DIG
+						<AiOutlineUserAdd size={30} />
+						 REGISTRERA DIG
 					</Button>
 				</Form>
 

@@ -6,11 +6,13 @@
 @import 'update-profile.css';
 @import 'emely-dialogue.css';
 @import 'home.css';
+@import 'user-menu.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
 * {
-	font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+	font-family: 'Poppins', 'Montserrat', Helvetica, Arial, sans-serif;
 }
 
 .link{
@@ -24,4 +26,5 @@
 
 a {
     color: green !important;
+	text-decoration: none !important;
 }

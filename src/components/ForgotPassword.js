@@ -47,7 +47,7 @@ export default function ForgotPassword() {
 						<Form.Label><HiOutlineMail size={30} /> E-postadress</Form.Label>
 						<Form.Control
 							placeholder="Skriv din e-postadress för att återställa lösenord"
-							className="p-3 rounded-pill"
+							className="p-3 rounded-pill shadow-sm"
 							type="email"
 							ref={emailRef}
 							required
