@@ -8,6 +8,7 @@ import Login from './Login';
 import PrivateRoute from './PrivateRoute';
 import ForgotPassword from './ForgotPassword';
 import UpdateProfile from './UpdateProfile';
+import Home from './Home';
 import '../css/app.css';
 
 function App() {
@@ -19,10 +20,10 @@ function App() {
 						<Switch>
 
 							{/* When logged in Routes */}
-							<PrivateRoute exact path="/" component={Dashboard} />
+							<PrivateRoute exact path="/dashboard" component={Dashboard} />
 							<PrivateRoute path="/update-profile" component={UpdateProfile} />
 
-							
+							<Route exact path="/" component={Home} />
 							<Route path="/signup" component={Signup} />
 							<Route path="/login" component={Login} />
 							<Route path="/forgot-password" component={ForgotPassword} />

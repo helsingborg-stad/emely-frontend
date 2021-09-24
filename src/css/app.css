@@ -4,9 +4,8 @@
 @import 'login.css';
 @import 'signup.css';
 @import 'update-profile.css';
-@import 'buttons.css';
-@import 'forms.css';
 @import 'emely-dialogue.css';
+@import 'home.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
 
@@ -21,4 +20,8 @@
 
 #root{
 	background: rgb(238, 238, 238);
+}
+
+a {
+    color: green !important;
 }

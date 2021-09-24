@@ -31,13 +31,13 @@ export default function UserMenu() {
 					<Navbar.Brand>
 						<Button
 							className="rounded-circle shadow-sm p-3"
-							variant="outline-primary"
+							variant="success"
 						>
 							<FiHome size={30} />
 						</Button>
 						<Button
 							className="m-2 rounded-circle shadow-sm p-3"
-							variant="outline-info"
+							variant="success"
 						>
 							<HiOutlineVolumeUp size={30} />
 						</Button>
@@ -47,8 +47,8 @@ export default function UserMenu() {
 						<Navbar.Text>
 							<p>
 								<Button
-									className="rounded-pill m-3 p-3 shadow-sm"
-									variant="primary"
+									className="rounded-pill m-3 p-3 shadow-sm fw-bold"
+									variant="success"
 								>
 									{currentUser.email}
 								</Button>
@@ -56,15 +56,15 @@ export default function UserMenu() {
 								<Link to="/update-profile">
 									<Button
 										className="rounded-pill m-3 p-3 shadow-sm fw-bold"
-										variant="outline-primary"
-										onClick={handleLogout}
+										variant="success"
+									
 									>
 										UPPDATERA PROFIL
 									</Button>
 								</Link>
 								<Button
 									className="rounded-pill m-3 p-3 shadow-sm fw-bold"
-									variant="outline-primary"
+									variant="success"
 									onClick={handleLogout}
 								>
 									LOGGA UT

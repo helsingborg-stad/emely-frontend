@@ -3,3 +3,11 @@
 #password-confirm {
 	font-weight: bold;
 }
+
+#container-signup{
+    border-radius: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+}

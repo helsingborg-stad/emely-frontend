@@ -8,16 +8,16 @@ export default function Choices() {
 		<>
 			<Button
 				className="w-49 rounded-pill  m-3 p-4 shadow-sm fw-bold"
-				variant="outline-primary"
+				variant="success"
 			>
-				<FiBriefcase size={25} /> SÖKA JOBB-ASSISTENT
+				<FiBriefcase size={30} /> SÖKA JOBB-ASSISTENT
 			</Button>
 			<Button
 				className="w-59 rounded-pill m-3 p-4 shadow-sm fw-bold"
 		
-				variant="outline-success"
+				variant="success"
 			>
-				<FiCoffee size={25} /> FIKA-KOMPIS
+				<FiCoffee size={30} /> FIKA-KOMPIS
 			</Button>
 		</>
 	);

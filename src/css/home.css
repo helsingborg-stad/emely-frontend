@@ -1,7 +1,12 @@
-#main-card{
+#container-home{
     border-radius: 40px;
     max-width: 600px;
     margin: 0 auto;
     float: none;
     margin-bottom: 10px;
+}
+
+#emely-image{
+    width: 50%;
+    height: 50%;
 }

@@ -1,10 +1,11 @@
 import React, { useRef, useState } from 'react';
-import { Form, Button, Card, Alert } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import { HiOutlineMail } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
 import { RiLoginCircleLine } from 'react-icons/ri'
+import { AiOutlineUser } from 'react-icons/ai'
 
 /* Variable declaration */
 export default function Login() {
@@ -24,7 +25,7 @@ export default function Login() {
 
 			/* Run firebase-auth login function from AuthContext.js */
 			await login(emailRef.current.value, passwordRef.current.value);
-			history.push('/');
+			history.push('/dashboard');
 
 			/* Catch error and print out in alert (in english) */
 		} catch (error) {
@@ -36,9 +37,7 @@ export default function Login() {
 
 	return (
 		<>
-			<div className="mt-3 mb-4">
-				<Card className="mt-5 shadow" id="main-card">
-					<Card.Body className="p-5 justify-content-center" id="login-card">
+			<div className="mt-3 mb-4" id="container-login">
 						<h2 className="text-center mb-4 fw-bold" id="login-header">
 							Logga in för att fortsätta
 						</h2>
@@ -47,7 +46,7 @@ export default function Login() {
 
 							{/* Login form */}
 							<Form.Group id="email" className="mt-5">
-								<Form.Label><HiOutlineMail size={20} /> E-postadress</Form.Label>
+								<Form.Label className="mt-3"><HiOutlineMail size={30} /> E-postadress</Form.Label>
 								<Form.Control
 									className="rounded-pill p-3"
 									placeholder="E-postadress"
@@ -57,7 +56,7 @@ export default function Login() {
 								/>
 							</Form.Group>
 							<Form.Group id="password" className="mt-4">
-								<Form.Label><RiLockPasswordLine size={20} />Lösenord</Form.Label>
+								<Form.Label className="mt-3"><RiLockPasswordLine size={30} /> Lösenord</Form.Label>
 								<Form.Control
 									className="rounded-pill p-3"
 									type="password"
@@ -70,11 +69,10 @@ export default function Login() {
 							{/* Submit button & Log in */}
 							<Button
 								disabled={loading}
-								className="w-100 mt-5 btn-primary rounded-pill p-3"
-								id="button-main"
+								className="w-100 mt-5 btn-success rounded-pill p-3 fw-bold"
 								type="submit"
 							>
-								<RiLoginCircleLine size={25} /> LOGGA IN
+								<RiLoginCircleLine size={30} /> LOGGA IN
 							</Button>
 						</Form>
 						<div className="w-100 text-center mt-3 fw-bold">
@@ -89,13 +87,11 @@ export default function Login() {
 								disabled={loading}
 								className="w-100 mt-2 rounded-pill p-3 fw-bold"
 								type="submit"
-								variant="outline-primary"
+								variant="outline-success"
 							>
-								LOGGA IN SOM GÄST
+								<AiOutlineUser size={30} /> LOGGA IN SOM GÄST
 							</Button>
 						</div>
-					</Card.Body>
-				</Card>
 			</div>
 
 			<div className="w-100 text-center mt-3 mb-4 fw-bold">
