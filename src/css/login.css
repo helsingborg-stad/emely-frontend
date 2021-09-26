@@ -1,12 +1,9 @@
-#login-card{
-    background-color:white;
-    border-radius: 45px;
+#container-login{
+    border-radius: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+    font-size: 1rem;
 }
 
-#login-button, #guest-button{
-    font-weight: bold;
-}
-
-#main-card{
-    border-radius: 45px;
-}
