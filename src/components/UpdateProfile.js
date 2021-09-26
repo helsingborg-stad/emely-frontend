@@ -108,7 +108,7 @@ export default function UpdateProfile() {
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2 fw-bold">
-        <Link to="/">Cancel</Link>
+        <Link to="/dashboard">Cancel</Link>
       </div>
     </>
   )

@@ -55,8 +55,8 @@ export default function UserMenu() {
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
-			</Navbar>
-			{error && <Alert variant="danger">{error}</Alert>}
+				</Navbar>
+				{error && <Alert variant="danger">{error}</Alert>}
 		</>
 	);
 }
