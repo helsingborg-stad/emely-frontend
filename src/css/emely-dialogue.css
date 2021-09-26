@@ -1,0 +1,19 @@
+#emely-dialogue-card{
+    border-radius: 60px;
+    margin: 0 auto; 
+    float: none; 
+    margin-bottom: 10px;
+    max-width: 600px;
+}
+
+#dialogue-text{
+    line-height: 1.8;
+}
+
+#emely-dialogue-container{
+    border-radius: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+}
