@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { useAuth } from '../../contexts/AuthContext';
-import emely from '../../images/emely.png';
+import { useAuth } from '../contexts/AuthContext';
+import emely from '../Assets/images/emely.png';
 
-export default function EmelyDialogue() {
+export default function EmelyDialogue(props) {
 	const { currentUser } = useAuth();
 
 	return (

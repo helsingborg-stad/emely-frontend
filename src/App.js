@@ -1,15 +1,15 @@
 import React from 'react';
-import Signup from './Signup';
+import Signup from './Navigation/Signup/Signup';
 import { Container } from 'react-bootstrap';
-import { AuthProvider } from '../contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Dashboard from './Dashboard/Dashboard';
-import Login from './Login';
-import PrivateRoute from './PrivateRoute';
-import ForgotPassword from './ForgotPassword';
-import UpdateProfile from './UpdateProfile';
-import Home from './Home';
-import '../css/app.css';
+import Dashboard from './Navigation/Dashboard/Dashboard';
+import Login from './Navigation/Login/Login';
+import PrivateRoute from './Components/PrivateRoute';
+import ForgotPassword from './Navigation/ForgotPassword/ForgotPassword';
+import UpdateProfile from './Navigation/UpdateProfile/UpdateProfile';
+import Home from './Navigation/Home/Home';
+import './css/app.css';
 
 function App() {
 	return (

@@ -1,7 +1,7 @@
 import React from 'react';
-import UserMenu from './UserMenu';
-import PersonaChoices from './PersonaChoices';
-import EmelyDialogue from './EmelyDialogue';
+import UserMenu from '../../Components/UserMenu';
+import PersonaChoices from '../../Components/PersonaChoices';
+import EmelyDialogue from '../../Components/EmelyDialogue';
 import { Container, Row, Col } from 'react-bootstrap';
 
 

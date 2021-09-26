@@ -1,11 +1,11 @@
-@import 'dashboard.css';
-@import 'forgot-password.css';
+@import '../Navigation/Dashboard/dashboard.css';
+@import '../Navigation/ForgotPassword/forgot-password.css';
+@import '../Navigation/Login/login.css';
+@import '../Navigation/Signup/signup.css';
+@import '../Navigation/UpdateProfile/update-profile.css';
+@import '../Navigation/Home/home.css';
 @import 'index.css';
-@import 'login.css';
-@import 'signup.css';
-@import 'update-profile.css';
 @import 'emely-dialogue.css';
-@import 'home.css';
 @import 'user-menu.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');

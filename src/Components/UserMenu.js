@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Navbar, Nav, Button, Alert } from 'react-bootstrap';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 // import { FiHome } from 'react-icons/fi';
 //import { HiOutlineVolumeUp } from 'react-icons/hi';

@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { AiOutlineUser } from 'react-icons/ai';
 import { RiLoginCircleLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
-import emely from '../images/emely.png';
+import emely from '../../Assets/images/emely.png';
 
 export default function Home() {
 	return (
