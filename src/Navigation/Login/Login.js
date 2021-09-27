@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import { HiOutlineMail } from 'react-icons/hi'
 import { RiLockPasswordLine } from 'react-icons/ri'
@@ -55,6 +55,7 @@ export default function Login() {
 									required
 								/>
 							</Form.Group>
+							
 							<Form.Group id="password" className="mt-4">
 								<Form.Label className="mt-3"><RiLockPasswordLine size={30} /> Lösenord</Form.Label>
 								<Form.Control
