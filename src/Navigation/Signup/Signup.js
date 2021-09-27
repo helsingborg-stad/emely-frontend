@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { HiOutlineMail } from 'react-icons/hi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import AuthLayout from '../../Components/AuthLayout/AuthLayout';
 
 /* Variable declaration */
 export default function Signup() {
@@ -41,14 +42,14 @@ export default function Signup() {
 
 	return (
 		<>
-			<div id="container-signup">
+			<AuthLayout>
 				<h2 className="text-center mb-5 fw-bold">
 					Registrera dig för att börja prata med Emely.
 				</h2>
 				{error && <Alert variant="danger">{error}</Alert>}
 				<Form onSubmit={handleSubmit}>
 					{/* Register new user form */}
-					<Form.Group  id="email">
+					<Form.Group id="email" className="fw-bold">
 						<Form.Label className="mt-5">
 							<HiOutlineMail size={30} /> Vad är din e-postadress?
 						</Form.Label>
@@ -60,7 +61,7 @@ export default function Signup() {
 							required
 						/>
 					</Form.Group>
-					<Form.Group id="password" className="mt-4">
+					<Form.Group id="password" className="mt-4 fw-bold">
 						<Form.Label className="mt-3">
 							<RiLockPasswordLine size={30} /> Skapa ett lösenord
 						</Form.Label>
@@ -72,7 +73,7 @@ export default function Signup() {
 							required
 						></Form.Control>
 					</Form.Group>
-					<Form.Group id="password-confirm" className="mt-4">
+					<Form.Group id="password-confirm" className="mt-4 fw-bold">
 						<Form.Label className="mt-3">
 							<RiLockPasswordLine size={30} /> Upprepa lösenord
 						</Form.Label>
@@ -92,14 +93,14 @@ export default function Signup() {
 						type="submit"
 					>
 						<AiOutlineUserAdd size={30} />
-						 REGISTRERA DIG
+						REGISTRERA DIG
 					</Button>
 				</Form>
 
 				<div className="w-100 text-center mt-3 fw-bold">
 					Har du ett konto? <Link to="/login">Logga In</Link>
 				</div>
-			</div>
+			</AuthLayout>
 		</>
 	);
 }

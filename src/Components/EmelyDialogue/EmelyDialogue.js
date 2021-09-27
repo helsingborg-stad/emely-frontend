@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import emely from '../../Assets/images/emely.png';
+import emelyWork from '../../Assets/images/emely_work.png';
 
 export default function EmelyDialogue(props) {
 	return (
@@ -10,7 +10,7 @@ export default function EmelyDialogue(props) {
 					<img
 						id="emely-image"
 						className="items-align-center"
-						src={emely}
+						src={emelyWork}
 						alt=""
 					/>
 				</div>
