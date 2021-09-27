@@ -40,23 +40,24 @@ export default function UserMenu() {
 						<HiOutlineVolumeUp size={30} />
 						</Button>
 					*/}
-
-			<Navbar fixed="top" bg="none" expand="lg">
-				<Container>
-					<Navbar.Brand></Navbar.Brand>
-					<Navbar.Toggle aria-controls="basic-navbar-nav" />
-					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
+					
+						<Navbar sticky="top" bg="none" expand="lg" id="navbar">
+						<Container>
+						<Navbar.Brand></Navbar.Brand>
+						<Navbar.Toggle aria-controls="basic-navbar-nav"></Navbar.Toggle>
+						<Navbar.Collapse bg="dark" id="basic-navbar-nav">
 						<Nav className="ms-auto">
-							<Nav.Item className="m-3">{currentUser.email}</Nav.Item>
-
-							<Nav.Item className="m-3"><Link to="/update-profile">Uppdatera profil</Link></Nav.Item>
-
-							<Button className="rounded-pill" variant="outline-success" onClick={handleLogout}>Logga ut</Button>
-						</Nav>
-					</Navbar.Collapse>
+						<Button className="rounded-pill m-2 p-3 shadow-sm" variant="light"><Nav.Item >{currentUser.email}</Nav.Item></Button>
+							
+						<Link to="/update-profile"><Button className="rounded-pill m-2 p-3 shadow-sm" variant="light"><Nav.Item >Uppdatera profil</Nav.Item></Button></Link>
+							
+							<Button className="rounded-pill m-2 p-3 shadow-sm" variant="light" onClick={handleLogout} style={{ textDecoration: 'none'}}>Logga ut</Button>
+							</Nav>
+							</Navbar.Collapse>
 				</Container>
 				</Navbar>
 				{error && <Alert variant="danger">{error}</Alert>}
-		</>
+			
+				</>
 	);
 }
