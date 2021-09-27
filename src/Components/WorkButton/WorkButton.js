@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dropdown } from 'react-bootstrap';
+import { Button, Dropdown, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export default function WorkButton(props) {
@@ -9,17 +9,19 @@ export default function WorkButton(props) {
 				className="mt-1 justify-content-center"
 				id="work-buttons-container-desktop"
 			>
-				{props.occupation.occupations.map((job, i) => (
-					
-						<Button
-							className="rounded-pill m-4 p-3 shadow-sm"
-							variant="light"
-							key={i}
-						>
-							<Link to="/emely-chat">{job}</Link>
-						</Button>
-					
+            <div id="work-buttons-row">
+            {props.occupation.occupations.map((job, i) => (
+                
+                <Button
+                className="rounded-pill m-1 p-3 shadow-sm"
+                variant="light"
+                key={i}
+                >
+                <Link to="/emely-chat">{job}</Link>
+                </Button>
+                
 				))}
+                </div>
 			</div>
 
 			<div
