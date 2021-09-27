@@ -3,6 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { HiOutlineMail } from 'react-icons/hi';
+import AuthLayout from '../../Components/AuthLayout/AuthLayout';
 
 /* Variable declaration */
 export default function ForgotPassword() {
@@ -34,7 +35,8 @@ export default function ForgotPassword() {
 
 	return (
 		<>
-			<div id="container-forgotpassword">
+			<AuthLayout>
+			
 				<h2 className="text-center mb-5 fw-bold" id="password-reset">
 					Återställ ditt lösenord
 				</h2>
@@ -71,7 +73,7 @@ export default function ForgotPassword() {
 				<div className="w-100 text-center mt-2 fw-bold">
 					Behöver ett konto? <Link to="/signup">Registrera dig</Link>
 				</div>
-			</div>
+				</AuthLayout>
 		</>
 	);
 }

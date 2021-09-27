@@ -1,0 +1,9 @@
+#container-auth{
+    border-radius: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+    margin-top: 15vh !important;
+    font-size: 1rem;
+}
