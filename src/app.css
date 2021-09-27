@@ -1,0 +1,35 @@
+@import './Navigation/Dashboard/dashboard.css';
+@import './Navigation/ForgotPassword/forgot-password.css';
+@import './Navigation/Login/login.css';
+@import './Navigation/Signup/signup.css';
+@import './Navigation/UpdateProfile/update-profile.css';
+@import './Navigation/Home/home.css';
+@import './Components/EmelyDialogue/emely-dialogue.css';
+@import './Components/UserMenu/user-menu.css';
+@import './Components/WorkButton/work-button.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+* {
+	font-family: 'Poppins', 'Montserrat', Helvetica, Arial, sans-serif;
+}
+
+.link{
+	text-decoration: none;
+}
+
+
+#root{
+	background: rgb(238, 238, 238);
+	margin: 0 !important;
+}
+
+body{
+	background: rgb(238, 238, 238) !important;
+}
+
+a {
+    color: green !important;
+	text-decoration: none !important;
+}

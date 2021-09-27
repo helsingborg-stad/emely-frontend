@@ -1,0 +1,19 @@
+#work-buttons-container-desktop{
+    display:block;
+}
+
+#work-buttons-container-mobile{
+    display:none;
+}
+
+
+@media (max-width: 768px){
+    #work-buttons-container-desktop{
+        display:none;
+    }
+
+    #work-buttons-container-mobile{
+        display: block;
+    }
+
+}

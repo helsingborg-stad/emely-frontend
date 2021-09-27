@@ -1,0 +1,14 @@
+.navbar-toggler{
+    outline: none !important;
+    box-shadow: none !important;
+    border: 2px solid rgb(167, 167, 167) !important;
+    border-radius: 90px !important;
+    padding: 10px !important;
+    margin-top: 20px;
+    background: white !important;
+}
+
+@media (max-width: 768px){
+
+
+}
