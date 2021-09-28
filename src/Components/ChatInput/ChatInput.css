@@ -1,5 +1,11 @@
 .chat-input-wrapper {
-  min-height: 50px;
+  background-color: #eeeeee;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  padding: 30px 0px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -23,30 +29,76 @@
   align-items: center;
 }
 
+.buttons-wrapper {
+  display: flex;
+  flex-basis: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .input-wrapper {
-  flex-basis: 60%;
-  background-color: #fff;
-  border-radius: 40px;
-  height: 50px;
+  flex-basis: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  -webkit-transition: all 0.7s ease 0s;
+  -moz-transition: all 0.7s ease 0s;
+  -o-transition: all 0.7s ease 0s;
+  transition: all 0.7s ease 0s;
 }
 
 .send_message_btn {
   border: none;
   border-radius: 50%;
-  padding: 10px;
+  padding: 9px;
   font-size: 1.5rem;
   display: flex;
   align-items: center;
   color: #ffffff;
   background-color: #5F8528;
   margin-right: 3px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 2;
+  cursor: pointer;
+  transform: translateX(2px);
 }
 
 .user-message_input {
+  background-color: #fff;
+  border-radius: 50px;
   border: none;
-  margin-left: 20px;
+  margin-left: 5px;
   width: 100%;
+  padding: 20px;
+  width: 100%;
+  outline: none;
+  height: 30px;
+}
+
+.user-message_input:focus {
+  border: 1px solid rgba(122, 177, 46, 0.671);
+}
+
+@media(max-width: 600px) {
+  .chat-input-wrapper {
+    flex-direction: column;
+
+  }
+  .buttons-wrapper {
+    width: 100%;
+    margin-top: 30px;
+  }
+  .sound_btn {
+    padding: 6px;
+  }
+  .hide {
+    display: none;
+  }
+  .expand {
+    flex-basis: 100%;
+    /* transition: all 0.5s ease-out; */
+  }
 }

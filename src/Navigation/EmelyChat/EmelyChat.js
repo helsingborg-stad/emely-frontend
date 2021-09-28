@@ -9,30 +9,35 @@ import { Container, Row, Col } from "react-bootstrap";
 export default function EmelyChat() {
   return (
     <>
-      <Container id="container-emely-chat">
+      <Container>
         <Row>
           <UserMenu />
         </Row>
-        <Row>
-          <Col id="emely-chat-col">
-            <EmelyChatBubble />
-          </Col>
-        </Row>
-        <Row className="p-0 mb-5">
-          <Col className="text-center mt-5">
-            <UserChatBubble />
-          </Col>
-        </Row>
-        <Row>
-          <Col id="emely-chat-col">
-            <EmelyChatBubble />
-          </Col>
-        </Row>
-        <Row className="p-0 mb-5">
-          <Col className="text-center mt-5">
-            <UserChatBubble />
-          </Col>
-        </Row>
+
+        <div className="emely-chat_wrapper">
+          <Row>
+            <Col>
+              <EmelyChatBubble />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <UserChatBubble />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <EmelyChatBubble />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <UserChatBubble />
+            </Col>
+          </Row>
+          
+        </div>
+
         <ChatInput />
       </Container>
     </>
