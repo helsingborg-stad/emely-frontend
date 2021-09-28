@@ -2,6 +2,8 @@ import React from "react";
 import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
+import ChatInput from '../../Components/ChatInput/ChatInput';
+
 import { Container, Row, Col } from "react-bootstrap";
 
 export default function EmelyChat() {
@@ -31,6 +33,7 @@ export default function EmelyChat() {
             <UserChatBubble />
           </Col>
         </Row>
+        <ChatInput />
       </Container>
     </>
   );
