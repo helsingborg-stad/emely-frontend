@@ -1,33 +1,13 @@
 import React from 'react';
-import { Button, Dropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
 
 export default function WorkButton(props) {
 
 	return (
 		<>
 			<div
-				className="mt-1 justify-content-center"
-				id="work-buttons-container-desktop"
-			>
-            <div id="work-buttons-row">
-            {props.occupation.occupations.map((job, i) => (
-                
-                <Button
-                className="rounded-pill m-1 p-3 shadow-sm"
-                variant="light"
-                key={i}
-                >
-                <Link to="/emely-chat">{job}</Link>
-                </Button>
-                
-				))}
-                </div>
-			</div>
-
-			<div
 				className="w-100 mt-1 justify-content-center"
-				id="work-buttons-container-mobile"
+				id="work-buttons-dropdown"
 			>
 				<Dropdown>
 					<Dropdown.Toggle
