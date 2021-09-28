@@ -1,6 +1,6 @@
 import React from 'react'
 import UserMenu from '../../Components/UserMenu/UserMenu';
-import ChatBubble from '../../Components/ChatBubble/ChatBubble';
+import ChatBubble from '../../Components/EmelyChatBubble/EmelyChatBubble';
 import { Container, Row, Col } from 'react-bootstrap';
 
 export default function EmelyChat() {
