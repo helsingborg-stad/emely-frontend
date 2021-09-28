@@ -1,26 +1,12 @@
-#work-buttons-container-desktop{
-    display:block;
-}
 
-#work-buttons-container-mobile{
-    display:none;
-}
-
-#work-buttons-row{
-    max-width: 900px;
+#work-buttons-dropdown{
+    max-width: 768px;
     margin: 0 auto;
     float: none;
     
 }
 
-
 @media (max-width: 768px){
-    #work-buttons-container-desktop{
-        display:none;
-    }
 
-    #work-buttons-container-mobile{
-        display: block;
-    }
 
 }
