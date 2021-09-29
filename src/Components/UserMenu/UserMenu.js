@@ -67,7 +67,7 @@ export default function UserMenu(props) {
 								id="menu-user-button"
 							>
 								<FaUserAlt className="p-1" size={25} />
-								{currentUser ? currentUser.displayName : currentUser.email}
+								{currentUser.displayName ? currentUser.displayName : currentUser.email}
 							</Button>
 
 							{/* Menu from the side */}
@@ -75,7 +75,7 @@ export default function UserMenu(props) {
 								<Offcanvas.Header className="m-3" closeButton>
 									<Offcanvas.Title className="m-3">
 										<FaUserAlt className="p-1" size={25} />
-										{currentUser ? currentUser.displayName : currentUser.email}
+										{currentUser.displayName ? currentUser.displayName : currentUser.email}
 									</Offcanvas.Title>
 								</Offcanvas.Header>
 								<Offcanvas.Body className="m-3">
