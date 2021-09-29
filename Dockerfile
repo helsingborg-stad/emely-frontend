@@ -2,7 +2,7 @@
 FROM node:15-alpine AS builder
 
 # Set working directory
-WORKDIR /emely-webapp-new
+WORKDIR /app
 
 # Copy our node module specification
 COPY package.json package.json
