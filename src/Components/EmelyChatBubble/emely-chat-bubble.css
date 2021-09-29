@@ -1,0 +1,25 @@
+.img-wrapper {
+    max-width: 90px;
+}
+
+.emely-image {
+    width: 100%;
+}
+
+.dialogue-text {
+    background-color: var(--white);
+    border-radius: 0px 40px 40px 40px;
+    border: 1px solid var(--gray);
+    max-width: 60%;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    margin-left: 60px;
+    padding: 20px;
+}
+
+@media(max-width: 500px) {
+    .dialogue-text {
+        max-width: 100%;
+        margin-left: 0;
+    }
+}
