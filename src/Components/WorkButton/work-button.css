@@ -1,12 +1,48 @@
-
-#work-buttons-dropdown{
+.work-button_container {
     max-width: 768px;
     margin: 0 auto;
-    float: none;
-    
 }
 
-@media (max-width: 768px){
-
-
+.occupation-btn {
+    border: none !important;
+    padding: 17px 40px;
+    background: linear-gradient(90deg, rgba(142, 182, 84, 1) 0%, rgba(119, 158, 62, 1) 50%, rgba(95, 133, 40, 1) 100%);
+    color: var(--white);
+    font-size: 1.1rem !important;
+    text-transform: uppercase;
+    font-weight: 600 !important;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
+
+.occupation-btn:hover {
+    background: var(--greenHover)!important;
+}
+
+.work-button_dropdown-list {
+    border-radius: 10px 10px 0px 0px !important;
+    overflow-y: scroll;
+    height: 40vh;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--scrollbarBackground);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbarColor);
+    border-radius: 3px;
+}
+
+.work-button_dropdown-item:active {
+    background-color: transparent !important;
+}
+
+@media (max-width: 768px) {}

@@ -32,6 +32,8 @@
 	--mainBakground: rgb(238, 238, 238);
 	--inputMessageFocus: rgba(122, 177, 46, 0.671);
 	--userDialogueBackground: rgba(123, 177, 46, 34%);
+	--scrollbarBackground: #f3f6f7;
+	--scrollbarColor: #9e9e9e7e;
 	--activeRecording: #9D2929;
 	--greenHover: #59841b;
 	--white: #ffffff;
