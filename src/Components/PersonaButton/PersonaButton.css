@@ -10,3 +10,7 @@
   justify-content: center;
   width: 100%;
 }
+
+.persona-btn:hover {
+  background: var(--greenHover);
+}
