@@ -8,30 +8,39 @@
 @import './Components/UserMenu/user-menu.css';
 @import './Components/WorkButton/work-button.css';
 @import './Components/AuthLayout/AuthLayout.css';
-@import './Components/ChatBubble/chat-bubble.css';
-
+@import './Components/EmelyChatBubble/emely-chat-bubble.css';
+@import './Components/UserChatBubble/user-chat-bubble.css';
+@import './Components/ChatInput/ChatInput.css';
+@import './Navigation/EmelyChat/EmelyChat.css';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
-
 * {
 	font-family: 'Poppins', 'Montserrat', Helvetica, Arial, sans-serif;
 }
 
-.link{
+.link {
 	text-decoration: none;
 }
 
-
-#root{
+#root {
 	background: rgb(238, 238, 238);
 	margin: 0 !important;
 }
 
-body{
+:root {
+	--mainBakground: rgb(238, 238, 238);
+	--inputMessageFocus: rgba(122, 177, 46, 0.671);
+	--userDialogueBackground: rgba(123, 177, 46, 34%);
+	--white: #ffffff;
+	--green: #5F8528;
+	--gray: #979797;
+}
+
+body {
 	background: rgb(238, 238, 238) !important;
 }
 
 a {
-    color: green !important;
+	color: green !important;
 	text-decoration: none !important;
 }

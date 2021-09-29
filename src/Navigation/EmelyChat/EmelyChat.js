@@ -1,25 +1,45 @@
-import React from 'react'
-import UserMenu from '../../Components/UserMenu/UserMenu';
-import ChatBubble from '../../Components/ChatBubble/ChatBubble';
-import { Container, Row, Col } from 'react-bootstrap';
+import React from "react";
+import UserMenu from "../../Components/UserMenu/UserMenu";
+import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
+import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
+import ChatInput from '../../Components/ChatInput/ChatInput';
+
+import { Container, Row, Col } from "react-bootstrap";
 
 export default function EmelyChat() {
-    return (
-        <>
-        <Container id="container-emely-chat">
+  return (
+    <>
+      <Container>
         <Row>
-            <UserMenu />
+          <UserMenu />
         </Row>
-        <Row>
-            <Col id="emely-chat-col">
-                <ChatBubble />
+
+        <div className="emely-chat_wrapper">
+          <Row>
+            <Col>
+              <EmelyChatBubble />
             </Col>
-        </Row>
-        <Row className="p-0 mb-5">
-            <Col className="text-center mt-5">
+          </Row>
+          <Row>
+            <Col>
+              <UserChatBubble />
             </Col>
-        </Row>
-    </Container>
-        </>
-    )
+          </Row>
+          <Row>
+            <Col>
+              <EmelyChatBubble />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <UserChatBubble />
+            </Col>
+          </Row>
+          
+        </div>
+
+        <ChatInput />
+      </Container>
+    </>
+  );
 }
