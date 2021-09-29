@@ -9,18 +9,21 @@ export default function ChatInput() {
   const [activeMicro, setActiveMicro] = useState(true);
   const [activeSound, setActiveSound] = useState(true);
   const [isFocused, setFocused] = useState(false);
-  const [width, setWidth] = useState(getWindowDimensions());
+  const [currentWidth, setCurrentWidth] = useState(getWindowDimensions());
 
+  //   get the current browser width
   function getWindowDimensions() {
     const { innerWidth: width } = window;
     return { width };
   }
 
+  // recalculates the width on every render
   useEffect(() => {
     function handleResize() {
-      setWidth(getWindowDimensions());
+      setCurrentWidth(getWindowDimensions());
     }
     window.addEventListener("resize", handleResize);
+    // should return for avoid memory leak
     return () => window.removeEventListener("resize", handleResize);
   });
 
@@ -54,7 +57,9 @@ export default function ChatInput() {
         <button
           onClick={() => setActiveSound(!activeSound)}
           className={
-            isFocused && width.width < 600 ? "hide" : "sound_btn navigation_btn"
+            isFocused && currentWidth.width < 600
+              ? "hide"
+              : "sound_btn navigation_btn"
           }
         >
           {activeSound ? <IoMdVolumeHigh /> : <IoMdVolumeOff />}
