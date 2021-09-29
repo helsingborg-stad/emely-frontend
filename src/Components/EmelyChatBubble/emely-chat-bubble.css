@@ -7,9 +7,9 @@
 }
 
 .dialogue-text {
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 0px 40px 40px 40px;
-    border: 1px solid #979797;
+    border: 1px solid var(--gray);
     max-width: 60%;
     font-size: 1.1rem;
     margin-top: 5px;

@@ -1,5 +1,5 @@
 .chat-input-wrapper {
-  background-color: #eeeeee;
+  background-color: var(--mainBakground);
   position: fixed;
   bottom: 0;
   right: 0;
@@ -20,8 +20,8 @@
 .navigation_btn {
   border: none;
   border-radius: 50%;
-  color: #ffffff;
-  background-color: #5F8528;
+  color: var(--white);
+  background-color: var(--green);
   font-size: 2rem;
   padding: 20px;
   display: flex;
@@ -55,8 +55,8 @@
   font-size: 1.5rem;
   display: flex;
   align-items: center;
-  color: #ffffff;
-  background-color: #5F8528;
+  color: var(--white);
+  background-color: var(--green);
   margin-right: 3px;
   position: absolute;
   top: 0px;
@@ -67,7 +67,7 @@
 }
 
 .user-message_input {
-  background-color: #fff;
+  background-color: var(--white);
   border-radius: 50px;
   border: none;
   margin-left: 5px;
@@ -79,13 +79,12 @@
 }
 
 .user-message_input:focus {
-  border: 1px solid rgba(122, 177, 46, 0.671);
+  border: 1px solid var(--inputMessageFocus) ;
 }
 
 @media(max-width: 600px) {
   .chat-input-wrapper {
     flex-direction: column;
-
   }
   .buttons-wrapper {
     width: 100%;
@@ -99,6 +98,5 @@
   }
   .expand {
     flex-basis: 100%;
-    /* transition: all 0.5s ease-out; */
   }
 }
