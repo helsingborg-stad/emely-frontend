@@ -1,8 +1,7 @@
-.work-button_container {
-    max-width: 768px;
-    margin: 0 auto;
+.dropdown-list__container {
+    max-width: 800px;
+    margin: auto;
 }
-
 .occupation-btn {
     font-weight: 700;
     letter-spacing: 1.1px;

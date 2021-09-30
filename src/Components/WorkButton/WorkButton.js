@@ -7,9 +7,8 @@ export default function WorkButton(props) {
 
   return (
     <>
-      <div className="w-100 mt-1 justify-content-center work-button_container">
         <nav className="work-button_dropdown-list">
-          <div className="container ">
+          <div className="dropdown-list__container">
             <input
               onClick={() => {
                 props.setDropdownOpen(!props.isDropdownOpen);
@@ -38,7 +37,6 @@ export default function WorkButton(props) {
             </ul>
           </div>
         </nav>
-      </div>
     </>
   );
 }
