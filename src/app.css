@@ -48,11 +48,12 @@ body {
 }
 
 a {
-	color: green !important;
+	color: var(--green) !important;
 	text-decoration: none !important;
 }
 
 /* common styles */
+
 .register-btn {
 	background: var(--buttonLinearGradient);
 	border: none !important;
@@ -63,9 +64,11 @@ a {
 }
 
 .register-btn_light {
-	border: 1px solid var(--buttonLinearGradient)
+	border: 1px solid var(--buttonLinearGradient);
+	color: var(--green) !important;
 }
 
 .register-btn_light:hover {
 	background-color: var(--greenHover) !important;
+	color: var(--white) !important;
 }

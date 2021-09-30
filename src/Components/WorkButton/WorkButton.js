@@ -1,5 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { FaHandPointDown } from "react-icons/fa";
 
 export default function WorkButton(props) {
   const history = useHistory();
@@ -10,14 +11,17 @@ export default function WorkButton(props) {
         <nav className="work-button_dropdown-list">
           <div className="container ">
             <input
-              onClick={() =>{
-								props.setDropdownOpen(!props.isDropdownOpen)
-							}}
+              onClick={() => {
+                props.setDropdownOpen(!props.isDropdownOpen);
+              }}
               id="responsive-menu"
               type="checkbox"
             />
             <label className="occupation-btn" htmlFor="responsive-menu">
-              Välj yrke <span id="menu-icon">Icon here</span>
+              <span>Välj yrke</span>
+              <span id="menu-icon">
+                <FaHandPointDown  size={20}/>
+              </span>
             </label>
 
             <div id="overlay"></div>
