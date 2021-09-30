@@ -1,17 +1,31 @@
 import React, { useRef, useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+
+/* Icon imports */
 import { HiOutlineMail } from 'react-icons/hi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineCalendar } from 'react-icons/ai';
+import { GrLanguage } from 'react-icons/gr';
+import { FaUserTie } from 'react-icons/fa';
+
 import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+
 
 /* Variable declaration */
 export default function Signup() {
+	/* Form value variables */
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
+	const usernameRef = useRef();
+	const birthYearRef = useRef();
+	const nativeLanguageRef = useRef();
+	const currentOccupationRef = useRef();
+
 	const { signup } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -29,7 +43,15 @@ export default function Signup() {
 			setLoading(true);
 
 			/* Run signup firebase-auth function from AuthContext.js */
-			await signup(emailRef.current.value, passwordRef.current.value);
+			await signup(
+				emailRef.current.value,
+				passwordRef.current.value,
+				usernameRef.current.value,
+				birthYearRef.current.value,
+				nativeLanguageRef.current.value,
+				currentOccupationRef.current.value
+			);
+
 			history.push('/');
 
 			/* Catch error and print out in alert (in english) */
@@ -48,7 +70,9 @@ export default function Signup() {
 				</h2>
 				{error && <Alert variant="danger">{error}</Alert>}
 				<Form onSubmit={handleSubmit}>
-					{/* Register new user form */}
+					{/* Register new user forms */}
+
+					{/* Enter email form */}
 					<Form.Group id="email" className="fw-bold">
 						<Form.Label className="mt-5">
 							<HiOutlineMail size={30} /> Vad är din e-postadress?
@@ -61,6 +85,8 @@ export default function Signup() {
 							required
 						/>
 					</Form.Group>
+
+					{/* Choose password form */}
 					<Form.Group id="password" className="mt-4 fw-bold">
 						<Form.Label className="mt-3">
 							<RiLockPasswordLine size={30} /> Skapa ett lösenord
@@ -73,6 +99,8 @@ export default function Signup() {
 							required
 						></Form.Control>
 					</Form.Group>
+
+					{/* Confirm password form */}
 					<Form.Group id="password-confirm" className="mt-4 fw-bold">
 						<Form.Label className="mt-3">
 							<RiLockPasswordLine size={30} /> Upprepa lösenord
@@ -85,6 +113,88 @@ export default function Signup() {
 							required
 						/>
 					</Form.Group>
+
+					<Row>
+						{/* Username form */}
+						<Col>
+							<Form.Group id="username" className="fw-bold">
+								<Form.Label className="mt-5">
+									<AiOutlineUser size={30} /> Vad ska vi kalla dig?
+								</Form.Label>
+								<Form.Control
+									className="rounded-pill p-3 shadow-sm"
+									placeholder="Användarnamn"
+									type="text"
+									ref={usernameRef}
+									required
+								/>
+							</Form.Group>
+						</Col>
+
+						{/* Birth Year form */}
+						<Col>
+							<Form.Group id="birthYear" className="fw-bold">
+								<Form.Label className="mt-5">
+									<AiOutlineCalendar size={30} /> När är du född?
+								</Form.Label>
+								<Form.Control
+									className="rounded-pill p-3 shadow-sm"
+									placeholder="När är du född?"
+									type="date"
+									defaultValue="1990-01-01"
+									ref={birthYearRef}
+									required
+								/>
+							</Form.Group>
+						</Col>
+					</Row>
+
+					<Row>
+						{/* Native language form */}
+						<Col>
+							<Form.Group id="nativeLanguage" className="fw-bold">
+								<Form.Label className="mt-5">
+									<GrLanguage size={25} /> Vilket språk talar du hemma?
+								</Form.Label>
+								<Form.Select
+									ref={nativeLanguageRef}
+									className="rounded-pill p-3 shadow-sm"
+									defaultValue="Svenska"
+								>
+									<option>Svenska</option>
+									<option>Engelska</option>
+									<option>Arabiska</option>
+									<option>Italienska</option>
+									<option>Spanska</option>
+									<option>Bosniska</option>
+									<option>Serbiska</option>
+									<option>Kroatiska</option>
+								</Form.Select>
+							</Form.Group>
+						</Col>
+
+						{/* Current occupation form */}
+						<Col>
+							<Form.Group id="currentOccupation" className="fw-bold">
+								<Form.Label className="mt-5">
+									<FaUserTie size={25} /> Vad är din syselsättning?
+								</Form.Label>
+								<Form.Select
+									ref={currentOccupationRef}
+									className="rounded-pill p-3 shadow-sm"
+									defaultValue="Arbetslös"
+								>
+									<option>Arbetslös</option>
+									<option>Söker arbete</option>
+									<option>Sjukskriven</option>
+									<option>Heltidsjobb</option>
+									<option>Deltidsjobb</option>
+									<option>Timanställd</option>
+									<option>Föräldraledig</option>
+								</Form.Select>
+							</Form.Group>
+						</Col>
+					</Row>
 
 					{/* Submit buttons */}
 					<Button
