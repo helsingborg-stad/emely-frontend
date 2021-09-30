@@ -79,23 +79,55 @@ export default function UserMenu(props) {
                     </Link>
                   </p>
 
-                  <p>
-                    <Button
-                      className="rounded-pill "
-                      variant="link"
-                      onClick={handleLogout}
-                      style={{ textDecoration: "none", color: "black" }}
-                    >
-                      Logga ut
-                    </Button>
-                  </p>
-                </Offcanvas.Body>
-              </Offcanvas>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-      {error && <Alert variant="danger">{error}</Alert>}
-    </>
-  );
+							{/* Menu-button */}
+							<Button
+								className="rounded-pill shadow-sm p-3 mt-3"
+								variant="light"
+								onClick={handleShow}
+								id="menu-user-button"
+							>
+								<FaUserAlt className="p-1" size={25} />
+								{currentUser.displayName ? currentUser.displayName : currentUser.email}
+							</Button>
+
+							{/* Menu from the side */}
+							<Offcanvas show={show} onHide={handleClose}>
+								<Offcanvas.Header className="m-3" closeButton>
+									<Offcanvas.Title className="m-3">
+										<FaUserAlt className="p-1" size={25} />
+										{currentUser.displayName ? currentUser.displayName : currentUser.email}
+									</Offcanvas.Title>
+								</Offcanvas.Header>
+								<Offcanvas.Body className="m-3">
+									<p>
+										<Link to="/update-profile">
+											<Button
+												className="rounded-pill "
+												variant="link"
+												style={{ textDecoration: 'none', color: 'black' }}
+											>
+												<Nav.Item>Uppdatera profil</Nav.Item>
+											</Button>
+										</Link>
+									</p>
+
+									<p>
+										<Button
+											className="rounded-pill "
+											variant="link"
+											onClick={handleLogout}
+											style={{ textDecoration: 'none', color: 'black' }}
+										>
+											Logga ut
+										</Button>
+									</p>
+								</Offcanvas.Body>
+							</Offcanvas>
+						</Nav>
+					</Navbar.Collapse>
+				</Container>
+			</Navbar>
+			{error && <Alert variant="danger">{error}</Alert>}
+		</>
+	);
 }
