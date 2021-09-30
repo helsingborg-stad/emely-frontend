@@ -51,3 +51,21 @@ a {
 	color: green !important;
 	text-decoration: none !important;
 }
+
+/* common styles */
+.register-btn {
+	background: var(--buttonLinearGradient);
+	border: none !important;
+}
+
+.register-btn:hover {
+	background: var(--greenHover) !important;
+}
+
+.register-btn_light {
+	border: 1px solid var(--buttonLinearGradient)
+}
+
+.register-btn_light:hover {
+	background-color: var(--greenHover) !important;
+}
