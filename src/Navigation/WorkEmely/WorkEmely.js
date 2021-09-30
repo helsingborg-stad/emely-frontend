@@ -3,27 +3,15 @@ import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
 import WorkButton from "../../Components/WorkButton/WorkButton";
 import { Container, Row, Col } from "react-bootstrap";
+import useWindowDimensions from "../../customHooks/useWindowDimensions";
 
 export default function WorkEmely() {
   const MEDIUM_WIDTH = 768;
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [currentWidth, setCurrentWidth] = useState(getWindowDimensions());
-  //   get the current browser width
-  function getWindowDimensions() {
-    const { innerWidth: width } = window;
-    return { width };
-  }
+  const { currentWidth } = useWindowDimensions();
 
-  // recalculates the width on every render
-  useEffect(() => {
-    function handleResize() {
-      setCurrentWidth(getWindowDimensions());
-    }
-    window.addEventListener("resize", handleResize);
-    // should return for avoid memory leak
-    return () => window.removeEventListener("resize", handleResize);
-  });
+  
   const occupation = {
     occupations: [
       "Bartender",
