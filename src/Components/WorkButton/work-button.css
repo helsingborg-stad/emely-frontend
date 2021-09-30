@@ -8,7 +8,7 @@
     letter-spacing: 1.1px;
     padding: 0;
     border-radius: 24px;
-    background: linear-gradient( 90deg, rgba(142, 182, 84, 1) 0%, rgba(119, 158, 62, 1) 50%, rgba(95, 133, 40, 1) 100%);
+    background: var(--buttonLinearGradient);
     color: var(--white);
     font-size: 1rem;
     display: flex;
@@ -18,6 +18,7 @@
 }
 
 /* List styling */
+
 .work-button_dropdown-list ul {
     margin: 0;
     padding: 0;
@@ -31,6 +32,7 @@
 }
 
 /* hide input checkbox */
+
 .work-button_dropdown-list input {
     opacity: 0;
     position: absolute;
@@ -38,6 +40,7 @@
 }
 
 /* label */
+
 .work-button_dropdown-list label {
     cursor: pointer;
     display: block;
@@ -46,6 +49,7 @@
 }
 
 /* nav styling */
+
 .work-button_dropdown-list {
     color: var(--green);
     left: 0;
