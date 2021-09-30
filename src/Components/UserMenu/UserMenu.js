@@ -36,48 +36,14 @@ export default function UserMenu(props) {
 	}
 
 	return (
-    <>
-      <Navbar sticky="top" bg="none" expand="lg" id="navbar">
-        <Container>
-          {/*TODO back button, delete {props.currentOccupation} */}
-          <Navbar.Brand>{props.currentOccupation}</Navbar.Brand>
-          <Navbar.Toggle
-            onClick={handleShow}
-            aria-controls="basic-navbar-nav"
-          ></Navbar.Toggle>
-          <Navbar.Collapse bg="dark" id="basic-navbar-nav">
-            <Nav className="ms-auto ">
-              {/* Menu-button */}
-              <Button
-                className="rounded-pill shadow-sm p-3 mt-3"
-                variant="light"
-                onClick={handleShow}
-                id="menu-user-button"
-              >
-                <FaUserAlt className="p-1" size={25} />
-                {currentUser ? currentUser.displayName : currentUser.email}
-              </Button>
-
-              {/* Menu from the side */}
-              <Offcanvas show={show} onHide={handleClose}>
-                <Offcanvas.Header className="m-3" closeButton>
-                  <Offcanvas.Title className="m-3">
-                    <FaUserAlt className="p-1" size={25} />
-                    {currentUser ? currentUser.displayName : currentUser.email}
-                  </Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body className="m-3">
-                  <p>
-                    <Link to="/update-profile">
-                      <Button
-                        className="rounded-pill "
-                        variant="link"
-                        style={{ textDecoration: "none", color: "black" }}
-                      >
-                        <Nav.Item>Uppdatera profil</Nav.Item>
-                      </Button>
-                    </Link>
-                  </p>
+		<>
+			<Navbar sticky="top" bg="none" expand="lg" id="navbar">
+				<Container>
+				{/* TODO: Add back-button */}
+					<Navbar.Brand></Navbar.Brand>
+					<Navbar.Toggle onClick={handleShow} aria-controls="basic-navbar-nav"></Navbar.Toggle>
+					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
+						<Nav className="ms-auto ">
 
 							{/* Menu-button */}
 							<Button
