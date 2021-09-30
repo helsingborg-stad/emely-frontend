@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react"
-import { auth } from "../firebase"
+import { auth, db } from "../firebase"
 
 const AuthContext = React.createContext()
 
@@ -14,7 +14,14 @@ export function AuthProvider({ children }) {
 
   /* Firebase functions used when handling users */
   /* Sign up with email and password */
-  function signup(email, password) {
+  function signup(email, password, username, birthYear, nativeLanguage, currentOccupation) {
+    db.collection('users').add({
+      email: email,
+      username: username,
+      birth_year: birthYear,
+      native_language: nativeLanguage,
+      current_occupation: currentOccupation,
+    });
     return auth.createUserWithEmailAndPassword(email, password)
   }
 
@@ -47,6 +54,7 @@ export function AuthProvider({ children }) {
   function updatePassword(password) {
     return currentUser.updatePassword(password)
   }
+  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
