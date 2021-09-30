@@ -1,5 +1,5 @@
 .chat-input-wrapper {
-  background-color: var(--mainBakground);
+  background-color: var(--mainBackground);
   position: fixed;
   bottom: 0;
   right: 0;
@@ -21,12 +21,57 @@
   border: none;
   border-radius: 50%;
   color: var(--white);
-  background-color: var(--green);
   font-size: 2rem;
-  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.recording_btn {
+  background-color: var(--green);
+  padding: 20px;
+}
+
+.recording_btn_active {
+  background: var(--activeRecording);
+  padding: 20px;
+  z-index: 99;
+  position: relative;
+}
+
+.recording_btn_active::before {
+  content: "";
+  width: 100px;
+  height: 100px;
+  background: var(--activeRecording);
+  opacity: 0.5;
+  position: absolute;
+  border-radius: 50%;
+  left: -14px;
+  top: -14px;
+  animation-duration: 2.0s;
+  animation-name: pulse;
+  animation-iteration-count: infinite;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+    transform: scale(0.9, 0.9);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.3, 1.3);
+  }
+}
+
+.sound_btn, .microphone_btn {
+  background: transparent;
+  color: var(--green);
+  border: 1px solid var(--gray);
+  padding: 15px;
+  margin-left: 10px;
 }
 
 .buttons-wrapper {
@@ -79,7 +124,7 @@
 }
 
 .user-message_input:focus {
-  border: 1px solid var(--inputMessageFocus) ;
+  border: 1px solid var(--inputMessageFocus);
 }
 
 @media(max-width: 600px) {
@@ -90,7 +135,7 @@
     width: 100%;
     margin-top: 30px;
   }
-  .sound_btn {
+  .sound_btn, .microphone_btn {
     padding: 6px;
   }
   .hide {

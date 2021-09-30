@@ -4,38 +4,32 @@ import { BiMicrophoneOff } from "react-icons/bi";
 import { IoMdVolumeHigh } from "react-icons/io";
 import { IoMdVolumeOff } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
+import { FaPlay } from "react-icons/fa";
+import { FaStop } from "react-icons/fa";
+
+import useWindowDimensions from '../../customHooks/useWindowDimensions'
 
 export default function ChatInput() {
+  const MEDIUM_WIDTH = 600;
+
   const [activeMicro, setActiveMicro] = useState(true);
   const [activeSound, setActiveSound] = useState(true);
+  const [isRecording, setRecording] = useState(false);
   const [isFocused, setFocused] = useState(false);
-  const [currentWidth, setCurrentWidth] = useState(getWindowDimensions());
-
-  //   get the current browser width
-  function getWindowDimensions() {
-    const { innerWidth: width } = window;
-    return { width };
-  }
-
-  // recalculates the width on every render
-  useEffect(() => {
-    function handleResize() {
-      setCurrentWidth(getWindowDimensions());
-    }
-    window.addEventListener("resize", handleResize);
-    // should return for avoid memory leak
-    return () => window.removeEventListener("resize", handleResize);
-  });
+  const { currentWidth } = useWindowDimensions();
 
   return (
     <div className="chat-input-wrapper">
       <button
-        onClick={() => setActiveMicro(!activeMicro)}
-        className="microphone_btn navigation_btn"
+        className={
+          isRecording
+            ? "navigation_btn recording_btn_active"
+            : "navigation_btn recording_btn"
+        }
+        onClick={() => setRecording(!isRecording)}
       >
-        {activeMicro ? <BiMicrophone /> : <BiMicrophoneOff />}
+        {isRecording ? <FaStop /> : <FaPlay />}
       </button>
-
       <div className="buttons-wrapper">
         <form className={isFocused ? "input-wrapper expand" : "input-wrapper"}>
           <input
@@ -57,12 +51,23 @@ export default function ChatInput() {
         <button
           onClick={() => setActiveSound(!activeSound)}
           className={
-            isFocused && currentWidth.width < 600
+            isFocused && currentWidth.width < MEDIUM_WIDTH
               ? "hide"
               : "sound_btn navigation_btn"
           }
         >
           {activeSound ? <IoMdVolumeHigh /> : <IoMdVolumeOff />}
+        </button>
+
+        <button
+          onClick={() => setActiveMicro(!activeMicro)}
+          className={
+            isFocused && currentWidth.width < MEDIUM_WIDTH
+              ? "hide"
+              : "microphone_btn navigation_btn"
+          }
+        >
+          {activeMicro ? <BiMicrophone /> : <BiMicrophoneOff />}
         </button>
       </div>
     </div>
