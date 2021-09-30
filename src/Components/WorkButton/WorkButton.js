@@ -1,32 +1,42 @@
-import React from 'react';
-import { Dropdown } from 'react-bootstrap';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { FaHandPointDown } from "react-icons/fa";
 
 export default function WorkButton(props) {
+  const history = useHistory();
 
-	return (
-		<>
-			<div
-				className="w-100 mt-1 justify-content-center"
-				id="work-buttons-dropdown"
-			>
-				<Dropdown>
-					<Dropdown.Toggle
-						className="w-100 rounded-pill shadow-sm p-3"
-						variant="light"
-						id="dropdown-basic"
-					>
-						Välj yrke
-					</Dropdown.Toggle>
+  return (
+    <>
+        <nav className="work-button_dropdown-list">
+          <div className="dropdown-list__container">
+            <input
+              onClick={() => {
+                props.setDropdownOpen(!props.isDropdownOpen);
+              }}
+              id="responsive-menu"
+              type="checkbox"
+            />
+            <label className="occupation-btn" htmlFor="responsive-menu">
+              <span>Välj yrke</span>
+              <span id="menu-icon">
+                <FaHandPointDown  size={20}/>
+              </span>
+            </label>
 
-					<Dropdown.Menu className="w-100">
-						{props.occupation.occupations.map((job, i) => (
-							<Dropdown.Item href="/emely-chat" key={i} className="w-100" >
-                            {job}
-							</Dropdown.Item>
-						))}
-					</Dropdown.Menu>
-				</Dropdown>
-			</div>
-		</>
-	);
+            <div id="overlay"></div>
+            <ul>
+              {props.occupation.occupations.map((job, i) => (
+                <li
+                  onClick={() => history.push("/emely-chat")}
+                  key={i}
+                  className="w-100 my-3 h5 work-button_dropdown-item"
+                >
+                  {job}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+    </>
+  );
 }

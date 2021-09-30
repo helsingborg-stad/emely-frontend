@@ -37,24 +37,10 @@ export default function UserMenu(props) {
 
 	return (
 		<>
-			{/* Emely - sound and home button
-						<Button
-						className="rounded-circle shadow-sm p-3"
-						variant="success"
-						>
-						<FiHome size={30} />
-						</Button>
-						<Button
-						className="m-2 rounded-circle shadow-sm p-3"
-						variant="success"
-						>
-						<HiOutlineVolumeUp size={30} />
-						</Button>
-					*/}
-
 			<Navbar sticky="top" bg="none" expand="lg" id="navbar">
 				<Container>
-					<Navbar.Brand>{props.currentOccupation}</Navbar.Brand>
+				{/* TODO: Add back-button */}
+					<Navbar.Brand></Navbar.Brand>
 					<Navbar.Toggle onClick={handleShow} aria-controls="basic-navbar-nav"></Navbar.Toggle>
 					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
 						<Nav className="ms-auto ">

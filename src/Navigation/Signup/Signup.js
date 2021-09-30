@@ -199,18 +199,17 @@ export default function Signup() {
 					{/* Submit buttons */}
 					<Button
 						disabled={loading}
-						className="w-100 mt-5 p-3 btn-success rounded-pill fw-bold shadow-sm"
+						className="w-100 mt-5 p-3 btn-success rounded-pill fw-bold shadow-sm register-btn"
 						type="submit"
 					>
 						<AiOutlineUserAdd size={30} />
 						REGISTRERA DIG
 					</Button>
 				</Form>
-
-				<div className="w-100 text-center mt-3 fw-bold">
-					Har du ett konto? <Link to="/login">Logga In</Link>
-				</div>
-			</AuthLayout>
-		</>
-	);
+        <div className="w-100 text-center mt-3 fw-bold">
+          Har du ett konto? <Link to="/login">Logga In</Link>
+        </div>
+      </AuthLayout>
+    </>
+  );
 }

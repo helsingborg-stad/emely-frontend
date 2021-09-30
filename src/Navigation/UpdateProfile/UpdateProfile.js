@@ -54,75 +54,75 @@ export default function UpdateProfile() {
 	}
 
 	return (
-		<>
-			<AuthLayout>
-				<h2 className="text-center mb-5 fw-bold">Uppdatera profil</h2>
-				{error && <Alert variant="danger">{error}</Alert>}
-				<Form onSubmit={handleSubmit}>
-					{/* Update different user attribute forms */}
-					<Form.Group className="mt-4" id="username">
-						<Form.Label className="fw-bold">
-							<AiOutlineUser size={30} /> Användarnamn
-						</Form.Label>
-						<Form.Control
-							className="rounded-pill p-3"
-							type="text"
-							ref={usernameRef}
-							required
-							defaultValue={currentUser.displayName}
-							placeholder="Vad ska vi kalla dig?"
-						/>
-					</Form.Group>
+    <>
+      <AuthLayout>
+        <h2 className="text-center mb-5 fw-bold">Uppdatera profil</h2>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          {/* Update different user attribute forms */}
+          <Form.Group className="mt-4" id="username">
+            <Form.Label className="fw-bold">
+              <AiOutlineUser size={30} /> Användarnamn
+            </Form.Label>
+            <Form.Control
+              className="rounded-pill p-3"
+              type="text"
+              ref={usernameRef}
+              required
+              defaultValue={currentUser.displayName}
+              placeholder="Vad ska vi kalla dig?"
+            />
+          </Form.Group>
 
-					<Form.Group className="mt-4 fw-bold" id="email">
-						<Form.Label>
-							<HiOutlineMail size={30} /> E-postadress
-						</Form.Label>
-						<Form.Control
-							className="rounded-pill p-3"
-							type="email"
-							ref={emailRef}
-							required
-							defaultValue={currentUser.email}
-						/>
-					</Form.Group>
-					<Form.Group className="mt-4 fw-bold" id="password">
-						<Form.Label>
-							<RiLockPasswordLine size={30} /> Lösenord
-						</Form.Label>
-						<Form.Control
-							className="rounded-pill p-3"
-							type="password"
-							ref={passwordRef}
-							placeholder="Lämna blankt för att behålla lösenord"
-						/>
-					</Form.Group>
-					<Form.Group className="mt-4 fw-bold" id="password-confirm">
-						<Form.Label>
-							<RiLockPasswordLine size={30} /> Upprepa lösenord
-						</Form.Label>
-						<Form.Control
-							className="rounded-pill p-3"
-							type="password"
-							ref={passwordConfirmRef}
-							placeholder="Lämna blankt för att behålla lösenord"
-						/>
-					</Form.Group>
+          <Form.Group className="mt-4 fw-bold" id="email">
+            <Form.Label>
+              <HiOutlineMail size={30} /> E-postadress
+            </Form.Label>
+            <Form.Control
+              className="rounded-pill p-3"
+              type="email"
+              ref={emailRef}
+              required
+              defaultValue={currentUser.email}
+            />
+          </Form.Group>
+          <Form.Group className="mt-4 fw-bold" id="password">
+            <Form.Label>
+              <RiLockPasswordLine size={30} /> Lösenord
+            </Form.Label>
+            <Form.Control
+              className="rounded-pill p-3"
+              type="password"
+              ref={passwordRef}
+              placeholder="Lämna blankt för att behålla lösenord"
+            />
+          </Form.Group>
+          <Form.Group className="mt-4 fw-bold" id="password-confirm">
+            <Form.Label>
+              <RiLockPasswordLine size={30} /> Upprepa lösenord
+            </Form.Label>
+            <Form.Control
+              className="rounded-pill p-3"
+              type="password"
+              ref={passwordConfirmRef}
+              placeholder="Lämna blankt för att behålla lösenord"
+            />
+          </Form.Group>
 
-					{/* Submit changes & update user-profile */}
-					<Button
-						disabled={loading}
-						className="w-100 p-3 mt-5 rounded-pill fw-bold"
-						variant="success"
-						type="submit"
-					>
-						<AiOutlineUserAdd size={30} /> UPPDATERA
-					</Button>
-				</Form>
-				<div className="w-100 text-center mt-2 fw-bold">
-					<Link to="/dashboard">Tillbaka</Link>
-				</div>
-			</AuthLayout>
-		</>
-	);
+          {/* Submit changes & update user-profile */}
+          <Button
+            disabled={loading}
+            className="w-100 p-3 mt-5 rounded-pill fw-bold register-btn"
+            variant="success"
+            type="submit"
+          >
+            <AiOutlineUserAdd size={30} /> UPPDATERA
+          </Button>
+        </Form>
+        <div className="w-100 text-center mt-2 fw-bold">
+          <Link to="/dashboard">Tillbaka</Link>
+        </div>
+      </AuthLayout>
+    </>
+  );
 }

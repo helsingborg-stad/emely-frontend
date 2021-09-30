@@ -1,0 +1,7 @@
+.hide-emely-dialog {
+  display: none !important;
+}
+
+.show-emely-dialog{
+  display: block;
+}
