@@ -10,5 +10,9 @@
     line-height: 1.8;
     font-size: 1.2rem;
     text-align: center;
-    
+}
+
+.button_container {
+    max-width: 800px;
+    margin: auto !important;
 }

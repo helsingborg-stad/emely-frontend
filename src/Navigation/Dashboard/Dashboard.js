@@ -31,7 +31,7 @@ export default function Dashboard() {
             </EmelyDialogue>
           </Col>
         </Row>
-        <Row className="my-5 align-items-center  justify-content-center">
+        <Row className="my-5 align-items-center  justify-content-center button_container">
           <Col xs={12} md={6} className="text-center mt-3">
             <PersonaButton linkTo={"/work-emely"} name={"SÖKA JOBB-ASSISTENT"}>
               <FiBriefcase size={25} />
