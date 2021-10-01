@@ -3,6 +3,8 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import AuthLayout from '../../Components/AuthLayout/AuthLayout';
 import { Link, useHistory } from 'react-router-dom';
+
+/* Icon Imports */
 import { HiOutlineMail } from 'react-icons/hi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { RiLoginCircleLine } from 'react-icons/ri';
