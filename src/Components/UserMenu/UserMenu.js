@@ -12,6 +12,10 @@ import {
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import { FaUserAlt } from 'react-icons/fa';
+
+//import { HiOutlineVolumeUp } from 'react-icons/hi';
+import BackButton from '../BackButton/BackButton';
+
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { AiOutlineHome } from 'react-icons/ai';
@@ -44,12 +48,16 @@ export default function UserMenu(props) {
 		<>
 			<Navbar sticky="top" bg="none" expand="lg" id="navbar">
 				<Container>
+    <Navbar.Brand><BackButton/></Navbar.Brand>
+					<Navbar.Toggle onClick={handleShow} aria-controls="basic-navbar-nav"></Navbar.Toggle>
+
 					{/* TODO: Add back-button */}
 					<Navbar.Brand></Navbar.Brand>
 					<Navbar.Toggle
 						onClick={handleShow}
 						aria-controls="basic-navbar-nav"
 					></Navbar.Toggle>
+
 					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
 						<Nav className="ms-auto ">
 							{/* Menu-button */}
