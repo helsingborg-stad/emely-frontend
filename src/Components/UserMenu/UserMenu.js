@@ -9,13 +9,11 @@ import {
 	Row,
 	Col,
 } from 'react-bootstrap';
-import { useAuth } from '../../contexts/AuthContext';
-import { Link, useHistory } from 'react-router-dom';
-import { FaUserAlt } from 'react-icons/fa';
-
-//import { HiOutlineVolumeUp } from 'react-icons/hi';
 import BackButton from '../BackButton/BackButton';
 
+/* Icon imports */
+import { useAuth } from '../../contexts/AuthContext';
+import { Link, useHistory } from 'react-router-dom';
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { AiOutlineHome } from 'react-icons/ai';
@@ -48,11 +46,11 @@ export default function UserMenu(props) {
 		<>
 			<Navbar sticky="top" bg="none" expand="lg" id="navbar">
 				<Container>
-    <Navbar.Brand><BackButton/></Navbar.Brand>
-					<Navbar.Toggle onClick={handleShow} aria-controls="basic-navbar-nav"></Navbar.Toggle>
+					<Navbar.Brand>
+						<BackButton />
+					</Navbar.Brand>
 
-					{/* TODO: Add back-button */}
-					<Navbar.Brand></Navbar.Brand>
+					{/* Mobile user-menu button */}
 					<Navbar.Toggle
 						onClick={handleShow}
 						aria-controls="basic-navbar-nav"
@@ -63,9 +61,9 @@ export default function UserMenu(props) {
 							{/* Menu-button */}
 							<Button
 								className="rounded-pill shadow-sm p-3"
+								id="menu-user-button"
 								onClick={handleShow}
 								variant="light"
-						
 							>
 								<AiOutlineUser className="me-2" size={25} />{' '}
 								{currentUser.displayName
@@ -85,12 +83,13 @@ export default function UserMenu(props) {
 								</Offcanvas.Header>
 								<Offcanvas.Body className="m-3">
 									<Row className="mb-2">
-									
 										<Col className="ms-4 p-1" xs={1}>
 											<AiOutlineHome size={25} />
 										</Col>
+
 										<Col>
 											<Link to="/update-profile">
+												{/* Profile page menu-button */}
 												<Button
 													className="rounded-pill "
 													variant="link"
@@ -101,12 +100,14 @@ export default function UserMenu(props) {
 											</Link>
 										</Col>
 									</Row>
+
 									<hr />
-									<Row className="menu-rows" >
+									<Row className="menu-rows">
 										<Col className="ms-4 p-1" xs={1}>
 											<AiOutlineEdit size={25} />
 										</Col>
 										<Col>
+											{/* Update profile menu-button */}
 											<Link to="/update-profile">
 												<Button
 													className="rounded-pill "
@@ -126,6 +127,7 @@ export default function UserMenu(props) {
 											<BiLogOutCircle size={25} />
 										</Col>
 										<Col>
+											{/* Log out menu-button */}
 											<Button
 												className="rounded-pill "
 												variant="link"
