@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+import { db } from "../../firebase"
 
 /* Icon imports */
 import { HiOutlineMail } from 'react-icons/hi';
@@ -26,7 +27,7 @@ export default function Signup() {
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
 
-	const { signup } = useAuth();
+	const { signup, createUser, currentUser } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
@@ -43,16 +44,21 @@ export default function Signup() {
 			setLoading(true);
 
 			/* Run signup firebase-auth function from AuthContext.js */
-			await signup(
+			const credential = await signup(
 				emailRef.current.value,
 				passwordRef.current.value,
+			);
+			const uid = credential.user.uid;
+			await createUser(				
+				emailRef.current.value,
 				usernameRef.current.value,
 				birthYearRef.current.value,
 				nativeLanguageRef.current.value,
-				currentOccupationRef.current.value
+				currentOccupationRef.current.value,
+				uid,
 			);
 
-			history.push('/');
+			history.push('/dashboard');
 
 			/* Catch error and print out in alert (in english) */
 		} catch (error) {

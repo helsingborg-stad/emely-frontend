@@ -10,19 +10,23 @@ export function useAuth() {
 /* Variable declaration */
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
+  const [userId, setUserId] = useState('')
   const [loading, setLoading] = useState(true)
 
   /* Firebase functions used when handling users */
   /* Sign up with email and password */
-  function signup(email, password, username, birthYear, nativeLanguage, currentOccupation) {
-    db.collection('users').add({
+  function signup(email, password) {
+    return auth.createUserWithEmailAndPassword(email, password)
+  }
+
+  function createUser(email, username, birthYear, nativeLanguage, currentOccupation, uid){
+    db.collection('users-debug').doc(uid).set({
       email: email,
       username: username,
       birth_year: birthYear,
       native_language: nativeLanguage,
       current_occupation: currentOccupation,
     });
-    return auth.createUserWithEmailAndPassword(email, password)
   }
 
   /* Log in with email and password */
@@ -59,11 +63,14 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setCurrentUser(user)
-      setLoading(false)
+  
+        
+        setLoading(false)
+      
     })
 
     return unsubscribe
-  }, [])
+  })
 
   const value = {
     currentUser,
@@ -73,7 +80,8 @@ export function AuthProvider({ children }) {
     resetPassword,
     updateEmail,
     updatePassword,
-    updateProfile
+    updateProfile,
+    createUser
   }
 
   return (
