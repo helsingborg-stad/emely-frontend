@@ -10,6 +10,7 @@ export function useAuth() {
 /* Variable declaration */
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
+  const [collection] = useState(process.env.REACT_APP_FIRESTORE_COLLECTION)
   const [userId, setUserId] = useState('')
   const [loading, setLoading] = useState(true)
 
@@ -20,7 +21,7 @@ export function AuthProvider({ children }) {
   }
 
   function createUser(email, username, birthYear, nativeLanguage, currentOccupation, uid){
-    db.collection('users-debug').doc(uid).set({
+    db.collection(collection).doc(uid).set({
       email: email,
       username: username,
       birth_year: birthYear,

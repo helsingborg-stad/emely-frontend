@@ -18,7 +18,7 @@ export default function Profile() {
 		try {
 		  const documentSnapshot = await db
 			.collection('users-debug')
-			.doc(currentUser.email)
+			.doc(currentUser.uid)
 			.get();
 	
 		  const userData = documentSnapshot.data();
@@ -30,11 +30,8 @@ export default function Profile() {
 	  
 
 	useEffect(() => {
-
-		
 		getUser();
-
-		
+	
 	});
 
 	return (
