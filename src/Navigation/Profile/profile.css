@@ -18,8 +18,13 @@
 
 @media (max-width: 768px){
     #side-menu{
-        font-size: 0.8rem;
+        display: none;
     }
+
+    #profile-card {
+        font-size: 0.7rem;
+    }
+
     
 
 }
