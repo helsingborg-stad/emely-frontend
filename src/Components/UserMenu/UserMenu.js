@@ -18,7 +18,9 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
-import { CgMenuMotion } from 'react-icons/cg';
+import { AiOutlineMenu } from 'react-icons/ai';
+import { BsChatDots } from 'react-icons/bs';
+
 
 /* Variable declaration */
 export default function UserMenu(props) {
@@ -30,12 +32,12 @@ export default function UserMenu(props) {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-		/* Getting the current user details on mount */
-		useEffect( ()  => {
-			getUserDetails(currentUser.uid)
-			
+	/* Getting the current user details on mount */
+	useEffect(() => {
+		getUserDetails(currentUser.uid);
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		}, [])
+	}, []);
 
 	async function handleLogout() {
 		setError('');
@@ -52,7 +54,13 @@ export default function UserMenu(props) {
 
 	return (
 		<>
-			<Navbar sticky="top" bg="none" expand="lg" id="navbar">
+			<Navbar
+				className="shadow-sm"
+				fixed="top"
+				bg="white"
+				expand="lg"
+				id="navbar"
+			>
 				<Container>
 					<Navbar.Brand>
 						<BackButton />
@@ -60,21 +68,38 @@ export default function UserMenu(props) {
 
 					{/* Mobile user-menu button */}
 					<Navbar.Toggle
+						className="mt-1"
 						onClick={handleShow}
 						aria-controls="basic-navbar-nav"
-					></Navbar.Toggle>
+					>
+						<span>
+							<AiOutlineMenu />
+						</span>
+					</Navbar.Toggle>
 
 					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
 						<Nav className="ms-auto ">
 							{/* Menu-button */}
+							<Link to="/dashboard">
 							<Button
-								className="rounded-pill pt-3 pb-3 pe-4 shadow-sm fw-bold "
+								className="me-3"
 								id="menu-user-button"
 								onClick={handleShow}
-								variant="light"
+								variant="none"
 							>
-								<CgMenuMotion className="ms-2 me-2" size={20} />
-								{userDetails && userDetails.username}
+								<BsChatDots className="ms-2 mb-1 me-2" size={20} />
+								Prata med Emely
+							</Button>
+							</Link>
+
+							<Button
+								className="p-0"
+								id="menu-user-button"
+								onClick={handleShow}
+								variant="none"
+							>
+								<AiOutlineUser className="ms-2 mb-1 me-2" size={20} />
+								Mitt konto
 							</Button>
 
 							{/* Menu from the side */}
@@ -95,11 +120,11 @@ export default function UserMenu(props) {
 											<Link to="/profile">
 												{/* Profile page menu-button */}
 												<Button
-													className="rounded-pill "
-													variant="link"
-													style={{ textDecoration: 'none', color: 'black' }}
+													className=""
+													variant="none"
+													
 												>
-													<Nav.Item>Min profil</Nav.Item>
+													<Nav.Item>Användarkonto</Nav.Item>
 												</Button>
 											</Link>
 										</Col>
@@ -113,11 +138,7 @@ export default function UserMenu(props) {
 										<Col>
 											{/* Update profile menu-button */}
 											<Link to="/update-profile">
-												<Button
-													className="rounded-pill "
-													variant="link"
-													style={{ textDecoration: 'none', color: 'black' }}
-												>
+												<Button variant="none">
 													<Nav.Item>Redigera profil</Nav.Item>
 												</Button>
 											</Link>
