@@ -1,12 +1,13 @@
 // handle HTTP request
 const axios = require("axios");
+const { URL } = require("../utils/constants");
 
 const createInitConversation = async (req, res) => {
   const userInfo = req.body;
   
   try {
     const response = await axios.post(
-      "https://emely-chat-service-api-staging-ef5bmjer3q-ey.a.run.app/init",
+      `${URL}/init`,
       {
         ...userInfo,
       },
