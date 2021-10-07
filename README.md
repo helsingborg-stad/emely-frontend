@@ -17,10 +17,10 @@ npm install
 ```
 
 
-## Put .env.local file in your root directory
-You can find the .env.local file in the NordAxon OneDrive. Put this file in your root folder for this project.
+## Put .env.development & .env.production files in your root directory
+You can find the .env.-files in the NordAxon OneDrive.
 ```
-NORDAXON/AI ML PROJECTS/EMELY/Design - Development - Test/API & json/.env.local -> Paste in root-folder.
+NORDAXON/AI ML PROJECTS/EMELY/Design - Development - Test/API & json/
 ```
 
 
@@ -30,4 +30,8 @@ Finally, run the below command to start the web-app. It will be running on local
 ```
 npm start
 ```
+
+
+## Project not running correctly?
+If the project is not running correctly, it could be because the package.json is not syncing with your local node_modules folder. To fix this run "npm install" again.
 
