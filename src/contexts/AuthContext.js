@@ -52,10 +52,8 @@ export function AuthProvider({ children }) {
 				.doc(userId)
 				.get()
 				.then((snapshot) => {
-					console.log(snapshot.data());
 					const userData = snapshot.data();
 					setUserDetails(userData);
-					console.log(userDetails);
 				});
 		} catch {}
 
