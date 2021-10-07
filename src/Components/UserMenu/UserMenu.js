@@ -18,6 +18,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { AiOutlineHome } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
+import { CgMenuMotion } from 'react-icons/cg';
 
 /* Variable declaration */
 export default function UserMenu(props) {
@@ -30,9 +31,11 @@ export default function UserMenu(props) {
 	const handleShow = () => setShow(true);
 
 		/* Getting the current user details on mount */
-		useEffect(() => {
+		useEffect( ()  => {
 			getUserDetails(currentUser.uid)
-		}, [currentUser.uid, getUserDetails])
+			
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [])
 
 	async function handleLogout() {
 		setError('');
@@ -65,12 +68,12 @@ export default function UserMenu(props) {
 						<Nav className="ms-auto ">
 							{/* Menu-button */}
 							<Button
-								className="rounded-pill shadow-sm p-3 fw-bold "
+								className="rounded-pill pt-3 pb-3 pe-4 shadow-sm fw-bold "
 								id="menu-user-button"
 								onClick={handleShow}
 								variant="light"
 							>
-								<AiOutlineUser className="me-2" size={25} />
+								<CgMenuMotion className="ms-2 me-2" size={20} />
 								{userDetails && userDetails.username}
 							</Button>
 
