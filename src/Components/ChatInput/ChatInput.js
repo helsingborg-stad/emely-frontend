@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BiMicrophone } from "react-icons/bi";
 import { BiMicrophoneOff } from "react-icons/bi";
 import { IoMdVolumeHigh } from "react-icons/io";
@@ -7,16 +7,31 @@ import { IoIosSend } from "react-icons/io";
 import { FaPlay } from "react-icons/fa";
 import { FaStop } from "react-icons/fa";
 
-import useWindowDimensions from '../../customHooks/useWindowDimensions'
+import useWindowDimensions from "../../customHooks/useWindowDimensions";
+import { ConversationContext } from "../../contexts/ConversationContext";
 
-export default function ChatInput() {
+export default function ChatInput({ persona }) {
+  // states for layout
   const MEDIUM_WIDTH = 600;
-
   const [activeMicro, setActiveMicro] = useState(true);
   const [activeSound, setActiveSound] = useState(true);
   const [isRecording, setRecording] = useState(false);
   const [isFocused, setFocused] = useState(false);
   const { currentWidth } = useWindowDimensions();
+  // states && functions for interactive actions
+  const { userMessage, setUserMessage, getContinueСonversation } = useContext(
+    ConversationContext
+  );
+
+  const handleClick = (e) => {
+    e.preventDefault();
+  console.log("1", userMessage);
+    if (userMessage.length > 0) {
+      getContinueСonversation(persona, userMessage);
+    }
+    
+    console.log("2", userMessage);
+  };
 
   return (
     <div className="chat-input-wrapper">
@@ -31,8 +46,12 @@ export default function ChatInput() {
         {isRecording ? <FaStop /> : <FaPlay />}
       </button>
       <div className="buttons-wrapper">
-        <form className={isFocused ? "input-wrapper expand" : "input-wrapper"}>
+        <form
+          onSubmit={(e) => handleClick(e)}
+          className={isFocused ? "input-wrapper expand" : "input-wrapper"}
+        >
           <input
+            onChange={(e) => setUserMessage(e.target.value)}
             className="user-message_input"
             type="text"
             placeholder="Skriv meddelande"

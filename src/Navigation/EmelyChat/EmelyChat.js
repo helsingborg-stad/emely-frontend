@@ -11,20 +11,25 @@ import ChatInput from '../../Components/ChatInput/ChatInput';
 
 export default function EmelyChat(props) {
   const { currentUser } = useAuth();
-  // get :persona to send to the BE for continue conversation
+  // get :persona to send to the BE for conversation
   const {persona} = props.match.params
 
   const {
     currentJob,
-    formatedTimestamp, 
+    formatedTimestamp,
     firstBotMessage,
     initConversation,
+    botMessage,
+    userMessage,
   } = useContext(ConversationContext);
 
- const date = formatedTimestamp();
-
   useEffect(() => {
-    initConversation(currentUser.displayName, currentJob, date, persona);
+    initConversation(
+      currentUser.displayName,
+      currentJob,
+      formatedTimestamp(),
+      persona
+    );
   }, []);
 
   
@@ -38,18 +43,21 @@ export default function EmelyChat(props) {
         <div className="emely-chat_wrapper">
           <Row>
             <Col>
-            {firstBotMessage ? <EmelyChatBubble message={firstBotMessage}/> : <p>loading...</p>}
-              
+              {firstBotMessage ? (
+                <EmelyChatBubble message={firstBotMessage} />
+              ) : (
+                <p>loading...</p>
+              )}
             </Col>
           </Row>
           <Row>
             <Col>
-              <UserChatBubble />
+              <UserChatBubble message={userMessage} />
             </Col>
           </Row>
         </div>
 
-        <ChatInput />
+        <ChatInput persona={persona} />
       </Container>
     </>
   );

@@ -4,14 +4,26 @@ import React, { createContext, useState } from "react";
 export const ConversationContext = createContext();
 
 const ConversationContextProvider = (props) => {
-  // state for Emely first message
+  // state for Emely's first init message
   const [firstBotMessage, setFirstBotMessage] = useState(null);
+  // state for  Emely's follow-up messages
+  const [botMessage, setBotMessage] = useState(null)
+  // state for user's message
+   const [userMessage, setUserMessage] = useState("");
+  // state for conversation id
+  const [conversationId, setConversationId] = useState(null)
   // state for occupational buttons
   const [jobButtons, setJobButtons] = useState(null);
   // chosen occupation by user
-  const [currentJob, setCurrentJob] = useState(null)
+  const [currentJob, setCurrentJob] = useState(null);
+  
 
-  const initConversation = async (userName, job = null, date, persona) => {
+  const initConversation = async (
+    userName,
+    job = null,
+    date = formatedTimestamp(),
+    persona
+  ) => {
     try {
       // send post request to local server
       const response = await axios.post(
@@ -32,6 +44,7 @@ const ConversationContextProvider = (props) => {
         }
       );
       const result = await response.data;
+      setConversationId(result.conversation_id);
       setFirstBotMessage(result.message);
     } catch (err) {
       console.log("Error: ", err);
@@ -39,28 +52,35 @@ const ConversationContextProvider = (props) => {
     }
   };
 
-  const getContinueСonversation = async () => {
-     try {
-       // send post request to local server
-       const response = await axios.post(
-         "http://localhost:3001/api/v1/conversation/itervju",
-         {
-           message: "This is a test message you can change",
-           conversation_id: "__CHANGE_ME__",
-           response_time: -1,
-           created_at: "1999-04-07 18:59:24.584658",
-           recording_used: false,
-           lang: "sv",
-           password: "KYgZfDG6P34H56WJM996CKKcNG4",
-         }
-       );
-       const result = await response.data;
-       setFirstBotMessage(result.message);
-     } catch (err) {
-       console.log("Error: ", err);
-       return false;
-     }
-  }
+  const getContinueСonversation = async (
+    endpoint,
+    userMessage,
+    id = conversationId,
+    date = formatedTimestamp()
+  ) => {
+    try {
+      // send post request to local server
+      const response = await axios.post(
+        `http://localhost:3001/api/v1/conversation/${endpoint}`,
+        {
+          message: `${userMessage}`,
+          conversation_id: `${id}`,
+          response_time: -1,
+          created_at: `${date}`,
+          recording_used: false,
+          lang: "sv",
+          password: "KYgZfDG6P34H56WJM996CKKcNG4",
+        }
+      );
+      const result = await response.data;
+      console.log("RESULT", result);
+      setBotMessage(result.message);
+    } catch (err) {
+      console.log("Error: ", err);
+      return false;
+    }
+    setUserMessage("");
+  };
 
   const getButtons = async () => {
     try {
@@ -92,6 +112,10 @@ const ConversationContextProvider = (props) => {
     setCurrentJob,
     currentJob,
     formatedTimestamp,
+    getContinueСonversation,
+    botMessage,
+    userMessage,
+    setUserMessage,
   };
 
   return (

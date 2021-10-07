@@ -12,7 +12,7 @@ const createInitConversation = async (req, res) => {
       {
         ...userInfo,
       },
-      { timeout: 1000 }
+      { timeout: 3000 }
     );
     // send server response to client
     // console.log(response.data);
@@ -36,25 +36,27 @@ const getAllOccupationalButtons = async (req, res) => {
   }
 };
 
+// continue conversation with Emely (fika + interview)
 const continueСonversation = async (req, res) => {
   const userInfo = req.body;
-
-   try {
-     const response = await axios.post(
-       `${URL}/init`,
-       {
-         ...userInfo,
-       },
-       { timeout: 1000 }
-     );
-     // send server response to client
-     // console.log(response.data);
-     res.status(200).json({ ...response.data });
-   } catch (err) {
-     console.error("Error", err);
-     res.status(500).json({ ...err });
-   }
-}
+  const { endpoint } = req.params;
+  
+  try {
+    const response = await axios.post(
+      `${URL}/${endpoint}`,
+      {
+        ...userInfo,
+      },
+      { timeout: 3000 }
+    );
+    // send server response to client
+    // console.log(response.data);
+    res.status(200).json({ ...response.data });
+  } catch (err) {
+    console.error("Error", err);
+    res.status(500).json({ ...err });
+  }
+};
 
 module.exports = {
   createInitConversation,
