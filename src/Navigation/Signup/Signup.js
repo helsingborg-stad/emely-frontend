@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
-import { db } from "../../firebase"
 
 /* Icon imports */
 import { HiOutlineMail } from 'react-icons/hi';
