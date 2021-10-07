@@ -2,6 +2,7 @@
     max-width: 800px;
     margin: auto;
 }
+
 .occupation-btn {
     font-weight: 700;
     letter-spacing: 1.1px;
@@ -83,8 +84,13 @@
     border-radius: 3px;
 }
 
+.work-button_dropdown-item {
+    text-transform:capitalize;
+}
+
 .work-button_dropdown-item:active {
     background-color: transparent !important;
+    
 }
 
 @media (max-width: 768px) {

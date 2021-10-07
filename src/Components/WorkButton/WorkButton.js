@@ -5,6 +5,12 @@ import { FaHandPointDown } from "react-icons/fa";
 export default function WorkButton(props) {
   const history = useHistory();
 
+  const handleClick = (e) => {
+    // todo set occupation choice
+    // console.log(e.target.id);
+    history.push("/emely-chat");
+  }
+
   return (
     <>
         <nav className="work-button_dropdown-list">
@@ -25,11 +31,12 @@ export default function WorkButton(props) {
 
             <div id="overlay"></div>
             <ul>
-              {props.occupation.occupations.map((job, i) => (
+              {props.occupation.map((job, i) => (
                 <li
-                  onClick={() => history.push("/emely-chat")}
+                  onClick={(e)=> handleClick(e)}
                   key={i}
                   className="w-100 my-3 h5 work-button_dropdown-item"
+                  id={job}
                 >
                   {job}
                 </li>

@@ -4,7 +4,10 @@ import React, { createContext, useState } from "react";
 export const ConversationContext = createContext();
 
 const ConversationContextProvider = (props) => {
+  // state for Emely message
   const [botMessage, setBotMessage] = useState(null);
+  // state for occupational buttons
+  const [jobButtons, setJobButtons] = useState(null);
 
   const initConversation = async () => {
     try {
@@ -29,7 +32,22 @@ const ConversationContextProvider = (props) => {
       const result = await response.data;
       setBotMessage(result.message);
     } catch (err) {
-      console.log("error from BE", err);
+      console.log("Error: ", err);
+      return false;
+    }
+  };
+
+  const getButtons = async () => {
+    try {
+      // send post request to local server
+      const response = await axios.get(
+        "http://localhost:3001/api/v1/conversation/joblist"
+      );
+
+      const result = await response.data;
+      setJobButtons(result);
+    } catch (err) {
+      console.log("Error: ", err);
       return false;
     }
   };
@@ -37,7 +55,10 @@ const ConversationContextProvider = (props) => {
   const values = {
     initConversation,
     botMessage,
+    getButtons,
+    jobButtons,
   };
+
   return (
     <ConversationContext.Provider value={values}>
       {props.children}
