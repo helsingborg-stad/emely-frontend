@@ -4,21 +4,23 @@ import React, { createContext, useState } from "react";
 export const ConversationContext = createContext();
 
 const ConversationContextProvider = (props) => {
-  // state for Emely message
-  const [botMessage, setBotMessage] = useState(null);
+  // state for Emely first message
+  const [firstBotMessage, setFirstBotMessage] = useState(null);
   // state for occupational buttons
   const [jobButtons, setJobButtons] = useState(null);
+  // chosen occupation by user
+  const [currentJob, setCurrentJob] = useState(null)
 
-  const initConversation = async () => {
+  const initConversation = async (userName, job = null, date, persona) => {
     try {
       // send post request to local server
       const response = await axios.post(
         "http://localhost:3001/api/v1/conversation/init",
         {
-          name: "test",
-          job: "test",
-          created_at: "1999-04-07 18:59:24.584658",
-          persona: "fika",
+          name: `${userName}`,
+          job: `${job}`,
+          created_at: `${date}`,
+          persona: `${persona}`,
           development_testing: true,
           webapp_local: true,
           webapp_url: "swaggerdocs",
@@ -30,7 +32,7 @@ const ConversationContextProvider = (props) => {
         }
       );
       const result = await response.data;
-      setBotMessage(result.message);
+      setFirstBotMessage(result.message);
     } catch (err) {
       console.log("Error: ", err);
       return false;
@@ -53,7 +55,7 @@ const ConversationContextProvider = (props) => {
          }
        );
        const result = await response.data;
-       setBotMessage(result.message);
+       setFirstBotMessage(result.message);
      } catch (err) {
        console.log("Error: ", err);
        return false;
@@ -75,11 +77,21 @@ const ConversationContextProvider = (props) => {
     }
   };
 
+   const formatedTimestamp = () => {
+     const d = new Date();
+     const date = d.toISOString().split("T")[0];
+     const time = d.toTimeString().split(" ")[0];
+     return `${date} ${time}`;
+   };
+
   const values = {
     initConversation,
-    botMessage,
+    firstBotMessage,
     getButtons,
     jobButtons,
+    setCurrentJob,
+    currentJob,
+    formatedTimestamp,
   };
 
   return (

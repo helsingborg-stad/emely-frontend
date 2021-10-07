@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useContext} from "react";
 import { useHistory } from "react-router-dom";
 import { FaHandPointDown } from "react-icons/fa";
 
+import {ConversationContext} from '../../contexts/ConversationContext'
+
 export default function WorkButton(props) {
+  const { setCurrentJob } = useContext(ConversationContext);
   const history = useHistory();
 
   const handleClick = (e) => {
-    // todo set occupation choice
-    // console.log(e.target.id);
+    setCurrentJob(e.target.id);
     history.push("/emely-chat/intervju");
   };
 

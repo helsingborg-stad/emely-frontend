@@ -2,24 +2,32 @@ import React, {useContext, useEffect} from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 import {ConversationContext} from '../../contexts/ConversationContext';
+import { useAuth } from "../../contexts/AuthContext";
 import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
 import ChatInput from '../../Components/ChatInput/ChatInput';
 
 
-export default function EmelyChat() {
-  const { botMessage, initConversation } = useContext(
-    ConversationContext
-  );
+export default function EmelyChat(props) {
+  const { currentUser } = useAuth();
+  // get :persona to send to the BE for continue conversation
+  const {persona} = props.match.params
+
+  const {
+    currentJob,
+    formatedTimestamp, 
+    firstBotMessage,
+    initConversation,
+  } = useContext(ConversationContext);
+
+ const date = formatedTimestamp();
 
   useEffect(() => {
-    initConversation();
+    initConversation(currentUser.displayName, currentJob, date, persona);
   }, []);
 
-  if(botMessage){
-    console.log(botMessage);
-  }
+  
   return (
     <>
       <Container>
@@ -30,7 +38,8 @@ export default function EmelyChat() {
         <div className="emely-chat_wrapper">
           <Row>
             <Col>
-              <EmelyChatBubble />
+            {firstBotMessage ? <EmelyChatBubble message={firstBotMessage}/> : <p>loading...</p>}
+              
             </Col>
           </Row>
           <Row>
@@ -38,17 +47,6 @@ export default function EmelyChat() {
               <UserChatBubble />
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <EmelyChatBubble />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <UserChatBubble />
-            </Col>
-          </Row>
-          
         </div>
 
         <ChatInput />
