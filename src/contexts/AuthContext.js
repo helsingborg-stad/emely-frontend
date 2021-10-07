@@ -84,25 +84,28 @@ export function AuthProvider({ children }) {
 		return currentUser.updateEmail(email);
 	}
 
+	/* Update username */
 	function updateUsername(uid, username) {
 		dbUsers.doc(uid).update({
 			username: username,
 		});
 	}
 
+	/* Update current occupation */
 	function updateCurrentOccupation(uid, currentOccupation) {
 		dbUsers.doc(uid).update({
 			current_occupation: currentOccupation,
 		});
 	}
 
-	
+	/* Update native language*/
 	function updateNativeLanguage(uid, nativeLanguage) {
 		dbUsers.doc(uid).update({
 			native_language: nativeLanguage,
 		});
 	}
 
+	/* Update birth year */
 	function updateBirthYear(uid, birthYear) {
 		dbUsers.doc(uid).update({
 			birth_year: birthYear,

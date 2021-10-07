@@ -21,7 +21,6 @@ import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsChatDots } from 'react-icons/bs';
 
-
 /* Variable declaration */
 export default function UserMenu(props) {
 	const [error, setError] = useState('');
@@ -81,15 +80,15 @@ export default function UserMenu(props) {
 						<Nav className="ms-auto ">
 							{/* Menu-button */}
 							<Link to="/dashboard">
-							<Button
-								className="me-3"
-								id="menu-user-button"
-								onClick={handleShow}
-								variant="none"
-							>
-								<BsChatDots className="ms-2 mb-1 me-2" size={20} />
-								Prata med Emely
-							</Button>
+								<Button
+									className="me-3"
+									id="menu-user-button"
+									onClick={handleShow}
+									variant="none"
+								>
+									<BsChatDots className="ms-2 mb-1 me-2" size={20} />
+									Prata med Emely
+								</Button>
 							</Link>
 
 							<Button
@@ -117,13 +116,10 @@ export default function UserMenu(props) {
 										</Col>
 
 										<Col>
+
+										{/* Profile page menu-button */}
 											<Link to="/profile">
-												{/* Profile page menu-button */}
-												<Button
-													className=""
-													variant="none"
-													
-												>
+												<Button className="" variant="none">
 													<Nav.Item>Användarkonto</Nav.Item>
 												</Button>
 											</Link>
@@ -136,6 +132,7 @@ export default function UserMenu(props) {
 											<AiOutlineEdit size={25} />
 										</Col>
 										<Col>
+
 											{/* Update profile menu-button */}
 											<Link to="/update-profile">
 												<Button variant="none">
@@ -152,6 +149,7 @@ export default function UserMenu(props) {
 											<BiLogOutCircle size={25} />
 										</Col>
 										<Col>
+										
 											{/* Log out menu-button */}
 											<Button
 												className="rounded-pill "
