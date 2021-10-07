@@ -84,10 +84,32 @@ export function AuthProvider({ children }) {
 		return currentUser.updateEmail(email);
 	}
 
-	/* Update username */
-	function updateProfile(username) {
-		return currentUser.updateProfile({ displayName: username });
+	function updateUsername(uid, username) {
+		dbUsers.doc(uid).update({
+			username: username,
+		});
 	}
+
+	function updateCurrentOccupation(uid, currentOccupation) {
+		dbUsers.doc(uid).update({
+			current_occupation: currentOccupation,
+		});
+	}
+
+	
+	function updateNativeLanguage(uid, nativeLanguage) {
+		dbUsers.doc(uid).update({
+			native_language: nativeLanguage,
+		});
+	}
+
+	function updateBirthYear(uid, birthYear) {
+		dbUsers.doc(uid).update({
+			birth_year: birthYear,
+		});
+	}
+
+
 
 	/* Update password */
 	function updatePassword(password) {
@@ -112,7 +134,10 @@ export function AuthProvider({ children }) {
 		resetPassword,
 		updateEmail,
 		updatePassword,
-		updateProfile,
+		updateUsername,
+		updateCurrentOccupation,
+		updateBirthYear,
+		updateNativeLanguage,
 		createUser,
 		updateLoginCount,
 		getUserDetails,
