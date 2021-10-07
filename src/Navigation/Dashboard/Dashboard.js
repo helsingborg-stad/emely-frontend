@@ -33,12 +33,20 @@ export default function Dashboard() {
         </Row>
         <Row className="my-5 align-items-center  justify-content-center button_container">
           <Col xs={12} md={6} className="text-center mt-3">
-            <PersonaButton linkTo={"/work-emely"} name={"SÖKA JOBB-ASSISTENT"}>
+            <PersonaButton
+              linkTo={"/work-emely"}
+              name={"SÖKA JOBB-ASSISTENT"}
+              persona="intervju"
+            >
               <FiBriefcase size={25} />
             </PersonaButton>
           </Col>
           <Col xs={12} md={6} className="mt-3">
-            <PersonaButton linkTo={"/fika-kompis"} name={"FIKA KOMPIS"}>
+            <PersonaButton
+              linkTo={"/emely-chat/fika"}
+              name={"FIKA KOMPIS"}
+              persona="fika"
+            >
               <FiCoffee size={25} />
             </PersonaButton>
           </Col>

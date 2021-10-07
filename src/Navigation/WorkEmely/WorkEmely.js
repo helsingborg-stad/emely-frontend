@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
@@ -7,13 +8,14 @@ import WorkButton from "../../Components/WorkButton/WorkButton";
 import useWindowDimensions from "../../customHooks/useWindowDimensions";
 import { ConversationContext } from "../../contexts/ConversationContext";
 
-export default function WorkEmely() {
-  const MEDIUM_WIDTH = 768;
+export default function WorkEmely(props) {
+ const MEDIUM_WIDTH = 768;
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const { currentWidth } = useWindowDimensions();
 
   const { getButtons, jobButtons } = useContext(ConversationContext);
+
 
   useEffect(() => {
     getButtons();

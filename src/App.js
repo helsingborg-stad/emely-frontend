@@ -37,7 +37,7 @@ function App() {
                     component={UpdateProfile}
                   />
                   <PrivateRoute path="/work-emely" component={WorkEmely} />
-                  <PrivateRoute path="/emely-chat" component={EmelyChat} />
+                  <PrivateRoute path="/emely-chat/:persona" component={EmelyChat} />
                   <PrivateRoute path="/profile" component={Profile} />
 
                   <Route exact path="/" component={Home} />
