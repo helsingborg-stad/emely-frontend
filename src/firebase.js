@@ -15,5 +15,7 @@ const app = firebase.initializeApp({
 
 export const auth = app.auth()
 export const db = app.firestore()
+export const dbUsers = app.firestore().collection(process.env.REACT_APP_FIRESTORE_COLLECTION)
 
 export default app
+

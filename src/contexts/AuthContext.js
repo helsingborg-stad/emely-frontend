@@ -1,93 +1,127 @@
-import React, { useContext, useState, useEffect } from "react"
-import { auth, db } from "../firebase"
+import React, { useContext, useState, useEffect } from 'react';
+import { auth, dbUsers } from '../firebase';
+import firebase from 'firebase/app';
 
-const AuthContext = React.createContext()
+const AuthContext = React.createContext();
 
 export function useAuth() {
-  return useContext(AuthContext)
+	return useContext(AuthContext);
 }
 
 /* Variable declaration */
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState()
-  const [collection] = useState(process.env.REACT_APP_FIRESTORE_COLLECTION)
-  const [userId, setUserId] = useState('')
-  const [loading, setLoading] = useState(true)
+	const [currentUser, setCurrentUser] = useState();
+	const [userDetails, setUserDetails] = useState();
+	const [loading, setLoading] = useState(true);
 
-  /* Firebase functions used when handling users */
-  /* Sign up with email and password */
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
-  }
+	/* Firebase functions used when handling users */
+	/* Sign up with email and password */
+	function signup(email, password) {
+		return auth.createUserWithEmailAndPassword(email, password);
+	}
 
-  function createUser(email, username, birthYear, nativeLanguage, currentOccupation, uid){
-    db.collection(collection).doc(uid).set({
-      email: email,
-      username: username,
-      birth_year: birthYear,
-      native_language: nativeLanguage,
-      current_occupation: currentOccupation,
-    });
-  }
+	/* Create the user in firestore */
+	function createUser(
+		email,
+		username,
+		birthYear,
+		nativeLanguage,
+		currentOccupation,
+		uid
+	) {
+		dbUsers.doc(uid).set({
+			uid: uid,
+			email: email,
+			username: username,
+			birth_year: birthYear,
+			native_language: nativeLanguage,
+			current_occupation: currentOccupation,
+			login_count: 1,
+		});
+	}
 
-  /* Log in with email and password */
-  function login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password)
-  }
+	/* Log in with email and password */
+	function login(email, password) {
+		return auth.signInWithEmailAndPassword(email, password);
+	}
 
-  /* Log out current authenticated user */
-  function logout() {
-    return auth.signOut()
-  }
+	/* Fetch user details from a user-id and push to userDetails state */
+	function getUserDetails(userId) {
+		try {
+			dbUsers
+				.doc(userId)
+				.get()
+				.then((snapshot) => {
+					const userData = snapshot.data();
+					setUserDetails(userData);
+				});
+		} catch {}
 
-  /* Reset the password with email */
-  function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email)
-  }
+		return userDetails;
+	}
 
-  /* Update email */
-  function updateEmail(email) {
-    return currentUser.updateEmail(email)
-  }
+	/* Increment login_count when login */
+	function updateLoginCount(uid) {
+		const increment = firebase.firestore.FieldValue.increment(1); //firebase increment function
 
-  /* Update username */
-  function updateProfile(username) {
-    return currentUser.updateProfile({displayName: username})
-  }
+		dbUsers.doc(uid).update({
+			login_count: increment,
+		});
+	}
 
-  /* Update password */
-  function updatePassword(password) {
-    return currentUser.updatePassword(password)
-  }
-  
+	/* Log out current authenticated user */
+	function logout() {
+		return auth.signOut();
+	}
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
-  
-        
-        setLoading(false)
-      
-    })
+	/* Reset the password with email */
+	function resetPassword(email) {
+		return auth.sendPasswordResetEmail(email);
+	}
 
-    return unsubscribe
-  })
+	/* Update email */
+	function updateEmail(email) {
+		return currentUser.updateEmail(email);
+	}
 
-  const value = {
-    currentUser,
-    login,
-    signup,
-    logout,
-    resetPassword,
-    updateEmail,
-    updatePassword,
-    updateProfile,
-    createUser
-  }
+	/* Update username */
+	function updateProfile(username) {
+		return currentUser.updateProfile({ displayName: username });
+	}
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  )
+	/* Update password */
+	function updatePassword(password) {
+		return currentUser.updatePassword(password);
+	}
+
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged((user) => {
+			setCurrentUser(user);
+
+			setLoading(false);
+		});
+
+		return unsubscribe;
+	});
+
+	const value = {
+		currentUser,
+		login,
+		signup,
+		logout,
+		resetPassword,
+		updateEmail,
+		updatePassword,
+		updateProfile,
+		createUser,
+		updateLoginCount,
+		getUserDetails,
+		userDetails,
+	};
+
+	return (
+		<AuthContext.Provider value={value}>
+			{!loading && children}
+		</AuthContext.Provider>
+	);
 }

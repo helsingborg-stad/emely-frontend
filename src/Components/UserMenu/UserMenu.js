@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Container,
 	Navbar,
@@ -22,12 +22,17 @@ import { BiLogOutCircle } from 'react-icons/bi';
 /* Variable declaration */
 export default function UserMenu(props) {
 	const [error, setError] = useState('');
-	const { currentUser, logout } = useAuth();
+	const { currentUser, logout, userDetails, getUserDetails } = useAuth();
 	const history = useHistory();
 
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+
+		/* Getting the current user details on mount */
+		useEffect(() => {
+			getUserDetails(currentUser.uid)
+		}, [currentUser.uid, getUserDetails])
 
 	async function handleLogout() {
 		setError('');
@@ -60,15 +65,13 @@ export default function UserMenu(props) {
 						<Nav className="ms-auto ">
 							{/* Menu-button */}
 							<Button
-								className="rounded-pill shadow-sm p-3"
+								className="rounded-pill shadow-sm p-3 fw-bold "
 								id="menu-user-button"
 								onClick={handleShow}
 								variant="light"
 							>
-								<AiOutlineUser className="me-2" size={25} />{' '}
-								{currentUser.displayName
-									? currentUser.displayName
-									: currentUser.email}
+								<AiOutlineUser className="me-2" size={25} />
+								{userDetails && userDetails.username}
 							</Button>
 
 							{/* Menu from the side */}
@@ -76,9 +79,7 @@ export default function UserMenu(props) {
 								<Offcanvas.Header className="m-3" closeButton>
 									<Offcanvas.Title className="m-3 fw-bold">
 										<AiOutlineUser className="me-3" size={25} />
-										{currentUser.displayName
-											? currentUser.displayName
-											: currentUser.email}
+										{userDetails && userDetails.username}
 									</Offcanvas.Title>
 								</Offcanvas.Header>
 								<Offcanvas.Body className="m-3">
@@ -88,7 +89,7 @@ export default function UserMenu(props) {
 										</Col>
 
 										<Col>
-											<Link to="/update-profile">
+											<Link to="/profile">
 												{/* Profile page menu-button */}
 												<Button
 													className="rounded-pill "
