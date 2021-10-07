@@ -54,14 +54,14 @@ export default function Profile() {
 						</Col>
 
 						{/* Profile fields */}
-						<Col className="ms-3 fw-bold">
+						<Col className="ms-3">
 							
 							{/* Username */}
 							<Row className="mt-5">
 								<Col xs={4}>
 									Användarnamn
 								</Col>
-								<Col>{userDetails && userDetails?.username}</Col>
+								<Col>{userDetails && userDetails.username}</Col>
 							</Row>
 							<hr />
 
@@ -77,7 +77,7 @@ export default function Profile() {
 								<Col xs={4}>
 									Födelsedatum
 								</Col>
-								<Col>{userDetails && userDetails?.birth_year}</Col>
+								<Col>{userDetails && userDetails.birth_year}</Col>
 							</Row>
 							<hr />
 
@@ -86,7 +86,7 @@ export default function Profile() {
 								<Col xs={4}>
 									Modersmål
 								</Col>
-								<Col>{userDetails && userDetails?.native_language}</Col>
+								<Col>{userDetails && userDetails.native_language}</Col>
 							</Row>
                             <hr />
 
@@ -95,7 +95,7 @@ export default function Profile() {
                             <Col xs={4}>
                                 Syselsättning
                             </Col>
-                            <Col>{userDetails && userDetails?.current_occupation}</Col>
+                            <Col>{userDetails && userDetails.current_occupation}</Col>
                         </Row>
 						</Col>
 					</Row>
