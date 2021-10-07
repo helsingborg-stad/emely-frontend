@@ -1,4 +1,6 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
+import {ConversationContext} from '../../contexts/ConversationContext';
+
 import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
@@ -7,6 +9,16 @@ import ChatInput from '../../Components/ChatInput/ChatInput';
 import { Container, Row, Col } from "react-bootstrap";
 
 export default function EmelyChat() {
+  const {botMessage, initConversation } = useContext(ConversationContext);
+
+  useEffect(() => {
+    initConversation();
+    
+  }, []);
+
+  if(botMessage){
+    console.log(botMessage);
+  }
   return (
     <>
       <Container>
