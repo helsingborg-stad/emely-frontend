@@ -7,18 +7,19 @@ const ConversationContextProvider = (props) => {
   // state for Emely's first init message
   const [firstBotMessage, setFirstBotMessage] = useState(null);
   // state for  Emely's follow-up messages
-  const [botMessage, setBotMessage] = useState([])
-  // state for user's message (invoke in onChange)
-   const [userMessage, setUserMessage] = useState("");
+  const [botMessage, setBotMessage] = useState([]);
+  // state for user's message (invokes in onChange case)
+  const [userMessage, setUserMessage] = useState("");
   //  state for show user message
   const [showUserMessage, setShowUserMessage] = useState([]);
   // state for conversation id
-  const [conversationId, setConversationId] = useState(null)
+  const [conversationId, setConversationId] = useState(null);
   // state for occupational buttons
   const [jobButtons, setJobButtons] = useState(null);
   // chosen occupation by user
   const [currentJob, setCurrentJob] = useState(null);
-  
+  // to determine the loading for disabling the "send" button when the request is pending
+  const [isLoading, setIsLoading] = useState(false);
 
   const initConversation = async (
     userName,
@@ -63,7 +64,7 @@ const ConversationContextProvider = (props) => {
     id = conversationId,
     date = formatedTimestamp()
   ) => {
-
+    setIsLoading(true);
     setShowUserMessage((prevState) => [...prevState, userMessage]);
 
     try {
@@ -81,7 +82,7 @@ const ConversationContextProvider = (props) => {
         }
       );
       const result = await response.data;
-      setBotMessage((prevState)=>[...prevState, result.message]);
+      setBotMessage((prevState) => [...prevState, result.message]);
     } catch (err) {
       console.log("Error: ", err);
       setBotMessage(
@@ -90,6 +91,7 @@ const ConversationContextProvider = (props) => {
       return false;
     }
     setUserMessage("");
+    setIsLoading(false);
   };
 
   const getButtons = async () => {
@@ -107,12 +109,12 @@ const ConversationContextProvider = (props) => {
     }
   };
 
-   const formatedTimestamp = () => {
-     const d = new Date();
-     const date = d.toISOString().split("T")[0];
-     const time = d.toTimeString().split(" ")[0];
-     return `${date} ${time}`;
-   };
+  const formatedTimestamp = () => {
+    const d = new Date();
+    const date = d.toISOString().split("T")[0];
+    const time = d.toTimeString().split(" ")[0];
+    return `${date} ${time}`;
+  };
 
   const values = {
     initConversation,
@@ -127,6 +129,7 @@ const ConversationContextProvider = (props) => {
     userMessage,
     setUserMessage,
     showUserMessage,
+    isLoading,
   };
 
   return (
