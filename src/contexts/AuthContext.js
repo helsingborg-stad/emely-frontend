@@ -1,6 +1,21 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth, dbUsers } from '../firebase';
-import firebase from 'firebase/app';
+import { auth, dbUsers, db } from '../firebase';
+import {
+	getFirestore,
+	getDoc,
+	doc,
+	updateDoc,
+	collection,
+	increment,
+	DocumentSnapshot,
+} from 'firebase/firestore';
+import {
+	updateEmail,
+	updatePassword,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	sendPasswordResetEmail,
+} from 'firebase/auth';
 
 const AuthContext = React.createContext();
 
@@ -17,7 +32,7 @@ export function AuthProvider({ children }) {
 	/* Firebase functions used when handling users */
 	/* Sign up with email and password */
 	function signup(email, password) {
-		return auth.createUserWithEmailAndPassword(email, password);
+		return createUserWithEmailAndPassword(auth, email, password);
 	}
 
 	/* Create the user in firestore */
@@ -42,19 +57,21 @@ export function AuthProvider({ children }) {
 
 	/* Log in with email and password */
 	function login(email, password) {
-		return auth.signInWithEmailAndPassword(email, password);
+		return signInWithEmailAndPassword(auth, email, password);
 	}
 
 	/* Fetch user details from a user-id and push to userDetails state */
-	function getUserDetails(userId) {
+	async function getUserDetails(userId) {
 		try {
-			dbUsers
-				.doc(userId)
-				.get()
-				.then((snapshot) => {
-					const userData = snapshot.data();
-					setUserDetails(userData);
-				});
+			const docRef = doc(dbUsers, userId);
+			const docSnap = await getDoc(docRef);
+
+			if (docSnap.exists()) {
+				const userData = docSnap.data();
+				setUserDetails(userData);
+			} else {
+				console.log('Error fetching User');
+			}
 		} catch {}
 
 		return userDetails;
@@ -62,10 +79,9 @@ export function AuthProvider({ children }) {
 
 	/* Increment login_count when login */
 	function updateLoginCount(uid) {
-		const increment = firebase.firestore.FieldValue.increment(1); //firebase increment function
-
-		dbUsers.doc(uid).update({
-			login_count: increment,
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
+			login_count: increment(1),
 		});
 	}
 
@@ -76,47 +92,49 @@ export function AuthProvider({ children }) {
 
 	/* Reset the password with email */
 	function resetPassword(email) {
-		return auth.sendPasswordResetEmail(email);
-	}
-
-	/* Update email */
-	function updateEmail(email) {
-		return currentUser.updateEmail(email);
+		return sendPasswordResetEmail(currentUser, email);
 	}
 
 	/* Update username */
 	function updateUsername(uid, username) {
-		dbUsers.doc(uid).update({
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
 			username: username,
 		});
 	}
 
 	/* Update current occupation */
 	function updateCurrentOccupation(uid, currentOccupation) {
-		dbUsers.doc(uid).update({
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
 			current_occupation: currentOccupation,
 		});
 	}
 
 	/* Update native language*/
 	function updateNativeLanguage(uid, nativeLanguage) {
-		dbUsers.doc(uid).update({
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
 			native_language: nativeLanguage,
 		});
 	}
 
 	/* Update birth year */
 	function updateBirthYear(uid, birthYear) {
-		dbUsers.doc(uid).update({
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
 			birth_year: birthYear,
 		});
 	}
 
-
-
 	/* Update password */
-	function updatePassword(password) {
-		return currentUser.updatePassword(password);
+	function passwordUpdate(password) {
+		return updatePassword(auth.currentUser, password);
+	}
+
+	/* Update email */
+	function emailUpdate(newEmail) {
+		return updateEmail(currentUser, newEmail);
 	}
 
 	useEffect(() => {
@@ -135,8 +153,8 @@ export function AuthProvider({ children }) {
 		signup,
 		logout,
 		resetPassword,
-		updateEmail,
-		updatePassword,
+		emailUpdate,
+		passwordUpdate,
 		updateUsername,
 		updateCurrentOccupation,
 		updateBirthYear,
