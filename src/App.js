@@ -1,57 +1,65 @@
-import React from "react";
-import { Container } from "react-bootstrap";
-import { AuthProvider } from "./contexts/AuthContext";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import { AuthProvider } from './contexts/AuthContext';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 /* Component imports */
-import Signup from "./Navigation/Signup/Signup";
-import Dashboard from "./Navigation/Dashboard/Dashboard";
-import Login from "./Navigation/Login/Login";
-import PrivateRoute from "./Components/PrivateRoute";
-import ForgotPassword from "./Navigation/ForgotPassword/ForgotPassword";
-import UpdateProfile from "./Navigation/UpdateProfile/UpdateProfile";
-import WorkEmely from "./Navigation/WorkEmely/WorkEmely";
-import EmelyChat from "./Navigation/EmelyChat/EmelyChat";
-import Home from "./Navigation/Home/Home";
-import Profile from "./Navigation/Profile/Profile";
-import ConversationContextProvider from "./contexts/ConversationContext";
+import Signup from './Navigation/Signup/Signup';
+import Dashboard from './Navigation/Dashboard/Dashboard';
+import Login from './Navigation/Login/Login';
+import PrivateRoute from './Components/PrivateRoute';
+import ForgotPassword from './Navigation/ForgotPassword/ForgotPassword';
+import UpdateProfile from './Navigation/UpdateProfile/UpdateProfile';
+import UpdateEmailPassword from './Navigation/UpdateProfile/UpdateEmailPassword';
+import WorkEmely from './Navigation/WorkEmely/WorkEmely';
+import EmelyChat from './Navigation/EmelyChat/EmelyChat';
+import Home from './Navigation/Home/Home';
+import Profile from './Navigation/Profile/Profile';
+import ConversationContextProvider from './contexts/ConversationContext';
 
-import "./app.css";
+import './app.css';
 
 function App() {
-  return (
-    <>
-      <Container
-        id="main-container"
-        className="d-flex align-items-center justify-content-center"
-      >
-        <div className="w-100 justify-content-center">
-          <Router>
-            <AuthProvider>
-              <ConversationContextProvider>
-                <Switch>
-                  {/* When logged in Routes */}
-                  <PrivateRoute exact path="/dashboard" component={Dashboard} />
+	return (
+		<>
+			<Container
+				id="main-container"
+				className="d-flex align-items-center justify-content-center"
+			>
+				<div className="w-100 justify-content-center">
+					<Router>
+						<AuthProvider>
+							<ConversationContextProvider>
+								<Switch>
+									{/* When logged in Routes */}
+									<PrivateRoute exact path="/dashboard" component={Dashboard} />
+									<PrivateRoute
+										path="/update-profile"
+										component={UpdateProfile}
+									/>
                   <PrivateRoute
-                    path="/update-profile"
-                    component={UpdateProfile}
-                  />
-                  <PrivateRoute path="/work-emely" component={WorkEmely} />
-                  <PrivateRoute path="/emely-chat/:persona" component={EmelyChat} />
-                  <PrivateRoute path="/profile" component={Profile} />
+                  path="/change-email-password"
+                  component={UpdateEmailPassword}
+                />
+									<PrivateRoute path="/work-emely" component={WorkEmely} />
+									<PrivateRoute
+										path="/emely-chat/:persona"
+										component={EmelyChat}
+									/>
+									<PrivateRoute path="/profile" component={Profile} />
 
-                  <Route exact path="/" component={Home} />
-                  <Route path="/signup" component={Signup} />
-                  <Route path="/login" component={Login} />
-                  <Route path="/forgot-password" component={ForgotPassword} />
-                </Switch>
-              </ConversationContextProvider>
-            </AuthProvider>
-          </Router>
-        </div>
-      </Container>
-    </>
-  );
+									<Route exact path="/" component={Home} />
+									<Route path="/signup" component={Signup} />
+									<Route path="/login" component={Login} />
+									<Route path="/forgot-password" component={ForgotPassword} />
+								</Switch>
+							</ConversationContextProvider>
+						</AuthProvider>
+					</Router>
+				</div>
+			</Container>
+		</>
+	);
 }
 
 export default App;
