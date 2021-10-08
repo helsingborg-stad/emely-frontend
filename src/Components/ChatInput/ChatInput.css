@@ -42,9 +42,14 @@
 
 .recording_btn {
   background-color: var(--green);
-  padding: 20px;
+  padding: 36px;
+  position: relative;
 }
 
+.faPlay-icon {
+position: absolute;
+right: 16px;
+}
 .recording_btn_active {
   background: var(--activeRecording);
   padding: 20px;

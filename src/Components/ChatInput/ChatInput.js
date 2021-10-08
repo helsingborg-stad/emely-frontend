@@ -46,7 +46,7 @@ export default function ChatInput({ persona }) {
           }
           onClick={() => setRecording(!isRecording)}
         >
-          {isRecording ? <FaStop /> : <FaPlay />}
+          {isRecording ? <FaStop /> : <FaPlay className="faPlay-icon"/>}
         </button>
         <div className="buttons-wrapper">
           <form
