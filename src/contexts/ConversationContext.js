@@ -10,6 +10,8 @@ const ConversationContextProvider = (props) => {
   const [botMessage, setBotMessage] = useState(null)
   // state for user's message
    const [userMessage, setUserMessage] = useState("");
+  //  state for show user message
+  const [showUserMessage, setShowUserMessage] = useState(null);
   // state for conversation id
   const [conversationId, setConversationId] = useState(null)
   // state for occupational buttons
@@ -58,6 +60,9 @@ const ConversationContextProvider = (props) => {
     id = conversationId,
     date = formatedTimestamp()
   ) => {
+
+    setShowUserMessage(userMessage);
+
     try {
       // send post request to local server
       const response = await axios.post(
@@ -116,6 +121,7 @@ const ConversationContextProvider = (props) => {
     botMessage,
     userMessage,
     setUserMessage,
+    showUserMessage,
   };
 
   return (

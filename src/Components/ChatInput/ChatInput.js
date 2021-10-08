@@ -25,12 +25,11 @@ export default function ChatInput({ persona }) {
 
   const handleClick = (e) => {
     e.preventDefault();
-  console.log("1", userMessage);
     if (userMessage.length > 0) {
       getContinueСonversation(persona, userMessage);
+      setUserMessage("");
     }
-    
-    console.log("2", userMessage);
+
   };
 
   return (
@@ -55,6 +54,7 @@ export default function ChatInput({ persona }) {
             className="user-message_input"
             type="text"
             placeholder="Skriv meddelande"
+            value={userMessage}
             onFocus={() => {
               setFocused(true);
             }}

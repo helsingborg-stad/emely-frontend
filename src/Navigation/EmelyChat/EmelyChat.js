@@ -1,18 +1,17 @@
-import React, {useContext, useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-import {ConversationContext} from '../../contexts/ConversationContext';
+import { ConversationContext } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
 import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
-import ChatInput from '../../Components/ChatInput/ChatInput';
-
+import ChatInput from "../../Components/ChatInput/ChatInput";
 
 export default function EmelyChat(props) {
   const { currentUser } = useAuth();
   // get :persona to send to the BE for conversation
-  const {persona} = props.match.params
+  const { persona } = props.match.params;
 
   const {
     currentJob,
@@ -21,6 +20,7 @@ export default function EmelyChat(props) {
     initConversation,
     botMessage,
     userMessage,
+    showUserMessage,
   } = useContext(ConversationContext);
 
   useEffect(() => {
@@ -32,7 +32,33 @@ export default function EmelyChat(props) {
     );
   }, []);
 
-  
+  useEffect(() => {
+    renderUserMessage();
+  }, [showUserMessage]);
+
+  useEffect(() => {
+    renderBotMessage();
+  }, [botMessage]);
+
+  const renderUserMessage = () => {
+    return (
+      <Row>
+        <Col>
+          <UserChatBubble message={showUserMessage} />
+        </Col>
+      </Row>
+    );
+  };
+
+  const renderBotMessage = () => {
+    return (
+      <Row>
+        <Col>
+          <EmelyChatBubble message={botMessage} />
+        </Col>
+      </Row>
+    );
+  };
   return (
     <>
       <Container>
@@ -50,11 +76,8 @@ export default function EmelyChat(props) {
               )}
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <UserChatBubble message={userMessage} />
-            </Col>
-          </Row>
+          {showUserMessage && renderUserMessage()}
+          {botMessage && renderBotMessage()}
         </div>
 
         <ChatInput persona={persona} />
