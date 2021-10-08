@@ -1,39 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
+
 import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
 import WorkButton from "../../Components/WorkButton/WorkButton";
-import { Container, Row, Col } from "react-bootstrap";
 import useWindowDimensions from "../../customHooks/useWindowDimensions";
+import { ConversationContext } from "../../contexts/ConversationContext";
 
-export default function WorkEmely() {
-  const MEDIUM_WIDTH = 768;
+export default function WorkEmely(props) {
+ const MEDIUM_WIDTH = 768;
 
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const { currentWidth } = useWindowDimensions();
 
-  
-  const occupation = {
-    occupations: [
-      "Bartender",
-      "Bilmekaniker",
-      "Butiksbiträde",
-      "Brevbärare",
-      "Ekonomiassistent",
-      "Förskollärare",
-      "Lagerarbetare",
-      "Lastbilsförare",
-      "Lokalvårdare",
-      "Lärare",
-      "Parkförvaltare",
-      "Receptionist",
-      "Servitör",
-      "Sjuksköterska",
-      "Snickare",
-      "Tandsköterska",
-      "Vaktmästare",
-      "Vårdassistent",
-    ],
-  };
+  const { getButtons, jobButtons } = useContext(ConversationContext);
+
+
+  useEffect(() => {
+    getButtons();
+  }, []);
 
   return (
     <>
@@ -43,7 +29,7 @@ export default function WorkEmely() {
         </Row>
         <Row
           className={
-            (isDropdownOpen && currentWidth.width < MEDIUM_WIDTH) 
+            isDropdownOpen && currentWidth.width < MEDIUM_WIDTH
               ? "hide-emely-dialog"
               : "show-emely-dialog"
           }
@@ -64,11 +50,15 @@ export default function WorkEmely() {
         </Row>
         <Row className="p-0 mb-5">
           <Col className="text-center mt-5">
-            <WorkButton
-              setDropdownOpen={setDropdownOpen}
-              isDropdownOpen={isDropdownOpen}
-              occupation={occupation}
-            ></WorkButton>
+            {jobButtons ? (
+              <WorkButton
+                setDropdownOpen={setDropdownOpen}
+                isDropdownOpen={isDropdownOpen}
+                occupation={jobButtons}
+              ></WorkButton>
+            ) : (
+              <p>loading...</p>
+            )}
           </Col>
         </Row>
       </Container>

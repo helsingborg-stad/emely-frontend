@@ -6,9 +6,22 @@
   left: 0;
   z-index: 1;
   padding: 30px 0px;
+}
+
+.chat-input_container-wrapper {
   display: flex;
   justify-content: space-around;
   align-items: center;
+}
+
+.chat-input_overlay {
+  background-color: #eeeeee85;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 999;
 }
 
 .btn_wrapper {
@@ -29,9 +42,14 @@
 
 .recording_btn {
   background-color: var(--green);
-  padding: 20px;
+  padding: 36px;
+  position: relative;
 }
 
+.faPlay-icon {
+position: absolute;
+right: 16px;
+}
 .recording_btn_active {
   background: var(--activeRecording);
   padding: 20px;
@@ -127,8 +145,8 @@
   border: 1px solid var(--inputMessageFocus);
 }
 
-@media(max-width: 600px) {
-  .chat-input-wrapper {
+@media(max-width: 800px) {
+  .chat-input_container-wrapper {
     flex-direction: column;
   }
   .buttons-wrapper {

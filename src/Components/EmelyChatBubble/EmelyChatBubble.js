@@ -9,9 +9,10 @@ export default function ChatBubble(props) {
           <img className="emely-image" src={emely} alt="Emely photo" />
         </div>
         <p className="dialogue-text">
-          Jag heter Emely. Jag är en virtuell språkassistent och med mig kan du
+          {/* Jag heter Emely. Jag är en virtuell språkassistent och med mig kan du
           öva att prata på svenska. Välj nedan vilken av mina personligheter du
-          önskar att prata med.
+          önskar att prata med. */}
+          {props.message}
         </p>
       </div>
     </>
