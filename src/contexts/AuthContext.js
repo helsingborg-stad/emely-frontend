@@ -4,6 +4,7 @@ import {
 	getFirestore,
 	getDoc,
 	doc,
+	setDoc,
 	updateDoc,
 	collection,
 	increment,
@@ -36,7 +37,7 @@ export function AuthProvider({ children }) {
 	}
 
 	/* Create the user in firestore */
-	function createUser(
+	async function createUser(
 		email,
 		username,
 		birthYear,
@@ -44,7 +45,7 @@ export function AuthProvider({ children }) {
 		currentOccupation,
 		uid
 	) {
-		dbUsers.doc(uid).set({
+		await setDoc(doc(dbUsers, uid), {
 			uid: uid,
 			email: email,
 			username: username,
@@ -52,7 +53,7 @@ export function AuthProvider({ children }) {
 			native_language: nativeLanguage,
 			current_occupation: currentOccupation,
 			login_count: 1,
-		});
+		})
 	}
 
 	/* Log in with email and password */

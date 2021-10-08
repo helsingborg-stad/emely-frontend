@@ -85,7 +85,7 @@ export default function Profile() {
 				</ProfileCard>
 
 				<br/>
-				<ProfileCard title={'Ändra email & lösenord'} buttonText={'Redigera'} linkTo={'/change-email-password'} buttonIcon={<AiOutlineEdit className="me-2" size={15} />}>
+				<ProfileCard title={'Email & lösenord'} buttonText={'Redigera'} linkTo={'/change-email-password'} buttonIcon={<AiOutlineEdit className="me-2" size={15} />}>
 				
 				</ProfileCard>
 			</Container>
