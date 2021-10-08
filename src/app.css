@@ -15,11 +15,15 @@
 @import './Components/PersonaButton/PersonaButton.css';
 @import './Navigation/WorkEmely/work-emely.css';
 @import './Navigation/Profile/profile.css';
+@import './Components/ProfileCard/profile-card.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
 * {
-	font-family: 'Poppins', 'Montserrat', Helvetica, Arial, sans-serif;
+	font-family: 'Roboto', 'DM Sans', 'Poppins', 'Montserrat', Helvetica, Arial, sans-serif;
 }
 
 .link {
@@ -29,6 +33,7 @@
 #root {
 	background: rgb(238, 238, 238);
 	margin: 0 !important;
+	padding-top: 90px; 
 }
 
 :root {

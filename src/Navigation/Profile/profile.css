@@ -1,27 +1,11 @@
-
-
-#profile-card {
-    border-radius: 15px;
-    margin: 0 auto;
-    float: none;
-    margin-bottom: 10px;
-    max-width: 800px;
-}
-
-#side-menu{
-    background: rgb(31, 31, 31);
-    color: white;
-    border-top-right-radius: 0px !important;
-    border-bottom-right-radius: 0px !important;
-    border-radius: 15px;
+.no-padding{
+    padding: 0 !important;
 }
 
 @media (max-width: 768px){
-
-    #profile-card {
-        font-size: 0.7rem;
+    #edit-button,
+    #log-out-button-profile{
+        font-size: 0.9rem !important;
     }
-
-    
 
 }
