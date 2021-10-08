@@ -50,6 +50,9 @@ const ConversationContextProvider = (props) => {
       setFirstBotMessage(result.message);
     } catch (err) {
       console.log("Error: ", err);
+      setFirstBotMessage(
+        "***this is Emely response in case of error: _CHANGE ME_*****"
+      );
       return false;
     }
   };
@@ -78,10 +81,12 @@ const ConversationContextProvider = (props) => {
         }
       );
       const result = await response.data;
-      console.log("RESULT", result);
       setBotMessage((prevState)=>[...prevState, result.message]);
     } catch (err) {
       console.log("Error: ", err);
+      setBotMessage(
+        "***this is Emely response in case of error: _CHANGE ME_*****"
+      );
       return false;
     }
     setUserMessage("");

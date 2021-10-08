@@ -20,6 +20,9 @@ const createInitConversation = async (req, res) => {
   } catch (err) {
     console.error("Error", err);
     res.status(500).json({ ...err });
+    res
+      .status(!200)
+      .json("***this is Emely response in case of error _CHANGE ME_*****");
   }
 };
 
@@ -40,7 +43,7 @@ const getAllOccupationalButtons = async (req, res) => {
 const continueСonversation = async (req, res) => {
   const userInfo = req.body;
   const { endpoint } = req.params;
-  
+
   try {
     const response = await axios.post(
       `${URL}/${endpoint}`,

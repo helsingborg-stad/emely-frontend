@@ -46,13 +46,13 @@ export default function EmelyChat(props) {
         // User message
         if (userIdx < showUserMessage.length) {
           messages.push(
-            <UserChatBubble message={showUserMessage[userIdx++]} />
+            <UserChatBubble message={showUserMessage[userIdx++]} key={i} />
           );
         }
       } else {
         // Bot message
         if (botIdx < botMessage.length) {
-          messages.push(<EmelyChatBubble message={botMessage[botIdx++]} />);
+          messages.push(<EmelyChatBubble message={botMessage[botIdx++]} key={i} />);
         }
       }
     }
