@@ -16,13 +16,9 @@ import { Link, useHistory } from 'react-router-dom';
 
 /* Icon imports */
 import { HiOutlineMail } from 'react-icons/hi';
-import { RiLockPasswordLine } from 'react-icons/ri';
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { AiOutlineCalendar } from 'react-icons/ai';
-import { AiOutlineHome } from 'react-icons/ai';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { BiLogOutCircle } from 'react-icons/bi';
 import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 
@@ -31,17 +27,12 @@ import AuthLayout from '../../Components/AuthLayout/AuthLayout';
 /* Variable declaration */
 export default function UpdateProfile() {
 	const usernameRef = useRef();
-	const emailRef = useRef();
-	const passwordRef = useRef();
-	const passwordConfirmRef = useRef();
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
 
 	const {
 		currentUser,
-		updatePassword,
-		updateEmail,
 		userDetails,
 		updateUsername,
 		updateCurrentOccupation,
@@ -60,47 +51,50 @@ export default function UpdateProfile() {
 		setError('');
 
 		/* Run update methods from AuthContext */
+		try {
 
-		if (emailRef.current.value !== currentUser.email) {
-			promises.push(updateEmail(emailRef.current.value));
+			if (usernameRef.current.value !== userDetails.username) {
+				promises.push(
+					updateUsername(currentUser.uid, usernameRef.current.value)
+				);
+			}
+
+			if (
+				currentOccupationRef.current.value !== userDetails.current_occupation
+			) {
+				promises.push(
+					updateCurrentOccupation(
+						currentUser.uid,
+						currentOccupationRef.current.value
+					)
+				);
+			}
+
+			if (birthYearRef.current.value !== userDetails.birth_year) {
+				promises.push(
+					updateBirthYear(currentUser.uid, birthYearRef.current.value)
+				);
+			}
+
+			if (nativeLanguageRef.current.value !== userDetails.native_language) {
+				promises.push(
+					updateNativeLanguage(currentUser.uid, nativeLanguageRef.current.value)
+				);
+			}
+
+			Promise.all(promises)
+				.then(() => {
+					history.push('/login');
+				})
+				.catch((error) => {
+					setError(error.message);
+				})
+				.finally(() => {
+					setLoading(false);
+				});
+		} catch (error) {
+			console.log(error.message);
 		}
-
-
-		if (usernameRef.current.value !== userDetails.username) {
-			promises.push(updateUsername(currentUser.uid, usernameRef.current.value));
-		}
-
-		if (currentOccupationRef.current.value !== userDetails.current_occupation) {
-			promises.push(
-				updateCurrentOccupation(
-					currentUser.uid,
-					currentOccupationRef.current.value
-				)
-			);
-		}
-
-		if (birthYearRef.current.value !== userDetails.birth_year) {
-			promises.push(
-				updateBirthYear(currentUser.uid, birthYearRef.current.value)
-			);
-		}
-
-		if (nativeLanguageRef.current.value !== userDetails.native_language) {
-			promises.push(
-				updateNativeLanguage(currentUser.uid, nativeLanguageRef.current.value)
-			);
-		}
-
-		Promise.all(promises)
-			.then(() => {
-				history.push('/profile');
-			})
-			.catch((error) => {
-				setError(error.message);
-			})
-			.finally(() => {
-				setLoading(false);
-			});
 	}
 
 	return (
@@ -119,106 +113,88 @@ export default function UpdateProfile() {
 					{error && <Alert variant="danger">{error}</Alert>}
 					{/* Username form */}
 					<Form onSubmit={handleSubmit} id="update-profile">
-					<Row className="m-3">
+						<Row className="m-3">
+							<Form.Group className="" id="username">
+								<Form.Label className="fw-bold">
+									<AiOutlineUser className="me-2" size={20} />
+									Användarnamn
+								</Form.Label>
+								<Form.Control
+									className="p-2 input-border"
+									type="text"
+									ref={usernameRef}
+									required
+									defaultValue={userDetails && userDetails.username}
+									placeholder="Vad ska vi kalla dig?"
+								/>
+							</Form.Group>
+						</Row>
 
-					
-						<Form.Group className="" id="username">
-							<Form.Label className="fw-bold">
-								<AiOutlineUser className="me-2" size={20} />
-								Användarnamn
-							</Form.Label>
-							<Form.Control
-								className="p-2 input-border"
-								type="text"
-								ref={usernameRef}
-								required
-								defaultValue={userDetails && userDetails.username}
-								placeholder="Vad ska vi kalla dig?"
-							/>
-						</Form.Group>
-					</Row>
+						{/* Birth year form */}
+						<Row className="m-3">
+							<Form.Group id="birthYear">
+								<Form.Label className="fw-bold">
+									<AiOutlineCalendar className="me-2" size={20} /> När är du
+									född?
+								</Form.Label>
+								<Form.Control
+									className="p-2 input-border"
+									placeholder="När är du född?"
+									type="date"
+									defaultValue={userDetails && userDetails.birth_year}
+									ref={birthYearRef}
+									required
+								/>
+							</Form.Group>
+						</Row>
 
-					{/* Email form */}
-					<Row className="m-3">
-						<Form.Group className="" id="email">
-							<Form.Label className="fw-bold">
-								<HiOutlineMail className="me-2" size={20} />
-								E-postadress
-							</Form.Label>
-							<Form.Control
-								className="p-2 input-border"
-								type="email"
-								ref={emailRef}
-								required
-								defaultValue={currentUser.email}
-							/>
-						</Form.Group>
-					</Row>
+						{/* Native language form */}
+						<Row className="m-3">
+							<Form.Group id="nativeLanguage">
+								<Form.Label className="fw-bold">
+									<GrLanguage className="me-2" size={20} /> Vilket språk talar
+									du hemma?
+								</Form.Label>
+								<Form.Select
+									ref={nativeLanguageRef}
+									className="p-2 input-border"
+									defaultValue={userDetails && userDetails.native_language}
+								>
+									<option>Svenska</option>
+									<option>Engelska</option>
+									<option>Arabiska</option>
+									<option>Italienska</option>
+									<option>Spanska</option>
+									<option>Bosniska</option>
+									<option>Serbiska</option>
+									<option>Kroatiska</option>
+								</Form.Select>
+							</Form.Group>
+						</Row>
 
-					{/* Birth year form */}
-					<Row className="m-3">
-						<Form.Group id="birthYear">
-							<Form.Label className="fw-bold">
-								<AiOutlineCalendar className="me-2" size={20} /> När är du född?
-							</Form.Label>
-							<Form.Control
-								className="p-2 input-border"
-								placeholder="När är du född?"
-								type="date"
-								defaultValue={userDetails && userDetails.birth_year}
-								ref={birthYearRef}
-								required
-							/>
-						</Form.Group>
-					</Row>
-
-					{/* Native language form */}
-					<Row className="m-3">
-						<Form.Group id="nativeLanguage">
-							<Form.Label className="fw-bold">
-								<GrLanguage className="me-2" size={20} /> Vilket språk talar du
-								hemma?
-							</Form.Label>
-							<Form.Select
-								ref={nativeLanguageRef}
-								className="p-2 input-border"
-								defaultValue={userDetails && userDetails.native_language}
-							>
-								<option>Svenska</option>
-								<option>Engelska</option>
-								<option>Arabiska</option>
-								<option>Italienska</option>
-								<option>Spanska</option>
-								<option>Bosniska</option>
-								<option>Serbiska</option>
-								<option>Kroatiska</option>
-							</Form.Select>
-						</Form.Group>
-					</Row>
-
-					{/* Current occupation form */}
-					<Row className="m-3">
-						<Form.Group id="currentOccupation">
-							<Form.Label className="fw-bold">
-								<FaUserTie className="me-2" size={20} /> Vad är din
-								syselsättning?
-							</Form.Label>
-							<Form.Select
-								ref={currentOccupationRef}
-								className="p-2 input-border"
-								defaultValue={userDetails && userDetails.current_occupation}
-							>
-								<option>Arbetslös</option>
-								<option>Söker arbete</option>
-								<option>Sjukskriven</option>
-								<option>Heltidsjobb</option>
-								<option>Deltidsjobb</option>
-								<option>Timanställd</option>
-								<option>Föräldraledig</option>
-							</Form.Select>
-						</Form.Group>
-					</Row>
-					{/* 
+						{/* Current occupation form */}
+						<Row className="m-3">
+							<Form.Group id="currentOccupation">
+								<Form.Label className="fw-bold">
+									<FaUserTie className="me-2" size={20} /> Vad är din
+									syselsättning?
+								</Form.Label>
+								<Form.Select
+									ref={currentOccupationRef}
+									className="p-2 input-border"
+									defaultValue={userDetails && userDetails.current_occupation}
+								>
+									<option>Arbetslös</option>
+									<option>Söker arbete</option>
+									<option>Sjukskriven</option>
+									<option>Heltidsjobb</option>
+									<option>Deltidsjobb</option>
+									<option>Timanställd</option>
+									<option>Föräldraledig</option>
+								</Form.Select>
+							</Form.Group>
+						</Row>
+						{/* 
 					
 						<Row className="m-3">
 						<Form.Group className="" id="password">
@@ -250,21 +226,20 @@ export default function UpdateProfile() {
 								</Row>
 							*/}
 
-					<Row className="mb-3 ms-4 mt-5 me-4 ">
-						<Button
-							disabled={loading}
-							type="submit"
-							variant="success"
-							className="p-3 rounded-pill fw-bold register-btn text-white"
-						>
-							<AiOutlineUserAdd className="me-2 text-white" size={25} />
-							SPARA
-						</Button>
-					</Row>
+						<Row className="mb-3 ms-4 mt-5 me-4 ">
+							<Button
+								disabled={loading}
+								type="submit"
+								variant="success"
+								className="p-3 rounded-pill fw-bold register-btn text-white"
+							>
+								<AiOutlineUserAdd className="me-2 text-white" size={25} />
+								SPARA
+							</Button>
+						</Row>
 					</Form>
 				</ProfileCard>
 			</Container>
-
 		</>
 	);
 }
