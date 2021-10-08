@@ -7,11 +7,11 @@ const ConversationContextProvider = (props) => {
   // state for Emely's first init message
   const [firstBotMessage, setFirstBotMessage] = useState(null);
   // state for  Emely's follow-up messages
-  const [botMessage, setBotMessage] = useState(null)
-  // state for user's message
+  const [botMessage, setBotMessage] = useState([])
+  // state for user's message (invoke in onChange)
    const [userMessage, setUserMessage] = useState("");
   //  state for show user message
-  const [showUserMessage, setShowUserMessage] = useState(null);
+  const [showUserMessage, setShowUserMessage] = useState([]);
   // state for conversation id
   const [conversationId, setConversationId] = useState(null)
   // state for occupational buttons
@@ -61,7 +61,7 @@ const ConversationContextProvider = (props) => {
     date = formatedTimestamp()
   ) => {
 
-    setShowUserMessage(userMessage);
+    setShowUserMessage((prevState) => [...prevState, userMessage]);
 
     try {
       // send post request to local server
@@ -79,7 +79,7 @@ const ConversationContextProvider = (props) => {
       );
       const result = await response.data;
       console.log("RESULT", result);
-      setBotMessage(result.message);
+      setBotMessage((prevState)=>[...prevState, result.message]);
     } catch (err) {
       console.log("Error: ", err);
       return false;

@@ -7,6 +7,7 @@ import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
 import ChatInput from "../../Components/ChatInput/ChatInput";
+import { render } from "@testing-library/react";
 
 export default function EmelyChat(props) {
   const { currentUser } = useAuth();
@@ -33,32 +34,32 @@ export default function EmelyChat(props) {
   }, []);
 
   useEffect(() => {
-    renderUserMessage();
-  }, [showUserMessage]);
+    renderMessages();
+  },[showUserMessage, botMessage]);
 
-  useEffect(() => {
-    renderBotMessage();
-  }, [botMessage]);
+  
+  const renderMessages = () => {
+    let messages = [];
 
-  const renderUserMessage = () => {
-    return (
-      <Row>
-        <Col>
-          <UserChatBubble message={showUserMessage} />
-        </Col>
-      </Row>
-    );
+    for (let i = 0, userIdx = 0, botIdx = 0; i < showUserMessage.length + botMessage.length; i++) {
+      if (i % 2 == 0) {// Odd or even to decide the message type
+        // User message
+        if (userIdx < showUserMessage.length) {
+          messages.push(
+            <UserChatBubble message={showUserMessage[userIdx++]} />
+          );
+        }
+      } else {
+        // Bot message
+        if (botIdx < botMessage.length) {
+          messages.push(<EmelyChatBubble message={botMessage[botIdx++]} />);
+        }
+      }
+    }
+
+    return messages;
   };
 
-  const renderBotMessage = () => {
-    return (
-      <Row>
-        <Col>
-          <EmelyChatBubble message={botMessage} />
-        </Col>
-      </Row>
-    );
-  };
   return (
     <>
       <Container>
@@ -76,8 +77,7 @@ export default function EmelyChat(props) {
               )}
             </Col>
           </Row>
-          {showUserMessage && renderUserMessage()}
-          {botMessage && renderBotMessage()}
+          {showUserMessage.length > 0 && renderMessages()}
         </div>
 
         <ChatInput persona={persona} />
