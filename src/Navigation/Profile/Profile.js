@@ -18,6 +18,7 @@ export default function Profile() {
 	const [error, setError] = useState('');
 	const history = useHistory();
 
+
 	async function handleLogout() {
 		setError('');
 
@@ -37,7 +38,7 @@ export default function Profile() {
 				<Row>
 					<UserMenu />
 				</Row>
-				<h2 className="text-center mb-4 mt-5 fw-bold">Användarkonto</h2>
+				<h2 className="text-center mb-4 fw-bold">Användarkonto</h2>
 				<ProfileCard title={'Mina uppgifter'} buttonText={'Redigera'} linkTo={'/update-profile'} buttonIcon={<AiOutlineEdit className="me-2" size={15} />}>
 					<Row className="m-3">
 						<small className="fw-bold p-0">Användarnamn</small>
@@ -84,7 +85,7 @@ export default function Profile() {
 				</ProfileCard>
 
 				<br/>
-				<ProfileCard title={'Byt lösenord'} buttonText={'Redigera'} linkTo={'/change-password'} buttonIcon={<BiShowAlt className="me-2" size={15} />}>
+				<ProfileCard title={'Ändra email & lösenord'} buttonText={'Redigera'} linkTo={'/change-email-password'} buttonIcon={<AiOutlineEdit className="me-2" size={15} />}>
 				
 				</ProfileCard>
 			</Container>
