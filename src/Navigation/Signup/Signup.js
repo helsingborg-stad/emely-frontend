@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive'
 
 /* Icon imports */
 import { HiOutlineMail } from 'react-icons/hi';
@@ -121,13 +122,13 @@ export default function Signup() {
 
 					<Row>
 						{/* Username form */}
-						<Col>
+						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="username" className="fw-bold">
-								<Form.Label className="mt-5">
+								<Form.Label className="mt-4">
 									<AiOutlineUser size={30} /> Vad ska vi kalla dig?
 								</Form.Label>
 								<Form.Control
-									className="rounded-pill p-3 shadow-sm"
+									className="w-100 rounded-pill p-3 shadow-sm"
 									placeholder="Användarnamn"
 									type="text"
 									ref={usernameRef}
@@ -137,13 +138,13 @@ export default function Signup() {
 						</Col>
 
 						{/* Birth Year form */}
-						<Col>
+						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="birthYear" className="fw-bold">
-								<Form.Label className="mt-5">
+								<Form.Label className="mt-4">
 									<AiOutlineCalendar size={30} /> När är du född?
 								</Form.Label>
 								<Form.Control
-									className="rounded-pill p-3 shadow-sm"
+									className="w-100 rounded-pill p-3 shadow-sm"
 									placeholder="När är du född?"
 									type="date"
 									defaultValue="1990-01-01"
@@ -156,7 +157,7 @@ export default function Signup() {
 
 					<Row>
 						{/* Native language form */}
-						<Col>
+						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="nativeLanguage" className="fw-bold">
 								<Form.Label className="mt-5">
 									<GrLanguage size={25} /> Vilket språk talar du hemma?
@@ -179,7 +180,7 @@ export default function Signup() {
 						</Col>
 
 						{/* Current occupation form */}
-						<Col>
+						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="currentOccupation" className="fw-bold">
 								<Form.Label className="mt-5">
 									<FaUserTie size={25} /> Vad är din syselsättning?
