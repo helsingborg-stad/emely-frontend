@@ -219,7 +219,7 @@ export default function Signup() {
 									required	
 									type="checkbox"
 									style={{ display: 'inline'}}
-								/> <span id="checkbox-text" className="text-end ms-3 ">Jag godkänner <Button variant="none" target="_blank" onClick={handleEndUserTerms}> <b>NordAxons användningsvillkor</b> </Button></span>
+								/> <span id="checkbox-text" className="text-end ms-3 ">Jag godkänner <Button className="p-0" variant="none" target="_blank" onClick={handleEndUserTerms}> <b>NordAxons användningsvillkor</b> </Button></span>
 								
 								{error && <Alert className="mt-4" variant="danger">{error}</Alert>}
 						</Form.Group>

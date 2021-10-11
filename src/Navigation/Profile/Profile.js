@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Card, Container, Row, Alert, Button } from 'react-bootstrap';
+import {
+	Col,
+	Card,
+	Container,
+	Row,
+	Alert,
+	Button,
+	Modal,
+} from 'react-bootstrap';
 import UserMenu from '../../Components/UserMenu/UserMenu';
 import ProfileCard from '../../Components/ProfileCard/ProfileCard';
 import { useHistory } from 'react-router-dom';
@@ -19,6 +27,10 @@ export default function Profile() {
 		useAuth();
 	const [error, setError] = useState('');
 	const history = useHistory();
+	const [show, setShow] = useState(false);
+
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	async function handleLogout() {
 		setError('');
@@ -75,6 +87,11 @@ export default function Profile() {
 						<small className="fw-bold">Användarnamn</small>
 						<p>{userDetails && userDetails.username}</p>
 					</Row>
+
+					<Row className="mt-3 ">
+					<small className="fw-bold">Användarnamn</small>
+					<p>{userDetails && userDetails.email}</p>
+				</Row>
 
 					<Row className="mt-3">
 						<small className="fw-bold ">Födelsedatum</small>
@@ -136,10 +153,10 @@ export default function Profile() {
 								variant="outline-danger"
 								className="rounded-pill pe-3 ps-3 fw-bold"
 								id="delete-user-button"
-								onClick={handleDeleteUser}
+								onClick={handleShow}
 							>
 								<FaRegTimesCircle className="me-2" size={15} />
-								Ta bort
+								Radera
 							</Button>
 						</span>
 					</Col>
@@ -151,10 +168,37 @@ export default function Profile() {
 					</Row>
 				</ProfileCard>
 
+				{/* Confirmation modal */}
+				<Modal show={show} onHide={handleClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Radera användarkonto</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						Är du säker på att du vill radera ditt användarkonto? All
+						användarinformation kommer att försvinna.
+					</Modal.Body>
+					<Modal.Footer>
+						<Button 
+						variant="outline-secondary"
+						className="rounded-pill pe-3 ps-3 fw-bold" 
+						onClick={handleClose}>
+							Avbryt
+						</Button>
+						<Button
+							variant="outline-danger"
+							className="rounded-pill pe-3 ps-3 fw-bold"
+							id="delete-user-button"
+							onClick={handleDeleteUser}
+						>
+							Radera
+						</Button>
+					</Modal.Footer>
+				</Modal>
+
 				<br />
 
 				{/* Change email and password card */}
-				<ProfileCard title={'Email & lösenord'}>
+				<ProfileCard title={'Ändra lösenord'}>
 					<Col className="text-end me-0">
 						<span>
 							<Link to={'/change-email-password'}>
@@ -171,13 +215,9 @@ export default function Profile() {
 					</Col>
 					<Row className="mt-3 ">
 						<p className="card-text" id="change-password-text">
-							Vill du ändra din e-postadress? Eller kanske ditt lösenord?{' '}
+							Vill du ändra ditt lösenord?
 						</p>
 					</Row>
-					<Row className="mt-3">
-					<small className="fw-bold ">E-postadress</small>
-					<p>{currentUser.email}</p>
-				</Row>
 				</ProfileCard>
 			</Container>
 		</>

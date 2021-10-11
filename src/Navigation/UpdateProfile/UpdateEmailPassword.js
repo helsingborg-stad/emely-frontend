@@ -28,12 +28,12 @@ export default function UpdateEmailPassword() {
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
 
-	const { currentUser, passwordUpdate, emailUpdate, userDetails } = useAuth();
+	const { currentUser, passwordUpdate, emailUpdate, userDetails, emailUpdateFirestore } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault();
 
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -46,16 +46,14 @@ export default function UpdateEmailPassword() {
 
 		/* Run update methods from AuthContext */
 		try {
-			if (emailRef.current.value !== currentUser.email) {
-				promises.push(emailUpdate(emailRef.current.value));
-			}
+
 			if (passwordRef.current.value) {
 				promises.push(passwordUpdate(passwordRef.current.value));
 			}
 
 			Promise.all(promises)
 				.then(() => {
-					history.push('/profile');
+					history.push('/login');
 				})
 				.catch((error) => {
 					setError(error.message);
@@ -96,22 +94,6 @@ export default function UpdateEmailPassword() {
 					{/* Username form */}
 					<Form onSubmit={handleSubmit} id="update-profile">
 						
-							{/* Email form */}
-							<Row className="mt-5">
-								<Form.Group className="" id="email">
-									<Form.Label className="fw-bold">
-										<HiOutlineMail className="me-2" size={20} />
-										E-postadress
-									</Form.Label>
-									<Form.Control
-										className="p-2 input-border"
-										type="email"
-										ref={emailRef}
-										required
-										defaultValue={currentUser.email}
-									/>
-								</Form.Group>
-							</Row>
 						
                         {/* Password form */}
 						<Row className="mt-3">

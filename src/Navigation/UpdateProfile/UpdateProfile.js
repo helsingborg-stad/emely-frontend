@@ -31,6 +31,7 @@ export default function UpdateProfile() {
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
+	const emailRef = useRef();
 
 	const {
 		currentUser,
@@ -53,7 +54,6 @@ export default function UpdateProfile() {
 
 		/* Run update methods from AuthContext */
 		try {
-
 			if (usernameRef.current.value !== userDetails.username) {
 				promises.push(
 					updateUsername(currentUser.uid, usernameRef.current.value)
@@ -85,7 +85,7 @@ export default function UpdateProfile() {
 
 			Promise.all(promises)
 				.then(() => {
-					history.push('/login');
+					history.push('/profile');
 				})
 				.catch((error) => {
 					setError(error.message);
@@ -106,23 +106,21 @@ export default function UpdateProfile() {
 				</Row>
 				<h2 className="text-center mb-4 fw-bold">Redigera profil</h2>
 
-				<ProfileCard
-					title={'Redigera uppgifter'}
-				>
+				<ProfileCard title={'Redigera uppgifter'}>
 					{error && <Alert variant="danger">{error}</Alert>}
 					<Col className="text-end p-0 me-0">
-					<span>
-						<Link to={'/profile'}>
-							<Button
-								variant="outline-success"
-								className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
-								id="edit-button"
-							>
-							<IoIosArrowBack className="me-2" size={15} /> Tillbaka
-							</Button>
-						</Link>
-					</span>
-				</Col>
+						<span>
+							<Link to={'/profile'}>
+								<Button
+									variant="outline-success"
+									className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+									id="edit-button"
+								>
+									<IoIosArrowBack className="me-2" size={15} /> Tillbaka
+								</Button>
+							</Link>
+						</span>
+					</Col>
 					{/* Username form */}
 					<Form onSubmit={handleSubmit} id="update-profile">
 						<Row className="mt-5">
@@ -138,6 +136,24 @@ export default function UpdateProfile() {
 									required
 									defaultValue={userDetails && userDetails.username}
 									placeholder="Vad ska vi kalla dig?"
+								/>
+							</Form.Group>
+						</Row>
+
+						<Row className="mt-3">
+							<Form.Group className="" id="email">
+								<Form.Label className="fw-bold">
+									<HiOutlineMail className="me-2" size={20} />
+									E-postadress
+								</Form.Label>
+								<Form.Control
+									disabled
+									className="p-2 input-border"
+									type="text"
+									ref={emailRef}
+									required
+									defaultValue={userDetails && userDetails.email}
+
 								/>
 							</Form.Group>
 						</Row>

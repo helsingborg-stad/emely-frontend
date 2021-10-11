@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth, dbUsers, db } from '../firebase';
 import {
-	getFirestore,
+
 	getDoc,
 	doc,
 	setDoc,
 	updateDoc,
-	collection,
 	increment,
 	deleteDoc,
 } from 'firebase/firestore';
@@ -83,6 +82,7 @@ export function AuthProvider({ children }) {
 		return userDetails;
 	}
 
+
 	/* Increment login_count when login */
 	function updateLoginCount(uid, lastSignInTime) {
 		const userRef = doc(dbUsers, uid);
@@ -112,6 +112,7 @@ export function AuthProvider({ children }) {
 
 	/* Update current occupation */
 	function updateCurrentOccupation(uid, currentOccupation) {
+		
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
 			current_occupation: currentOccupation,
@@ -136,21 +137,37 @@ export function AuthProvider({ children }) {
 
 	/* Update password */
 	function passwordUpdate(password) {
-		return updatePassword(auth.currentUser, password);
+		updatePassword(currentUser, password).then(() => {
+			console.log("Password updated successfully")
+		  }).catch((error) => {
+			console.log(error.message)
+		  });
 	}
 
 	/* Update email */
 	function emailUpdate(newEmail) {
-		return updateEmail(currentUser, newEmail);
+		updateEmail(currentUser, newEmail).then(() => {
+			const userRef = doc(dbUsers, currentUser.uid);
+			updateDoc(userRef, {
+				email: newEmail,
+			});
+			console.log("Email updated")
+		  }).catch((error) => {
+			console.log(error.message)
+		  });
+	}
+
+	/* Update email in firestore */
+	function emailUpdateFirestore(email, uid){
+
 	}
 
 	/* Delete user from auth */
 function userDelete() {
 	deleteUser(auth.currentUser).then(() => {
-		// User deleted.
+		console.log("User deleted")
 	  }).catch((error) => {
-		// An error ocurred
-		// ...
+		console.log(error.message)
 	  });
 	}
 
@@ -187,6 +204,8 @@ function userDelete() {
 		userDetails,
 		userDelete,
 		deleteFirestoreUser,
+		emailUpdateFirestore,
+		
 	};
 
 	return (
