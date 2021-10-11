@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { BiMicrophone } from "react-icons/bi";
 import { BiMicrophoneOff } from "react-icons/bi";
 import { IoMdVolumeHigh } from "react-icons/io";
@@ -36,7 +36,7 @@ export default function ChatInput({ persona }) {
 
   return (
     <div className="chat-input-wrapper">
-      <div className={isLoading && "chat-input_overlay"}></div>
+      <div className={isLoading ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
         <button
           className={

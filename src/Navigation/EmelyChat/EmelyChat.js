@@ -7,10 +7,9 @@ import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
 import ChatInput from "../../Components/ChatInput/ChatInput";
-import { render } from "@testing-library/react";
 
 export default function EmelyChat(props) {
-  const { currentUser } = useAuth();
+  const { userDetails, currentUser, getUserDetails } = useAuth();
   // get :persona to send to the BE for conversation
   const { persona } = props.match.params;
 
@@ -20,29 +19,39 @@ export default function EmelyChat(props) {
     firstBotMessage,
     initConversation,
     botMessage,
-    userMessage,
     showUserMessage,
   } = useContext(ConversationContext);
 
   useEffect(() => {
-    initConversation(
-      currentUser.displayName,
-      currentJob,
-      formatedTimestamp(),
-      persona
-    );
+    getUserDetails(currentUser.uid);
   }, []);
+
+  // runs when userDetails has been known
+  useEffect(() => {
+    if (userDetails) {
+      initConversation(
+        userDetails.username,
+        currentJob,
+        formatedTimestamp(),
+        persona
+      );
+    }
+  }, [userDetails]);
 
   useEffect(() => {
     renderMessages();
-  },[showUserMessage, botMessage]);
+  }, [showUserMessage, botMessage]);
 
-  
   const renderMessages = () => {
     let messages = [];
 
-    for (let i = 0, userIdx = 0, botIdx = 0; i < showUserMessage.length + botMessage.length; i++) {
-      if (i % 2 == 0) {// Odd or even to decide the message type
+    for (
+      let i = 0, userIdx = 0, botIdx = 0;
+      i < showUserMessage.length + botMessage.length;
+      i++
+    ) {
+      if (i % 2 === 0) {
+        // Odd or even to decide the message type
         // User message
         if (userIdx < showUserMessage.length) {
           messages.push(
@@ -52,7 +61,9 @@ export default function EmelyChat(props) {
       } else {
         // Bot message
         if (botIdx < botMessage.length) {
-          messages.push(<EmelyChatBubble message={botMessage[botIdx++]} key={i} />);
+          messages.push(
+            <EmelyChatBubble message={botMessage[botIdx++]} key={i} />
+          );
         }
       }
     }
