@@ -13,6 +13,7 @@ import UpdateProfile from './Navigation/UpdateProfile/UpdateProfile';
 import UpdateEmailPassword from './Navigation/UpdateProfile/UpdateEmailPassword';
 import WorkEmely from './Navigation/WorkEmely/WorkEmely';
 import EmelyChat from './Navigation/EmelyChat/EmelyChat';
+import EndUserTerms from './Components/EndUserTerms/EndUserTerms';
 import Home from './Navigation/Home/Home';
 import Profile from './Navigation/Profile/Profile';
 import ConversationContextProvider from './contexts/ConversationContext';
@@ -37,10 +38,10 @@ function App() {
 										path="/update-profile"
 										component={UpdateProfile}
 									/>
-                  <PrivateRoute
-                  path="/change-email-password"
-                  component={UpdateEmailPassword}
-                />
+									<PrivateRoute
+										path="/change-email-password"
+										component={UpdateEmailPassword}
+									/>
 									<PrivateRoute path="/work-emely" component={WorkEmely} />
 									<PrivateRoute
 										path="/emely-chat/:persona"
@@ -51,6 +52,7 @@ function App() {
 									<Route exact path="/" component={Home} />
 									<Route path="/signup" component={Signup} />
 									<Route path="/login" component={Login} />
+									<Route path="/end-user-terms" component={EndUserTerms} />
 									<Route path="/forgot-password" component={ForgotPassword} />
 								</Switch>
 							</ConversationContextProvider>
