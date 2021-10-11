@@ -21,6 +21,7 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
+import { IoIosArrowBack } from 'react-icons/io';
 
 import AuthLayout from '../../Components/AuthLayout/AuthLayout';
 
@@ -107,13 +108,24 @@ export default function UpdateProfile() {
 
 				<ProfileCard
 					title={'Redigera uppgifter'}
-					buttonText={'Avbryt'}
-					linkTo={'/profile'}
 				>
 					{error && <Alert variant="danger">{error}</Alert>}
+					<Col className="text-end p-0 me-0">
+					<span>
+						<Link to={'/profile'}>
+							<Button
+								variant="outline-success"
+								className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+								id="edit-button"
+							>
+							<IoIosArrowBack className="me-2" size={15} /> Tillbaka
+							</Button>
+						</Link>
+					</span>
+				</Col>
 					{/* Username form */}
 					<Form onSubmit={handleSubmit} id="update-profile">
-						<Row className="m-3">
+						<Row className="mt-5">
 							<Form.Group className="" id="username">
 								<Form.Label className="fw-bold">
 									<AiOutlineUser className="me-2" size={20} />
@@ -131,7 +143,7 @@ export default function UpdateProfile() {
 						</Row>
 
 						{/* Birth year form */}
-						<Row className="m-3">
+						<Row className="mt-3">
 							<Form.Group id="birthYear">
 								<Form.Label className="fw-bold">
 									<AiOutlineCalendar className="me-2" size={20} /> När är du
@@ -149,7 +161,7 @@ export default function UpdateProfile() {
 						</Row>
 
 						{/* Native language form */}
-						<Row className="m-3">
+						<Row className="mt-3">
 							<Form.Group id="nativeLanguage">
 								<Form.Label className="fw-bold">
 									<GrLanguage className="me-2" size={20} /> Vilket språk talar
@@ -173,7 +185,7 @@ export default function UpdateProfile() {
 						</Row>
 
 						{/* Current occupation form */}
-						<Row className="m-3">
+						<Row className="mt-3">
 							<Form.Group id="currentOccupation">
 								<Form.Label className="fw-bold">
 									<FaUserTie className="me-2" size={20} /> Vad är din

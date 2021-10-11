@@ -4,11 +4,13 @@ import {
 	Button,
 	Alert,
 	Row,
+	Col,
 	Container,
 } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import UserMenu from '../../Components/UserMenu/UserMenu';
 import ProfileCard from '../../Components/ProfileCard/ProfileCard';
+
 
 import { Link, useHistory } from 'react-router-dom';
 
@@ -16,6 +18,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { HiOutlineMail } from 'react-icons/hi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import { AiOutlineEdit } from 'react-icons/ai';
+import { IoIosArrowBack } from 'react-icons/io';
 
 
 /* Variable declaration */
@@ -70,19 +74,30 @@ export default function UpdateEmailPassword() {
 				<Row>
 					<UserMenu />
 				</Row>
-				<h2 className="text-center mb-4 fw-bold">Redigera profil</h2>
+				<h2 className="text-center mb-4 fw-bold">Email & Lösenord</h2>
 
 				<ProfileCard
 					title={'Ändra Email & Lösenord'}
-					buttonText={'Avbryt'}
-					linkTo={'/profile'}
 				>
+				<Col className="text-end p-0 me-0">
+				<span>
+					<Link to={'/profile'}>
+						<Button
+							variant="outline-success"
+							className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+							id="edit-button"
+						>
+						<IoIosArrowBack className="me-2" size={15} /> Tillbaka
+						</Button>
+					</Link>
+				</span>
+			</Col>
 					{error && <Alert variant="danger">{error}</Alert>}
 					{/* Username form */}
 					<Form onSubmit={handleSubmit} id="update-profile">
 						
 							{/* Email form */}
-							<Row className="m-3">
+							<Row className="mt-5">
 								<Form.Group className="" id="email">
 									<Form.Label className="fw-bold">
 										<HiOutlineMail className="me-2" size={20} />
@@ -99,7 +114,7 @@ export default function UpdateEmailPassword() {
 							</Row>
 						
                         {/* Password form */}
-						<Row className="m-3">
+						<Row className="mt-3">
 							<Form.Group className="" id="password">
 								<Form.Label className="fw-bold">
 									<RiLockPasswordLine className="me-2" size={20} />
@@ -115,7 +130,7 @@ export default function UpdateEmailPassword() {
 						</Row>
 
                         {/* Password confirm form */}
-						<Row className="m-3">
+						<Row className="mt-3">
 							<Form.Group className="" id="password-confirm">
 								<Form.Label className="fw-bold">
 									<RiLockPasswordLine className="me-2" size={20} /> Upprepa
