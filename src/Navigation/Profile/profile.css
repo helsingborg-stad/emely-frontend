@@ -2,6 +2,10 @@
     padding: 0 !important;
 }
 
+.card-text{
+    font-size: 1.1rem !important;
+}
+
 @media (max-width: 768px){
     #edit-button,
     #log-out-button-profile{
