@@ -31,9 +31,10 @@ export default function Login() {
 			/* Run firebase-auth login function from AuthContext */
 			const credentials = await login(emailRef.current.value, passwordRef.current.value);
 			const userId = credentials.user.uid
+			const lastSignInTime = credentials.user.metadata.creationTime;
 
 			/* Run updateLoginCount to increment login_count after login */
-			await updateLoginCount(userId)
+			await updateLoginCount(userId, lastSignInTime)
 			history.push('/dashboard');
 
 			/* Catch error and print out in alert (in english) */
@@ -50,7 +51,7 @@ export default function Login() {
 				<h2 className="text-center mb-4 fw-bold" id="login-header">
 					Logga in för att fortsätta
 				</h2>
-				{error && <Alert variant="danger">{error}</Alert>}
+				
 				<Form onSubmit={handleSubmit}>
 				
 					{/* Login form */}
@@ -79,6 +80,8 @@ export default function Login() {
 							required
 						/>
 					</Form.Group>
+
+					{error && <Alert className="mt-5" variant="danger">{error}</Alert>}
 
 					{/* Submit button & Log in */}
 					<Button
