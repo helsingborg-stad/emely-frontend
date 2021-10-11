@@ -11,7 +11,7 @@ import useWindowDimensions from "../../customHooks/useWindowDimensions";
 import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 
-export default function ChatInput({ persona }) {
+export default function ChatInput({ persona, scroll }) {
   // states for layout
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
@@ -40,20 +40,20 @@ export default function ChatInput({ persona }) {
     if (userMessage.trim().length > 0) {
       getContinueСonversation(persona, userMessage);
       setUserMessage("");
-      setFocused(false)
+      setFocused(false);
     }
   };
 
   // sets the recordings button active
   const handleClickRecordingBtn = (e) => {
     e.preventDefault();
-    setUserMessage("");
     // set input onFocus
     setFocused(true);
     setUserMessage(recordingNote);
-    console.log("recordingNote", recordingNote);
     setIsListening((prevState) => !prevState);
+    setRecordingNote("");
   };
+  
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading ? "chat-input_overlay" : ""}></div>
