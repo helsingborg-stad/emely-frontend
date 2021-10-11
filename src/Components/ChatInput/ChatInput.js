@@ -40,7 +40,6 @@ export default function ChatInput({ persona, scroll }) {
     if (userMessage.trim().length > 0) {
       getContinueСonversation(persona, userMessage);
       setUserMessage("");
-      setFocused(false);
     }
   };
 
@@ -49,11 +48,12 @@ export default function ChatInput({ persona, scroll }) {
     e.preventDefault();
     // set input onFocus
     setFocused(true);
+    // overwriting userMessage if recording button works
     setUserMessage(recordingNote);
     setIsListening((prevState) => !prevState);
     setRecordingNote("");
   };
-  
+
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading ? "chat-input_overlay" : ""}></div>
@@ -80,7 +80,7 @@ export default function ChatInput({ persona, scroll }) {
               className="user-message_input"
               type="text"
               placeholder={isLoading ? "" : "Skriv meddelande"}
-              value={isLoading ? "" : userMessage}
+              value={isListening ? recordingNote : userMessage}
               onFocus={() => {
                 setFocused(true);
               }}
