@@ -8,6 +8,7 @@ import { FaPlay } from "react-icons/fa";
 import { FaStop } from "react-icons/fa";
 
 import useWindowDimensions from "../../customHooks/useWindowDimensions";
+import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 
 export default function ChatInput({ persona }) {
@@ -15,10 +16,9 @@ export default function ChatInput({ persona }) {
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
   const [activeSound, setActiveSound] = useState(true);
-  const [isRecording, setRecording] = useState(false);
   const [isFocused, setFocused] = useState(false);
   const { currentWidth } = useWindowDimensions();
-  // states && functions for interactive actions
+  // states && functions for interactive actions with BE
   const {
     userMessage,
     setUserMessage,
@@ -26,35 +26,57 @@ export default function ChatInput({ persona }) {
     isLoading,
   } = useContext(ConversationContext);
 
-  const handleClick = (e) => {
+  // states && functions for translating voice to text
+  const {
+    isListening,
+    recordingNote,
+    setIsListening,
+    setRecordingNote,
+  } = useVoiceToText();
+
+  // send user message to BE
+  const handleSendClick = (e) => {
     e.preventDefault();
     if (userMessage.trim().length > 0) {
       getContinueСonversation(persona, userMessage);
       setUserMessage("");
+      setFocused(false)
     }
   };
 
+  // sets the recordings button active
+  const handleClickRecordingBtn = (e) => {
+    e.preventDefault();
+    setUserMessage("");
+    // set input onFocus
+    setFocused(true);
+    setUserMessage(recordingNote);
+    console.log("recordingNote", recordingNote);
+    setIsListening((prevState) => !prevState);
+  };
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
         <button
           className={
-            isRecording
+            isListening
               ? "navigation_btn recording_btn_active"
               : "navigation_btn recording_btn"
           }
-          onClick={() => setRecording(!isRecording)}
+          onClick={(e) => handleClickRecordingBtn(e)}
         >
-          {isRecording ? <FaStop /> : <FaPlay className="faPlay-icon"/>}
+          {isListening ? <FaStop /> : <FaPlay className="faPlay-icon" />}
         </button>
         <div className="buttons-wrapper">
           <form
-            onSubmit={(e) => handleClick(e)}
+            onSubmit={(e) => handleSendClick(e)}
             className={isFocused ? "input-wrapper expand" : "input-wrapper"}
           >
             <input
-              onChange={(e) => setUserMessage(e.target.value)}
+              onChange={(e) => {
+                setUserMessage(e.target.value);
+              }}
               className="user-message_input"
               type="text"
               placeholder={isLoading ? "" : "Skriv meddelande"}
