@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
 import { ConversationContext } from "../../contexts/ConversationContext";
@@ -12,7 +12,7 @@ export default function EmelyChat(props) {
   const { userDetails, currentUser, getUserDetails } = useAuth();
   // get :persona to send to the BE for conversation
   const { persona } = props.match.params;
-
+const scroll = useRef();
   const {
     currentJob,
     formatedTimestamp,
@@ -62,7 +62,11 @@ export default function EmelyChat(props) {
         // Bot message
         if (botIdx < botMessage.length) {
           messages.push(
-            <EmelyChatBubble message={botMessage[botIdx++]} key={i} />
+            <EmelyChatBubble
+              message={botMessage[botIdx++]}
+              key={i}
+              scroll={scroll}
+            />
           );
         }
       }
@@ -91,7 +95,8 @@ export default function EmelyChat(props) {
           {showUserMessage.length > 0 && renderMessages()}
         </div>
 
-        <ChatInput persona={persona} />
+        <ChatInput persona={persona} scroll={scroll} />
+        <div ref={scroll}></div>
       </Container>
     </>
   );
