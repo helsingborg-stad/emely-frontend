@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Redirect } from "react-router-dom";
 
 import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
