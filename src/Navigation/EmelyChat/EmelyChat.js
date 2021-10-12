@@ -12,7 +12,7 @@ export default function EmelyChat(props) {
   const { userDetails, currentUser, getUserDetails } = useAuth();
   // get :persona to send to the BE for conversation
   const { persona } = props.match.params;
-const scroll = useRef();
+  const scroll = useRef();
   const {
     currentJob,
     formatedTimestamp,
@@ -71,7 +71,6 @@ const scroll = useRef();
         }
       }
     }
-
     return messages;
   };
 
@@ -92,11 +91,12 @@ const scroll = useRef();
               )}
             </Col>
           </Row>
-          {showUserMessage.length > 0 && renderMessages()}
-        </div>
 
-        <ChatInput persona={persona} scroll={scroll} />
+          {showUserMessage.length > 0 && renderMessages()}
+         
+        </div>
         <div ref={scroll}></div>
+        <ChatInput persona={persona} scroll={scroll} />
       </Container>
     </>
   );

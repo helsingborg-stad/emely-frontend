@@ -131,14 +131,14 @@ right: 16px;
 
 .user-message_input {
   background-color: var(--white);
-  border-radius: 50px;
+  border-radius: 25px;
   border: none;
   margin-left: 5px;
   width: 100%;
-  padding: 20px;
+  padding: 10px 50px 10px 20px;
   width: 100%;
   outline: none;
-  height: 30px;
+  /* height: 30px; */
 }
 
 .user-message_input:focus {

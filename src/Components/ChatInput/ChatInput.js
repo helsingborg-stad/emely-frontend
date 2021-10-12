@@ -10,6 +10,7 @@ import { FaStop } from "react-icons/fa";
 import useWindowDimensions from "../../customHooks/useWindowDimensions";
 import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
+import TextareaAutosize from "react-textarea-autosize";
 
 export default function ChatInput({ persona, scroll }) {
   // states for layout
@@ -42,6 +43,7 @@ export default function ChatInput({ persona, scroll }) {
       setUserMessage("");
       scroll.current.scrollIntoView({ behavior: "smooth" });
     }
+    setFocused(false);
   };
 
   // sets the recordings button active
@@ -74,21 +76,23 @@ export default function ChatInput({ persona, scroll }) {
             onSubmit={(e) => handleSendClick(e)}
             className={isFocused ? "input-wrapper expand" : "input-wrapper"}
           >
-            <input
+            <TextareaAutosize
               onChange={(e) => {
                 setUserMessage(e.target.value);
               }}
               className="user-message_input"
               type="text"
+              minRows={1}
+              maxRows={3}
               placeholder={isLoading ? "" : "Skriv meddelande"}
               value={isListening ? recordingNote : userMessage}
               onFocus={() => {
                 setFocused(true);
               }}
-              onBlur={() => {
-                setFocused(false);
-              }}
-            ></input>
+              // onBlur={() => {
+              //   setFocused((prevState) => !prevState);
+              // }}
+            ></TextareaAutosize>
             <button disabled={isLoading} className="send_message_btn">
               <IoIosSend />
             </button>
