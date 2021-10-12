@@ -5,30 +5,23 @@ Emely web app is the user interface part of Emely, consisting of this web app an
 
 ## Windows installation
 
-1. To be able to run npm install you need to download and install Nodejs:
-
-[https://nodejs.org/en/download/]
-
-
-
-## Project setup
-Run the below command in the root folder of this project.
-```
-npm install
-```
-
-
-## Put .env.local file in your root directory
-You can find the .env.local file in the NordAxon OneDrive. Put this file in your root folder for this project.
-```
-NORDAXON/AI ML PROJECTS/EMELY/Design - Development - Test/API & json/.env.local -> Paste in root-folder.
-```
-
-
+### Get started -first time
+1. Clone repository
+2. Download and install NodeJS from https://nodejs.org/en/download/
+3. Go to root-folder and write following command
+ ```
+ $ npm install
+ ```
+7. Navigate to the api folder in your prompt and do the '$ npm install' again.
+8. Aquire the files '.env.production', '.env.development' from OneDrive and put in the root-folder.
+9. You are ready to run the project.
 
 ## Run project
 Finally, run the below command to start the web-app. It will be running on localhost:3000.
 ```
 npm start
 ```
+
+## Changes in 'package.json' and 'package-lock.json
+If there has been changes in 'package.json' and 'package-lock.json' you need to run '$ npm install' again otherwise you will get an error saying that you are missing a certain module used in the project. 
 
