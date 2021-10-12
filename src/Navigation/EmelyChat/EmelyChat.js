@@ -9,6 +9,7 @@ import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
 import ChatInput from "../../Components/ChatInput/ChatInput";
 
 export default function EmelyChat(props) {
+  let messages = [];
   const { userDetails, currentUser, getUserDetails } = useAuth();
   // get :persona to send to the BE for conversation
   const { persona } = props.match.params;
@@ -40,10 +41,18 @@ export default function EmelyChat(props) {
 
   useEffect(() => {
     renderMessages();
+    scrollToTop();
   }, [showUserMessage, botMessage]);
 
+
+  const scrollToTop = () => {
+    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+
+
   const renderMessages = () => {
-    let messages = [];
+    
 
     for (
       let i = 0, userIdx = 0, botIdx = 0;
@@ -96,7 +105,7 @@ export default function EmelyChat(props) {
          
         </div>
         <div ref={scroll}></div>
-        <ChatInput persona={persona} scroll={scroll} />
+        <ChatInput persona={persona} />
       </Container>
     </>
   );

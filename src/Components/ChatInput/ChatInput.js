@@ -41,7 +41,6 @@ export default function ChatInput({ persona, scroll }) {
     if (userMessage.trim().length > 0) {
       getContinueСonversation(persona, userMessage);
       setUserMessage("");
-      scroll.current.scrollIntoView({ behavior: "smooth" });
     }
     setFocused(false);
   };
