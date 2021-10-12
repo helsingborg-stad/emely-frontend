@@ -50,6 +50,7 @@ export default function EmelyChat(props) {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // todo This function should be rewritten, collections from the firestore should be rendered.
   const renderMessages = () => {
     let messages = [];
 
@@ -62,24 +63,20 @@ export default function EmelyChat(props) {
         // Odd or even to decide the message type
         // User message
         if (userIdx < showUserMessage.length) {
-          if(userIdx === showUserMessage.length-1){
-             messages.push(
-            <UserChatBubble
-              message={showUserMessage[userIdx++]}
-              key={i}
-              isFocused={isFocused}
-              loader={<PulseLoader size={6} />}
-            />
-          );
-          }else {
-             messages.push(
-               <UserChatBubble
-                 message={showUserMessage[userIdx++]}
-                 key={i}
-               />
-             );
+          if (userIdx === showUserMessage.length - 1) {
+            messages.push(
+              <UserChatBubble
+                message={showUserMessage[userIdx++]}
+                key={i}
+                isFocused={isFocused}
+                loader={<PulseLoader size={6} />}
+              />
+            );
+          } else {
+            messages.push(
+              <UserChatBubble message={showUserMessage[userIdx++]} key={i} />
+            );
           }
-         
         }
       } else {
         // Bot message
@@ -95,10 +92,7 @@ export default function EmelyChat(props) {
             );
           } else {
             messages.push(
-              <EmelyChatBubble
-                message={botMessage[botIdx++]}
-                key={i}
-              />
+              <EmelyChatBubble message={botMessage[botIdx++]} key={i} />
             );
           }
         }
