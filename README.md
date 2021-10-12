@@ -1,29 +1,20 @@
-# Emely Web App
+# Emely WebApp
 
-This is the new Emely react Web App
-
-
-## Install Node JS
-To be able to run npm install you need to download and install Nodejs:
-```
-https://nodejs.org/en/download/
-```
+Emely web app is the user interface part of Emely, consisting of this web app and the Brain. The web app is mainly based on the JavaScript framework **React** but also uses GCP services such as Firebase Authentication, Firestore etc. There is some backend logic created in Python. 
 
 
-## Project setup
-Run the below command in the root folder of this project.
-```
-npm install
-```
+## Windows installation
 
-
-## Put .env.development & .env.production files in your root directory
-You can find the .env.-files in the NordAxon OneDrive.
-```
-NORDAXON/AI ML PROJECTS/EMELY/Design - Development - Test/API & json/
-```
-
-
+### Get started -first time
+1. Clone repository
+2. Download and install NodeJS from https://nodejs.org/en/download/
+3. Go to root-folder and write following command
+ ```
+ $ npm install
+ ```
+7. Navigate to the api folder in your prompt and do the '$ npm install' again.
+8. Aquire the files '.env.production', '.env.development' from OneDrive and put in the root-folder.
+9. You are ready to run the project.
 
 ## Run project
 Finally, run the below command to start the web-app. It will be running on localhost:3000.
@@ -31,7 +22,6 @@ Finally, run the below command to start the web-app. It will be running on local
 npm start
 ```
 
-
-## Project not running correctly?
-If the project is not running correctly, it could be because the package.json is not syncing with your local node_modules folder. To fix this run "npm install" again.
+## Changes in 'package.json' and 'package-lock.json
+If there has been changes in 'package.json' and 'package-lock.json' you need to run '$ npm install' again otherwise you will get an error saying that you are missing a certain module used in the project. 
 
