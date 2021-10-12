@@ -1,14 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { auth, dbUsers, db } from '../firebase';
 import {
-	getFirestore,
+
 	getDoc,
 	doc,
 	setDoc,
 	updateDoc,
-	collection,
 	increment,
-	DocumentSnapshot,
+	deleteDoc,
 } from 'firebase/firestore';
 import {
 	updateEmail,
@@ -16,6 +15,7 @@ import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	sendPasswordResetEmail,
+	deleteUser,
 } from 'firebase/auth';
 
 const AuthContext = React.createContext();
@@ -43,7 +43,8 @@ export function AuthProvider({ children }) {
 		birthYear,
 		nativeLanguage,
 		currentOccupation,
-		uid
+		uid,
+		creationTime,
 	) {
 		await setDoc(doc(dbUsers, uid), {
 			uid: uid,
@@ -53,7 +54,10 @@ export function AuthProvider({ children }) {
 			native_language: nativeLanguage,
 			current_occupation: currentOccupation,
 			login_count: 1,
-		})
+			created_at: creationTime,
+			last_sign_in: creationTime,
+			
+		});
 	}
 
 	/* Log in with email and password */
@@ -78,11 +82,13 @@ export function AuthProvider({ children }) {
 		return userDetails;
 	}
 
+
 	/* Increment login_count when login */
-	function updateLoginCount(uid) {
+	function updateLoginCount(uid, lastSignInTime) {
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
 			login_count: increment(1),
+			last_sign_in: lastSignInTime,
 		});
 	}
 
@@ -106,6 +112,7 @@ export function AuthProvider({ children }) {
 
 	/* Update current occupation */
 	function updateCurrentOccupation(uid, currentOccupation) {
+		
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
 			current_occupation: currentOccupation,
@@ -130,12 +137,43 @@ export function AuthProvider({ children }) {
 
 	/* Update password */
 	function passwordUpdate(password) {
-		return updatePassword(auth.currentUser, password);
+		updatePassword(currentUser, password).then(() => {
+			console.log("Password updated successfully")
+		  }).catch((error) => {
+			console.log(error.message)
+		  });
 	}
 
 	/* Update email */
 	function emailUpdate(newEmail) {
-		return updateEmail(currentUser, newEmail);
+		updateEmail(currentUser, newEmail).then(() => {
+			const userRef = doc(dbUsers, currentUser.uid);
+			updateDoc(userRef, {
+				email: newEmail,
+			});
+			console.log("Email updated")
+		  }).catch((error) => {
+			console.log(error.message)
+		  });
+	}
+
+	/* Update email in firestore */
+	function emailUpdateFirestore(email, uid){
+
+	}
+
+	/* Delete user from auth */
+function userDelete() {
+	deleteUser(auth.currentUser).then(() => {
+		console.log("User deleted")
+	  }).catch((error) => {
+		console.log(error.message)
+	  });
+	}
+
+	/* Delete user from firestore */
+	function deleteFirestoreUser(uid) {
+		deleteDoc(doc(dbUsers, uid));
 	}
 
 	useEffect(() => {
@@ -164,6 +202,10 @@ export function AuthProvider({ children }) {
 		updateLoginCount,
 		getUserDetails,
 		userDetails,
+		userDelete,
+		deleteFirestoreUser,
+		emailUpdateFirestore,
+		
 	};
 
 	return (

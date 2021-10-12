@@ -14,7 +14,6 @@ import { FaUserTie } from 'react-icons/fa';
 
 import AuthLayout from '../../Components/AuthLayout/AuthLayout';
 
-
 /* Variable declaration */
 export default function Signup() {
 	/* Form value variables */
@@ -31,6 +30,13 @@ export default function Signup() {
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
+
+	function handleEndUserTerms(e){
+		e.preventDefault();
+
+		window.open("/end-user-terms", "User Terms", "width=1000, height=1000", "resizable,scrollbars,status");
+	}
+
 	async function handleSubmit(e) {
 		e.preventDefault();
 
@@ -45,16 +51,19 @@ export default function Signup() {
 			/* Run signup firebase-auth function from AuthContext.js */
 			const credential = await signup(
 				emailRef.current.value,
-				passwordRef.current.value,
+				passwordRef.current.value
 			);
 			const uid = credential.user.uid;
-			await createUser(				
+			const creationTime = credential.user.metadata.creationTime;
+
+			await createUser(
 				emailRef.current.value,
 				usernameRef.current.value,
 				birthYearRef.current.value,
 				nativeLanguageRef.current.value,
 				currentOccupationRef.current.value,
 				uid,
+				creationTime
 			);
 
 			history.push('/dashboard');
@@ -73,7 +82,7 @@ export default function Signup() {
 				<h2 className="text-center mb-5 fw-bold">
 					Registrera dig för att börja prata med Emely.
 				</h2>
-				{error && <Alert variant="danger">{error}</Alert>}
+				
 				<Form onSubmit={handleSubmit}>
 					{/* Register new user forms */}
 
@@ -182,15 +191,15 @@ export default function Signup() {
 						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="currentOccupation" className="fw-bold">
 								<Form.Label className="mt-5">
-									<FaUserTie size={25} /> Vad är din syselsättning?
+									<FaUserTie size={25} /> Vad är din sysselsättning?
 								</Form.Label>
 								<Form.Select
 									ref={currentOccupationRef}
 									className="rounded-pill p-3 shadow-sm"
 									defaultValue="Arbetslös"
 								>
-									<option>Arbetslös</option>
-									<option>Söker arbete</option>
+									<option>Arbetssökande</option>
+									<option>Studerande</option>
 									<option>Sjukskriven</option>
 									<option>Heltidsjobb</option>
 									<option>Deltidsjobb</option>
@@ -200,21 +209,36 @@ export default function Signup() {
 							</Form.Group>
 						</Col>
 					</Row>
+					<Row>
+						<Form.Group
+							className="mb-3 mt-4 ms-3"
+							controlId="formBasicCheckbox"
+						>
+							
+								<Form.Check
+									required	
+									type="checkbox"
+									style={{ display: 'inline'}}
+								/> <span id="checkbox-text" className="text-end ms-3 ">Jag godkänner <Button className="p-0" variant="none" target="_blank" onClick={handleEndUserTerms}> <b>NordAxons användningsvillkor</b> </Button></span>
+								
+								{error && <Alert className="mt-4" variant="danger">{error}</Alert>}
+						</Form.Group>
+					</Row>
 
 					{/* Submit buttons */}
 					<Button
 						disabled={loading}
-						className="w-100 mt-5 p-3 btn-success rounded-pill fw-bold shadow-sm register-btn"
+						className="w-100 mt-3 p-3 btn-success rounded-pill fw-bold shadow-sm register-btn"
 						type="submit"
 					>
 						<AiOutlineUserAdd size={30} />
-						REGISTRERA DIG
+						SKAPA ANVÄNDARE
 					</Button>
 				</Form>
-        <div className="w-100 text-center mt-3 fw-bold">
-          Har du ett konto? <Link to="/login">Logga In</Link>
-        </div>
-      </AuthLayout>
-    </>
-  );
+				<div className="w-100 text-center mt-3 fw-bold">
+					Har du ett konto? <Link to="/login">Logga In</Link>
+				</div>
+			</AuthLayout>
+		</>
+	);
 }

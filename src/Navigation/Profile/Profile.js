@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Card, Container, Row, Alert, Button } from 'react-bootstrap';
+import {
+	Col,
+	Card,
+	Container,
+	Row,
+	Alert,
+	Button,
+	Modal,
+} from 'react-bootstrap';
 import UserMenu from '../../Components/UserMenu/UserMenu';
 import ProfileCard from '../../Components/ProfileCard/ProfileCard';
 import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /* Icon imports */
 import { AiOutlineHome } from 'react-icons/ai';
@@ -14,16 +23,34 @@ import { FaRegTimesCircle } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function Profile() {
-	const { currentUser, userDetails, logout } = useAuth();
+	const { currentUser, userDetails, logout, userDelete, deleteFirestoreUser } =
+		useAuth();
 	const [error, setError] = useState('');
 	const history = useHistory();
+	const [show, setShow] = useState(false);
 
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	async function handleLogout() {
 		setError('');
 
 		try {
 			await logout();
+			history.push('/login');
+
+			/* Catch error */
+		} catch (error) {
+			setError(error.message);
+		}
+	}
+
+	async function handleDeleteUser() {
+		setError('');
+
+		try {
+			await userDelete();
+			await deleteFirestoreUser(currentUser.uid);
 			history.push('/login');
 
 			/* Catch error */
@@ -39,28 +66,46 @@ export default function Profile() {
 					<UserMenu />
 				</Row>
 				<h2 className="text-center mb-4 fw-bold">Användarkonto</h2>
-				<ProfileCard title={'Mina uppgifter'} buttonText={'Redigera'} linkTo={'/update-profile'} buttonIcon={<AiOutlineEdit className="me-2" size={15} />}>
-					<Row className="m-3">
-						<small className="fw-bold p-0">Användarnamn</small>
-						{userDetails && userDetails.username}
+
+				{/* My information card */}
+				<ProfileCard title={'Mina uppgifter'}>
+					<Col className="text-end">
+						<span>
+							<Link to={'/update-profile'}>
+								<Button
+									variant="outline-success"
+									className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+									id="edit-button"
+								>
+									<AiOutlineEdit className="me-2" size={15} />
+									Redigera
+								</Button>
+							</Link>
+						</span>
+					</Col>
+					<Row className="mt-3 ">
+						<small className="fw-bold">Användarnamn</small>
+						<p>{userDetails && userDetails.username}</p>
 					</Row>
-					<Row className="m-3">
-						<small className="fw-bold p-0">E-postadress</small>
-						{currentUser.email}
+
+					<Row className="mt-3 ">
+					<small className="fw-bold">Användarnamn</small>
+					<p>{userDetails && userDetails.email}</p>
+				</Row>
+
+					<Row className="mt-3">
+						<small className="fw-bold ">Födelsedatum</small>
+						<p>{userDetails && userDetails.birth_year}</p>
 					</Row>
-					<Row className="m-3">
-						<small className="fw-bold p-0">Födelsedatum</small>
-						{userDetails && userDetails.birth_year}
+					<Row className="mt-3">
+						<small className="fw-bold ">Modersmål</small>
+						<p>{userDetails && userDetails.native_language}</p>
 					</Row>
-					<Row className="m-3">
-						<small className="fw-bold p-0">Modersmål</small>
-						{userDetails && userDetails.native_language}
+					<Row className="mt-3">
+						<small className="fw-bold ">Sysselsättning</small>
+						<p>{userDetails && userDetails.current_occupation}</p>
 					</Row>
-					<Row className="m-3">
-						<small className="fw-bold p-0">Sysselsättning</small>
-						{userDetails && userDetails.current_occupation}
-					</Row>
-					<Row className="text-end mb-3 pe-3">
+					<Row className="mb-3 mt-5">
 						<span>
 							<Button
 								variant="outline-success"
@@ -75,18 +120,104 @@ export default function Profile() {
 					</Row>
 				</ProfileCard>
 
-				<br/>
-				<ProfileCard title={'Samtalshistorik'} buttonText={'Visa'} linkTo={'/chat-history'} buttonIcon={<BiShowAlt className="me-2" size={15} />}>
-				
-				</ProfileCard>
-				<br/>
-				<ProfileCard title={'Radera användare'} buttonText={'Radera'} linkTo={'/delete-profile'} buttonIcon={<FaRegTimesCircle className="me-2" size={15} />}>
-				
+				<br />
+
+				{/* Conversation history card */}
+				<ProfileCard title={'Samtalshistorik'}>
+					<Col className="text-end me-0">
+						<span>
+							<Link to={'/conversation-history'}>
+								<Button
+									variant="outline-success"
+									className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+									id="edit-button"
+								>
+									<BiShowAlt className="me-2" size={15} />
+									Visa
+								</Button>
+							</Link>
+						</span>
+					</Col>
 				</ProfileCard>
 
-				<br/>
-				<ProfileCard title={'Email & lösenord'} buttonText={'Redigera'} linkTo={'/change-email-password'} buttonIcon={<AiOutlineEdit className="me-2" size={15} />}>
-				
+				<br />
+
+				{/* Delete user card */}
+				<ProfileCard
+					title={'Radera användare'}
+					buttonIcon={<FaRegTimesCircle className="me-2" size={15} />}
+				>
+					<Col className="text-end me-0">
+						<span>
+							<Button
+								variant="outline-danger"
+								className="rounded-pill pe-3 ps-3 fw-bold"
+								id="delete-user-button"
+								onClick={handleShow}
+							>
+								<FaRegTimesCircle className="me-2" size={15} />
+								Radera
+							</Button>
+						</span>
+					</Col>
+					<Row className="mt-3 ">
+						<p className="card-text" id="delete-text">
+							Om du raderar din användare så kommer all användarinformation att
+							försvinna. Var försiktig med detta för det finns ingen återvändo.{' '}
+						</p>
+					</Row>
+				</ProfileCard>
+
+				{/* Confirmation modal */}
+				<Modal show={show} onHide={handleClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Radera användarkonto</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						Är du säker på att du vill radera ditt användarkonto? All
+						användarinformation kommer att försvinna.
+					</Modal.Body>
+					<Modal.Footer>
+						<Button 
+						variant="outline-secondary"
+						className="rounded-pill pe-3 ps-3 fw-bold" 
+						onClick={handleClose}>
+							Avbryt
+						</Button>
+						<Button
+							variant="outline-danger"
+							className="rounded-pill pe-3 ps-3 fw-bold"
+							id="delete-user-button"
+							onClick={handleDeleteUser}
+						>
+							Radera
+						</Button>
+					</Modal.Footer>
+				</Modal>
+
+				<br />
+
+				{/* Change email and password card */}
+				<ProfileCard title={'Ändra lösenord'}>
+					<Col className="text-end me-0">
+						<span>
+							<Link to={'/change-email-password'}>
+								<Button
+									variant="outline-success"
+									className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+									id="edit-button"
+								>
+									<AiOutlineEdit className="me-2" size={15} />
+									Ändra
+								</Button>
+							</Link>
+						</span>
+					</Col>
+					<Row className="mt-3 ">
+						<p className="card-text" id="change-password-text">
+							Vill du ändra ditt lösenord?
+						</p>
+					</Row>
 				</ProfileCard>
 			</Container>
 		</>
