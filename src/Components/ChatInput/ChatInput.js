@@ -12,12 +12,12 @@ import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
 
-export default function ChatInput({ persona, scroll }) {
+export default function ChatInput({ persona, setFocused, isFocused }) {
   // states for layout
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
   const [activeSound, setActiveSound] = useState(true);
-  const [isFocused, setFocused] = useState(false);
+  
   const { currentWidth } = useWindowDimensions();
   // states && functions for interactive actions with BE
   const {

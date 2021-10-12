@@ -1,6 +1,7 @@
 import React from "react";
 import emely from "../../Assets/images/emely.png";
 
+
 export default function ChatBubble(props) {
   return (
     <>
@@ -8,7 +9,11 @@ export default function ChatBubble(props) {
         <div className="img-wrapper">
           <img className="emely-image" src={emely} alt="Emely" />
         </div>
-        <p className="dialogue-text">{props.message}</p>
+
+        <p className="dialogue-text">
+          {props.isLoading ? props.loader : props.message}
+        </p>
+
       </div>
     </>
   );

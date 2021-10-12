@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import { ConversationContext } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
@@ -9,7 +10,7 @@ import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
 import ChatInput from "../../Components/ChatInput/ChatInput";
 
 export default function EmelyChat(props) {
-  let messages = [];
+  const [isFocused, setFocused] = useState(false);
   const { userDetails, currentUser, getUserDetails } = useAuth();
   // get :persona to send to the BE for conversation
   const { persona } = props.match.params;
@@ -21,6 +22,7 @@ export default function EmelyChat(props) {
     initConversation,
     botMessage,
     showUserMessage,
+    isLoading,
   } = useContext(ConversationContext);
 
   useEffect(() => {
@@ -44,15 +46,12 @@ export default function EmelyChat(props) {
     scrollToTop();
   }, [showUserMessage, botMessage]);
 
-
   const scrollToTop = () => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-
-
   const renderMessages = () => {
-    
+    let messages = [];
 
     for (
       let i = 0, userIdx = 0, botIdx = 0;
@@ -63,23 +62,49 @@ export default function EmelyChat(props) {
         // Odd or even to decide the message type
         // User message
         if (userIdx < showUserMessage.length) {
-          messages.push(
-            <UserChatBubble message={showUserMessage[userIdx++]} key={i} />
+          if(userIdx === showUserMessage.length-1){
+             messages.push(
+            <UserChatBubble
+              message={showUserMessage[userIdx++]}
+              key={i}
+              isFocused={isFocused}
+              loader={<PulseLoader size={6} />}
+            />
           );
+          }else {
+             messages.push(
+               <UserChatBubble
+                 message={showUserMessage[userIdx++]}
+                 key={i}
+               />
+             );
+          }
+         
         }
       } else {
         // Bot message
         if (botIdx < botMessage.length) {
-          messages.push(
-            <EmelyChatBubble
-              message={botMessage[botIdx++]}
-              key={i}
-              scroll={scroll}
-            />
-          );
+          if (botIdx === botMessage.length - 1) {
+            messages.push(
+              <EmelyChatBubble
+                message={botMessage[botIdx++]}
+                key={i}
+                isLoading={isLoading}
+                loader={<PulseLoader size={6} />}
+              />
+            );
+          } else {
+            messages.push(
+              <EmelyChatBubble
+                message={botMessage[botIdx++]}
+                key={i}
+              />
+            );
+          }
         }
       }
     }
+
     return messages;
   };
 
@@ -93,19 +118,18 @@ export default function EmelyChat(props) {
         <div className="emely-chat_wrapper">
           <Row>
             <Col>
-              {firstBotMessage ? (
-                <EmelyChatBubble message={firstBotMessage} />
-              ) : (
-                <p>loading...</p>
-              )}
+              <EmelyChatBubble message={firstBotMessage} />
             </Col>
           </Row>
 
           {showUserMessage.length > 0 && renderMessages()}
-         
         </div>
         <div ref={scroll}></div>
-        <ChatInput persona={persona} />
+        <ChatInput
+          persona={persona}
+          setFocused={setFocused}
+          isFocused={isFocused}
+        />
       </Container>
     </>
   );
