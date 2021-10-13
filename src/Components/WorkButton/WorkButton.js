@@ -33,7 +33,7 @@ export default function WorkButton(props) {
 
           <div id="overlay"></div>
           <ul>
-            {props.occupation.map((job, i) => (
+            {props.occupation.sort().map((job, i) => (
               <li
                 onClick={(e) => handleClick(e)}
                 key={i}
