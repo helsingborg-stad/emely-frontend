@@ -6,12 +6,10 @@ export const ConversationContext = createContext();
 const ConversationContextProvider = (props) => {
   // state for Emely's first init message
   const [firstBotMessage, setFirstBotMessage] = useState(null);
-  // state for  Emely's follow-up messages
-  const [botMessage, setBotMessage] = useState([]);
+  // saves Emely's and user's messages
+  const [sessionConversation, setSessionConersation] = useState([]);
   // state for user's message (invokes in onChange case)
   const [userMessage, setUserMessage] = useState("");
-  //  state for show user message
-  const [showUserMessage, setShowUserMessage] = useState([]);
   // state for conversation id
   const [conversationId, setConversationId] = useState(null);
   // state for occupational buttons
@@ -65,8 +63,8 @@ const ConversationContextProvider = (props) => {
     date = formatedTimestamp()
   ) => {
     setIsLoading(true);
-    setShowUserMessage((prevState) => [...prevState, userMessage]);
-
+    // saves user's message
+    setSessionConersation((prevState) => [...prevState, userMessage]);
     try {
       // send post request to local server
       const response = await axios.post(
@@ -82,10 +80,11 @@ const ConversationContextProvider = (props) => {
         }
       );
       const result = await response.data;
-      setBotMessage((prevState) => [...prevState, result.message]);
+      // saves Emely's message
+      setSessionConersation((prevState) => [...prevState, result.message]);
     } catch (err) {
       console.log("Error: ", err);
-      setBotMessage(
+      setSessionConersation(
         "***this is Emely response in case of error: _CHANGE ME_*****"
       );
       return false;
@@ -125,11 +124,11 @@ const ConversationContextProvider = (props) => {
     currentJob,
     formatedTimestamp,
     getContinueСonversation,
-    botMessage,
     userMessage,
     setUserMessage,
-    showUserMessage,
     isLoading,
+    sessionConversation,
+    setSessionConersation,
   };
 
   return (
