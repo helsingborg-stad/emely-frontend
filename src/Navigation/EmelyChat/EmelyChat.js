@@ -50,7 +50,7 @@ export default function EmelyChat(props) {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // todo This function should be rewritten, collections from the firestore should be rendered.
+  // todo This function should be rewritten, custom hook??
   const renderMessages = () => {
     let messages = [];
 
@@ -63,38 +63,16 @@ export default function EmelyChat(props) {
         // Odd or even to decide the message type
         // User message
         if (userIdx < showUserMessage.length) {
-          if (userIdx === showUserMessage.length - 1) {
-            messages.push(
-              <UserChatBubble
-                message={showUserMessage[userIdx++]}
-                key={i}
-                isFocused={isFocused}
-                loader={<PulseLoader size={6} />}
-              />
-            );
-          } else {
-            messages.push(
-              <UserChatBubble message={showUserMessage[userIdx++]} key={i} />
-            );
-          }
+          messages.push(
+            <UserChatBubble message={showUserMessage[userIdx++]} key={i} />
+          );
         }
       } else {
         // Bot message
         if (botIdx < botMessage.length) {
-          if (botIdx === botMessage.length - 1) {
-            messages.push(
-              <EmelyChatBubble
-                message={botMessage[botIdx++]}
-                key={i}
-                isLoading={isLoading}
-                loader={<PulseLoader size={6} />}
-              />
-            );
-          } else {
-            messages.push(
-              <EmelyChatBubble message={botMessage[botIdx++]} key={i} />
-            );
-          }
+          messages.push(
+            <EmelyChatBubble message={botMessage[botIdx++]} key={i} />
+          );
         }
       }
     }
@@ -117,6 +95,20 @@ export default function EmelyChat(props) {
           </Row>
 
           {showUserMessage.length > 0 && renderMessages()}
+          {/* renders Emely loader (waiting for a response from the server )*/}
+          {isLoading && (
+            <EmelyChatBubble
+              isLoading={isLoading}
+              loader={<PulseLoader size={6} color={"#979797"} />}
+            />
+          )}
+          {/* renders user loader (if textarea onFocus) */}
+          {isFocused && (
+            <UserChatBubble
+              isFocused={isFocused}
+              loader={<PulseLoader size={6} color={"#979797"} />}
+            />
+          )}
         </div>
         <div ref={scroll}></div>
         <ChatInput
