@@ -18,6 +18,8 @@ const ConversationContextProvider = (props) => {
   const [currentJob, setCurrentJob] = useState(null);
   // to determine the loading for disabling the "send" button when the request is pending
   const [isLoading, setIsLoading] = useState(false);
+  // disable "send" button in error case
+  const [isError, setError] = useState(false);
 
   const initConversation = async (
     userName,
@@ -25,6 +27,7 @@ const ConversationContextProvider = (props) => {
     date = formatedTimestamp(),
     persona
   ) => {
+    setError(false);
     try {
       // send post request to local server
       const response = await axios.post(
@@ -40,7 +43,6 @@ const ConversationContextProvider = (props) => {
           webapp_version: "NA",
           brain_url: "NA",
           lang: "sv",
-          password: "KYgZfDG6P34H56WJM996CKKcNG4",
           user_ip_number: "127.0.0.1",
         }
       );
@@ -50,8 +52,9 @@ const ConversationContextProvider = (props) => {
     } catch (err) {
       console.log("Error: ", err);
       setFirstBotMessage(
-        "***this is Emely response in case of error: _CHANGE ME_*****"
+        "Ojoj, mitt stackars huvud... Jag tror jag har bivit sjuk och måste gå till vårdcentralen. Vi får prata en annan dag. Hejdå!"
       );
+      setError(true);
       return false;
     }
   };
@@ -62,6 +65,7 @@ const ConversationContextProvider = (props) => {
     id = conversationId,
     date = formatedTimestamp()
   ) => {
+    
     setIsLoading(true);
     // saves user's message
     setSessionConersation((prevState) => [...prevState, userMessage]);
@@ -76,7 +80,6 @@ const ConversationContextProvider = (props) => {
           created_at: `${date}`,
           recording_used: false,
           lang: "sv",
-          password: "KYgZfDG6P34H56WJM996CKKcNG4",
         }
       );
       const result = await response.data;
@@ -84,9 +87,12 @@ const ConversationContextProvider = (props) => {
       setSessionConersation((prevState) => [...prevState, result.message]);
     } catch (err) {
       console.log("Error: ", err);
-      setSessionConersation(
-        "***this is Emely response in case of error: _CHANGE ME_*****"
-      );
+      setSessionConersation((prevState) => [
+        ...prevState,
+        "Ojoj, mitt stackars huvud... Jag tror jag har bivit sjuk och måste gå till vårdcentralen. Vi får prata en annan dag. Hejdå!",
+      ]);
+      setError(true);
+      setIsLoading(false);
       return false;
     }
     setUserMessage("");
@@ -129,6 +135,7 @@ const ConversationContextProvider = (props) => {
     isLoading,
     sessionConversation,
     setSessionConersation,
+    isError,
   };
 
   return (

@@ -23,6 +23,7 @@ export default function EmelyChat(props) {
     isLoading,
     sessionConversation,
     setSessionConersation,
+    
   } = useContext(ConversationContext);
 
   //  gets a user ID and starts a conversation with Emely from the beginning every  first rendering
@@ -80,7 +81,7 @@ export default function EmelyChat(props) {
 
           {sessionConversation.length > 0 && renderMessages()}
           {/* renders Emely loader (waiting for a response from the server )*/}
-          {isLoading && (
+          {isLoading  && (
             <EmelyChatBubble
               isLoading={isLoading}
               loader={<PulseLoader size={6} color={"#979797"} />}
