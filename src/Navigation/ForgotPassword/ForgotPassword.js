@@ -4,30 +4,34 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { HiOutlineMail } from 'react-icons/hi';
 import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 /* Variable declaration */
 export default function ForgotPassword() {
 	const emailRef = useRef();
-	const { resetPassword } = useAuth();
-	const [error, setError] = useState('');
-	const [message, setMessage] = useState('');
+	const { resetPassword, translateError } = useAuth();
+	const [msg, setMsg] = useState('');
+	const [msgVariant, setMsgVariant] = useState('');
 	const [loading, setLoading] = useState(false);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 
 		try {
-			setMessage('');
-			setError('');
+
+			setMsg('');
 			setLoading(true);
 
 			/* Run resetPassword function from AuthContext.js */
 			await resetPassword(emailRef.current.value);
-			setMessage('Check your inbox for further instructions');
+			setMsg('Kontrollera din inkorg för ytterligare instruktioner');
+			setMsgVariant('warning');
 
 			/* Catch error and print out in alert (in english) */
 		} catch (error) {
-			setError(error.message);
+      console.log(error.code);
+      setMsgVariant('danger');
+			setMsg(translateError(error.code));
 		}
 
 		setLoading(false);
@@ -35,12 +39,15 @@ export default function ForgotPassword() {
 
 	return (
     <>
+    {msg && (
+      <AlertMessage message={msg} variant={msgVariant} />
+    )}
+
       <AuthLayout>
         <h2 className="text-center mb-5 fw-bold" id="password-reset">
           Återställ ditt lösenord
         </h2>
-        {error && <Alert variant="danger">{error}</Alert>}
-        {message && <Alert variant="success">{message}</Alert>}
+
 
         {/* Reset password form */}
         <Form onSubmit={handleSubmit}>

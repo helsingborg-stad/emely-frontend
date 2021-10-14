@@ -1,16 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
-import {
-	Form,
-	Button,
-	Alert,
-	Row,
-	Col,
-	Container,
-} from 'react-bootstrap';
+import { Form, Button, Alert, Row, Col, Container } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import UserMenu from '../../Components/UserMenu/UserMenu';
 import ProfileCard from '../../Components/ProfileCard/ProfileCard';
-
+import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 import { Link, useHistory } from 'react-router-dom';
 
@@ -21,49 +14,40 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { IoIosArrowBack } from 'react-icons/io';
 
-
 /* Variable declaration */
 export default function UpdateEmailPassword() {
-	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
 
-	const { currentUser, passwordUpdate, emailUpdate, userDetails, emailUpdateFirestore } = useAuth();
-	const [error, setError] = useState('');
+	const { passwordUpdate, translateError } = useAuth();
+	const [msg, setMsg] = useState('');
+	const [msgVariant, setMsgVariant] = useState('');
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-
+		
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-			return setError('Passwords do not match');
+			setMsgVariant('danger');
+			console.log('Passwords dont match');
+			return setMsg('Lösenorden matchar inte');
 		}
-
-		const promises = [];
-		setLoading(true);
-		setError('');
-
-		/* Run update methods from AuthContext */
 		try {
-
-			if (passwordRef.current.value) {
-				promises.push(passwordUpdate(passwordRef.current.value));
-			}
-
-			Promise.all(promises)
-				.then(() => {
-					history.push('/login');
-				})
-				.catch((error) => {
-					setError(error.message);
-				})
-				.finally(() => {
-					setLoading(false);
-				});
+			setMsg('');
+			setLoading(true);
+			
+			
+			 await passwordUpdate(passwordRef.current.value);
+			 history.push("login")
+			
 		} catch (error) {
-			console.log(error.message);
+			console.log(error.code);
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
 		}
+		setLoading(false);
+	
 	}
 
 	return (
@@ -71,31 +55,28 @@ export default function UpdateEmailPassword() {
 			<Container>
 				<Row>
 					<UserMenu />
+					{msg && <AlertMessage message={msg} variant={msgVariant} />}
 				</Row>
 				<h2 className="text-center mb-4 fw-bold">Email & Lösenord</h2>
 
-				<ProfileCard
-					title={'Ändra Email & Lösenord'}
-				>
-				<Col className="text-end p-0 me-0">
-				<span>
-					<Link to={'/profile'}>
-						<Button
-							variant="outline-success"
-							className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
-							id="edit-button"
-						>
-						<IoIosArrowBack className="me-2" size={15} /> Tillbaka
-						</Button>
-					</Link>
-				</span>
-			</Col>
-					{error && <Alert variant="danger">{error}</Alert>}
+				<ProfileCard title={'Ändra Email & Lösenord'}>
+					<Col className="text-end p-0 me-0">
+						<span>
+							<Link to={'/profile'}>
+								<Button
+									variant="outline-success"
+									className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+									id="edit-button"
+								>
+									<IoIosArrowBack className="me-2" size={15} /> Tillbaka
+								</Button>
+							</Link>
+						</span>
+					</Col>
+
 					{/* Username form */}
 					<Form onSubmit={handleSubmit} id="update-profile">
-						
-						
-                        {/* Password form */}
+						{/* Password form */}
 						<Row className="mt-3">
 							<Form.Group className="" id="password">
 								<Form.Label className="fw-bold">
@@ -111,7 +92,7 @@ export default function UpdateEmailPassword() {
 							</Form.Group>
 						</Row>
 
-                        {/* Password confirm form */}
+						{/* Password confirm form */}
 						<Row className="mt-3">
 							<Form.Group className="" id="password-confirm">
 								<Form.Label className="fw-bold">

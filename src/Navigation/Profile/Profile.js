@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import {
 	Col,
-	Card,
 	Container,
 	Row,
-	Alert,
 	Button,
 	Modal,
 } from 'react-bootstrap';
 import UserMenu from '../../Components/UserMenu/UserMenu';
 import ProfileCard from '../../Components/ProfileCard/ProfileCard';
+import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 /* Icon imports */
-import { AiOutlineHome } from 'react-icons/ai';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { BiShowAlt } from 'react-icons/bi';
@@ -25,15 +23,18 @@ import { useAuth } from '../../contexts/AuthContext';
 export default function Profile() {
 	const { currentUser, userDetails, logout, userDelete, deleteFirestoreUser } =
 		useAuth();
-	const [error, setError] = useState('');
 	const history = useHistory();
 	const [show, setShow] = useState(false);
+
+	const { translateError } = useAuth();
+	const [msg, setMsg] = useState('');
+	const [msgVariant, setMsgVariant] = useState('');
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
 	async function handleLogout() {
-		setError('');
+		setMsg('');
 
 		try {
 			await logout();
@@ -41,12 +42,14 @@ export default function Profile() {
 
 			/* Catch error */
 		} catch (error) {
-			setError(error.message);
+			console.log(error.code);
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
 		}
 	}
 
 	async function handleDeleteUser() {
-		setError('');
+		setMsg('');
 
 		try {
 			await userDelete();
@@ -55,12 +58,16 @@ export default function Profile() {
 
 			/* Catch error */
 		} catch (error) {
-			setError(error.message);
+			console.log(error.code);
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
 		}
 	}
 
 	return (
 		<>
+			{/* ------------ Alert for error messages: fixed-top ------------ */}
+			{msg && <AlertMessage message={msg} variant={msgVariant} />}
 			<Container>
 				<Row>
 					<UserMenu />
@@ -89,9 +96,9 @@ export default function Profile() {
 					</Row>
 
 					<Row className="mt-3 ">
-					<small className="fw-bold">Användarnamn</small>
-					<p>{userDetails && userDetails.email}</p>
-				</Row>
+						<small className="fw-bold">Användarnamn</small>
+						<p>{userDetails && userDetails.email}</p>
+					</Row>
 
 					<Row className="mt-3">
 						<small className="fw-bold ">Födelsedatum</small>
@@ -178,10 +185,11 @@ export default function Profile() {
 						användarinformation kommer att försvinna.
 					</Modal.Body>
 					<Modal.Footer>
-						<Button 
-						variant="outline-secondary"
-						className="rounded-pill pe-3 ps-3 fw-bold" 
-						onClick={handleClose}>
+						<Button
+							variant="outline-secondary"
+							className="rounded-pill pe-3 ps-3 fw-bold"
+							onClick={handleClose}
+						>
 							Avbryt
 						</Button>
 						<Button
@@ -201,7 +209,7 @@ export default function Profile() {
 				<ProfileCard title={'Ändra lösenord'}>
 					<Col className="text-end me-0">
 						<span>
-							<Link to={'/change-email-password'}>
+							<Link to={'/change-password'}>
 								<Button
 									variant="outline-success"
 									className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"

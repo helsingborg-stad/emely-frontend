@@ -1,8 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+
 import { Link, useHistory } from 'react-router-dom';
+
+import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 
 /* Icon Imports */
@@ -15,8 +18,9 @@ import { AiOutlineUser } from 'react-icons/ai';
 export default function Login() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const { login, updateLoginCount } = useAuth();
-	const [error, setError] = useState('');
+	const { login, updateUserInfo, translateError } = useAuth();
+	const [msg, setMsg] = useState('');
+	const [msgVariant, setMsgVariant] = useState('');
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
@@ -25,7 +29,7 @@ export default function Login() {
 		e.preventDefault();
 
 		try {
-			setError('');
+			setMsg('');
 			setLoading(true);
 
 			/* Run firebase-auth login function from AuthContext */
@@ -33,13 +37,15 @@ export default function Login() {
 			const userId = credentials.user.uid
 			const lastSignInTime = credentials.user.metadata.creationTime;
 
-			/* Run updateLoginCount to increment login_count after login */
-			await updateLoginCount(userId, lastSignInTime)
+			/* Run updateUserInfo to update appropriate fields on login */
+			await updateUserInfo(userId, lastSignInTime)
 			history.push('/dashboard');
 
-			/* Catch error and print out in alert (in english) */
+			/*  Catch error & translate in a function */
 		} catch (error) {
-			setError(error.message);
+			console.log(error.code);
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
 		}
 
 		setLoading(false);
@@ -47,6 +53,9 @@ export default function Login() {
 
 	return (
 		<>
+		{msg && (
+			<AlertMessage message={msg} variant={msgVariant} />
+		  )}
 			<AuthLayout>
 				<h2 className="text-center mb-4 fw-bold" id="login-header">
 					Logga in för att fortsätta
@@ -81,7 +90,7 @@ export default function Login() {
 						/>
 					</Form.Group>
 
-					{error && <Alert className="mt-5" variant="danger">{error}</Alert>}
+					
 
 					{/* Submit button & Log in */}
 					<Button
