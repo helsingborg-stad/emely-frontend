@@ -50,7 +50,7 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
   const handleClickRecordingBtn = (e) => {
     e.preventDefault();
     // set input onFocus
-    setFocused(true);
+    setFocused((prevState) => !prevState);
     // overwriting userMessage if recording button works
     setUserMessage(recordingNote);
     setIsListening((prevState) => !prevState);
