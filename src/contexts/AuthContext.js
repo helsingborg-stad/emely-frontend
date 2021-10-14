@@ -17,6 +17,8 @@ import {
 	deleteUser,
 } from 'firebase/auth';
 
+
+
 const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -32,7 +34,7 @@ export function AuthProvider({ children }) {
 	useEffect(() => {
 		const unsubscribe = auth.onAuthStateChanged((user) => {
 			setCurrentUser(user);
-
+		
 			setLoading(false);
 		});
 
@@ -69,7 +71,19 @@ export function AuthProvider({ children }) {
 
 	/* ---- Reset password with email ---- */
 	function resetPassword(email) {
-		return sendPasswordResetEmail(currentUser, email);
+		sendPasswordResetEmail(auth, email)
+			.then(() => {
+				console.log('Password reset email sent');
+			})
+			.catch((error) => {
+				console.log(error.code);
+			});
+	}
+
+	/* ---- Update password ---- */
+	function passwordUpdate(password) {
+		console.log("Password updated")
+		return updatePassword(currentUser, password);
 	}
 
 	/* ---- Translate auth errors ---- */
@@ -80,6 +94,18 @@ export function AuthProvider({ children }) {
 
 			case 'auth/weak-password':
 				return 'Lösenordet måste vara minst 6 karaktärer. Vänligen försök igen.';
+
+			case 'auth/wrong-password':
+				return 'Fel lösenord. Vänligen försök igen';
+
+			case 'auth/user-not-found':
+				return 'E-postadressen du angav finns inte registrerad. Vänligen försök igen';
+
+			case 'auth/too-many-requests':
+				return 'För många försök. Vänligen försök igen lite senare';
+
+			case 'auth/requires-recent-login':
+				return 'Du har blivit utloggad. Logga in igen.';
 
 			default:
 				return 'Opps något gick fel!';
@@ -109,6 +135,7 @@ export function AuthProvider({ children }) {
 			created_at: creationTime,
 			last_sign_in: creationTime,
 		});
+		console.log("User created in firestore")
 	}
 
 	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
@@ -120,6 +147,7 @@ export function AuthProvider({ children }) {
 			if (docSnap.exists()) {
 				const userData = docSnap.data();
 				setUserDetails(userData);
+				console.log("Successfully fetched user data from firestore")
 			} else {
 				console.log('Error fetching User');
 			}
@@ -129,12 +157,13 @@ export function AuthProvider({ children }) {
 	}
 
 	/* ---- Update user information on login ---- */
-	function updateLoginCount(uid, lastSignInTime) {
+	function updateUserInfo(uid, lastSignInTime) {
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
 			login_count: increment(1),
 			last_sign_in: lastSignInTime,
 		});
+		console.log("User info updated on log in");
 	}
 
 	/* ---- Update username ---- */
@@ -143,6 +172,7 @@ export function AuthProvider({ children }) {
 		updateDoc(userRef, {
 			username: username,
 		});
+		console.log("Username updated")
 	}
 
 	/* ---- Update current occupation ---- */
@@ -151,6 +181,7 @@ export function AuthProvider({ children }) {
 		updateDoc(userRef, {
 			current_occupation: currentOccupation,
 		});
+		console.log("Current occupation updated")
 	}
 
 	/* ---- Update native language ---- */
@@ -159,6 +190,7 @@ export function AuthProvider({ children }) {
 		updateDoc(userRef, {
 			native_language: nativeLanguage,
 		});
+		console.log("Native language updated")
 	}
 
 	/* ---- Update birth date ---- */
@@ -167,17 +199,7 @@ export function AuthProvider({ children }) {
 		updateDoc(userRef, {
 			birth_year: birthYear,
 		});
-	}
-
-	/* ---- Update password ---- */
-	function passwordUpdate(password) {
-		updatePassword(currentUser, password)
-			.then(() => {
-				console.log('Password updated successfully');
-			})
-			.catch((error) => {
-				console.log(error.message);
-			});
+		console.log("Birth date updated")
 	}
 
 	/* ---- Update email in Firestore ---- */
@@ -198,6 +220,7 @@ export function AuthProvider({ children }) {
 	/* ---- Delete user information from Firestore ---- */
 	function deleteFirestoreUser(uid) {
 		deleteDoc(doc(dbUsers, uid));
+		console.log("User deleted")
 	}
 
 	const value = {
@@ -213,7 +236,7 @@ export function AuthProvider({ children }) {
 		updateBirthYear,
 		updateNativeLanguage,
 		createUser,
-		updateLoginCount,
+		updateUserInfo,
 		getUserDetails,
 		userDetails,
 		userDelete,
