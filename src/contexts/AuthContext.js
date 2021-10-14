@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth, dbUsers, db } from '../firebase';
+import { auth, dbUsers } from '../firebase';
 import {
-
 	getDoc,
 	doc,
 	setDoc,
@@ -24,19 +23,72 @@ export function useAuth() {
 	return useContext(AuthContext);
 }
 
-/* Variable declaration */
 export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
 	const [userDetails, setUserDetails] = useState();
 	const [loading, setLoading] = useState(true);
 
-	/* Firebase functions used when handling users */
-	/* Sign up with email and password */
+	/* ---- Check for user changes ---- */
+	useEffect(() => {
+		const unsubscribe = auth.onAuthStateChanged((user) => {
+			setCurrentUser(user);
+
+			setLoading(false);
+		});
+
+		return unsubscribe;
+	});
+
+	/* ---- FIREBASE AUTHENTICATION ---- */
+
+	/* ---- Sign up new user with email and password ---- */
 	function signup(email, password) {
 		return createUserWithEmailAndPassword(auth, email, password);
 	}
 
-	/* Create the user in firestore */
+	/* ---- Log in with email and password ---- */
+	function login(email, password) {
+		return signInWithEmailAndPassword(auth, email, password);
+	}
+
+	/* ---- Delete user from Firebase Authentication ---- */
+	function userDelete() {
+		deleteUser(auth.currentUser)
+			.then(() => {
+				console.log('User deleted');
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
+	}
+
+	/* ---- Log out current authenticated user ---- */
+	function logout() {
+		return auth.signOut();
+	}
+
+	/* ---- Reset password with email ---- */
+	function resetPassword(email) {
+		return sendPasswordResetEmail(currentUser, email);
+	}
+
+	/* ---- Translate auth errors ---- */
+	function translateError(errorMessage) {
+		switch (errorMessage) {
+			case 'auth/email-already-in-use':
+				return 'E-postadressen är redan upptagen. Vänligen välj en annan e-postadress.';
+
+			case 'auth/weak-password':
+				return 'Lösenordet måste vara minst 6 karaktärer. Vänligen försök igen.';
+
+			default:
+				return 'Opps något gick fel!';
+		}
+	}
+
+	/* ---- FIRESTORE QUERIES ---- */
+
+	/* ---- Create user in Firestore with signup information ---- */
 	async function createUser(
 		email,
 		username,
@@ -44,7 +96,7 @@ export function AuthProvider({ children }) {
 		nativeLanguage,
 		currentOccupation,
 		uid,
-		creationTime,
+		creationTime
 	) {
 		await setDoc(doc(dbUsers, uid), {
 			uid: uid,
@@ -56,16 +108,10 @@ export function AuthProvider({ children }) {
 			login_count: 1,
 			created_at: creationTime,
 			last_sign_in: creationTime,
-			
 		});
 	}
 
-	/* Log in with email and password */
-	function login(email, password) {
-		return signInWithEmailAndPassword(auth, email, password);
-	}
-
-	/* Fetch user details from a user-id and push to userDetails state */
+	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
 	async function getUserDetails(userId) {
 		try {
 			const docRef = doc(dbUsers, userId);
@@ -82,8 +128,7 @@ export function AuthProvider({ children }) {
 		return userDetails;
 	}
 
-
-	/* Increment login_count when login */
+	/* ---- Update user information on login ---- */
 	function updateLoginCount(uid, lastSignInTime) {
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
@@ -92,17 +137,7 @@ export function AuthProvider({ children }) {
 		});
 	}
 
-	/* Log out current authenticated user */
-	function logout() {
-		return auth.signOut();
-	}
-
-	/* Reset the password with email */
-	function resetPassword(email) {
-		return sendPasswordResetEmail(currentUser, email);
-	}
-
-	/* Update username */
+	/* ---- Update username ---- */
 	function updateUsername(uid, username) {
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
@@ -110,16 +145,15 @@ export function AuthProvider({ children }) {
 		});
 	}
 
-	/* Update current occupation */
+	/* ---- Update current occupation ---- */
 	function updateCurrentOccupation(uid, currentOccupation) {
-		
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
 			current_occupation: currentOccupation,
 		});
 	}
 
-	/* Update native language*/
+	/* ---- Update native language ---- */
 	function updateNativeLanguage(uid, nativeLanguage) {
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
@@ -127,7 +161,7 @@ export function AuthProvider({ children }) {
 		});
 	}
 
-	/* Update birth year */
+	/* ---- Update birth date ---- */
 	function updateBirthYear(uid, birthYear) {
 		const userRef = doc(dbUsers, uid);
 		updateDoc(userRef, {
@@ -135,56 +169,36 @@ export function AuthProvider({ children }) {
 		});
 	}
 
-	/* Update password */
+	/* ---- Update password ---- */
 	function passwordUpdate(password) {
-		updatePassword(currentUser, password).then(() => {
-			console.log("Password updated successfully")
-		  }).catch((error) => {
-			console.log(error.message)
-		  });
-	}
-
-	/* Update email */
-	function emailUpdate(newEmail) {
-		updateEmail(currentUser, newEmail).then(() => {
-			const userRef = doc(dbUsers, currentUser.uid);
-			updateDoc(userRef, {
-				email: newEmail,
+		updatePassword(currentUser, password)
+			.then(() => {
+				console.log('Password updated successfully');
+			})
+			.catch((error) => {
+				console.log(error.message);
 			});
-			console.log("Email updated")
-		  }).catch((error) => {
-			console.log(error.message)
-		  });
 	}
 
-	/* Update email in firestore */
-	function emailUpdateFirestore(email, uid){
-
+	/* ---- Update email in Firestore ---- */
+	function emailUpdate(newEmail) {
+		updateEmail(currentUser, newEmail)
+			.then(() => {
+				const userRef = doc(dbUsers, currentUser.uid);
+				updateDoc(userRef, {
+					email: newEmail,
+				});
+				console.log('Email updated');
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
 	}
 
-	/* Delete user from auth */
-function userDelete() {
-	deleteUser(auth.currentUser).then(() => {
-		console.log("User deleted")
-	  }).catch((error) => {
-		console.log(error.message)
-	  });
-	}
-
-	/* Delete user from firestore */
+	/* ---- Delete user information from Firestore ---- */
 	function deleteFirestoreUser(uid) {
 		deleteDoc(doc(dbUsers, uid));
 	}
-
-	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged((user) => {
-			setCurrentUser(user);
-
-			setLoading(false);
-		});
-
-		return unsubscribe;
-	});
 
 	const value = {
 		currentUser,
@@ -204,8 +218,7 @@ function userDelete() {
 		userDetails,
 		userDelete,
 		deleteFirestoreUser,
-		emailUpdateFirestore,
-		
+		translateError,
 	};
 
 	return (
