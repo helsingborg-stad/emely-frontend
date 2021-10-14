@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 
 import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 export default function Signup() {
 	/* ------ Form value variables ------ */
@@ -27,8 +28,9 @@ export default function Signup() {
 
 	/* ------ Hooks ------ */
 	const { signup, createUser, translateError } = useAuth();
-	const [error, setError] = useState('');
+	const [msg, setMsg] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [msgVariant, setMsgVariant] = useState('');
 	const history = useHistory();
 	/* ----------------------------------- */
 
@@ -51,11 +53,12 @@ export default function Signup() {
 
 			/* ------ Start with, checking if the passwords match ------ */
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-			return setError('Passwords do not match');
+			setMsgVariant('danger');
+			return setMsg('Lösenorden matchar inte');
 		}
 
 		try {
-			setError('');
+			setMsg('');
 			setLoading(true);
 
 			/* Run sign-up function from context which communicates with Firebase */
@@ -82,7 +85,9 @@ export default function Signup() {
 			/*  Catch error & translate in a function */
 		} catch (error) {
 			console.log(error.code);
-			setError(translateError(error.code));
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
+			
 		}
 
 		setLoading(false);
@@ -91,11 +96,9 @@ export default function Signup() {
 	return (
 		<>
 			{/* ------------ Alert for error messages: fixed-top ------------ */}
-			{error && (
-				<Alert className="fixed-top text-center fw-bold" variant="danger">
-					{error}
-				</Alert>
-			)}
+			{msg && (
+				<AlertMessage message={msg} variant={msgVariant} />
+			  )}
 			<AuthLayout>
 				<h2 className="text-center mb-5 fw-bold">
 					Registrera dig för att börja prata med Emely.

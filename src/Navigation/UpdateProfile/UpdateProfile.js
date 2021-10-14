@@ -1,11 +1,10 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import {
 	Form,
 	Button,
 	Alert,
 	Row,
 	Col,
-	Card,
 	Container,
 } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
@@ -22,8 +21,6 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
-
-import AuthLayout from '../../Components/AuthLayout/AuthLayout';
 
 /* Variable declaration */
 export default function UpdateProfile() {
