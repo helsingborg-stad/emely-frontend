@@ -25,6 +25,7 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
     setUserMessage,
     getContinueСonversation,
     isLoading,
+    isError,
   } = useContext(ConversationContext);
 
   // states && functions for translating voice to text
@@ -49,16 +50,16 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
   const handleClickRecordingBtn = (e) => {
     e.preventDefault();
     // set input onFocus
-    setFocused(true);
+    setFocused((prevState) => !prevState);
     // overwriting userMessage if recording button works
     setUserMessage(recordingNote);
     setIsListening((prevState) => !prevState);
     setRecordingNote("");
   };
-
+ 
   return (
     <div className="chat-input-wrapper">
-      <div className={isLoading ? "chat-input_overlay" : ""}></div>
+      <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
         <button
           className={

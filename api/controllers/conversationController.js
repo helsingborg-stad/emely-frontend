@@ -22,7 +22,9 @@ const createInitConversation = async (req, res) => {
     res.status(500).json({ ...err });
     res
       .status(!200)
-      .json("***this is Emely response in case of error _CHANGE ME_*****");
+      .json(
+        "Ojoj mitt stackars huvud... Jag tror jag har bivit sjuk och måste gå till vårdcentralen. Vi får prata en annan dag. Hejdå!"
+      );
   }
 };
 

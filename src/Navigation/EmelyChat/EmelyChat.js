@@ -20,13 +20,16 @@ export default function EmelyChat(props) {
     formatedTimestamp,
     firstBotMessage,
     initConversation,
-    botMessage,
-    showUserMessage,
     isLoading,
+    sessionConversation,
+    setSessionConersation,
+    
   } = useContext(ConversationContext);
 
+  //  gets a user ID and starts a conversation with Emely from the beginning every  first rendering
   useEffect(() => {
     getUserDetails(currentUser.uid);
+    setSessionConersation([]);
   }, []);
 
   // runs when userDetails has been known
@@ -44,40 +47,22 @@ export default function EmelyChat(props) {
   useEffect(() => {
     renderMessages();
     scrollToTop();
-  }, [showUserMessage, botMessage]);
+  }, [sessionConversation]);
 
   const scrollToTop = () => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // todo This function should be rewritten, custom hook??
+  
   const renderMessages = () => {
-    let messages = [];
-
-    for (
-      let i = 0, userIdx = 0, botIdx = 0;
-      i < showUserMessage.length + botMessage.length;
-      i++
-    ) {
+    return sessionConversation.map((msg, i) => {
       if (i % 2 === 0) {
-        // Odd or even to decide the message type
-        // User message
-        if (userIdx < showUserMessage.length) {
-          messages.push(
-            <UserChatBubble message={showUserMessage[userIdx++]} key={i} />
-          );
-        }
+        return <UserChatBubble message={msg} key={i} />;
       } else {
-        // Bot message
-        if (botIdx < botMessage.length) {
-          messages.push(
-            <EmelyChatBubble message={botMessage[botIdx++]} key={i} />
-          );
-        }
+        return <EmelyChatBubble message={msg} key={i} />;
       }
-    }
+    });
 
-    return messages;
   };
 
   return (
@@ -94,9 +79,9 @@ export default function EmelyChat(props) {
             </Col>
           </Row>
 
-          {showUserMessage.length > 0 && renderMessages()}
+          {sessionConversation.length > 0 && renderMessages()}
           {/* renders Emely loader (waiting for a response from the server )*/}
-          {isLoading && (
+          {isLoading  && (
             <EmelyChatBubble
               isLoading={isLoading}
               loader={<PulseLoader size={6} color={"#979797"} />}
