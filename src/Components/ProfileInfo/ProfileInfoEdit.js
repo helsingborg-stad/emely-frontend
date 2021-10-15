@@ -1,20 +1,18 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { Form, Button, Alert, Row, Col, Container } from 'react-bootstrap';
+import React, { useRef, useState } from 'react';
+import { Form, Button, Alert, Row, Container } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import UserMenu from '../UserMenu/UserMenu';
-import AlertMessage from '../AlertMessage/AlertMessage';
-import ProfileCard from '../Layout/ProfileCard/ProfileCard';
 
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 /* Icon imports */
 import { HiOutlineMail } from 'react-icons/hi';
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { AiOutlineCalendar } from 'react-icons/ai';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
-import { IoIosArrowBack } from 'react-icons/io';
+
 
 /* Variable declaration */
 export default function ProfileInfoEdit() {
@@ -36,11 +34,9 @@ export default function ProfileInfoEdit() {
 		updateNativeLanguage,
 	} = useAuth();
 	const [error, setError] = useState('');
-	const [done, setDone] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
-	function handleReload() {}
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -97,9 +93,10 @@ export default function ProfileInfoEdit() {
 					setLoading(false);
 
 					for (let i of updates) {
-						const updatesToString = updates.join(', ').toString();
+						
+						const updatesToString = updates.join(' - ').toString();
 						console.log(i);
-						setMsg(updatesToString + ' har uppdaterats')
+						setMsg(updatesToString)
 					}
 
 					
@@ -107,19 +104,21 @@ export default function ProfileInfoEdit() {
 					history.push('/profile');
 				});
 		} catch (error) {
-			console.log(error.message);
+			console.log(error.code);
+			setMsg(error.message)
+
 		}
 	}
 
 	return (
 		<>
-			{/* ------------ Alert for error messages: fixed-top ------------ */}
-			{msg && <AlertMessage message={msg} variant={msgVariant} />}
-			<Container>
+			
+			
+			<Container className="p-5">
 				<h2 className="text-center mb-2 fw-bold">Redigera profil</h2>
 
-				<ProfileCard title={'Redigera uppgifter'}>
-					{error && <Alert variant="danger">{error}</Alert>}
+				
+					{msg && <Alert variant="success"> {msg} <AiOutlineCheckCircle size={20} className="ms-1" /></Alert>}
 
 					{/* Username form */}
 					<Form onSubmit={handleSubmit} id="update-profile">
@@ -234,7 +233,7 @@ export default function ProfileInfoEdit() {
 							</Button>
 						</Row>
 					</Form>
-				</ProfileCard>
+				
 			</Container>
 		</>
 	);

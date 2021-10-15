@@ -48,18 +48,15 @@ export default function Profile() {
 		<>
 			{/* ------------ Alert for error messages: fixed-top ------------ */}
 			{msg && <AlertMessage message={msg} variant={msgVariant} />}
-			<Container>
+		
 				<ProfileCard>
-					<Row>
-						<UserMenu />
-					</Row>
 
 					{/* My information card */}
-					<Row className="p-2">
+					<Row className="p-0 m-0">
 						<Col xs="auto" md={8} lg={8}>
 							<h4 className="mb-3 fw-bold">Min uppgifter</h4>
 						</Col>
-						<Col xs="auto" md={4} lg={4} className="text-end">
+						<Col xs="auto" md={4} lg={4} className="text-end p-0">
 							<span>
 								
 									<Button
@@ -77,10 +74,11 @@ export default function Profile() {
 					</Row>
 
 					
-					<Modal show={show} onHide={handleClose}>
+					<Modal size="lg" show={show} onHide={handleClose}>
 						<Modal.Body>
                     
                             <ProfileInfoEdit />
+							
 						</Modal.Body>
 		
 					</Modal>
@@ -121,7 +119,7 @@ export default function Profile() {
 						</span>
 					</Row>
 				</ProfileCard>
-			</Container>
+			
 		</>
 	);
 }
