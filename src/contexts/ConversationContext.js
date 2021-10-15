@@ -103,7 +103,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.get(
-        "http://cors-anywhere.herokuapp.com/https://emely-chat-service-api-staging-ef5bmjer3q-ey.a.run.app/joblist"
+        "http://cors-anywhere.herokuapp.com/http://emely-chat-service-api-staging-ef5bmjer3q-ey.a.run.app/joblist"
       );
 
       const result = await response.data;
