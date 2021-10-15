@@ -12,7 +12,7 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 
-import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 export default function Signup() {

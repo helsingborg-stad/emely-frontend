@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Form, Button, Alert, Row, Col, Container } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import UserMenu from '../../Components/UserMenu/UserMenu';
-import ProfileCard from '../../Components/ProfileCard/ProfileCard';
+import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 import { Link, useHistory } from 'react-router-dom';
@@ -52,14 +52,13 @@ export default function UpdateEmailPassword() {
 
 	return (
 		<>
-			<Container>
-				<Row>
-					<UserMenu />
+			<Container className="p-5">
+			<h2 className="text-center mb-4 fw-bold">Ändra Lösenord</h2>
+				
 					{msg && <AlertMessage message={msg} variant={msgVariant} />}
-				</Row>
-				<h2 className="text-center mb-4 fw-bold">Email & Lösenord</h2>
+			
 
-				<ProfileCard title={'Ändra Email & Lösenord'}>
+			
 					<Col className="text-end p-0 me-0">
 						<span>
 							<Link to={'/profile'}>
@@ -120,7 +119,7 @@ export default function UpdateEmailPassword() {
 							</Button>
 						</Row>
 					</Form>
-				</ProfileCard>
+				
 			</Container>
 		</>
 	);

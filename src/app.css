@@ -7,7 +7,7 @@
 @import './Components/EmelyDialogue/emely-dialogue.css';
 @import './Components/UserMenu/user-menu.css';
 @import './Components/WorkButton/work-button.css';
-@import './Components/AuthLayout/AuthLayout.css';
+@import './Components/Layout/AuthLayout/AuthLayout.css';
 @import './Components/EmelyChatBubble/emely-chat-bubble.css';
 @import './Components/UserChatBubble/user-chat-bubble.css';
 @import './Components/ChatInput/ChatInput.css';
@@ -15,7 +15,7 @@
 @import './Components/PersonaButton/PersonaButton.css';
 @import './Navigation/WorkEmely/work-emely.css';
 @import './Navigation/Profile/profile.css';
-@import './Components/ProfileCard/profile-card.css';
+@import './Components/Layout/ProfileCard/profile-card.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
@@ -25,7 +25,8 @@
 
 
 * {
-	font-family: 'DM Sans', 'Montserrat', Helvetica, Arial, sans-serif;
+	font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+
 }
 
 .link {
@@ -35,7 +36,8 @@
 #root {
 	background: rgb(238, 238, 238);
 	margin: 0 !important;
-	padding-top: 90px; 
+	padding-top: 90px;
+ 
 }
 
 :root {
@@ -50,10 +52,12 @@
 	--white: #ffffff;
 	--green: #5F8528;
 	--gray: #979797;
+
 }
 
 body {
 	background: rgb(238, 238, 238) !important;
+	
 }
 
 a {

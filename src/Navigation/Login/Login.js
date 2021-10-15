@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 
 import { Link, useHistory } from 'react-router-dom';
 
-import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 
