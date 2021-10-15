@@ -31,7 +31,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.post(
-        "http://localhost:3001/api/v1/conversation/init",
+        "https://emely-chat-service-api-staging-ef5bmjer3q-ey.a.run.app/init",
         {
           name: `${userName}`,
           job: `${job}`,
@@ -103,7 +103,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.get(
-        "http://localhost:3001/api/v1/conversation/joblist"
+        "https://emely-chat-service-api-staging-ef5bmjer3q-ey.a.run.app/joblist"
       );
 
       const result = await response.data;
