@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {
-	Col,
-	Container,
-	Row,
-	Button,
-	Modal,
-} from 'react-bootstrap';
+import { Col, Container, Row, Button, Modal } from 'react-bootstrap';
 import UserMenu from '../../Components/UserMenu/UserMenu';
-import ProfileCard from '../../Components/ProfileCard/ProfileCard';
+import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
+import ProfileInfo from '../../Components/ProfileInfo/ProfileInfo';
+import ProfileInfoEdit from '../../Components/ProfileInfo/ProfileInfoEdit';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -72,60 +68,8 @@ export default function Profile() {
 				<Row>
 					<UserMenu />
 				</Row>
-				<h2 className="text-center mb-4 fw-bold">Användarkonto</h2>
-
-				{/* My information card */}
-				<ProfileCard title={'Mina uppgifter'}>
-					<Col className="text-end">
-						<span>
-							<Link to={'/update-profile'}>
-								<Button
-									variant="outline-success"
-									className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
-									id="edit-button"
-								>
-									<AiOutlineEdit className="me-2" size={15} />
-									Redigera
-								</Button>
-							</Link>
-						</span>
-					</Col>
-					<Row className="mt-3 ">
-						<small className="fw-bold">Användarnamn</small>
-						<p>{userDetails && userDetails.username}</p>
-					</Row>
-
-					<Row className="mt-3 ">
-						<small className="fw-bold">Användarnamn</small>
-						<p>{userDetails && userDetails.email}</p>
-					</Row>
-
-					<Row className="mt-3">
-						<small className="fw-bold ">Födelsedatum</small>
-						<p>{userDetails && userDetails.birth_year}</p>
-					</Row>
-					<Row className="mt-3">
-						<small className="fw-bold ">Modersmål</small>
-						<p>{userDetails && userDetails.native_language}</p>
-					</Row>
-					<Row className="mt-3">
-						<small className="fw-bold ">Sysselsättning</small>
-						<p>{userDetails && userDetails.current_occupation}</p>
-					</Row>
-					<Row className="mb-3 mt-5">
-						<span>
-							<Button
-								variant="outline-success"
-								className="rounded-pill pe-3 ps-3 fw-bold register-btn_light"
-								id="log-out-button-profile"
-								onClick={handleLogout}
-							>
-								<BiLogOutCircle className="me-2" size={18} />
-								Logga ut
-							</Button>
-						</span>
-					</Row>
-				</ProfileCard>
+				<h2 className="fw-bold text-center mt-3 mb-3">Mitt Användarkonto</h2>
+				<ProfileInfo />
 
 				<br />
 

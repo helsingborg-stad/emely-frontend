@@ -26,6 +26,7 @@ export default function UserMenu(props) {
 	const [error, setError] = useState('');
 	const { currentUser, logout, userDetails, getUserDetails } = useAuth();
 	const history = useHistory();
+	
 
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);

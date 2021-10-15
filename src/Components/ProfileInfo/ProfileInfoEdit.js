@@ -1,15 +1,9 @@
-import React, { useRef, useState } from 'react';
-import {
-	Form,
-	Button,
-	Alert,
-	Row,
-	Col,
-	Container,
-} from 'react-bootstrap';
+import React, { useRef, useState, useEffect } from 'react';
+import { Form, Button, Alert, Row, Col, Container } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import UserMenu from '../../Components/UserMenu/UserMenu';
-import ProfileCard from '../../Components/ProfileCard/ProfileCard';
+import UserMenu from '../UserMenu/UserMenu';
+import AlertMessage from '../AlertMessage/AlertMessage';
+import ProfileCard from '../Layout/ProfileCard/ProfileCard';
 
 import { Link, useHistory } from 'react-router-dom';
 
@@ -23,12 +17,15 @@ import { FaUserTie } from 'react-icons/fa';
 import { IoIosArrowBack } from 'react-icons/io';
 
 /* Variable declaration */
-export default function UpdateProfile() {
+export default function ProfileInfoEdit() {
 	const usernameRef = useRef();
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
 	const emailRef = useRef();
+
+	const [msg, setMsg] = useState();
+	const [msgVariant, setMsgVariant] = useState();
 
 	const {
 		currentUser,
@@ -39,13 +36,18 @@ export default function UpdateProfile() {
 		updateNativeLanguage,
 	} = useAuth();
 	const [error, setError] = useState('');
+	const [done, setDone] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
-	function handleSubmit(e) {
+	function handleReload() {}
+
+	async function handleSubmit(e) {
 		e.preventDefault();
 
 		const promises = [];
+		const updates = [];
+
 		setLoading(true);
 		setError('');
 
@@ -55,8 +57,10 @@ export default function UpdateProfile() {
 				promises.push(
 					updateUsername(currentUser.uid, usernameRef.current.value)
 				);
+				updates.push('Användarnamn');
+				
 			}
-
+			
 			if (
 				currentOccupationRef.current.value !== userDetails.current_occupation
 			) {
@@ -64,31 +68,43 @@ export default function UpdateProfile() {
 					updateCurrentOccupation(
 						currentUser.uid,
 						currentOccupationRef.current.value
-					)
-				);
+						)
+						);
+						updates.push('Sysselsättning');
+						
 			}
 
 			if (birthYearRef.current.value !== userDetails.birth_year) {
 				promises.push(
 					updateBirthYear(currentUser.uid, birthYearRef.current.value)
 				);
+				updates.push('Födelsedatum');
 			}
 
 			if (nativeLanguageRef.current.value !== userDetails.native_language) {
 				promises.push(
 					updateNativeLanguage(currentUser.uid, nativeLanguageRef.current.value)
 				);
+				updates.push('Modersmål');
 			}
 
-			Promise.all(promises)
-				.then(() => {
-					history.push('/profile');
-				})
+			await Promise.all(promises)
+				.then(() => {})
 				.catch((error) => {
 					setError(error.message);
 				})
 				.finally(() => {
 					setLoading(false);
+
+					for (let i of updates) {
+						const updatesToString = updates.join(', ').toString();
+						console.log(i);
+						setMsg(updatesToString + ' har uppdaterats')
+					}
+
+					
+					setMsgVariant('success');
+					history.push('/profile');
 				});
 		} catch (error) {
 			console.log(error.message);
@@ -97,27 +113,14 @@ export default function UpdateProfile() {
 
 	return (
 		<>
+			{/* ------------ Alert for error messages: fixed-top ------------ */}
+			{msg && <AlertMessage message={msg} variant={msgVariant} />}
 			<Container>
-				<Row>
-					<UserMenu />
-				</Row>
-				<h2 className="text-center mb-4 fw-bold">Redigera profil</h2>
+				<h2 className="text-center mb-2 fw-bold">Redigera profil</h2>
 
 				<ProfileCard title={'Redigera uppgifter'}>
 					{error && <Alert variant="danger">{error}</Alert>}
-					<Col className="text-end p-0 me-0">
-						<span>
-							<Link to={'/profile'}>
-								<Button
-									variant="outline-success"
-									className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
-									id="edit-button"
-								>
-									<IoIosArrowBack className="me-2" size={15} /> Tillbaka
-								</Button>
-							</Link>
-						</span>
-					</Col>
+
 					{/* Username form */}
 					<Form onSubmit={handleSubmit} id="update-profile">
 						<Row className="mt-5">
@@ -150,7 +153,6 @@ export default function UpdateProfile() {
 									ref={emailRef}
 									required
 									defaultValue={userDetails && userDetails.email}
-
 								/>
 							</Form.Group>
 						</Row>
@@ -219,37 +221,6 @@ export default function UpdateProfile() {
 								</Form.Select>
 							</Form.Group>
 						</Row>
-						{/* 
-					
-						<Row className="m-3">
-						<Form.Group className="" id="password">
-						<Form.Label className="fw-bold">
-						<RiLockPasswordLine className="me-2" size={20} />
-						Lösenord
-						</Form.Label>
-						<Form.Control
-						className="p-2 input-border"
-						type="password"
-						ref={passwordRef}
-						placeholder="Lämna blankt för att behålla lösenord"
-						/>
-						</Form.Group>
-						</Row>
-						<Row className="m-3">
-						<Form.Group className="" id="password-confirm">
-						<Form.Label className="fw-bold">
-								<RiLockPasswordLine className="me-2" size={20} /> Upprepa
-								lösenord
-							</Form.Label>
-							<Form.Control
-								className="p-2 shadow-sm"
-								type="password"
-								ref={passwordConfirmRef}
-								placeholder="Lämna blankt för att behålla lösenord"
-								/>
-								</Form.Group>
-								</Row>
-							*/}
 
 						<Row className="mb-3 ms-4 mt-5 me-4 ">
 							<Button

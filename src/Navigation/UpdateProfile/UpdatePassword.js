@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Form, Button, Alert, Row, Col, Container } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import UserMenu from '../../Components/UserMenu/UserMenu';
-import ProfileCard from '../../Components/ProfileCard/ProfileCard';
+import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 import { Link, useHistory } from 'react-router-dom';

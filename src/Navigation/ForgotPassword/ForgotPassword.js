@@ -3,7 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link } from 'react-router-dom';
 import { HiOutlineMail } from 'react-icons/hi';
-import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 /* Variable declaration */

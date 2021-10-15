@@ -9,8 +9,8 @@ import Dashboard from './Navigation/Dashboard/Dashboard';
 import Login from './Navigation/Login/Login';
 import PrivateRoute from './Components/PrivateRoute';
 import ForgotPassword from './Navigation/ForgotPassword/ForgotPassword';
-import UpdateProfile from './Navigation/UpdateProfile/UpdateProfile';
-import UpdateEmailPassword from './Navigation/UpdateProfile/UpdatePassword';
+import ProfileInfoEdit from './Components/ProfileInfo/ProfileInfoEdit';
+import UpdatePassword from './Navigation/UpdateProfile/UpdatePassword';
 import WorkEmely from './Navigation/WorkEmely/WorkEmely';
 import EmelyChat from './Navigation/EmelyChat/EmelyChat';
 import EndUserTerms from './Components/EndUserTerms/EndUserTerms';
@@ -36,11 +36,11 @@ function App() {
 									<PrivateRoute exact path="/dashboard" component={Dashboard} />
 									<PrivateRoute
 										path="/update-profile"
-										component={UpdateProfile}
+										component={ProfileInfoEdit}
 									/>
 									<PrivateRoute
 										path="/change-password"
-										component={UpdateEmailPassword}
+										component={UpdatePassword}
 									/>
 									<PrivateRoute path="/work-emely" component={WorkEmely} />
 									<PrivateRoute
