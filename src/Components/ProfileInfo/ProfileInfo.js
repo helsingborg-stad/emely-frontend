@@ -51,7 +51,7 @@ export default function Profile() {
 		
 				<ProfileCard>
 
-					{/* My information card */}
+					{/* --- My information card --- */}
 					<Row className="p-0 m-0">
 						<Col xs="auto" md={8} lg={8}>
 							<h4 className="mb-3 fw-bold">Min uppgifter</h4>
@@ -61,7 +61,7 @@ export default function Profile() {
 								
 									<Button
 										variant="outline-success"
-										className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+										className="rounded-pill fw-bold"
 										id="edit-button"
                                         onClick={handleShow}
 									>
@@ -74,15 +74,14 @@ export default function Profile() {
 					</Row>
 
 					
+					{/* --- Edit fields pop up (modal) --- */}
 					<Modal size="lg" show={show} onHide={handleClose}>
 						<Modal.Body>
-                    
                             <ProfileInfoEdit />
-							
 						</Modal.Body>
-		
 					</Modal>
 
+					{/* --- Information rows --- */}
 					<Row className="mt-3 ">
 						<small className="fw-bold">Användarnamn</small>
 						<p>{userDetails && userDetails.username}</p>
@@ -109,7 +108,7 @@ export default function Profile() {
 						<span>
 							<Button
 								variant="outline-success"
-								className="rounded-pill pe-3 ps-3 fw-bold register-btn_light"
+								className="rounded-pill pe-3 ps-3 fw-bold"
 								id="log-out-button-profile"
 								onClick={handleLogout}
 							>

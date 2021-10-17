@@ -5,3 +5,19 @@
 .show-emely-dialog{
   display: block;
 }
+
+#emely-dialogue-col {
+  width: 90vh;
+}
+
+.emely-dialog_dialogue-text {
+  line-height: 1.8;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 500;
+}
+
+#container-work-emely{
+  max-width: 800px;
+  margin: auto !important;
+}

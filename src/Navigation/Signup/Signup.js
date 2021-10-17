@@ -108,11 +108,11 @@ export default function Signup() {
 				<Form onSubmit={handleSubmit}>
 					{/* ------------ Email form ------------ */}
 					<Form.Group id="email" className="fw-bold">
-						<Form.Label className="mt-5">
+						<Form.Label className="mt-5 input-label">
 							<HiOutlineMail size={30} /> Vad är din e-postadress?
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3 shadow-sm"
+							className="input-field"
 							placeholder="Ange din e-postadress."
 							type="email"
 							ref={emailRef}
@@ -122,28 +122,28 @@ export default function Signup() {
 
 					{/* ------------ Choose password form ------------ */}
 					<Form.Group id="password" className="mt-4 fw-bold">
-						<Form.Label className="mt-3">
+						<Form.Label className="mt-3 input-label">
 							<RiLockPasswordLine size={30} /> Skapa ett lösenord
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3 mb-2 shadow-sm"
+							className="input-field"
 							placeholder="Skapa ett lösenord."
 							type="password"
 							ref={passwordRef}
 							required
 						></Form.Control>
-						<small className="ms-3" id="password-info">
+						<small className="ms-3 " id="password-info">
 							Lösenordet måste vara minst 6 karaktärer
 						</small>
 					</Form.Group>
 
 					{/* ------------ Confirm password form ------------ */}
 					<Form.Group id="password-confirm" className="mt-4 fw-bold">
-						<Form.Label className="mt-3">
+						<Form.Label className="mt-3 input-label">
 							<RiLockPasswordLine size={30} /> Upprepa lösenord
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3 shadow-sm"
+							className="input-field"
 							type="password"
 							placeholder="Upprepa ditt valda lösenord."
 							ref={passwordConfirmRef}
@@ -159,7 +159,7 @@ export default function Signup() {
 									<AiOutlineUser size={30} /> Vad ska vi kalla dig?
 								</Form.Label>
 								<Form.Control
-									className="w-100 rounded-pill p-3 shadow-sm"
+									className="w-100 input-field"
 									placeholder="Användarnamn"
 									type="text"
 									ref={usernameRef}
@@ -175,7 +175,7 @@ export default function Signup() {
 									<AiOutlineCalendar size={30} /> När är du född?
 								</Form.Label>
 								<Form.Control
-									className="w-100 rounded-pill p-3 shadow-sm"
+									className="w-100 input-field"
 									placeholder="När är du född?"
 									type="date"
 									defaultValue="1990-01-01"
@@ -195,7 +195,7 @@ export default function Signup() {
 								</Form.Label>
 								<Form.Select
 									ref={nativeLanguageRef}
-									className="rounded-pill p-3 shadow-sm"
+									className="input-field"
 									defaultValue="Svenska"
 								>
 									<option>Svenska</option>
@@ -218,7 +218,7 @@ export default function Signup() {
 								</Form.Label>
 								<Form.Select
 									ref={currentOccupationRef}
-									className="rounded-pill p-3 shadow-sm"
+									className="input-field"
 									defaultValue="Arbetslös"
 								>
 									<option>Arbetssökande</option>
@@ -262,7 +262,7 @@ export default function Signup() {
 					{/* ------------ Login buttons ------------ */}
 					<Button
 						disabled={loading}
-						className="w-100 mt-3 p-3 btn-success rounded-pill fw-bold shadow-sm register-btn"
+						className="w-100 mt-3 register-btn"
 						type="submit"
 					>
 						<AiOutlineUserAdd size={30} />

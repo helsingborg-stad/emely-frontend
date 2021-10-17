@@ -1,18 +1,17 @@
 import React, { useRef, useState } from 'react';
-import { Form, Button, Alert, Row, Container } from 'react-bootstrap';
+import { Form, Button, Alert, Row, Container, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 
 import { useHistory } from 'react-router-dom';
 
 /* Icon imports */
-import { HiOutlineMail } from 'react-icons/hi';
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
-
+import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 /* Variable declaration */
 export default function ProfileInfoEdit() {
@@ -37,7 +36,6 @@ export default function ProfileInfoEdit() {
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
-
 	async function handleSubmit(e) {
 		e.preventDefault();
 
@@ -54,9 +52,8 @@ export default function ProfileInfoEdit() {
 					updateUsername(currentUser.uid, usernameRef.current.value)
 				);
 				updates.push('Användarnamn');
-				
 			}
-			
+
 			if (
 				currentOccupationRef.current.value !== userDetails.current_occupation
 			) {
@@ -64,10 +61,9 @@ export default function ProfileInfoEdit() {
 					updateCurrentOccupation(
 						currentUser.uid,
 						currentOccupationRef.current.value
-						)
-						);
-						updates.push('Sysselsättning');
-						
+					)
+				);
+				updates.push('Sysselsättning');
 			}
 
 			if (birthYearRef.current.value !== userDetails.birth_year) {
@@ -93,147 +89,142 @@ export default function ProfileInfoEdit() {
 					setLoading(false);
 
 					for (let i of updates) {
-						
 						const updatesToString = updates.join(' - ').toString();
 						console.log(i);
-						setMsg(updatesToString)
+						setMsg(updatesToString);
 					}
 
-					
 					setMsgVariant('success');
 					history.push('/profile');
 				});
 		} catch (error) {
 			console.log(error.code);
-			setMsg(error.message)
-
+			setMsg(error.message);
 		}
 	}
 
 	return (
 		<>
-			
-			
 			<Container className="p-5">
 				<h2 className="text-center mb-2 fw-bold">Redigera profil</h2>
 
-				
-					{msg && <Alert variant="success"> {msg} <AiOutlineCheckCircle size={20} className="ms-1" /></Alert>}
+				{msg && (
+					<Alert variant="success">
+						{' '}
+						{msg} <AiOutlineCheckCircle size={20} className="ms-1" />
+					</Alert>
+				)}
 
-					{/* Username form */}
-					<Form onSubmit={handleSubmit} id="update-profile">
-						<Row className="mt-5">
-							<Form.Group className="" id="username">
-								<Form.Label className="fw-bold">
-									<AiOutlineUser className="me-2" size={20} />
-									Användarnamn
-								</Form.Label>
-								<Form.Control
-									className="p-2 input-border"
-									type="text"
-									ref={usernameRef}
-									required
-									defaultValue={userDetails && userDetails.username}
-									placeholder="Vad ska vi kalla dig?"
-								/>
-							</Form.Group>
-						</Row>
+				{/* Username form */}
+				<Form onSubmit={handleSubmit} id="update-profile">
+					<Row className="mt-5">
+						<Form.Group className="" id="username">
+							<Form.Label className="input-label">
+								<AiOutlineUser className="me-2" size={20} />
+								Användarnamn
+							</Form.Label>
+							<Form.Control
+								className="input-field-small"
+								type="text"
+								ref={usernameRef}
+								required
+								defaultValue={userDetails && userDetails.username}
+								placeholder="Vad ska vi kalla dig?"
+							/>
+						</Form.Group>
+					</Row>
 
-						<Row className="mt-3">
-							<Form.Group className="" id="email">
-								<Form.Label className="fw-bold">
-									<HiOutlineMail className="me-2" size={20} />
-									E-postadress
-								</Form.Label>
-								<Form.Control
-									disabled
-									className="p-2 input-border"
-									type="text"
-									ref={emailRef}
-									required
-									defaultValue={userDetails && userDetails.email}
-								/>
-							</Form.Group>
-						</Row>
+					{/* Birth year form */}
+					<Row className="mt-3">
+						<Form.Group id="birthYear">
+							<Form.Label className="input-label">
+								<AiOutlineCalendar className="me-2" size={20} /> När är du född?
+							</Form.Label>
+							<Form.Control
+								className="input-field-small"
+								placeholder="När är du född?"
+								type="date"
+								defaultValue={userDetails && userDetails.birth_year}
+								ref={birthYearRef}
+								required
+							/>
+						</Form.Group>
+					</Row>
 
-						{/* Birth year form */}
-						<Row className="mt-3">
-							<Form.Group id="birthYear">
-								<Form.Label className="fw-bold">
-									<AiOutlineCalendar className="me-2" size={20} /> När är du
-									född?
-								</Form.Label>
-								<Form.Control
-									className="p-2 input-border"
-									placeholder="När är du född?"
-									type="date"
-									defaultValue={userDetails && userDetails.birth_year}
-									ref={birthYearRef}
-									required
-								/>
-							</Form.Group>
-						</Row>
+					{/* Native language form */}
+					<Row className="mt-3">
+						<Form.Group id="nativeLanguage">
+							<Form.Label className="input-label">
+								<GrLanguage className="me-2" size={20} /> Vilket språk talar du
+								hemma?
+							</Form.Label>
+							<Form.Select
+								ref={nativeLanguageRef}
+								className="input-field-small"
+								defaultValue={userDetails && userDetails.native_language}
+							>
+								<option>Svenska</option>
+								<option>Engelska</option>
+								<option>Arabiska</option>
+								<option>Italienska</option>
+								<option>Spanska</option>
+								<option>Bosniska</option>
+								<option>Serbiska</option>
+								<option>Kroatiska</option>
+							</Form.Select>
+						</Form.Group>
+					</Row>
 
-						{/* Native language form */}
-						<Row className="mt-3">
-							<Form.Group id="nativeLanguage">
-								<Form.Label className="fw-bold">
-									<GrLanguage className="me-2" size={20} /> Vilket språk talar
-									du hemma?
-								</Form.Label>
-								<Form.Select
-									ref={nativeLanguageRef}
-									className="p-2 input-border"
-									defaultValue={userDetails && userDetails.native_language}
-								>
-									<option>Svenska</option>
-									<option>Engelska</option>
-									<option>Arabiska</option>
-									<option>Italienska</option>
-									<option>Spanska</option>
-									<option>Bosniska</option>
-									<option>Serbiska</option>
-									<option>Kroatiska</option>
-								</Form.Select>
-							</Form.Group>
-						</Row>
+					{/* Current occupation form */}
+					<Row className="mt-3">
+						<Form.Group id="currentOccupation">
+							<Form.Label className="input-label">
+								<FaUserTie className="me-2" size={20} /> Vad är din
+								syselsättning?
+							</Form.Label>
+							<Form.Select
+								ref={currentOccupationRef}
+								className="input-field-small"
+								defaultValue={userDetails && userDetails.current_occupation}
+							>
+								<option>Arbetssökande</option>
+								<option>Söker arbete</option>
+								<option>Sjukskriven</option>
+								<option>Heltidsjobb</option>
+								<option>Deltidsjobb</option>
+								<option>Timanställd</option>
+								<option>Föräldraledig</option>
+							</Form.Select>
+						</Form.Group>
+					</Row>
 
-						{/* Current occupation form */}
-						<Row className="mt-3">
-							<Form.Group id="currentOccupation">
-								<Form.Label className="fw-bold">
-									<FaUserTie className="me-2" size={20} /> Vad är din
-									syselsättning?
-								</Form.Label>
-								<Form.Select
-									ref={currentOccupationRef}
-									className="p-2 input-border"
-									defaultValue={userDetails && userDetails.current_occupation}
-								>
-									<option>Arbetslös</option>
-									<option>Söker arbete</option>
-									<option>Sjukskriven</option>
-									<option>Heltidsjobb</option>
-									<option>Deltidsjobb</option>
-									<option>Timanställd</option>
-									<option>Föräldraledig</option>
-								</Form.Select>
-							</Form.Group>
-						</Row>
-
-						<Row className="mb-3 ms-4 mt-5 me-4 ">
+					<Row className="mb-3 ms-4 mt-5 me-4 ">
+						<Col>
 							<Button
 								disabled={loading}
 								type="submit"
-								variant="success"
-								className="p-3 rounded-pill fw-bold register-btn text-white"
+								className="w-100 register-btn"
+								onClick={() => history.goBack()}
+							>
+								
+								<MdKeyboardArrowLeft size={25} /> TILLBAKA
+							</Button>
+						</Col>
+
+						<Col>
+							<Button
+								disabled={loading}
+								type="submit"
+								className="w-100 register-btn"
+								
 							>
 								<AiOutlineUserAdd className="me-2 text-white" size={25} />
 								SPARA
 							</Button>
-						</Row>
-					</Form>
-				
+						</Col>
+
+					</Row>
+				</Form>
 			</Container>
 		</>
 	);

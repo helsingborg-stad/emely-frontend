@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { AuthProvider } from './contexts/AuthContext';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 /* Component imports */
 import Signup from './Navigation/Signup/Signup';
@@ -21,6 +21,10 @@ import ConversationContextProvider from './contexts/ConversationContext';
 import './app.css';
 
 function App() {
+
+
+
+
 	return (
 		<>
 			<Container
@@ -49,7 +53,7 @@ function App() {
 									/>
 									<PrivateRoute path="/profile" component={Profile} />
 
-									<Route exact path="/" component={Home} />
+									<Route exact path="/" component={Login} />
 									<Route path="/signup" component={Signup} />
 									<Route path="/login" component={Login} />
 									<Route path="/end-user-terms" component={EndUserTerms} />

@@ -26,7 +26,6 @@
 
 * {
 	font-family: 'Montserrat', Helvetica, Arial, sans-serif;
-
 }
 
 .link {
@@ -48,9 +47,9 @@
 	--scrollbarColor: #9e9e9e7e;
 	--activeRecording: #9D2929;
 	--buttonLinearGradient: linear-gradient( 90deg, rgba(142, 182, 84, 1) 0%, rgba(119, 158, 62, 1) 50%, rgba(95, 133, 40, 1) 100%);
-	--greenHover: #59841b;
+	--greenHover: #41c291;
 	--white: #ffffff;
-	--green: #5F8528;
+	--green: #37a17e;
 	--gray: #979797;
 
 }
@@ -65,23 +64,74 @@ a {
 	text-decoration: none !important;
 }
 
+.input-field{
+	border-radius: 20px !important;
+	padding: 15px !important;
+	font-weight: 500 !important;
+}
+
+.input-field-small{
+	border-radius: 15px !important;
+	padding: 10px !important;
+	font-weight: 500 !important;
+	border-color: rgb(153, 153, 153) !important;
+}
+
+.input-label{
+	font-weight: 700;
+	margin-left: 15px !important;
+}
+
+.input-field::placeholder{
+	font-weight: 400;
+}
+
+a:hover {
+	color: var(--greenHover) !important;
+	text-decoration: none !important;
+}
+
 /* common styles */
 
 .register-btn {
-	background: var(--buttonLinearGradient);
+	background: var(--green) !important;
 	border: none !important;
+	color: rgb(255, 255, 255) !important;
+	border-radius: 25px !important;
+	padding: 15px !important;
+	font-weight: 800 !important;
+	letter-spacing: 1px;
 }
 
 .register-btn:hover {
 	background: var(--greenHover) !important;
+	border-radius: 25px !important;
+	color: white !important;
+	padding: 15px !important;
+	font-weight: 800 !important;
 }
 
 .register-btn_light {
-	border: 1px solid var(--buttonLinearGradient);
+	border: 2px solid var(--green) !important;
 	color: var(--green) !important;
+	border-radius: 25px !important;
+	padding: 15px !important;
+	font-weight: 800 !important;
+	letter-spacing: 1px;
+}
+
+.register-btn_light_small {
+	border: 2px solid var(--green) !important;
+	color: var(--greenHover) !important;
+	border-radius: 25px !important;
+	padding: 15px !important;
+	font-weight: 800 !important;
 }
 
 .register-btn_light:hover {
 	background-color: var(--greenHover) !important;
 	color: var(--white) !important;
+	border-radius: 25px !important;
+	padding: 15px !important;
+	font-weight: 800 !important;
 }
