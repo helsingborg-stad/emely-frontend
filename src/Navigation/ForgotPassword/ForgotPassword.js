@@ -52,12 +52,12 @@ export default function ForgotPassword() {
         {/* Reset password form */}
         <Form onSubmit={handleSubmit}>
           <Form.Group id="email">
-            <Form.Label>
-              <HiOutlineMail size={30} /> E-postadress
+            <Form.Label className="input-label">
+              <HiOutlineMail className="me-2" size={30} /> E-postadress
             </Form.Label>
             <Form.Control
               placeholder="Skriv din e-postadress för att återställa lösenord"
-              className="p-3 rounded-pill shadow-sm"
+              className="input-field"
               type="email"
               ref={emailRef}
               required
@@ -67,11 +67,11 @@ export default function ForgotPassword() {
           {/* Submit button & send instructions to mail */}
           <Button
             disabled={loading}
-            className="w-100 mt-3 p-3 rounded-pill btn-success mt-5 fw-bold register-btn"
+            className="w-100 mt-5 register-btn"
             id="button-main"
             type="submit"
           >
-            <HiOutlineMail size={30} /> ÅTERSTÄLL LÖSENORD
+            <HiOutlineMail className="me-2" size={30} /> ÅTERSTÄLL LÖSENORD
           </Button>
         </Form>
         <div className="w-100 text-center mt-3 fw-bold">

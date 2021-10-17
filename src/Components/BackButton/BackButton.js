@@ -9,10 +9,11 @@ const BackButton = () => {
   return (
     <Button
       variant="outline-secondary"
+      className="fw-bold pe-2"
       onClick={() => history.goBack()}
       style={{ border: "none" }}
     >
-      <MdKeyboardArrowLeft size={25} /> Back
+      <MdKeyboardArrowLeft size={25} /> BACK
     </Button>
   );
 };

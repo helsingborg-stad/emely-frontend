@@ -26,27 +26,23 @@ export default function WorkEmely(props) {
         <Row>
           <UserMenu />
         </Row>
-        <Row
-          className={
-            isDropdownOpen && currentWidth.width < MEDIUM_WIDTH
-              ? "hide-emely-dialog"
-              : "show-emely-dialog"
-          }
-        >
-          <Col id="emely-dialogue-col">
-            <EmelyDialogue className="m-0">
-              <p className="m-3 p-3" id="dialogue-text">
-                Jag har arbetat med att intervjua folk för jobb i ungefär ett
-                halvår. Eftersom att jag är nybörjare på detta blir jag nervös
-                ibland och glömmer vad jag tidigare har sagt. Det är inte ditt
-                fel om jag råkar glömma något.
-                <br />
-                <br />
-                Vilket arbete söker du?
-              </p>
-            </EmelyDialogue>
-          </Col>
-        </Row>
+
+        <Row>
+     
+        
+          <EmelyDialogue className="m-0">
+            <p className="m-3 p-3 emely-dialog_dialogue-text">
+            Jag har arbetat med att intervjua folk för jobb i ungefär ett
+            halvår. Eftersom att jag är nybörjare på detta blir jag nervös
+            ibland och glömmer vad jag tidigare har sagt. Det är inte ditt
+            fel om jag råkar glömma något.
+            <br />
+            <br />
+            Vilket arbete söker du?
+            </p>
+          </EmelyDialogue>
+        
+      </Row>
         <Row className="p-0 mb-5">
           <Col className="text-center mt-5">
             {jobButtons ? (

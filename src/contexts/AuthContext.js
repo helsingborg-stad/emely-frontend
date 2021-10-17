@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 import { auth, dbUsers } from '../firebase';
 import {
 	getDoc,
@@ -15,6 +16,8 @@ import {
 	signInWithEmailAndPassword,
 	sendPasswordResetEmail,
 	deleteUser,
+	onAuthStateChanged,
+	getAuth,
 } from 'firebase/auth';
 
 
@@ -32,14 +35,24 @@ export function AuthProvider({ children }) {
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
-		const unsubscribe = auth.onAuthStateChanged((user) => {
+		
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user);
 		
 			setLoading(false);
-		});
+
+			if(currentUser) {
+			
+				console.log("User is signed in")
+				return <Redirect to="/dashboard" />
+			} else {
+				console.log("User is signed out")
+				return <Redirect to="/login" />
+			}
+		}, [currentUser]);
 
 		return unsubscribe;
-	});
+	}, []);
 
 	/* ---- FIREBASE AUTHENTICATION ---- */
 

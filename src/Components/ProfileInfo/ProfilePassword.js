@@ -27,7 +27,7 @@ export default function Profile() {
 						<span>
 							<Button
 								variant="outline-success"
-								className="rounded-pill pe-3 ps-3  fw-bold register-btn_light"
+								className="rounded-pill pe-3 ps-3 fw-bold"
 								id="edit-button"
 								onClick={handleShow}
 							>

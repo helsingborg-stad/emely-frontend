@@ -60,12 +60,12 @@ export default function ProfileInfoEdit() {
 					{/* Password form */}
 					<Row className="mt-3">
 						<Form.Group className="" id="password">
-							<Form.Label className="fw-bold">
+							<Form.Label className="input-label">
 								<RiLockPasswordLine className="me-2" size={20} />
 								Nytt lösenord
 							</Form.Label>
 							<Form.Control
-								className="p-2 input-border"
+								className="input-field-small"
 								type="password"
 								ref={passwordRef}
 								placeholder="Lämna blankt för att behålla lösenord"
@@ -76,12 +76,12 @@ export default function ProfileInfoEdit() {
 					{/* Password confirm form */}
 					<Row className="mt-3">
 						<Form.Group className="" id="password-confirm">
-							<Form.Label className="fw-bold">
+							<Form.Label className="input-label">
 								<RiLockPasswordLine className="me-2" size={20} /> Upprepa
 								lösenord
 							</Form.Label>
 							<Form.Control
-								className="p-2 input-border"
+								className="input-field-small"
 								type="password"
 								ref={passwordConfirmRef}
 								placeholder="Lämna blankt för att behålla lösenord"
@@ -94,7 +94,7 @@ export default function ProfileInfoEdit() {
 							disabled={loading}
 							type="submit"
 							variant="success"
-							className="p-3 rounded-pill fw-bold register-btn text-white"
+							className="register-btn"
 						>
 							<AiOutlineUserAdd className="me-2 text-white" size={25} />
 							SPARA
