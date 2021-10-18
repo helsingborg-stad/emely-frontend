@@ -33,15 +33,16 @@ export default function UserMenu(props) {
 
 	/* Getting the current user details on mount */
 	useEffect(() => {
-		getUserDetails(currentUser.uid);
+		try{
 
-		if (userDetails) {
-			const initials = userDetails.username.charAt(0);
-			setInitials(initials);
+			getUserDetails(currentUser.uid);
+			
+		}catch (error) {
+			console.log(error.message)
 		}
-
+		
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [userDetails.username]);
+	}, []);
 
 	async function handleLogout() {
 		setError('');
@@ -61,7 +62,10 @@ export default function UserMenu(props) {
 			<Navbar className="" fixed="top" expand="lg" id="navbar" bg="white">
 				<Container>
 					<Navbar.Brand>
-						
+					<Button className="rounded-circle avatar-btn">
+												
+					{ userDetails && userDetails.username.charAt(0) }
+					</Button>
 					</Navbar.Brand>
 					<Link to="/profile">
 						<Button
@@ -70,10 +74,6 @@ export default function UserMenu(props) {
 							onClick={handleShow}
 							variant="none"
 						>
-							<Button className="rounded-circle avatar-btn">
-								{' '}
-								{initials && initials}
-							</Button>
 
 							{userDetails && userDetails.username}
 						</Button>
@@ -108,16 +108,17 @@ export default function UserMenu(props) {
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
 								<Offcanvas.Header className="m-3 " closeButton>
 									<Offcanvas.Title className="fw-bold">
+									<Button className="rounded-circle avatar-btn">
+												
+									{ userDetails && userDetails.username.charAt(0) }
+									</Button>
 										<Button
 											className="fw-bold"
 											
-											onClick={handleShow}
+											
 											variant="none"
 										>
-											<Button className="rounded-circle avatar-btn">
-												
-												{initials && initials}
-											</Button>
+
 
 											{userDetails && userDetails.username}
 										</Button>
