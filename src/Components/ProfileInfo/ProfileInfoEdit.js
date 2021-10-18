@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import { Form, Button, Alert, Row, Container, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -13,7 +13,9 @@ import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
+
 /* Variable declaration */
+
 export default function ProfileInfoEdit() {
 	const usernameRef = useRef();
 	const birthYearRef = useRef();
@@ -23,6 +25,8 @@ export default function ProfileInfoEdit() {
 
 	const [msg, setMsg] = useState();
 	const [msgVariant, setMsgVariant] = useState();
+	const [show, setShow] = useState(true);
+	const [isUpdated, setIsUpdated] = useState(false);
 
 	const {
 		currentUser,
@@ -36,6 +40,12 @@ export default function ProfileInfoEdit() {
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
+	function handleClose(){
+
+			return window.location.reload();
+
+	}
+
 	async function handleSubmit(e) {
 		e.preventDefault();
 
@@ -44,6 +54,7 @@ export default function ProfileInfoEdit() {
 
 		setLoading(true);
 		setError('');
+		setIsUpdated(false);
 
 		/* Run update methods from AuthContext */
 		try {
@@ -91,9 +102,10 @@ export default function ProfileInfoEdit() {
 					for (let i of updates) {
 						const updatesToString = updates.join(' - ').toString();
 						console.log(i);
-						setMsg(updatesToString);
+						setMsg(updatesToString + " har uppdaterats");
 					}
-
+					
+					setIsUpdated(true);
 					setMsgVariant('success');
 					history.push('/profile');
 				});
@@ -110,8 +122,8 @@ export default function ProfileInfoEdit() {
 
 				{msg && (
 					<Alert variant="success">
-						{' '}
-						{msg} <AiOutlineCheckCircle size={20} className="ms-1" />
+				
+						{msg} 
 					</Alert>
 				)}
 
@@ -198,20 +210,21 @@ export default function ProfileInfoEdit() {
 						</Form.Group>
 					</Row>
 
-					<Row className="mb-3 ms-4 mt-5 me-4 ">
+					<Row className="mb-3 mt-5">
 						<Col>
 							<Button
 								disabled={loading}
-								type="submit"
-								className="w-100 register-btn"
-								onClick={() => history.goBack()}
+								
+								variant="outline-success"
+								className="w-100 register-btn_light"
+								onClick={handleClose}
 							>
 								
 								<MdKeyboardArrowLeft size={25} /> TILLBAKA
 							</Button>
 						</Col>
 
-						<Col>
+						<Col >
 							<Button
 								disabled={loading}
 								type="submit"
@@ -229,3 +242,5 @@ export default function ProfileInfoEdit() {
 		</>
 	);
 }
+
+

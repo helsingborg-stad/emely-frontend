@@ -25,10 +25,15 @@ export default function Login() {
 	const history = useHistory();
 
 	useEffect(() => {
-		if(currentUser){
-			return <Redirect to="/dashboard" />
+		try{
+
+			if(currentUser.uid) {
+				return history.push("/dashboard")
+			} 
+		} catch(error){
+			console.log(error.message)
 		}
-	},[currentUser])
+	}, [])
 
 	async function handleSubmit(e) {
 		e.preventDefault();

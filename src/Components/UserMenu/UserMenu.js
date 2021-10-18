@@ -27,6 +27,7 @@ export default function UserMenu(props) {
 	const history = useHistory();
 
 	const [show, setShow] = useState(false);
+	const [initials, setInitials] = useState('');
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
@@ -34,8 +35,13 @@ export default function UserMenu(props) {
 	useEffect(() => {
 		getUserDetails(currentUser.uid);
 
+		if (userDetails) {
+			const initials = userDetails.username.charAt(0);
+			setInitials(initials);
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [userDetails]);
 
 	async function handleLogout() {
 		setError('');
@@ -55,18 +61,22 @@ export default function UserMenu(props) {
 			<Navbar className="" fixed="top" expand="lg" id="navbar" bg="white">
 				<Container>
 					<Navbar.Brand>
-						<BackButton />
+						
 					</Navbar.Brand>
 					<Link to="/profile">
-					<Button
-						className="fw-bold"
-						id="menu-user-button"
-						onClick={handleShow}
-						variant="none"
-					>
-						<AiOutlineUser className="ms-2 mb-1 me-2" size={20} />
-						{userDetails && userDetails.username}
-					</Button>
+						<Button
+							className="fw-bold"
+							id="menu-user-button"
+							onClick={handleShow}
+							variant="none"
+						>
+							<Button className="rounded-circle avatar-btn">
+								{' '}
+								{initials && initials}
+							</Button>
+
+							{userDetails && userDetails.username}
+						</Button>
 					</Link>
 
 					{/* Mobile user-menu button */}
@@ -97,9 +107,20 @@ export default function UserMenu(props) {
 							{/* Menu from the side */}
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
 								<Offcanvas.Header className="m-3 " closeButton>
-									<Offcanvas.Title className="m-3 fw-bold">
-										<AiOutlineUser className="me-3" size={25} />
-										{userDetails && userDetails.username}
+									<Offcanvas.Title className="fw-bold">
+										<Button
+											className="fw-bold"
+											id="menu-user-button"
+											onClick={handleShow}
+											variant="none"
+										>
+											<Button className="rounded-circle avatar-btn">
+												
+												{initials && initials}
+											</Button>
+
+											{userDetails && userDetails.username}
+										</Button>
 									</Offcanvas.Title>
 								</Offcanvas.Header>
 								<Offcanvas.Body className="m-3">
@@ -111,7 +132,11 @@ export default function UserMenu(props) {
 										<Col>
 											{/* Profile page menu-button */}
 											<Link to="/profile">
-												<Button className="" style={{ fontWeight: '600' }} variant="none">
+												<Button
+													className=""
+													style={{ fontWeight: '600' }}
+													variant="none"
+												>
 													<Nav.Item>Användarkonto</Nav.Item>
 												</Button>
 											</Link>
@@ -126,7 +151,11 @@ export default function UserMenu(props) {
 										<Col>
 											{/* Update profile menu-button */}
 											<Link to="/dashboard">
-												<Button className="" style={{ fontWeight: '600' }} variant="none">
+												<Button
+													className=""
+													style={{ fontWeight: '600' }}
+													variant="none"
+												>
 													<Nav.Item>Prata med Emely</Nav.Item>
 												</Button>
 											</Link>
@@ -145,7 +174,11 @@ export default function UserMenu(props) {
 												className=""
 												variant="link"
 												onClick={handleLogout}
-												style={{ textDecoration: 'none', color: 'black', fontWeight: '600'}}
+												style={{
+													textDecoration: 'none',
+													color: 'black',
+													fontWeight: '600',
+												}}
 											>
 												Logga ut
 											</Button>
