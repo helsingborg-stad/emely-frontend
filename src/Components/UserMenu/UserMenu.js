@@ -41,7 +41,7 @@ export default function UserMenu(props) {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [userDetails]);
+	}, [userDetails.username]);
 
 	async function handleLogout() {
 		setError('');
@@ -110,7 +110,7 @@ export default function UserMenu(props) {
 									<Offcanvas.Title className="fw-bold">
 										<Button
 											className="fw-bold"
-											id="menu-user-button"
+											
 											onClick={handleShow}
 											variant="none"
 										>

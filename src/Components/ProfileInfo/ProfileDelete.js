@@ -72,8 +72,8 @@ export default function Profile() {
                     <span>
                         
                     <Button
-                    variant="outline-danger"
-                    className="rounded-pill pe-3 ps-3 fw-bold"
+                    variant="none"
+                    className="register-btn_light_small"
                     id="delete-user-button"
                     onClick={handleShow}
                 >
@@ -106,6 +106,7 @@ export default function Profile() {
 							variant="outline-secondary"
 							className="rounded-pill pe-3 ps-3 fw-bold"
 							onClick={handleClose}
+							
 						>
 							Avbryt
 						</Button>

@@ -26,8 +26,8 @@ export default function Profile() {
 					<Col xs="auto" md={4} lg={4} className="text-end p-0">
 						<span>
 							<Button
-								variant="outline-success"
-								className="rounded-pill pe-3 ps-3 fw-bold"
+								variant="none"
+								className="register-btn_light_small"
 								id="edit-button"
 								onClick={handleShow}
 							>

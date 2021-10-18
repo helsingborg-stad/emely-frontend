@@ -61,8 +61,8 @@ export default function Profile() {
 							<span>
 								
 									<Button
-										variant="outline-success"
-										className="rounded-pill fw-bold"
+										variant="none"
+										className="register-btn_light_small"
 										id="edit-button"
                                         onClick={handleShow}
 									>
@@ -108,8 +108,8 @@ export default function Profile() {
 					<Row className="mb-3 mt-5">
 						<span>
 							<Button
-								variant="outline-success"
-								className="rounded-pill pe-3 ps-3 fw-bold"
+								variant="none"
+								className="register-btn_light_small"
 								id="log-out-button-profile"
 								onClick={handleLogout}
 							>
