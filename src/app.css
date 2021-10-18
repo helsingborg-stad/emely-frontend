@@ -20,12 +20,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Work+Sans:wght@300;400;500;600;700;800&display=swap');
 
 * {
-	font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+	font-family: 'Poppins', Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: auto;
 }
 
 .link {
@@ -120,7 +120,7 @@ a:hover {
 }
 
 .register-btn_light_small {
-	border: 2px solid var(--green) !important;
+	border: 1px solid var(--green) !important;
 	color: var(--green) !important;
 	border-radius: 25px !important;
 
