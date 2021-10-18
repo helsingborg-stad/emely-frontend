@@ -41,15 +41,20 @@ export function AuthProvider({ children }) {
 		
 			setLoading(false);
 
-			if(currentUser) {
-			
-				console.log("User is signed in")
-				return <Redirect to="/dashboard" />
-			} else {
-				console.log("User is signed out")
-				return <Redirect to="/login" />
+			try{
+
+				const uid = user.uid
+				if(uid === user.uid) {
+					console.log("You are signed in!")
+					return <Redirect to="/dashboard" />
+				} else {
+					console.log("Signed out!")
+					return <Redirect to="/login" />
+				}
+			} catch(error){
+				console.log("Signed out!")
 			}
-		}, [currentUser]);
+		});
 
 		return unsubscribe;
 	}, []);

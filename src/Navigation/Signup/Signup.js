@@ -220,7 +220,9 @@ export default function Signup() {
 									ref={currentOccupationRef}
 									className="input-field"
 									defaultValue="Arbetslös"
+									
 								>
+								
 									<option>Arbetssökande</option>
 									<option>Studerande</option>
 									<option>Sjukskriven</option>

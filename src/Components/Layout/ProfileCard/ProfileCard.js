@@ -1,6 +1,5 @@
 import React from 'react';
-import { Col, Container, Row, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Row} from 'react-bootstrap';
 
 export default function ProfileCard(props) {
 	return (
