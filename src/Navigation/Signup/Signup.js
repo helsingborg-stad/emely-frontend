@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
-/* Icon imports */
+/* --- Icon imports --- */
 import { HiOutlineMail } from 'react-icons/hi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { AiOutlineUserAdd } from 'react-icons/ai';
@@ -12,11 +12,11 @@ import { AiOutlineCalendar } from 'react-icons/ai';
 import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 
-import AuthLayout from '../../Components/AuthLayout/AuthLayout';
+import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
+import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
-/* Variable declaration */
 export default function Signup() {
-	/* Form value variables */
+	/* ------ Form value variables ------ */
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
@@ -24,31 +24,44 @@ export default function Signup() {
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
+	/* ----------------------------------- */
 
-	const { signup, createUser, currentUser } = useAuth();
-	const [error, setError] = useState('');
+	/* ------ Hooks ------ */
+	const { signup, createUser, translateError } = useAuth();
+	const [msg, setMsg] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [msgVariant, setMsgVariant] = useState('');
 	const history = useHistory();
+	/* ----------------------------------- */
 
 
-	function handleEndUserTerms(e){
+	/* ------ Open user terms onClick ------ */
+	function handleEndUserTerms(e) {
 		e.preventDefault();
 
-		window.open("/end-user-terms", "User Terms", "width=1000, height=1000", "resizable,scrollbars,status");
+		window.open(
+			'/end-user-terms',
+			'User Terms',
+			'width=1000, height=1000',
+			'resizable,scrollbars,status'
+		);
 	}
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 
+
+			/* ------ Start with, checking if the passwords match ------ */
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-			return setError('Passwords do not match');
+			setMsgVariant('danger');
+			return setMsg('Lösenorden matchar inte');
 		}
 
 		try {
-			setError('');
+			setMsg('');
 			setLoading(true);
 
-			/* Run signup firebase-auth function from AuthContext.js */
+			/* Run sign-up function from context which communicates with Firebase */
 			const credential = await signup(
 				emailRef.current.value,
 				passwordRef.current.value
@@ -56,6 +69,7 @@ export default function Signup() {
 			const uid = credential.user.uid;
 			const creationTime = credential.user.metadata.creationTime;
 
+			/*  When signing up, send information to Firestore  */
 			await createUser(
 				emailRef.current.value,
 				usernameRef.current.value,
@@ -68,9 +82,12 @@ export default function Signup() {
 
 			history.push('/dashboard');
 
-			/* Catch error and print out in alert (in english) */
+			/*  Catch error & translate in a function */
 		} catch (error) {
-			setError(error.message);
+			console.log(error.code);
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
+			
 		}
 
 		setLoading(false);
@@ -78,21 +95,24 @@ export default function Signup() {
 
 	return (
 		<>
+			{/* ------------ Alert for error messages: fixed-top ------------ */}
+			{msg && (
+				<AlertMessage message={msg} variant={msgVariant} />
+			  )}
 			<AuthLayout>
 				<h2 className="text-center mb-5 fw-bold">
 					Registrera dig för att börja prata med Emely.
 				</h2>
-				
-				<Form onSubmit={handleSubmit}>
-					{/* Register new user forms */}
 
-					{/* Enter email form */}
+				{/* ------------ All forms ------------ */}
+				<Form onSubmit={handleSubmit}>
+					{/* ------------ Email form ------------ */}
 					<Form.Group id="email" className="fw-bold">
-						<Form.Label className="mt-5">
+						<Form.Label className="mt-5 input-label">
 							<HiOutlineMail size={30} /> Vad är din e-postadress?
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3 shadow-sm"
+							className="input-field"
 							placeholder="Ange din e-postadress."
 							type="email"
 							ref={emailRef}
@@ -100,27 +120,30 @@ export default function Signup() {
 						/>
 					</Form.Group>
 
-					{/* Choose password form */}
+					{/* ------------ Choose password form ------------ */}
 					<Form.Group id="password" className="mt-4 fw-bold">
-						<Form.Label className="mt-3">
+						<Form.Label className="mt-3 input-label">
 							<RiLockPasswordLine size={30} /> Skapa ett lösenord
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3 shadow-sm"
+							className="input-field"
 							placeholder="Skapa ett lösenord."
 							type="password"
 							ref={passwordRef}
 							required
 						></Form.Control>
+						<small className="ms-3 " id="password-info">
+							Lösenordet måste vara minst 6 karaktärer
+						</small>
 					</Form.Group>
 
-					{/* Confirm password form */}
+					{/* ------------ Confirm password form ------------ */}
 					<Form.Group id="password-confirm" className="mt-4 fw-bold">
-						<Form.Label className="mt-3">
+						<Form.Label className="mt-3 input-label">
 							<RiLockPasswordLine size={30} /> Upprepa lösenord
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3 shadow-sm"
+							className="input-field"
 							type="password"
 							placeholder="Upprepa ditt valda lösenord."
 							ref={passwordConfirmRef}
@@ -128,15 +151,15 @@ export default function Signup() {
 						/>
 					</Form.Group>
 
+					{/* ------------ Username form ------------ */}
 					<Row>
-						{/* Username form */}
 						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="username" className="fw-bold">
 								<Form.Label className="mt-4">
 									<AiOutlineUser size={30} /> Vad ska vi kalla dig?
 								</Form.Label>
 								<Form.Control
-									className="w-100 rounded-pill p-3 shadow-sm"
+									className="w-100 input-field"
 									placeholder="Användarnamn"
 									type="text"
 									ref={usernameRef}
@@ -145,14 +168,14 @@ export default function Signup() {
 							</Form.Group>
 						</Col>
 
-						{/* Birth Year form */}
+						{/* ------------ Birth date form ------------ */}
 						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="birthYear" className="fw-bold">
 								<Form.Label className="mt-4">
 									<AiOutlineCalendar size={30} /> När är du född?
 								</Form.Label>
 								<Form.Control
-									className="w-100 rounded-pill p-3 shadow-sm"
+									className="w-100 input-field"
 									placeholder="När är du född?"
 									type="date"
 									defaultValue="1990-01-01"
@@ -163,8 +186,8 @@ export default function Signup() {
 						</Col>
 					</Row>
 
+					{/* ------------ Native language form ------------ */}
 					<Row>
-						{/* Native language form */}
 						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="nativeLanguage" className="fw-bold">
 								<Form.Label className="mt-5">
@@ -172,7 +195,7 @@ export default function Signup() {
 								</Form.Label>
 								<Form.Select
 									ref={nativeLanguageRef}
-									className="rounded-pill p-3 shadow-sm"
+									className="input-field"
 									defaultValue="Svenska"
 								>
 									<option>Svenska</option>
@@ -187,7 +210,7 @@ export default function Signup() {
 							</Form.Group>
 						</Col>
 
-						{/* Current occupation form */}
+						{/* ------------ Current occupation form ------------ */}
 						<Col md={6} xs="auto" lg={6}>
 							<Form.Group id="currentOccupation" className="fw-bold">
 								<Form.Label className="mt-5">
@@ -195,9 +218,11 @@ export default function Signup() {
 								</Form.Label>
 								<Form.Select
 									ref={currentOccupationRef}
-									className="rounded-pill p-3 shadow-sm"
+									className="input-field"
 									defaultValue="Arbetslös"
+									
 								>
+								
 									<option>Arbetssökande</option>
 									<option>Studerande</option>
 									<option>Sjukskriven</option>
@@ -209,26 +234,37 @@ export default function Signup() {
 							</Form.Group>
 						</Col>
 					</Row>
+
+					{/* ------------ Checkbox user terms ------------ */}
 					<Row>
 						<Form.Group
 							className="mb-3 mt-4 ms-3"
 							controlId="formBasicCheckbox"
 						>
-							
-								<Form.Check
-									required	
-									type="checkbox"
-									style={{ display: 'inline'}}
-								/> <span id="checkbox-text" className="text-end ms-3 ">Jag godkänner <Button className="p-0" variant="none" target="_blank" onClick={handleEndUserTerms}> <b>NordAxons användningsvillkor</b> </Button></span>
-								
-								{error && <Alert className="mt-4" variant="danger">{error}</Alert>}
+							<Form.Check
+								required
+								type="checkbox"
+								style={{ display: 'inline' }}
+							/>{' '}
+							<span id="checkbox-text" className="text-end ms-3 ">
+								Jag godkänner{' '}
+								<Button
+									className="p-0"
+									variant="none"
+									target="_blank"
+									onClick={handleEndUserTerms}
+								>
+									{' '}
+									<b>NordAxons användningsvillkor</b>{' '}
+								</Button>
+							</span>
 						</Form.Group>
 					</Row>
 
-					{/* Submit buttons */}
+					{/* ------------ Login buttons ------------ */}
 					<Button
 						disabled={loading}
-						className="w-100 mt-3 p-3 btn-success rounded-pill fw-bold shadow-sm register-btn"
+						className="w-100 mt-3 register-btn"
 						type="submit"
 					>
 						<AiOutlineUserAdd size={30} />

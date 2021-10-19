@@ -8,10 +8,24 @@
     background: white !important;
 }
 
-#menu-user-button{
-    font-size: 1.2rem;
-    display: block ;
+.navbar{
+    border-bottom: 1px solid rgb(216, 216, 216) !important;
+
 }
+
+#menu-user-button{
+    font-size: 1rem;
+    display: block ;
+    color: rgb(77, 77, 77) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.offcanvas{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 
 
 @media (max-width: 768px){

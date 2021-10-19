@@ -1,8 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import AuthLayout from '../../Components/AuthLayout/AuthLayout';
-import { Link, useHistory } from 'react-router-dom';
+
+import { Link, useHistory, Redirect } from 'react-router-dom';
+
+import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
+import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 
 /* Icon Imports */
@@ -15,17 +18,28 @@ import { AiOutlineUser } from 'react-icons/ai';
 export default function Login() {
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const { login, updateLoginCount } = useAuth();
-	const [error, setError] = useState('');
+	const { login, updateUserInfo, translateError, currentUser } = useAuth();
+	const [msg, setMsg] = useState('');
+	const [msgVariant, setMsgVariant] = useState('');
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
+	useEffect(() => {
+		try{
+
+			if(currentUser.uid) {
+				return history.push("/dashboard")
+			} 
+		} catch(error){
+			console.log(error.message)
+		}
+	}, [])
 
 	async function handleSubmit(e) {
 		e.preventDefault();
 
 		try {
-			setError('');
+			setMsg('');
 			setLoading(true);
 
 			/* Run firebase-auth login function from AuthContext */
@@ -33,13 +47,15 @@ export default function Login() {
 			const userId = credentials.user.uid
 			const lastSignInTime = credentials.user.metadata.creationTime;
 
-			/* Run updateLoginCount to increment login_count after login */
-			await updateLoginCount(userId, lastSignInTime)
+			/* Run updateUserInfo to update appropriate fields on login */
+			await updateUserInfo(userId, lastSignInTime)
 			history.push('/dashboard');
 
-			/* Catch error and print out in alert (in english) */
+			/*  Catch error & translate in a function */
 		} catch (error) {
-			setError(error.message);
+			console.log(error.code);
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
 		}
 
 		setLoading(false);
@@ -47,6 +63,9 @@ export default function Login() {
 
 	return (
 		<>
+		{msg && (
+			<AlertMessage message={msg} variant={msgVariant} />
+		  )}
 			<AuthLayout>
 				<h2 className="text-center mb-4 fw-bold" id="login-header">
 					Logga in för att fortsätta
@@ -56,11 +75,11 @@ export default function Login() {
 				
 					{/* Login form */}
 					<Form.Group id="email" className="mt-5 fw-bold">
-						<Form.Label className="mt-3">
+						<Form.Label className="mt-3 input-label">
 							<HiOutlineMail size={30} /> E-postadress
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3 shadow-sm"
+							className="input-field"
 							placeholder="E-postadress"
 							type="email"
 							ref={emailRef}
@@ -69,11 +88,11 @@ export default function Login() {
 					</Form.Group>
 
 					<Form.Group id="password" className="mt-4 fw-bold">
-						<Form.Label className="mt-3">
+						<Form.Label className="mt-3 input-label">
 							<RiLockPasswordLine size={30} /> Lösenord
 						</Form.Label>
 						<Form.Control
-							className="rounded-pill p-3 shadow-sm"
+							className="input-field"
 							type="password"
 							placeholder="Lösenord"
 							ref={passwordRef}
@@ -81,12 +100,12 @@ export default function Login() {
 						/>
 					</Form.Group>
 
-					{error && <Alert className="mt-5" variant="danger">{error}</Alert>}
+					
 
 					{/* Submit button & Log in */}
 					<Button
 						disabled={loading}
-						className="w-100 mt-5 btn-success rounded-pill p-3 fw-bold shadow-sm register-btn"
+						className="w-100 mt-5 register-btn"
 						type="submit"
 					>
 						<RiLoginCircleLine size={30} /> LOGGA IN
@@ -102,9 +121,9 @@ export default function Login() {
 					{/* Guest login */}
 					<Button
 						disabled={loading}
-						className="w-100 mt-2 rounded-pill p-3 fw-bold shadow-sm register-btn_light"
+						className="w-100 mt-2 register-btn_light"
 						type="submit"
-						variant="outline-success"
+						variant="none"
 					>
 						<AiOutlineUser size={30} /> LOGGA IN SOM GÄST
 					</Button>

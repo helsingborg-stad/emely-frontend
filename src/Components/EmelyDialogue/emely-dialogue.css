@@ -1,24 +1,23 @@
 #emely-dialogue-card {
-    border-radius: 15px;
-    margin: 0 auto;
-    float: none;
-    margin-bottom: 10px;
-    max-width: 800px;
+    border-bottom-right-radius: 45px;
+    border-top-right-radius: 45px;
+    border-top-left-radius: 45px;
+    border-bottom-left-radius: 0px;
+    max-width: 900px;
+    font-size: 1rem !important; 
+    margin-bottom: 70px;
+    font-weight: 500;
+    text-align: left;
+    line-height: 1.8rem;
 }
 
-#dialogue-text {
-    line-height: 1.8;
-    font-size: 1.2rem;
+.dialogue-row{
+    align-items: end !important;
+    text-align: end !important;
+    border-bottom: 1px solid rgb(212, 212, 212);
 }
 
-#emely-dialogue-container {
-    border-radius: 40px;
-    max-width: 800px;
-    margin: 0 auto;
-    float: none;
-    margin-bottom: 10px;
-}
 
 #emely-image {
-    max-width: 200px;
+    width: 100%;
 }

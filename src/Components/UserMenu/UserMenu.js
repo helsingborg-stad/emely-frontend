@@ -15,11 +15,10 @@ import BackButton from '../BackButton/BackButton';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import { AiOutlineUser } from 'react-icons/ai';
-import { AiOutlineEdit } from 'react-icons/ai';
-import { AiOutlineHome } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { BsChatDots } from 'react-icons/bs';
+import { BsChatRightDots } from 'react-icons/bs';
+import { RiShieldUserLine } from 'react-icons/ri';
 
 /* Variable declaration */
 export default function UserMenu(props) {
@@ -28,13 +27,20 @@ export default function UserMenu(props) {
 	const history = useHistory();
 
 	const [show, setShow] = useState(false);
+	const [initials, setInitials] = useState('');
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
 	/* Getting the current user details on mount */
 	useEffect(() => {
-		getUserDetails(currentUser.uid);
+		try{
 
+			getUserDetails(currentUser.uid);
+			
+		}catch (error) {
+			console.log(error.message)
+		}
+		
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -53,17 +59,25 @@ export default function UserMenu(props) {
 
 	return (
 		<>
-			<Navbar
-				className="shadow-sm"
-				fixed="top"
-				bg="white"
-				expand="lg"
-				id="navbar"
-			>
+			<Navbar className="" fixed="top" expand="lg" id="navbar" bg="white">
 				<Container>
 					<Navbar.Brand>
-						<BackButton />
+					<Button className="rounded-circle avatar-btn">
+												
+					{ userDetails && userDetails.username.charAt(0) }
+					</Button>
 					</Navbar.Brand>
+					<Link to="/profile">
+						<Button
+							className="fw-bold"
+							id="menu-user-button"
+							onClick={handleShow}
+							variant="none"
+						>
+
+							{userDetails && userDetails.username}
+						</Button>
+					</Link>
 
 					{/* Mobile user-menu button */}
 					<Navbar.Toggle
@@ -79,47 +93,51 @@ export default function UserMenu(props) {
 					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
 						<Nav className="ms-auto ">
 							{/* Menu-button */}
-							<Link to="/dashboard">
-								<Button
-									className="me-3"
-									id="menu-user-button"
-									onClick={handleShow}
-									variant="none"
-								>
-									<BsChatDots className="ms-2 mb-1 me-2" size={20} />
-									Prata med Emely
-								</Button>
-							</Link>
 
 							<Button
-								className="p-0"
+								className="p-0 fw-bold"
 								id="menu-user-button"
 								onClick={handleShow}
 								variant="none"
 							>
-								<AiOutlineUser className="ms-2 mb-1 me-2" size={20} />
-								Mitt konto
+								<AiOutlineMenu className="ms-2 mb-1 me-2" size={20} />
+								MENY
 							</Button>
 
 							{/* Menu from the side */}
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
-								<Offcanvas.Header className="m-3" closeButton>
-									<Offcanvas.Title className="m-3 fw-bold">
-										<AiOutlineUser className="me-3" size={25} />
-										{userDetails && userDetails.username}
+								<Offcanvas.Header className="m-3 " closeButton>
+									<Offcanvas.Title className="fw-bold">
+									<Button className="rounded-circle avatar-btn">
+												
+									{ userDetails && userDetails.username.charAt(0) }
+									</Button>
+										<Button
+											className="fw-bold"
+											
+											
+											variant="none"
+										>
+
+
+											{userDetails && userDetails.username}
+										</Button>
 									</Offcanvas.Title>
 								</Offcanvas.Header>
 								<Offcanvas.Body className="m-3">
 									<Row className="mb-2">
 										<Col className="ms-4 p-1" xs={1}>
-											<AiOutlineHome size={25} />
+											<RiShieldUserLine size={25} />
 										</Col>
 
 										<Col>
-
-										{/* Profile page menu-button */}
+											{/* Profile page menu-button */}
 											<Link to="/profile">
-												<Button className="" variant="none">
+												<Button
+													className=""
+													style={{ fontWeight: '600' }}
+													variant="none"
+												>
 													<Nav.Item>Användarkonto</Nav.Item>
 												</Button>
 											</Link>
@@ -127,16 +145,19 @@ export default function UserMenu(props) {
 									</Row>
 
 									<hr />
-									<Row className="menu-rows">
+									<Row className="menu-rows ">
 										<Col className="ms-4 p-1" xs={1}>
-											<AiOutlineEdit size={25} />
+											<BsChatRightDots size={25} />
 										</Col>
 										<Col>
-
 											{/* Update profile menu-button */}
-											<Link to="/update-profile">
-												<Button variant="none">
-													<Nav.Item>Redigera profil</Nav.Item>
+											<Link to="/dashboard">
+												<Button
+													className=""
+													style={{ fontWeight: '600' }}
+													variant="none"
+												>
+													<Nav.Item>Prata med Emely</Nav.Item>
 												</Button>
 											</Link>
 										</Col>
@@ -149,13 +170,16 @@ export default function UserMenu(props) {
 											<BiLogOutCircle size={25} />
 										</Col>
 										<Col>
-										
 											{/* Log out menu-button */}
 											<Button
-												className="rounded-pill "
+												className=""
 												variant="link"
 												onClick={handleLogout}
-												style={{ textDecoration: 'none', color: 'black' }}
+												style={{
+													textDecoration: 'none',
+													color: 'black',
+													fontWeight: '600',
+												}}
 											>
 												Logga ut
 											</Button>

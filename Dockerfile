@@ -16,13 +16,13 @@ RUN yarn install --production
 COPY . .
 
 # Change working directory to folder 'api'
-WORKDIR /app/api
+#WORKDIR /app/api
 
 # install node modules and build assets in this folder
-RUN yarn install --production
+#RUN yarn install --production
 
 # Change working directory back to root
-WORKDIR /app
+#WORKDIR /app
 
 # Create production build of React App
 RUN yarn build

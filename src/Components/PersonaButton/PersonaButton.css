@@ -2,13 +2,15 @@
   border: none;
   border-radius: 24px;
   padding: 17px 40px;
-  background: var(--buttonLinearGradient);
+  background: var(--green);
   color: var(--white);
   font-size: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  letter-spacing: 1px;
+  font-weight: 800 !important;
 }
 
 .persona-btn:hover {
