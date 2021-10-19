@@ -3,6 +3,8 @@ import React, { createContext, useState } from "react";
 
 export const ConversationContext = createContext();
 
+console.log(process.env.REACT_APP_API_URL);
+
 const ConversationContextProvider = (props) => {
   // state for Emely's first init message
   const [firstBotMessage, setFirstBotMessage] = useState(null);
@@ -31,7 +33,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.post(
-        "http://localhost:3001/api/v1/conversation/init",
+        `${process.env.REACT_APP_API_URL}/init`,
         {
           name: `${userName}`,
           job: `${job}`,
@@ -65,14 +67,13 @@ const ConversationContextProvider = (props) => {
     id = conversationId,
     date = formatedTimestamp()
   ) => {
-    
     setIsLoading(true);
     // saves user's message
     setSessionConersation((prevState) => [...prevState, userMessage]);
     try {
       // send post request to local server
       const response = await axios.post(
-        `http://localhost:3001/api/v1/conversation/${endpoint}`,
+        `${process.env.REACT_APP_API_URL}/${endpoint}`,
         {
           message: `${userMessage}`,
           conversation_id: `${id}`,
@@ -103,10 +104,11 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.get(
-        "http://localhost:3001/api/v1/conversation/joblist"
+        `${process.env.REACT_APP_API_URL}/joblist`
       );
 
       const result = await response.data;
+      console.log(result);
       setJobButtons(result);
     } catch (err) {
       console.log("Error: ", err);

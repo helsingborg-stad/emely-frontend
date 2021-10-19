@@ -1,18 +1,19 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { FaHandPointDown } from "react-icons/fa";
 
-import {ConversationContext} from '../../contexts/ConversationContext'
+import { ConversationContext } from "../../contexts/ConversationContext";
 
 export default function WorkButton(props) {
   const { setCurrentJob } = useContext(ConversationContext);
   const history = useHistory();
 
+  const buttons = props.occupation.occupations;
   const handleClick = (e) => {
     setCurrentJob(e.target.id);
     history.push("/emely-chat/intervju");
   };
-
+ 
   return (
     <>
       <nav className="work-button_dropdown-list">
@@ -33,7 +34,7 @@ export default function WorkButton(props) {
 
           <div id="overlay"></div>
           <ul>
-            {props.occupation.sort().map((job, i) => (
+            {buttons.sort().map((job, i) => (
               <li
                 onClick={(e) => handleClick(e)}
                 key={i}

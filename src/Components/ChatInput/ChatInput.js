@@ -17,7 +17,7 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
   const [activeSound, setActiveSound] = useState(true);
-  
+
   const { currentWidth } = useWindowDimensions();
   // states && functions for interactive actions with BE
   const {
@@ -56,7 +56,7 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
     setIsListening((prevState) => !prevState);
     setRecordingNote("");
   };
- 
+
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
