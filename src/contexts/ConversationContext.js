@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 
 export const ConversationContext = createContext();
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = "https://emely-chat-service-api-staging-ef5bmjer3q-ey.a.run.app";
 
 const ConversationContextProvider = (props) => {
   // state for Emely's first init message
