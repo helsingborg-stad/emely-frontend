@@ -103,7 +103,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.get(
-        "https://emely-chat-service-api-staging-ef5bmjer3q-ey.a.run.app/joblist"
+      `https://emely-chat-service-api-staging-ef5bmjer3q-ey.a.run.app/joblist`, { crossdomain: true}
       );
 
       const result = await response.data;
