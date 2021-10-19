@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 
 export const ConversationContext = createContext();
 
-console.log(process.env.REACT_APP_API_URL);
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 const ConversationContextProvider = (props) => {
   // state for Emely's first init message
@@ -23,6 +23,8 @@ const ConversationContextProvider = (props) => {
   // disable "send" button in error case
   const [isError, setError] = useState(false);
 
+
+
   const initConversation = async (
     userName,
     job = null,
@@ -33,7 +35,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/init`,
+        `/init`,
         {
           name: `${userName}`,
           job: `${job}`,
@@ -48,6 +50,7 @@ const ConversationContextProvider = (props) => {
           user_ip_number: "127.0.0.1",
         }
       );
+      console.log(`${axios.defaults.baseURL}/init`);
       const result = await response.data;
       setConversationId(result.conversation_id);
       setFirstBotMessage(result.message);
@@ -73,7 +76,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/${endpoint}`,
+        `/${endpoint}`,
         {
           message: `${userMessage}`,
           conversation_id: `${id}`,
@@ -83,6 +86,7 @@ const ConversationContextProvider = (props) => {
           lang: "sv",
         }
       );
+      console.log(`${axios.defaults.baseURL}/${endpoint}`);
       const result = await response.data;
       // saves Emely's message
       setSessionConersation((prevState) => [...prevState, result.message]);
@@ -104,11 +108,11 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/joblist`
+        `/joblist`
       );
-
+      console.log(`${axios.defaults.baseURL}/joblist`);
       const result = await response.data;
-      console.log(result);
+      
       setJobButtons(result);
     } catch (err) {
       console.log("Error: ", err);
