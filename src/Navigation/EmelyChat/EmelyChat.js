@@ -11,6 +11,7 @@ import ChatInput from "../../Components/ChatInput/ChatInput";
 
 export default function EmelyChat(props) {
   const [isFocused, setFocused] = useState(false);
+  const [isValidationError, setValidationError] = useState(false)
   const { userDetails, currentUser, getUserDetails } = useAuth();
   // get :persona to send to the BE for conversation
   const { persona } = props.match.params;
@@ -65,6 +66,7 @@ export default function EmelyChat(props) {
 
   };
 
+  console.log("isValidationError", isValidationError);
   return (
     <>
       <Container>
@@ -81,7 +83,7 @@ export default function EmelyChat(props) {
 
           {sessionConversation.length > 0 && renderMessages()}
           {/* renders Emely loader (waiting for a response from the server )*/}
-          {isLoading  && (
+          {isLoading && (
             <EmelyChatBubble
               isLoading={isLoading}
               loader={<PulseLoader size={6} color={"#979797"} />}
@@ -91,6 +93,17 @@ export default function EmelyChat(props) {
           {isFocused && (
             <UserChatBubble
               isFocused={isFocused}
+              loader={
+                <PulseLoader
+                  size={6}
+                  color={"#979797"}
+                />
+              }
+            />
+          )}
+          {isValidationError && (
+            <UserChatBubble
+              isValidationError={isValidationError}
               loader={<PulseLoader size={6} color={"#979797"} />}
             />
           )}
@@ -100,6 +113,7 @@ export default function EmelyChat(props) {
           persona={persona}
           setFocused={setFocused}
           isFocused={isFocused}
+          setValidationError={setValidationError}
         />
       </Container>
     </>

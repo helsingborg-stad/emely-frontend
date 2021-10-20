@@ -12,7 +12,7 @@ import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
 
-export default function ChatInput({ persona, setFocused, isFocused }) {
+export default function ChatInput({ persona, setFocused, isFocused, setValidationError }) {
   // states for layout
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
@@ -40,9 +40,15 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
   // send user message to BE
   const handleSendClick = (e) => {
     e.preventDefault();
-    if (userMessage.trim().length > 0) {
+    if (
+      userMessage.trim().length > 0 &&
+      userMessage.trim().match(/^[^><#@*&«»[]]+$/)
+    ) {
       getContinueСonversation(persona, userMessage);
       setUserMessage("");
+    } else {
+      // if user's message contains "< > @ # « » & * [ ] " symbols
+      setValidationError(true);
     }
     setFocused(false);
   };
@@ -92,6 +98,7 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
             className={isFocused ? "input-wrapper expand" : "input-wrapper"}
             onFocus={() => {
               setFocused(true);
+              setValidationError(false)
             }}
             onBlur={() => {
               setFocused((prevState) => !prevState);
