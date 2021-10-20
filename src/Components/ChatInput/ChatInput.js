@@ -12,7 +12,12 @@ import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
 
-export default function ChatInput({ persona, setFocused, isFocused, setValidationError }) {
+export default function ChatInput({
+  persona,
+  setFocused,
+  isFocused,
+  setValidationError,
+}) {
   // states for layout
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
@@ -42,13 +47,16 @@ export default function ChatInput({ persona, setFocused, isFocused, setValidatio
     e.preventDefault();
     if (
       userMessage.trim().length > 0 &&
-      userMessage.trim().match(/^[^><#@*&«»[]]+$/)
+      userMessage.trim().match(/^[^><#@*&«»]+$/)
     ) {
       getContinueСonversation(persona, userMessage);
       setUserMessage("");
+      console.log("userMessage", userMessage);
     } else {
-      // if user's message contains "< > @ # « » & * [ ] " symbols
+      // if user's message contains "< > @ # « » & *  " symbols
       setValidationError(true);
+      setUserMessage("");
+      console.log("userMessage", userMessage);
     }
     setFocused(false);
   };
@@ -98,10 +106,10 @@ export default function ChatInput({ persona, setFocused, isFocused, setValidatio
             className={isFocused ? "input-wrapper expand" : "input-wrapper"}
             onFocus={() => {
               setFocused(true);
-              setValidationError(false)
+              setValidationError(false);
             }}
             onBlur={() => {
-              setFocused((prevState) => !prevState);
+              setFocused(false);
             }}
           >
             <TextareaAutosize

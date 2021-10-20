@@ -13,9 +13,9 @@ const UserChatBubble = ({
         <img className="user-image" src={userLogo} alt="User logo" />
       </div>
       {isValidationError ? (
-        <p className="user-dialogue-text">
+        <p className="alert-danger user-dialogue-text">
           Message can not be empty or contains &#60; &#62; @ # &#171; &#187;
-          &#38; * [ ] characters
+          &#38; * characters
         </p>
       ) : (
         <p className="user-dialogue-text">{isFocused ? loader : message}</p>
