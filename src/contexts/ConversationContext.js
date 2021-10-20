@@ -50,7 +50,6 @@ const ConversationContextProvider = (props) => {
           user_ip_number: "127.0.0.1",
         }
       );
-      console.log(`${axios.defaults.baseURL}/init`);
       const result = await response.data;
       setConversationId(result.conversation_id);
       setFirstBotMessage(result.message);
@@ -86,7 +85,6 @@ const ConversationContextProvider = (props) => {
           lang: "sv",
         }
       );
-      console.log(`${axios.defaults.baseURL}/${endpoint}`);
       const result = await response.data;
       // saves Emely's message
       setSessionConersation((prevState) => [...prevState, result.message]);
@@ -110,7 +108,6 @@ const ConversationContextProvider = (props) => {
       const response = await axios.get(
         `/joblist`
       );
-      console.log(`${axios.defaults.baseURL}/joblist`);
       const result = await response.data;
       
       setJobButtons(result);

@@ -21,13 +21,19 @@ if (mic) {
 const useVoiceToText = () => {
   const [isListening, setIsListening] = useState(false);
   const [recordingNote, setRecordingNote] = useState("");
+  // if a browser is not Chrome hide the mic button
+  const [isBrowserSupportsSpeechApi, setBrowserSupportsSpeechApi] = useState(
+    false
+  );
 
   useEffect(() => {
     handleListen();
   }, [isListening]);
 
   const handleListen = () => {
-    if (mic) {
+    // be sure that the SpeechRecognition() exist and this is the Chrome browser
+    if (mic && navigator.userAgent.indexOf("Chrome") !== -1) {
+      setBrowserSupportsSpeechApi(true);
       if (isListening) {
         mic.start();
         mic.onend = () => {
@@ -65,6 +71,7 @@ const useVoiceToText = () => {
     recordingNote,
     setIsListening,
     setRecordingNote,
+    isBrowserSupportsSpeechApi,
   };
 };
 

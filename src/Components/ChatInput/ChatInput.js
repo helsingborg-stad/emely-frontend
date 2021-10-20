@@ -34,6 +34,7 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
     recordingNote,
     setIsListening,
     setRecordingNote,
+    isBrowserSupportsSpeechApi,
   } = useVoiceToText();
 
   // send user message to BE
@@ -57,24 +58,44 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
     setRecordingNote("");
   };
 
+  // if the user clicks the "enter" btn, his response is sent to the BE
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSendClick(e);
+    }
+  };
+
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
-        <button
-          className={
-            isListening
-              ? "navigation_btn recording_btn_active"
-              : "navigation_btn recording_btn"
-          }
-          onClick={(e) => handleClickRecordingBtn(e)}
-        >
-          {isListening ? <FaStop /> : <FaPlay className="faPlay-icon" />}
-        </button>
+        {isBrowserSupportsSpeechApi && (
+          <button
+            className={
+              isListening
+                ? "navigation_btn recording_btn_active"
+                : "navigation_btn recording_btn"
+            }
+            onClick={(e) => handleClickRecordingBtn(e)}
+          >
+            {isListening ? (
+              <FaStop size={"2rem"} />
+            ) : (
+              <FaPlay className="faPlay-icon" size={"2rem"} />
+            )}
+          </button>
+        )}
+
         <div className="buttons-wrapper">
           <form
             onSubmit={(e) => handleSendClick(e)}
             className={isFocused ? "input-wrapper expand" : "input-wrapper"}
+            onFocus={() => {
+              setFocused(true);
+            }}
+            onBlur={() => {
+              setFocused((prevState) => !prevState);
+            }}
           >
             <TextareaAutosize
               onChange={(e) => {
@@ -86,15 +107,10 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
               maxRows={3}
               placeholder={isLoading ? "" : "Skriv meddelande"}
               value={isListening ? recordingNote : userMessage}
-              onFocus={() => {
-                setFocused(true);
-              }}
-              // onBlur={() => {
-              //   setFocused((prevState) => !prevState);
-              // }}
+              onKeyDown={(e) => handleKeyDown(e)}
             ></TextareaAutosize>
             <button disabled={isLoading} className="send_message_btn">
-              <IoIosSend />
+              <IoIosSend size={"1.5rem"} />
             </button>
           </form>
 
@@ -106,19 +122,29 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
                 : "sound_btn navigation_btn"
             }
           >
-            {activeSound ? <IoMdVolumeHigh /> : <IoMdVolumeOff />}
+            {activeSound ? (
+              <IoMdVolumeHigh size={"2rem"} />
+            ) : (
+              <IoMdVolumeOff size={"2rem"} />
+            )}
           </button>
 
-          <button
-            onClick={() => setActiveMicro(!activeMicro)}
-            className={
-              isFocused && currentWidth.width < MEDIUM_WIDTH
-                ? "hide"
-                : "microphone_btn navigation_btn"
-            }
-          >
-            {activeMicro ? <BiMicrophone /> : <BiMicrophoneOff />}
-          </button>
+          {isBrowserSupportsSpeechApi && (
+            <button
+              onClick={() => setActiveMicro(!activeMicro)}
+              className={
+                isFocused && currentWidth.width < MEDIUM_WIDTH
+                  ? "hide"
+                  : "microphone_btn navigation_btn"
+              }
+            >
+              {activeMicro ? (
+                <BiMicrophone size={"2rem"} />
+              ) : (
+                <BiMicrophoneOff size={"2rem"} />
+              )}
+            </button>
+          )}
         </div>
       </div>
     </div>
