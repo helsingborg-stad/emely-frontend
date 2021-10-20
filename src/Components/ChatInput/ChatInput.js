@@ -57,7 +57,14 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
     setIsListening((prevState) => !prevState);
     setRecordingNote("");
   };
- ;
+
+  // if the user clicks the "enter" btn, his response is sent to the BE
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSendClick(e);
+    }
+  };
+
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
@@ -100,6 +107,7 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
               maxRows={3}
               placeholder={isLoading ? "" : "Skriv meddelande"}
               value={isListening ? recordingNote : userMessage}
+              onKeyDown={(e) => handleKeyDown(e)}
             ></TextareaAutosize>
             <button disabled={isLoading} className="send_message_btn">
               <IoIosSend size={"1.5rem"} />
