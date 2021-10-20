@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { BiMicrophone } from "react-icons/bi";
 import { BiMicrophoneOff } from "react-icons/bi";
 import { IoMdVolumeHigh } from "react-icons/io";
@@ -8,7 +8,6 @@ import { FaPlay } from "react-icons/fa";
 import { FaStop } from "react-icons/fa";
 
 import useWindowDimensions from "../../customHooks/useWindowDimensions";
-import useDetectBrowser from "../../customHooks/useDetectBrowser";
 import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
@@ -35,15 +34,8 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
     recordingNote,
     setIsListening,
     setRecordingNote,
+    isBrowserSupportsSpeechApi,
   } = useVoiceToText();
-
-  //
-  const { isChrome, detectBrowser } = useDetectBrowser();
-
-  // if a browser is not Chrome hide the mic button
-  useEffect(() => {
-    detectBrowser();
-  }, []);
 
   // send user message to BE
   const handleSendClick = (e) => {
@@ -65,12 +57,12 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
     setIsListening((prevState) => !prevState);
     setRecordingNote("");
   };
-
+ ;
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
-        {isChrome && (
+        {isBrowserSupportsSpeechApi && (
           <button
             className={
               isListening
@@ -129,7 +121,7 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
             )}
           </button>
 
-          {isChrome && (
+          {isBrowserSupportsSpeechApi && (
             <button
               onClick={() => setActiveMicro(!activeMicro)}
               className={
