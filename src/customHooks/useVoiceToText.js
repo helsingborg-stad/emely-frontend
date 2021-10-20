@@ -31,7 +31,8 @@ const useVoiceToText = () => {
   }, [isListening]);
 
   const handleListen = () => {
-    if (mic) {
+    // be sure that the SpeechRecognition() exist and this is the Chrome browser
+    if (mic && navigator.userAgent.indexOf("Chrome") !== -1) {
       setBrowserSupportsSpeechApi(true);
       if (isListening) {
         mic.start();
