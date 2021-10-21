@@ -3,8 +3,6 @@ import React, { createContext, useState } from "react";
 
 export const ConversationContext = createContext();
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-
 const ConversationContextProvider = (props) => {
   // state for Emely's first init message
   const [firstBotMessage, setFirstBotMessage] = useState(null);
@@ -35,7 +33,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.post(
-        `/init`,
+        `${process.env.REACT_APP_API_URL}/init`,
         {
           name: `${userName}`,
           job: `${job}`,
@@ -75,7 +73,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.post(
-        `/${endpoint}`,
+        `${process.env.REACT_APP_API_URL}/${endpoint}`,
         {
           message: `${userMessage}`,
           conversation_id: `${id}`,
@@ -106,7 +104,7 @@ const ConversationContextProvider = (props) => {
     try {
       // send post request to local server
       const response = await axios.get(
-        `/joblist`
+        `${process.env.REACT_APP_API_URL}/joblist`
       );
       const result = await response.data;
       

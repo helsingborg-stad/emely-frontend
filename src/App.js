@@ -17,6 +17,7 @@ import EndUserTerms from './Components/EndUserTerms/EndUserTerms';
 import Home from './Navigation/Home/Home';
 import Profile from './Navigation/Profile/Profile';
 import ConversationContextProvider from './contexts/ConversationContext';
+import AcapelaContextProvider from './contexts/AcapelaContext';
 
 import './app.css';
 
@@ -26,46 +27,52 @@ function App() {
 
 
 	return (
-		<>
-			<Container
-				id="main-container"
-				className="d-flex align-items-center justify-content-center"
-			>
-				<div className="w-100 justify-content-center">
-					<Router>
-						<AuthProvider>
-							<ConversationContextProvider>
-								<Switch>
-									{/* When logged in Routes */}
-									<PrivateRoute exact path="/dashboard" component={Dashboard} />
-									<PrivateRoute
-										path="/update-profile"
-										component={ProfileInfoEdit}
-									/>
-									<PrivateRoute
-										path="/change-password"
-										component={UpdatePassword}
-									/>
-									<PrivateRoute path="/work-emely" component={WorkEmely} />
-									<PrivateRoute
-										path="/emely-chat/:persona"
-										component={EmelyChat}
-									/>
-									<PrivateRoute path="/profile" component={Profile} />
+    <>
+      <Container
+        id="main-container"
+        className="d-flex align-items-center justify-content-center"
+      >
+        <div className="w-100 justify-content-center">
+          <Router>
+            <AuthProvider>
+              <ConversationContextProvider>
+                <AcapelaContextProvider>
+                  <Switch>
+                    {/* When logged in Routes */}
+                    <PrivateRoute
+                      exact
+                      path="/dashboard"
+                      component={Dashboard}
+                    />
+                    <PrivateRoute
+                      path="/update-profile"
+                      component={ProfileInfoEdit}
+                    />
+                    <PrivateRoute
+                      path="/change-password"
+                      component={UpdatePassword}
+                    />
+                    <PrivateRoute path="/work-emely" component={WorkEmely} />
+                    <PrivateRoute
+                      path="/emely-chat/:persona"
+                      component={EmelyChat}
+                    />
+                    <PrivateRoute path="/profile" component={Profile} />
 
-									<Route exact path="/" component={Login} />
-									<Route path="/signup" component={Signup} />
-									<Route path="/login" component={Login} />
-									<Route path="/end-user-terms" component={EndUserTerms} />
-									<Route path="/forgot-password" component={ForgotPassword} />
-								</Switch>
-							</ConversationContextProvider>
-						</AuthProvider>
-					</Router>
-				</div>
-			</Container>
-		</>
-	);
+                    <Route exact path="/" component={Login} />
+                    <Route path="/signup" component={Signup} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/end-user-terms" component={EndUserTerms} />
+                    <Route path="/forgot-password" component={ForgotPassword} />
+                  </Switch>
+                </AcapelaContextProvider>
+              </ConversationContextProvider>
+            </AuthProvider>
+          </Router>
+        </div>
+      </Container>
+    </>
+  );
 }
 
 export default App;
