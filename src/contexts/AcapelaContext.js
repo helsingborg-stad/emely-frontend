@@ -4,9 +4,8 @@ import React, { createContext, useState, useEffect } from "react";
 export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
-  // todo delete variables
-  const [test, setTest] = useState("text from Acapela Context");
   const [acapelaToken, setAcapelaToken] = useState(null);
+  const [acapelaUrl, setAcapelaUrl] = useState(null);
 
   useEffect(() => {
     loginAcapela();
@@ -33,29 +32,21 @@ const AcapelaContextProvider = (props) => {
   };
 
   const playAcapela = async (stringToSay) => {
+    console.log("acapela speech", stringToSay);
     const voice = "?voice=Mia22k_HQ";
     const output = "&output=stream";
     const type = "&type=mp3";
     const text = encodeURIComponent(stringToSay);
-    const src_type = "audio/wav";
-    // const src_type = "mp3";
+    // const src_type = "audio/wav";
     const volume = "&volume=32768";
 
-    console.log(stringToSay);
-    let url = `
+    const url = `
        ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${acapelaToken}`;
-    try {
-      var output2 =
-        '<audio controls="controls" autobuffer="autobuffer" autoplay="autoplay"><source src="' +
-        url +'" type="' +src_type +'" /></audio>';
-        document.getElementById("player").innerHTML = output2;
-    } catch (err) {
-      console.log("Error: ", err);
-      return false;
-    }
+    setAcapelaUrl(url);
   };
   const values = {
     playAcapela,
+    acapelaUrl,
   };
 
   return (

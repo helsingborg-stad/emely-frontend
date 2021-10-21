@@ -12,7 +12,7 @@ import ChatInput from "../../Components/ChatInput/ChatInput";
 export default function EmelyChat(props) {
   const [isFocused, setFocused] = useState(false);
   const [isValidationError, setValidationError] = useState(false);
-  const { userDetails, currentUser, getUserDetails } = useAuth();
+  const { userDetails } = useAuth();
   // get :persona to send to the BE for conversation
   const { persona } = props.match.params;
   const scroll = useRef();
@@ -20,6 +20,7 @@ export default function EmelyChat(props) {
     currentJob,
     formatedTimestamp,
     firstBotMessage,
+    setFirstBotMessage,
     initConversation,
     isLoading,
     sessionConversation,
@@ -28,8 +29,8 @@ export default function EmelyChat(props) {
 
   //  gets a user ID and starts a conversation with Emely from the beginning every  first rendering
   useEffect(() => {
-    getUserDetails(currentUser.uid);
     setSessionConersation([]);
+    setFirstBotMessage(null);
   }, []);
 
   // runs when userDetails has been known
@@ -41,6 +42,7 @@ export default function EmelyChat(props) {
         formatedTimestamp(),
         persona
       );
+      console.log("init");
     }
   }, [userDetails]);
 

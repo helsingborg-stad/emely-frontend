@@ -125,6 +125,7 @@ const ConversationContextProvider = (props) => {
   const values = {
     initConversation,
     firstBotMessage,
+    setFirstBotMessage,
     getButtons,
     jobButtons,
     setCurrentJob,

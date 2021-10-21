@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import emely from "../../Assets/images/emely.png";
-import { AcapelaContext } from "../../contexts/AcapelaContext";
+import AcapelaPlayer from "../AcapelaPlayer";
 
 export default function ChatBubble({
   isValidationError,
@@ -8,10 +8,8 @@ export default function ChatBubble({
   loader,
   message,
 }) {
-  // const { playAcapela } = useContext(AcapelaContext);
-
   if (message) {
-    // playAcapela(message);
+    console.log("EmelyChatBubble", message);
   }
   return (
     <>
@@ -29,7 +27,7 @@ export default function ChatBubble({
           <p className="dialogue-text">{isLoading ? loader : message}</p>
         )}
       </div>
-      <div id="player"></div>
+      {message && <AcapelaPlayer message={message} />}
     </>
   );
 }
