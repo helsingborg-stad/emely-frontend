@@ -45,29 +45,34 @@ export default function ChatInput({
   // send user message to BE
   const handleSendClick = (e) => {
     e.preventDefault();
-    // simple validation
-    if (
-      userMessage.trim().length > 0 &&
-      userMessage.trim().match(/^[^><#@*&«»{}]+$/)
-    ) {
-      getContinueСonversation(persona, userMessage);
-      setValidationError(false);
-    } else {
-      // if user's message contains "< > @ # « » & * {} " symbols
-      setValidationError(true);
+    // don't allow clicking send btn if  the recording is in progress
+    if (!isListening) {
+      // simple validation
+      if (
+        userMessage.trim().length > 0 &&
+        userMessage.trim().match(/^[^><#@*&«»{}]+$/)
+      ) {
+        getContinueСonversation(persona, userMessage);
+        setValidationError(false);
+      } else {
+        // if user's message contains "< > @ # « » & * {} " symbols
+        setValidationError(true);
+        console.log("failed validation", userMessage);
+      }
+      setUserMessage("");
+      setFocused(false);
     }
-    setUserMessage("");
-    setFocused(false);
   };
 
   // sets the recordings button active
   const handleClickRecordingBtn = (e) => {
     e.preventDefault();
     // set input onFocus
-    setFocused((prevState) => !prevState);
+    setFocused(true);
+    setIsListening((prevState) => !prevState);
     // overwriting userMessage if recording button works
     setUserMessage(recordingNote);
-    setIsListening((prevState) => !prevState);
+
     setRecordingNote("");
   };
 
@@ -107,9 +112,9 @@ export default function ChatInput({
               setFocused(true);
               setValidationError(false);
             }}
-            onBlur={() => {
-              setFocused(false);
-            }}
+            // onBlur={() => {
+            //   setFocused(false);
+            // }}
           >
             <TextareaAutosize
               onChange={(e) => {
