@@ -45,19 +45,18 @@ export default function ChatInput({
   // send user message to BE
   const handleSendClick = (e) => {
     e.preventDefault();
+    // simple validation
     if (
       userMessage.trim().length > 0 &&
-      userMessage.trim().match(/^[^><#@*&«»]+$/)
+      userMessage.trim().match(/^[^><#@*&«»{}]+$/)
     ) {
       getContinueСonversation(persona, userMessage);
-      setUserMessage("");
-      console.log("userMessage", userMessage);
+      setValidationError(false);
     } else {
-      // if user's message contains "< > @ # « » & *  " symbols
+      // if user's message contains "< > @ # « » & * {} " symbols
       setValidationError(true);
-      setUserMessage("");
-      console.log("userMessage", userMessage);
     }
+    setUserMessage("");
     setFocused(false);
   };
 
