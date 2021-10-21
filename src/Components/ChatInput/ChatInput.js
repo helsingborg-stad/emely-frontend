@@ -12,7 +12,12 @@ import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
 
-export default function ChatInput({ persona, setFocused, isFocused }) {
+export default function ChatInput({
+  persona,
+  setFocused,
+  isFocused,
+  setValidationError,
+}) {
   // states for layout
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
@@ -40,21 +45,34 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
   // send user message to BE
   const handleSendClick = (e) => {
     e.preventDefault();
-    if (userMessage.trim().length > 0) {
-      getContinueСonversation(persona, userMessage);
+    // don't allow clicking send btn if  the recording is in progress
+    if (!isListening) {
+      // simple validation
+      if (
+        userMessage.trim().length > 0 &&
+        userMessage.trim().match(/^[^><#@*&«»{}]+$/)
+      ) {
+        getContinueСonversation(persona, userMessage);
+        setValidationError(false);
+      } else {
+        // if user's message contains "< > @ # « » & * {} " symbols
+        setValidationError(true);
+        console.log("failed validation", userMessage);
+      }
       setUserMessage("");
+      setFocused(false);
     }
-    setFocused(false);
   };
 
   // sets the recordings button active
   const handleClickRecordingBtn = (e) => {
     e.preventDefault();
     // set input onFocus
-    setFocused((prevState) => !prevState);
+    setFocused(true);
+    setIsListening((prevState) => !prevState);
     // overwriting userMessage if recording button works
     setUserMessage(recordingNote);
-    setIsListening((prevState) => !prevState);
+
     setRecordingNote("");
   };
 
@@ -92,10 +110,11 @@ export default function ChatInput({ persona, setFocused, isFocused }) {
             className={isFocused ? "input-wrapper expand" : "input-wrapper"}
             onFocus={() => {
               setFocused(true);
+              setValidationError(false);
             }}
-            onBlur={() => {
-              setFocused((prevState) => !prevState);
-            }}
+            // onBlur={() => {
+            //   setFocused(false);
+            // }}
           >
             <TextareaAutosize
               onChange={(e) => {

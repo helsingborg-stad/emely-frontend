@@ -11,6 +11,7 @@ import ChatInput from "../../Components/ChatInput/ChatInput";
 
 export default function EmelyChat(props) {
   const [isFocused, setFocused] = useState(false);
+  const [isValidationError, setValidationError] = useState(false);
   const { userDetails, currentUser, getUserDetails } = useAuth();
   // get :persona to send to the BE for conversation
   const { persona } = props.match.params;
@@ -23,7 +24,6 @@ export default function EmelyChat(props) {
     isLoading,
     sessionConversation,
     setSessionConersation,
-    
   } = useContext(ConversationContext);
 
   //  gets a user ID and starts a conversation with Emely from the beginning every  first rendering
@@ -47,13 +47,12 @@ export default function EmelyChat(props) {
   useEffect(() => {
     renderMessages();
     scrollToTop();
-  }, [sessionConversation]);
+  }, [sessionConversation, isValidationError]);
 
   const scrollToTop = () => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  
   const renderMessages = () => {
     return sessionConversation.map((msg, i) => {
       if (i % 2 === 0) {
@@ -62,7 +61,6 @@ export default function EmelyChat(props) {
         return <EmelyChatBubble message={msg} key={i} />;
       }
     });
-
   };
 
   return (
@@ -81,7 +79,8 @@ export default function EmelyChat(props) {
 
           {sessionConversation.length > 0 && renderMessages()}
           {/* renders Emely loader (waiting for a response from the server )*/}
-          {isLoading  && (
+
+          {isLoading && (
             <EmelyChatBubble
               isLoading={isLoading}
               loader={<PulseLoader size={6} color={"#979797"} />}
@@ -94,12 +93,19 @@ export default function EmelyChat(props) {
               loader={<PulseLoader size={6} color={"#979797"} />}
             />
           )}
+          {isValidationError && (
+            <EmelyChatBubble
+              isValidationError={isValidationError}
+              loader={<PulseLoader size={6} color={"#979797"} />}
+            />
+          )}
         </div>
         <div ref={scroll}></div>
         <ChatInput
           persona={persona}
           setFocused={setFocused}
           isFocused={isFocused}
+          setValidationError={setValidationError}
         />
       </Container>
     </>
