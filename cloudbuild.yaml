@@ -15,9 +15,12 @@ steps:
     - 'REACT_APP_FIREBASE_APP_ID=${_REACT_APP_FIREBASE_APP_ID}'
     - 'REACT_APP_FIRESTORE_COLLECTION=${_REACT_APP_FIRESTORE_COLLECTION}'
     - 'REACT_APP_API_URL=${_REACT_APP_API_URL}'
-# Build the container image
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}','.']
+# Build the container image using Kaniko cache in Google Build
+- name: 'gcr.io/kaniko-project/executor:latest'
+  args:
+    - --destination=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}
+    - --cache=true
+    - --cache-ttl=6h
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}']
