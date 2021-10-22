@@ -23,8 +23,17 @@ steps:
   entrypoint: 'bash'
   args: 
   - '-c'
-  - 'docker pull ${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest || exit 0'    
-# Build the container image
+  - 'docker pull ${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest || exit 0'
+  - 'docker pull ${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest-builder || exit 0'    
+# Build and push builder image
+- id: tag-builder-image
+  name: 'gcr.io/cloud-builders/docker'
+  args: 
+  - '-t'
+  - '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest-builder'
+  - --target=builder
+  - '.'
+  # Build the final image
 - id: build-image
   name: 'gcr.io/cloud-builders/docker'
   args: 
@@ -32,6 +41,7 @@ steps:
   - '-t'
   - '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}'
   - '.'
+  - --cache-from=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest-builder
   - --cache-from=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest
   - --tag=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest
 # Push the container image to Container Registry
@@ -51,6 +61,7 @@ steps:
   - '--region'
   - '${_DEPLOY_REGION}'
 images:
+- '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest-builder'
 - '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}'
 - '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest'
 timeout: '1600s'
