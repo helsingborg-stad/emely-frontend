@@ -13,9 +13,6 @@ export default function Dashboard() {
 	return (
     <>
       <Container id="dashboard-card">
-        <Row>
-          <UserMenu />
-        </Row>
         <Row className="my-5 align-items-center  justify-content-center button_container">
         <Row>
           <Col id="emely-dialogue-col" className="">

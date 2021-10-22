@@ -23,9 +23,6 @@ export default function WorkEmely(props) {
   return (
     <>
       <Container id="container-work-emely">
-        <Row>
-          <UserMenu />
-        </Row>
 
         <Row
           className={

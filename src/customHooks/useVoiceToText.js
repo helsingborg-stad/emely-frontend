@@ -21,6 +21,7 @@ if (mic) {
 const useVoiceToText = () => {
   const [isListening, setIsListening] = useState(false);
   const [recordingNote, setRecordingNote] = useState("");
+
   // if a browser is not Chrome hide the mic button
   const [isBrowserSupportsSpeechApi, setBrowserSupportsSpeechApi] = useState(
     false
