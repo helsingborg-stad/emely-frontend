@@ -98,12 +98,13 @@ export default function ChatInput({
       playAcapela();
     }
   };
+
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
         {/* recording button, hides in all browsers except Chrome */}
-        {isBrowserSupportsSpeechApi && (
+        {isBrowserSupportsSpeechApi && activeMicro && (
           <button
             className={
               isListening
