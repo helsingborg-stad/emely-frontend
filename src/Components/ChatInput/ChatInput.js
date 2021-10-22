@@ -11,6 +11,7 @@ import useWindowDimensions from "../../customHooks/useWindowDimensions";
 import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
+import { AcapelaContext } from "../../contexts/AcapelaContext";
 
 export default function ChatInput({
   persona,
@@ -32,6 +33,10 @@ export default function ChatInput({
     isLoading,
     isError,
   } = useContext(ConversationContext);
+
+  const { logoutAcapela, loginAcapela, playAcapela } = useContext(
+    AcapelaContext
+  );
 
   // states && functions for translating voice to text
   const {
@@ -83,10 +88,21 @@ export default function ChatInput({
     }
   };
 
+  const handelSound = (e) => {
+    e.preventDefault();
+    setActiveSound(!activeSound);
+    if (activeSound) {
+      logoutAcapela();
+    } else {
+      loginAcapela();
+      playAcapela();
+    }
+  };
   return (
     <div className="chat-input-wrapper">
       <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
+        {/* recording button, hides in all browsers except Chrome */}
         {isBrowserSupportsSpeechApi && (
           <button
             className={
@@ -133,8 +149,9 @@ export default function ChatInput({
             </button>
           </form>
 
+          {/* sound button */}
           <button
-            onClick={() => setActiveSound(!activeSound)}
+            onClick={(e) => handelSound(e)}
             className={
               isFocused && currentWidth.width < MEDIUM_WIDTH
                 ? "hide"
@@ -148,6 +165,7 @@ export default function ChatInput({
             )}
           </button>
 
+          {/* microphone button, hides in all browsers except Chrome */}
           {isBrowserSupportsSpeechApi && (
             <button
               onClick={() => setActiveMicro(!activeMicro)}

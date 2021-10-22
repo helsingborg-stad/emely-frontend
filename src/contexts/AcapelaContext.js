@@ -32,7 +32,6 @@ const AcapelaContextProvider = (props) => {
   };
 
   const playAcapela = async (stringToSay) => {
-    console.log("acapela speech", stringToSay);
     const voice = "?voice=Mia22k_HQ";
     const output = "&output=stream";
     const type = "&type=mp3";
@@ -44,9 +43,32 @@ const AcapelaContextProvider = (props) => {
        ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${acapelaToken}`;
     setAcapelaUrl(url);
   };
+
+  const logoutAcapela = async () => {
+    try {
+      // send post request to local server
+      const response = await axios.get(
+        `${process.env.REACT_APP_ACAPELA_URL}/logout/`,
+        {
+          headers: {
+            "Content-type": "application/json",
+            Authorization: `Token ${acapelaToken}`,
+          },
+        }
+      );
+      const result = await response.data;
+      console.log("logout acapela", result.success);
+      setAcapelaToken(null);
+    } catch (err) {
+      console.log("Error: ", err);
+    }
+  };
+
   const values = {
     playAcapela,
+    loginAcapela,
     acapelaUrl,
+    logoutAcapela,
   };
 
   return (

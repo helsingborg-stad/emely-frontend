@@ -8,9 +8,6 @@ export default function ChatBubble({
   loader,
   message,
 }) {
-  if (message) {
-    console.log("EmelyChatBubble", message);
-  }
   return (
     <>
       <div className="mt-3 mb-0 emely-chat-wrapper">

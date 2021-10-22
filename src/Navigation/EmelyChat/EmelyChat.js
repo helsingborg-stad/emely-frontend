@@ -42,7 +42,6 @@ export default function EmelyChat(props) {
         formatedTimestamp(),
         persona
       );
-      console.log("init");
     }
   }, []);
 

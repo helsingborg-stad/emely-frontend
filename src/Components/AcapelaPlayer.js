@@ -6,7 +6,6 @@ const AcapelaPlayer = ({message}) => {
 const { playAcapela, acapelaUrl } = useContext(AcapelaContext);
 
   useEffect(() => {
-    console.log('message from acapelaPlayer', message);
     playAcapela(message);
   }, [message]);
 
