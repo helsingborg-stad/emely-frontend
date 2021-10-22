@@ -12,9 +12,6 @@ export default function Profile() {
 		<>
 
 			<Container>
-				<Row>
-					<UserMenu />
-				</Row>
 
 				<h2 className="fw-bold text-center mt-3 mb-3">Mitt Användarkonto</h2>
 				
