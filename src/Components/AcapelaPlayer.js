@@ -1,13 +1,13 @@
-import React, { useEffect, useContext } from "react";
-import {AcapelaContext} from '../contexts/AcapelaContext'
+import React, { useEffect, useContext, useState } from "react";
+import { AcapelaContext } from "../contexts/AcapelaContext";
 
-const AcapelaPlayer = ({message}) => {
+const AcapelaPlayer = ({ message }) => {
+  const { playAcapela, acapelaUrl, activeSound } = useContext(AcapelaContext);
 
-const { playAcapela, acapelaUrl } = useContext(AcapelaContext);
-
+  
   useEffect(() => {
     playAcapela(message);
-  }, [message]);
+  }, [message, activeSound]);
 
   return (
     <div>

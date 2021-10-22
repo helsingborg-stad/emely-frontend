@@ -22,7 +22,7 @@ export default function ChatInput({
   // states for layout
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
-  const [activeSound, setActiveSound] = useState(true);
+
 
   const { currentWidth } = useWindowDimensions();
   // states && functions for interactive actions with BE
@@ -34,9 +34,7 @@ export default function ChatInput({
     isError,
   } = useContext(ConversationContext);
 
-  const { logoutAcapela, loginAcapela, playAcapela } = useContext(
-    AcapelaContext
-  );
+  const { handelSound, activeSound } = useContext(AcapelaContext);
 
   // states && functions for translating voice to text
   const {
@@ -88,16 +86,7 @@ export default function ChatInput({
     }
   };
 
-  const handelSound = (e) => {
-    e.preventDefault();
-    setActiveSound(!activeSound);
-    if (activeSound) {
-      logoutAcapela();
-    } else {
-      loginAcapela();
-      playAcapela();
-    }
-  };
+ 
 
   return (
     <div className="chat-input-wrapper">

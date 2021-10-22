@@ -7,6 +7,8 @@ const AcapelaContextProvider = (props) => {
   const [acapelaToken, setAcapelaToken] = useState(null);
   const [acapelaUrl, setAcapelaUrl] = useState(null);
 
+  const [activeSound, setActiveSound] = useState(true);
+
   useEffect(() => {
     loginAcapela();
   }, []);
@@ -31,7 +33,7 @@ const AcapelaContextProvider = (props) => {
     }
   };
 
-  const playAcapela = async (stringToSay) => {
+  const getVoiceUrl = async (stringToSay) => {
     const voice = "?voice=Mia22k_HQ";
     const output = "&output=stream";
     const type = "&type=mp3";
@@ -39,8 +41,15 @@ const AcapelaContextProvider = (props) => {
     // const src_type = "audio/wav";
     const volume = "&volume=32768";
 
-    const url = `
+    let url;
+    if (activeSound) {
+      url = `
        ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${acapelaToken}`;
+    } else {
+      console.log("muted");
+      url =
+        "https://github.com/anars/blank-audio/blob/master/250-milliseconds-of-silence.mp3?raw=true";
+    }
     setAcapelaUrl(url);
   };
 
@@ -64,11 +73,23 @@ const AcapelaContextProvider = (props) => {
     }
   };
 
+  const handelSound = (e) => {
+    e.preventDefault();
+    setActiveSound(!activeSound);
+    if (activeSound) {
+      logoutAcapela();
+    } else {
+      loginAcapela();
+    }
+  };
+
   const values = {
-    playAcapela,
+    playAcapela: getVoiceUrl,
     loginAcapela,
     acapelaUrl,
     logoutAcapela,
+    handelSound,
+    activeSound,
   };
 
   return (
