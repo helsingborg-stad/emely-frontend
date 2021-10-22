@@ -137,6 +137,7 @@ export default function UserMenu(props) {
 													className=""
 													style={{ fontWeight: '600' }}
 													variant="none"
+													onClick={handleClose}
 												>
 													<Nav.Item>Användarkonto</Nav.Item>
 												</Button>
@@ -156,6 +157,7 @@ export default function UserMenu(props) {
 													className=""
 													style={{ fontWeight: '600' }}
 													variant="none"
+													onClick={handleClose}
 												>
 													<Nav.Item>Prata med Emely</Nav.Item>
 												</Button>
