@@ -100,7 +100,7 @@ export default function Signup() {
 				<AlertMessage message={msg} variant={msgVariant} />
 			  )}
 			<AuthLayout>
-				<h2 className="text-center mb-5 fw-bold">
+				<h2 className="text-center fw-bold mb-5">
 					Registrera dig för att börja prata med Emely.
 				</h2>
 
@@ -108,7 +108,7 @@ export default function Signup() {
 				<Form onSubmit={handleSubmit}>
 					{/* ------------ Email form ------------ */}
 					<Form.Group id="email" className="fw-bold">
-						<Form.Label className="mt-5 input-label">
+						<Form.Label className=" input-label">
 							<HiOutlineMail size={30} /> Vad är din e-postadress?
 						</Form.Label>
 						<Form.Control
@@ -121,9 +121,9 @@ export default function Signup() {
 					</Form.Group>
 
 					{/* ------------ Choose password form ------------ */}
-					<Form.Group id="password" className="mt-4 fw-bold">
-						<Form.Label className="mt-3 input-label">
-							<RiLockPasswordLine size={30} /> Skapa ett lösenord
+					<Form.Group id="password" className=" fw-bold">
+						<Form.Label className=" input-label">
+							<RiLockPasswordLine size={30} /> Skapa ett lösenord <small className="fw-normal">(minst 6 karaktärer)</small>
 						</Form.Label>
 						<Form.Control
 							className="input-field"
@@ -132,14 +132,12 @@ export default function Signup() {
 							ref={passwordRef}
 							required
 						></Form.Control>
-						<small className="ms-3 " id="password-info">
-							Lösenordet måste vara minst 6 karaktärer
-						</small>
+
 					</Form.Group>
 
 					{/* ------------ Confirm password form ------------ */}
-					<Form.Group id="password-confirm" className="mt-4 fw-bold">
-						<Form.Label className="mt-3 input-label">
+					<Form.Group id="password-confirm" className="fw-bold">
+						<Form.Label className=" input-label">
 							<RiLockPasswordLine size={30} /> Upprepa lösenord
 						</Form.Label>
 						<Form.Control
@@ -153,9 +151,9 @@ export default function Signup() {
 
 					{/* ------------ Username form ------------ */}
 					<Row>
-						<Col md={6} xs="auto" lg={6}>
+						
 							<Form.Group id="username" className="fw-bold">
-								<Form.Label className="mt-4">
+								<Form.Label className="input-label">
 									<AiOutlineUser size={30} /> Vad ska vi kalla dig?
 								</Form.Label>
 								<Form.Control
@@ -166,12 +164,12 @@ export default function Signup() {
 									required
 								/>
 							</Form.Group>
-						</Col>
+						
 
 						{/* ------------ Birth date form ------------ */}
-						<Col md={6} xs="auto" lg={6}>
+						
 							<Form.Group id="birthYear" className="fw-bold">
-								<Form.Label className="mt-4">
+								<Form.Label className="input-label">
 									<AiOutlineCalendar size={30} /> När är du född?
 								</Form.Label>
 								<Form.Control
@@ -183,14 +181,14 @@ export default function Signup() {
 									required
 								/>
 							</Form.Group>
-						</Col>
+						
 					</Row>
 
 					{/* ------------ Native language form ------------ */}
 					<Row>
-						<Col md={6} xs="auto" lg={6}>
+						
 							<Form.Group id="nativeLanguage" className="fw-bold">
-								<Form.Label className="mt-5">
+								<Form.Label className="input-label">
 									<GrLanguage size={25} /> Vilket språk talar du hemma?
 								</Form.Label>
 								<Form.Select
@@ -208,12 +206,12 @@ export default function Signup() {
 									<option>Kroatiska</option>
 								</Form.Select>
 							</Form.Group>
-						</Col>
+						
 
 						{/* ------------ Current occupation form ------------ */}
-						<Col md={6} xs="auto" lg={6}>
+					
 							<Form.Group id="currentOccupation" className="fw-bold">
-								<Form.Label className="mt-5">
+								<Form.Label className="input-label">
 									<FaUserTie size={25} /> Vad är din sysselsättning?
 								</Form.Label>
 								<Form.Select
@@ -232,7 +230,7 @@ export default function Signup() {
 									<option>Föräldraledig</option>
 								</Form.Select>
 							</Form.Group>
-						</Col>
+						
 					</Row>
 
 					{/* ------------ Checkbox user terms ------------ */}

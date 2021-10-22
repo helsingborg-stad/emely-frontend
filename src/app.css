@@ -70,6 +70,7 @@ a {
 	padding: 15px !important;
 	font-weight: 500 !important;
 	border: 2px solid rgb(223, 223, 223) !important;
+	margin-bottom: 25px;
 }
 
 .input-field-small{
@@ -99,7 +100,7 @@ a:hover {
 	background: var(--green) !important;
 	border: 2px solid var(--green) !important;
 	color: rgb(255, 255, 255) !important;
-	border-radius: 25px !important;
+	border-radius: 25px 25px 25px 0px !important;
 	padding: 13px !important;
 	font-weight: 700 !important;
 	letter-spacing: 1px;
@@ -114,7 +115,7 @@ a:hover {
 .register-btn_light {
 	border: 2px solid var(--green) !important;
 	color: var(--green) !important;
-	border-radius: 25px !important;
+	border-radius: 25px 25px 25px 0px !important;
 	padding: 13px !important;
 	font-weight: 700 !important;
 	letter-spacing: 1px;
@@ -123,7 +124,7 @@ a:hover {
 .register-btn_light_small {
 	border: 1px solid var(--green) !important;
 	color: var(--green) !important;
-	border-radius: 25px !important;
+	border-radius: 25px 25px 25px 0px !important;
 	text-transform: uppercase !important;
 	letter-spacing: 0.5px !important;
 	font-weight: 600 !important;

@@ -88,7 +88,7 @@ export default function Login() {
 					</Form.Group>
 
 					<Form.Group id="password" className="mt-4 fw-bold">
-						<Form.Label className="mt-3 input-label">
+						<Form.Label className="input-label">
 							<RiLockPasswordLine size={30} /> Lösenord
 						</Form.Label>
 						<Form.Control
