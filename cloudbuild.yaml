@@ -29,9 +29,11 @@ steps:
 - id: tag-builder-image
   name: 'gcr.io/cloud-builders/docker'
   args: 
+  - 'build'
   - '-t'
   - '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest-builder'
   - --target=builder
+  - --cache-from=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest-builder
   - '.'
   # Build the final image
 - id: build-image
