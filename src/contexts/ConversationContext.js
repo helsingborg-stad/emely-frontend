@@ -21,10 +21,8 @@ const ConversationContextProvider = (props) => {
   // disable "send" button in error case
   const [isError, setError] = useState(false);
 
-
-
   const initConversation = async (
-    userName,
+    userName = "Gäst",
     job = null,
     date = formatedTimestamp(),
     persona
@@ -107,7 +105,7 @@ const ConversationContextProvider = (props) => {
         `${process.env.REACT_APP_API_URL}/joblist`
       );
       const result = await response.data;
-      
+
       setJobButtons(result);
     } catch (err) {
       console.log("Error: ", err);
