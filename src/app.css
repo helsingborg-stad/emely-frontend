@@ -65,6 +65,10 @@ a {
 	text-decoration: none !important;
 }
 
+button:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
 .input-field{
 	border-radius: 20px !important;
 	padding: 15px !important;
