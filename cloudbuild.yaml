@@ -1,10 +1,12 @@
 steps:
 # Install npm to be able to create environment
-- name: node:10.15.1
+- id: install-npm
+  name: node:10.15.1
   entrypoint: npm
   args: ["install"]
 # Get environment variables from gcloud build  
-- name: node:10.15.1
+- id: create-env
+  name: node:10.15.1
   entrypoint: npm
   args: ["run", "create-env"]
   env:
@@ -16,13 +18,15 @@ steps:
     - 'REACT_APP_FIRESTORE_COLLECTION=${_REACT_APP_FIRESTORE_COLLECTION}'
     - 'REACT_APP_API_URL=${_REACT_APP_API_URL}'
 # Cache last container image
-- name: 'gcr.io/cloud-builders/docker'
+- id: pull-image-cache
+  name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
   args: 
   - '-c'
   - 'docker pull ${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest || exit 0'    
 # Build the container image
-- name: 'gcr.io/cloud-builders/docker'
+- id: build-image
+  name: 'gcr.io/cloud-builders/docker'
   args: 
   - 'build'
   - '-t'
@@ -31,10 +35,12 @@ steps:
   - --cache-from=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest
   - --tag=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest
 # Push the container image to Container Registry
-- name: 'gcr.io/cloud-builders/docker'
+- id: push-image
+  name: 'gcr.io/cloud-builders/docker'
   args: ['push', '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}']
 # Deploy container image to Cloud Run
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+- id: deploy-image
+  name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
   args:
   - 'run'
