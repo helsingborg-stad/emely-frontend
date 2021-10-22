@@ -27,9 +27,9 @@ steps:
   - 'build'
   - '-t'
   - '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}'
-  - --cache-from'
-  - '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest', '.'
-  --tag=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest'
+  - '.'
+  - --cache-from=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest
+  - --tag=${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:latest
 # Push the container image to Container Registry
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', '${_GCR_HOSTNAME}/${PROJECT_ID}/${_SERVICE_NAME}:${COMMIT_SHA}']
