@@ -23,13 +23,9 @@ export default function Profile() {
     const [show, setShow] = useState(false);
 
 	
+	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
     
-	function handleClose(){
-			setShow(false);
-			window.location.reload();
-		
-	}
 	async function handleLogout() {
 		setMsg('');
 

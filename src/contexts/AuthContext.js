@@ -8,6 +8,7 @@ import {
 	updateDoc,
 	increment,
 	deleteDoc,
+	onSnapshot
 } from 'firebase/firestore';
 import {
 	updateEmail,
@@ -159,17 +160,15 @@ export function AuthProvider({ children }) {
 	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
 	async function getUserDetails(userId) {
 		try {
-			const docRef = doc(dbUsers, userId);
-			const docSnap = await getDoc(docRef);
+			const unsub = onSnapshot(doc(dbUsers, userId), (doc) => {
+				setUserDetails(doc.data())
+				
+			});
 
-			if (docSnap.exists()) {
-				const userData = docSnap.data();
-				setUserDetails(userData);
-				console.log("Successfully fetched user data from firestore")
-			} else {
-				console.log('Error fetching User');
-			}
-		} catch {}
+
+		} catch (error) {
+			console.log(error.message)
+		}
 
 		return userDetails;
 	}

@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext } from 'react';
 import { Form, Button, Alert, Row, Container, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 /* Icon imports */
 import { AiOutlineUser } from 'react-icons/ai';
@@ -40,11 +40,8 @@ export default function ProfileInfoEdit() {
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
-	function handleClose(){
-
-			return window.location.reload();
-
-	}
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -101,7 +98,7 @@ export default function ProfileInfoEdit() {
 
 					for (let i of updates) {
 						const updatesToString = updates.join(' - ').toString();
-						console.log(i);
+						
 						setMsg(updatesToString + " har uppdaterats");
 					}
 					
@@ -120,12 +117,6 @@ export default function ProfileInfoEdit() {
 			<Container className="p-5">
 				<h2 className="text-center mb-2 fw-bold">Redigera profil</h2>
 
-				{msg && (
-					<Alert variant="success">
-				
-						{msg} 
-					</Alert>
-				)}
 
 				{/* Username form */}
 				<Form onSubmit={handleSubmit} id="update-profile">
@@ -209,9 +200,16 @@ export default function ProfileInfoEdit() {
 							</Form.Select>
 						</Form.Group>
 					</Row>
+					{msg && (
+						<Alert className="mt-4" variant="success">
+					
+							{msg} 
+						</Alert>
+					)}
 
 					<Row className="mb-3 mt-5">
 						<Col>
+						<Link to="/profile">
 							<Button
 								disabled={loading}
 								
@@ -222,6 +220,7 @@ export default function ProfileInfoEdit() {
 								
 								<MdKeyboardArrowLeft size={25} /> TILLBAKA
 							</Button>
+							</Link>
 						</Col>
 
 						<Col >
