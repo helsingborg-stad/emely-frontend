@@ -66,14 +66,14 @@ export default function Profile() {
 
                 <Row className="p-0 m-0">
                 <Col xs="auto" md={8} lg={8}>
-                    <h4 className="mb-3 fw-bold">Radera användare</h4>
+                    <h4 className="mb-3 fw-bold ">Radera användare</h4>
                 </Col>
                 <Col xs="auto" md={4} lg={4} className="text-end p-0">
                     <span>
                         
                     <Button
                     variant="none"
-                    className="register-btn_light_small"
+                    className="register-btn_light_small-danger"
                     id="delete-user-button"
                     onClick={handleShow}
                 >

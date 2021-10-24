@@ -52,6 +52,8 @@
 	--white: #ffffff;
 	--green: #27ae60;
 	--gray: #979797;
+	--red: #b95252;
+	--redHover: #ce5c5c;
 
 }
 
@@ -133,6 +135,21 @@ a:hover {
 	letter-spacing: 0.5px !important;
 	font-weight: 600 !important;
 	font-size: 0.9rem !important;
+}
+
+.register-btn_light_small-danger {
+	border: 1px solid var(--red) !important;
+	color: var(--red) !important;
+	border-radius: 25px 25px 25px 0px !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 600 !important;
+	font-size: 0.9rem !important;
+}
+
+.register-btn_light_small-danger:hover {
+	background-color: var(--redHover) !important;
+	color: var(--white) !important;
 }
 
 .register-btn_light_small:hover {

@@ -48,7 +48,7 @@ export default function Profile() {
 			{/* Confirmation modal */}
 			<Modal size="lg" show={show} onHide={handleClose}>
 				<Modal.Body>
-					<ProfileInfoPasswordEdit />
+					<ProfileInfoPasswordEdit closeModal={handleClose} />
 				</Modal.Body>
 			</Modal>
 

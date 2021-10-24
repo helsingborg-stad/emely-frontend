@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react';
+import React, { useRef, useState, useContext, useEffect } from 'react';
 import { Form, Button, Alert, Row, Container, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -13,10 +13,9 @@ import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
-
 /* Variable declaration */
 
-export default function ProfileInfoEdit() {
+export default function ProfileInfoEdit(props) {
 	const usernameRef = useRef();
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
@@ -40,11 +39,10 @@ export default function ProfileInfoEdit() {
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
-
 	async function handleSubmit(e) {
 		e.preventDefault();
+
+		setIsUpdated('');
 
 		const promises = [];
 		const updates = [];
@@ -98,13 +96,12 @@ export default function ProfileInfoEdit() {
 
 					for (let i of updates) {
 						const updatesToString = updates.join(' - ').toString();
-						
-						setMsg(updatesToString + " har uppdaterats");
+
+						setMsg(updatesToString + ' har uppdaterats');
 					}
-					
+
 					setIsUpdated(true);
 					setMsgVariant('success');
-					history.push('/profile');
 				});
 		} catch (error) {
 			console.log(error.code);
@@ -116,7 +113,6 @@ export default function ProfileInfoEdit() {
 		<>
 			<Container className="p-5">
 				<h2 className="text-center mb-2 fw-bold">Redigera profil</h2>
-
 
 				{/* Username form */}
 				<Form onSubmit={handleSubmit} id="update-profile">
@@ -202,44 +198,37 @@ export default function ProfileInfoEdit() {
 					</Row>
 					{msg && (
 						<Alert className="mt-4" variant="success">
-					
-							{msg} 
+							{msg}
 						</Alert>
 					)}
 
 					<Row className="mb-3 mt-5">
-						<Col>
-						<Link to="/profile">
-							<Button
-								disabled={loading}
-								
-								variant="outline-success"
-								className="w-100 register-btn_light"
-								onClick={handleClose}
-							>
-								
-								<MdKeyboardArrowLeft size={25} /> TILLBAKA
-							</Button>
-							</Link>
-						</Col>
-
-						<Col >
+						<Col className="mb-3" md={6} lg={6} xs="auto">
 							<Button
 								disabled={loading}
 								type="submit"
 								className="w-100 register-btn"
-								
 							>
 								<AiOutlineUserAdd className="me-2 text-white" size={25} />
 								SPARA
 							</Button>
 						</Col>
 
+						<Col className="" md={6} lg={6} xs="auto">
+							<Link to="/profile">
+								<Button
+									disabled={loading}
+									variant="outline-success"
+									className="w-100 register-btn_light"
+									onClick={props.closeModal}
+								>
+									<MdKeyboardArrowLeft size={25} /> TILLBAKA
+								</Button>
+							</Link>
+						</Col>
 					</Row>
 				</Form>
 			</Container>
 		</>
 	);
 }
-
-
