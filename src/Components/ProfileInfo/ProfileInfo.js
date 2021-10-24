@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Col, Container, Row, Button, Modal, CloseButton } from 'react-bootstrap';
-import UserMenu from '../../Components/UserMenu/UserMenu';
+import React, { useState } from 'react';
+import { Col, Row, Button, Modal } from 'react-bootstrap';
 import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 import ProfileInfoEdit from './ProfileInfoEdit';
 import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+
 
 /* Icon imports */
 import { AiOutlineEdit } from 'react-icons/ai';

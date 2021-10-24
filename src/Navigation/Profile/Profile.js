@@ -1,6 +1,5 @@
 import React from 'react';
-import { Container, Row, } from 'react-bootstrap';
-import UserMenu from '../../Components/UserMenu/UserMenu';
+import { Container } from 'react-bootstrap';
 import ProfileInfo from '../../Components/ProfileInfo/ProfileInfo';
 import ProfileDelete from '../../Components/ProfileInfo/ProfileDelete';
 import ProfilePassword from '../../Components/ProfileInfo/ProfilePassword';

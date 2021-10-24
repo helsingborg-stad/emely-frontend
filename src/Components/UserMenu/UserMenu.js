@@ -9,12 +9,10 @@ import {
 	Row,
 	Col,
 } from 'react-bootstrap';
-import BackButton from '../BackButton/BackButton';
 
 /* Icon imports */
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
-import { AiOutlineUser } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsChatRightDots } from 'react-icons/bs';
@@ -27,20 +25,17 @@ export default function UserMenu(props) {
 	const history = useHistory();
 
 	const [show, setShow] = useState(false);
-	const [initials, setInitials] = useState('');
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
 	/* Getting the current user details on mount */
 	useEffect(() => {
-		try{
-
+		try {
 			getUserDetails(currentUser.uid);
-			
-		}catch (error) {
-			console.log(error.message)
+		} catch (error) {
+			console.log(error.message);
 		}
-		
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -62,10 +57,9 @@ export default function UserMenu(props) {
 			<Navbar className="" fixed="top" expand="lg" id="navbar" bg="white">
 				<Container>
 					<Navbar.Brand>
-					<Button className="rounded-circle avatar-btn">
-												
-					{ userDetails && userDetails.username.charAt(0) }
-					</Button>
+						<Button className="rounded-circle avatar-btn">
+							{userDetails && userDetails.username.charAt(0)}
+						</Button>
 					</Navbar.Brand>
 					<Link to="/profile">
 						<Button
@@ -74,7 +68,6 @@ export default function UserMenu(props) {
 							onClick={handleShow}
 							variant="none"
 						>
-
 							{userDetails && userDetails.username}
 						</Button>
 					</Link>
@@ -108,18 +101,10 @@ export default function UserMenu(props) {
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
 								<Offcanvas.Header className="m-3 " closeButton>
 									<Offcanvas.Title className="fw-bold">
-									<Button className="rounded-circle avatar-btn">
-												
-									{ userDetails && userDetails.username.charAt(0) }
-									</Button>
-										<Button
-											className="fw-bold"
-											
-											
-											variant="none"
-										>
-
-
+										<Button className="rounded-circle avatar-btn">
+											{userDetails && userDetails.username.charAt(0)}
+										</Button>
+										<Button className="fw-bold" variant="none">
 											{userDetails && userDetails.username}
 										</Button>
 									</Offcanvas.Title>
