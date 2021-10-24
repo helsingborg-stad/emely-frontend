@@ -11,7 +11,7 @@ button:focus {
 	background: var(--green) !important;
 	border: 2px solid var(--green) !important;
 	color: rgb(255, 255, 255) !important;
-	border-radius: 25px 25px 25px 0px !important;
+	border-radius: var(--buttonBorderRadius) !important;
 	padding: 13px !important;
 	font-weight: 700 !important;
 	letter-spacing: 1px;
@@ -28,7 +28,7 @@ button:focus {
 .register-btn_light {
 	border: 2px solid var(--green) !important;
 	color: var(--green) !important;
-	border-radius: 25px 25px 25px 0px !important;
+	border-radius: var(--buttonBorderRadius) !important;
 	padding: 13px !important;
 	font-weight: 700 !important;
 	letter-spacing: 1px;
@@ -47,7 +47,7 @@ button:focus {
 	background: var(--green) !important;
 	border: 2px solid var(--green) !important;
 	color: rgb(255, 255, 255) !important;
-	border-radius: 25px 25px 25px 0px !important;
+	border-radius: var(--buttonBorderRadius) !important;
 	font-weight: 700 !important;
 	letter-spacing: 1px;
 	font-size: 0.9rem !important;
@@ -63,7 +63,7 @@ button:focus {
 .register-btn_light_small {
 	border: 1px solid var(--green) !important;
 	color: var(--green) !important;
-	border-radius: 25px 25px 25px 0px !important;
+	border-radius: var(--buttonBorderRadius) !important;
 	text-transform: uppercase !important;
 	letter-spacing: 0.5px !important;
 	font-weight: 600 !important;
@@ -78,7 +78,7 @@ button:focus {
 .register-btn_light_small-danger {
 	border: 1px solid var(--red) !important;
 	color: var(--red) !important;
-	border-radius: 25px 25px 25px 0px !important;
+	border-radius: var(--buttonBorderRadius) !important;
 	text-transform: uppercase !important;
 	letter-spacing: 0.5px !important;
 	font-weight: 600 !important;

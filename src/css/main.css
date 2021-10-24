@@ -39,8 +39,8 @@
  
 }
 
-/* ---- Common colors ---- */
 :root {
+	/* ---- Common colors ---- */
 	--mainBackground: rgb(238, 238, 238);
 	--inputMessageFocus: rgba(122, 177, 46, 0.671);
 	--userDialogueBackground: #aeffae;
@@ -54,6 +54,10 @@
 	--gray: #979797;
 	--red: #b95252;
 	--redHover: #ce5c5c;
+
+	/* Common border radius */
+	--buttonBorderRadius: 25px 25px 25px 0px;
+	--inputFieldBorderRadius: 20px;
 }
 
 body {
