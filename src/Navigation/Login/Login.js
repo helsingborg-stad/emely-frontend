@@ -1,12 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-
-import { Link, useHistory, Redirect } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
-
 
 /* Icon Imports */
 import { HiOutlineMail } from 'react-icons/hi';
@@ -25,15 +23,37 @@ export default function Login() {
 	const history = useHistory();
 
 	useEffect(() => {
-		try{
 
-			if(currentUser.uid) {
-				return history.push("/dashboard")
-			} 
-		} catch(error){
-			console.log(error.message)
+		/* If userid is not guest then push to dashboard when on login page */
+		try {
+			if (currentUser.uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
+				return history.push('/dashboard');
+			}
+		} catch (error) {
+			console.log(error.message);
 		}
-	}, [])
+	}, []);
+
+	async function handleGuestLogin(e) {
+		e.preventDefault();
+
+		try {
+			setMsg('');
+			setLoading(true);
+
+			/* Login with Guest credentials */
+			await login('guest@emely.com', 'guest123');
+			history.push('/dashboard');
+
+			/*  Catch error & translate in a function */
+		} catch (error) {
+			console.log(error.code);
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
+		}
+
+		setLoading(false);
+	}
 
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -43,12 +63,15 @@ export default function Login() {
 			setLoading(true);
 
 			/* Run firebase-auth login function from AuthContext */
-			const credentials = await login(emailRef.current.value, passwordRef.current.value);
-			const userId = credentials.user.uid
+			const credentials = await login(
+				emailRef.current.value,
+				passwordRef.current.value
+			);
+			const userId = credentials.user.uid;
 			const lastSignInTime = credentials.user.metadata.creationTime;
 
 			/* Run updateUserInfo to update appropriate fields on login */
-			await updateUserInfo(userId, lastSignInTime)
+			await updateUserInfo(userId, lastSignInTime);
 			history.push('/dashboard');
 
 			/*  Catch error & translate in a function */
@@ -63,16 +86,13 @@ export default function Login() {
 
 	return (
 		<>
-		{msg && (
-			<AlertMessage message={msg} variant={msgVariant} />
-		  )}
+			{msg && <AlertMessage message={msg} variant={msgVariant} />}
 			<AuthLayout>
 				<h2 className="text-center mb-4 fw-bold" id="login-header">
 					Logga in för att fortsätta
 				</h2>
-				
+
 				<Form onSubmit={handleSubmit}>
-				
 					{/* Login form */}
 					<Form.Group id="email" className="mt-5 fw-bold">
 						<Form.Label className="mt-3 input-label">
@@ -100,8 +120,6 @@ export default function Login() {
 						/>
 					</Form.Group>
 
-					
-
 					{/* Submit button & Log in */}
 					<Button
 						disabled={loading}
@@ -119,14 +137,17 @@ export default function Login() {
 					</h4>
 
 					{/* Guest login */}
-					<Button
-						disabled={loading}
-						className="w-100 mt-2 register-btn_light"
-						type="submit"
-						variant="none"
-					>
-						<AiOutlineUser size={30} /> LOGGA IN SOM GÄST
-					</Button>
+					<Form onSubmit={handleGuestLogin}>
+						<Button
+							disabled={loading}
+							className="w-100 mt-2 register-btn_light"
+							type="submit"
+							variant="none"
+							onClick={handleGuestLogin}
+						>
+							<AiOutlineUser size={30} /> LOGGA IN SOM GÄST
+						</Button>
+					</Form>
 				</div>
 			</AuthLayout>
 
