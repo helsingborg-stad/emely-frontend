@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Col, Container, Row, Button, Modal } from 'react-bootstrap';
-import UserMenu from '../../Components/UserMenu/UserMenu';
+import React, { useState } from 'react';
+import { Col, Row, Button, Modal } from 'react-bootstrap';
 import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 import { useHistory } from 'react-router-dom';
@@ -12,7 +11,7 @@ import { FaRegTimesCircle } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function Profile() {
-	const { currentUser, logout, userDelete, deleteFirestoreUser } =
+	const { currentUser, userDelete, deleteFirestoreUser } =
 		useAuth();
 	const history = useHistory();
 	const [show, setShow] = useState(false);
@@ -24,20 +23,6 @@ export default function Profile() {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	async function handleLogout() {
-		setMsg('');
-
-		try {
-			await logout();
-			history.push('/login');
-
-			/* Catch error */
-		} catch (error) {
-			console.log(error.code);
-			setMsgVariant('danger');
-			setMsg(translateError(error.code));
-		}
-	}
 
 	async function handleDeleteUser() {
 		setMsg('');

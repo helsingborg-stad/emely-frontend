@@ -4,7 +4,6 @@ import PulseLoader from "react-spinners/PulseLoader";
 
 import { ConversationContext } from "../../contexts/ConversationContext";
 import { useAuth } from "../../contexts/AuthContext";
-import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
 import ChatInput from "../../Components/ChatInput/ChatInput";
@@ -37,14 +36,22 @@ export default function EmelyChat(props) {
   useEffect(() => {
     try {
 
-      if (currentUser) {
+      if (currentUser && userDetails != null) {
         console.log('init')
         initConversation(
-          userDetails.username,
+         userDetails.username,
           currentJob,
           formatedTimestamp(),
           persona
           );
+        } else {
+          console.log('init')
+          initConversation(
+            '',
+            currentJob,
+            formatedTimestamp(),
+            persona
+            );
         }
       } catch(error){
         console.log(error.message)

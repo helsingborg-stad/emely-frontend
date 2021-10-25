@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
-import UserMenu from "../../Components/UserMenu/UserMenu";
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
 import WorkButton from "../../Components/WorkButton/WorkButton";
 import useWindowDimensions from "../../customHooks/useWindowDimensions";

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container } from 'react-bootstrap'
 import textfile from '../../Assets/text-files/user-terms.txt'
 import parse from 'html-react-parser';

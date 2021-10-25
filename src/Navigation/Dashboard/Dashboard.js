@@ -1,5 +1,4 @@
 import React from 'react';
-import UserMenu from '../../Components/UserMenu/UserMenu';
 import PersonaButton from '../../Components/PersonaButton/PersonaButton';
 import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -9,7 +8,7 @@ import { FiCoffee } from 'react-icons/fi';
 
 /* Variable declaration */
 export default function Dashboard() {
-	const { currentUser, userDetails } = useAuth();
+	const { userDetails } = useAuth();
 	return (
     <>
       <Container id="dashboard-card">

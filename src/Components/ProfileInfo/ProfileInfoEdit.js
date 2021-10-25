@@ -1,14 +1,13 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form, Button, Alert, Row, Container, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 /* Icon imports */
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { AiOutlineCalendar } from 'react-icons/ai';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
@@ -20,12 +19,10 @@ export default function ProfileInfoEdit(props) {
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
-	const emailRef = useRef();
 
 	const [msg, setMsg] = useState();
-	const [msgVariant, setMsgVariant] = useState();
-	const [show, setShow] = useState(true);
-	const [isUpdated, setIsUpdated] = useState(false);
+	const [setMsgVariant] = useState();
+	const [setIsUpdated] = useState(false);
 
 	const {
 		currentUser,
@@ -35,9 +32,9 @@ export default function ProfileInfoEdit(props) {
 		updateBirthYear,
 		updateNativeLanguage,
 	} = useAuth();
-	const [error, setError] = useState('');
+	const [setError] = useState('');
 	const [loading, setLoading] = useState(false);
-	const history = useHistory();
+
 
 	async function handleSubmit(e) {
 		e.preventDefault();

@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link, useHistory, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { auth, dbUsers } from '../firebase';
 import {
-	getDoc,
 	doc,
 	setDoc,
 	updateDoc,
@@ -18,7 +17,6 @@ import {
 	sendPasswordResetEmail,
 	deleteUser,
 	onAuthStateChanged,
-	getAuth,
 } from 'firebase/auth';
 
 
@@ -39,16 +37,18 @@ export function AuthProvider({ children }) {
 		
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user);
-		
-			setLoading(false);
-
 			try{
 
+			setLoading(false);
 				const uid = user.uid
-				if(uid === user.uid) {
+
+				if(uid === user.uid && uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
 					console.log("You are signed in!")
 					return <Redirect to="/dashboard" />
-				} else {
+				} else if(uid === 'mcK6kHLV4nh33XJmO2tJXzokqpG2'){
+					console.log('You are signed in as guest')
+				} 
+				else {
 					console.log("Signed out!")
 					return <Redirect to="/login" />
 				}
@@ -160,11 +160,12 @@ export function AuthProvider({ children }) {
 	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
 	async function getUserDetails(userId) {
 		try {
-			const unsub = onSnapshot(doc(dbUsers, userId), (doc) => {
-				setUserDetails(doc.data())
-				
-			});
-
+			/* Get user details from firestore if user is not Guest */
+			if(userId !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2'){
+				onSnapshot(doc(dbUsers, userId), (doc) => {
+					setUserDetails(doc.data())
+				});
+			}
 
 		} catch (error) {
 			console.log(error.message)
