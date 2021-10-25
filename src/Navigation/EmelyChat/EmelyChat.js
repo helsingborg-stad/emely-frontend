@@ -33,9 +33,11 @@ export default function EmelyChat(props) {
   }, []);
 
   /* ---- Runs when userDetails has been known ---- */
-  useEffect(() => {
+  useEffect(() => { 
+
     try {
-      if (userDetails) {
+      if (currentUser) {
+        console.log('init');
         initConversation(
           userDetails.username,
           currentJob,
@@ -46,7 +48,7 @@ export default function EmelyChat(props) {
     } catch (error) {
       console.log(error.message);
     }
-  }, [userDetails]);
+  }, [userDetails, currentUser]);
 
   /* ---- Tracks and renders new messages, scrolls them up ---- */
   useEffect(() => {
