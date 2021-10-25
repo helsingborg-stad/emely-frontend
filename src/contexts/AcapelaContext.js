@@ -45,11 +45,12 @@ const AcapelaContextProvider = (props) => {
     if (activeSound) {
       url = `
        ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${acapelaToken}`;
-    } else {
-      console.log("muted");
-      url =
-        "https://github.com/anars/blank-audio/blob/master/250-milliseconds-of-silence.mp3?raw=true";
     }
+    // else {
+    //   console.log("muted");
+    //   url =
+    //     "https://github.com/anars/blank-audio/blob/master/250-milliseconds-of-silence.mp3?raw=true";
+    // }
     setAcapelaUrl(url);
   };
 
