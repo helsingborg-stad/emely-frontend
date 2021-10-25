@@ -28,14 +28,18 @@
 	letter-spacing: 0.4px;
 }
 
-.link {
+.Link {
 	text-decoration: none;
+}
+
+.link:hover{
+	color: var(--green) !important;
 }
 
 #root {
 	background: rgb(238, 238, 238);
 	margin: 0 !important;
-	padding-top: 70px;
+	padding-top: 75px;
  
 }
 
@@ -58,6 +62,9 @@
 	/* Common border radius */
 	--buttonBorderRadius: 25px 25px 25px 0px;
 	--inputFieldBorderRadius: 20px;
+
+	/* Common shadow */
+	--smallShadow: 0 .125rem .25rem rgba(0,0,0,.075);
 }
 
 body {
@@ -66,12 +73,24 @@ body {
 }
 
 a {
-	color: var(--green) !important;
+	color: black !important;
 	text-decoration: none !important;
 }
 
+a:visited {
+	color: black !important;
+	text-decoration: none !important;
+}
 
+#text-link{
+	color: var(--green) !important;
+	font-weight: 600;
 
+}
+
+#text-link:hover{
+	color: var(--greenHover) !important;
+}
 
 a:hover {
 	color: var(--greenHover) !important;

@@ -26,9 +26,10 @@ import './css/main.css';
 function App() {
 	return (
 		<>
-			<Container
+			<Container 
 				id="main-container"
 				className="d-flex align-items-center justify-content-center"
+				
 			>
 				<div className="w-100 justify-content-center">
 					<Router>

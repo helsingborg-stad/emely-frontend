@@ -1,37 +1,3 @@
-.navbar-toggler{
-    outline: none !important;
-    box-shadow: none !important;
-    border: 2px solid rgb(167, 167, 167) !important;
-    border-radius: 90px !important;
-    padding: 10px !important;
-    margin-top: 20px;
-    background: none !important;
-}
-
-.navbar{
-    border-bottom: 1px solid rgb(216, 216, 216) !important;
-    height: 65px !important;
-
-}
-
-#menu-user-button{
-    font-size: 1rem;
-    display: block ;
-    color: rgb(77, 77, 77) !important;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.offcanvas{
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-
-
-@media (max-width: 768px){
-    #menu-user-button{
-        display: none;
-    }
-
+.nav.item{
+    color: red !important;
 }

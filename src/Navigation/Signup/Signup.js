@@ -253,7 +253,7 @@ export default function Signup() {
 									onClick={handleEndUserTerms}
 								>
 									{' '}
-									<b>NordAxons användningsvillkor</b>{' '}
+									<b id="text-link">NordAxons användningsvillkor</b>{' '}
 								</Button>
 							</span>
 						</Form.Group>
@@ -270,7 +270,7 @@ export default function Signup() {
 					</Button>
 				</Form>
 				<div className="w-100 text-center mt-3 fw-bold">
-					Har du ett konto? <Link to="/login">Logga In</Link>
+				<p style={{ fontWeight: '600'}}> Har du ett konto? <Link id="text-link" to="/login">Logga In</Link></p>
 				</div>
 			</AuthLayout>
 		</>

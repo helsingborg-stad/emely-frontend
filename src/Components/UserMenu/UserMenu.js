@@ -54,10 +54,16 @@ export default function UserMenu(props) {
 
 	return (
 		<>
-			<Navbar className="" fixed="top" expand="lg" id="navbar" bg="white">
+			<Navbar
+				className="shadow-sm mt-2"
+				fixed="top"
+				expand="lg"
+				id="navbar"
+				bg="white"
+			>
 				<Container>
 					<Navbar.Brand>
-						<Button className="rounded-circle avatar-btn">
+						<Button className="rounded-circle avatar-btn shadow-sm">
 							{userDetails && userDetails.username.charAt(0)}
 						</Button>
 					</Navbar.Brand>
@@ -74,7 +80,7 @@ export default function UserMenu(props) {
 
 					{/* Mobile user-menu button */}
 					<Navbar.Toggle
-						className="mt-1"
+						className="avatar-btn shadow-sm"
 						onClick={handleShow}
 						aria-controls="basic-navbar-nav"
 					>
@@ -88,19 +94,18 @@ export default function UserMenu(props) {
 							{/* Menu-button */}
 
 							<Button
-								className="p-0 fw-bold"
+								className=""
 								id="menu-user-button"
 								onClick={handleShow}
 								variant="none"
 							>
 								<AiOutlineMenu className="ms-2 mb-1 me-2" size={20} />
-								MENY
 							</Button>
 
 							{/* Menu from the side */}
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
 								<Offcanvas.Header className="m-3 " closeButton>
-									<Offcanvas.Title className="fw-bold">
+									<Offcanvas.Title className="">
 										<Button className="rounded-circle avatar-btn">
 											{userDetails && userDetails.username.charAt(0)}
 										</Button>
@@ -119,10 +124,10 @@ export default function UserMenu(props) {
 											{/* Profile page menu-button */}
 											<Link to="/profile">
 												<Button
-													className=""
-													style={{ fontWeight: '600' }}
+													className="register-btn_sidebar"
 													variant="none"
 													onClick={handleClose}
+													
 												>
 													<Nav.Item>Användarkonto</Nav.Item>
 												</Button>
@@ -137,10 +142,9 @@ export default function UserMenu(props) {
 										</Col>
 										<Col>
 											{/* Update profile menu-button */}
-											<Link to="/dashboard">
+											<Link id="side-bar-link" to="/dashboard">
 												<Button
-													className=""
-													style={{ fontWeight: '600' }}
+													className="register-btn_sidebar"
 													variant="none"
 													onClick={handleClose}
 												>
@@ -159,14 +163,9 @@ export default function UserMenu(props) {
 										<Col>
 											{/* Log out menu-button */}
 											<Button
-												className=""
-												variant="link"
+												className="register-btn_sidebar"
+												variant="none"
 												onClick={handleLogout}
-												style={{
-													textDecoration: 'none',
-													color: 'black',
-													fontWeight: '600',
-												}}
 											>
 												Logga ut
 											</Button>

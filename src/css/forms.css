@@ -4,6 +4,7 @@
 	font-weight: 500 !important;
 	border: 2px solid rgb(223, 223, 223) !important;
 	margin-bottom: 25px;
+	box-shadow: var(--smallShadow) !important;
 }
 
 .input-field-small{
@@ -11,6 +12,7 @@
 	padding: 10px !important;
 	font-weight: 500 !important;
 	border-color: rgb(153, 153, 153) !important;
+	box-shadow: var(--smallShadow) !important;
 }
 
 .input-label{
