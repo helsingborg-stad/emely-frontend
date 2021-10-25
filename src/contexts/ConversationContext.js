@@ -21,6 +21,7 @@ const ConversationContextProvider = (props) => {
   // disable "send" button in error case
   const [isError, setError] = useState(false);
 
+  /* ---- Gets first message from BE ---- */
   const initConversation = async (
     userName = "Gäst",
     job = null,
@@ -29,7 +30,6 @@ const ConversationContextProvider = (props) => {
   ) => {
     setError(false);
     try {
-      // send post request to local server
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/init`,
         {
@@ -59,6 +59,7 @@ const ConversationContextProvider = (props) => {
     }
   };
 
+  /* ---- Continue conversation ---- */
   const getContinueСonversation = async (
     endpoint,
     userMessage,
@@ -69,7 +70,6 @@ const ConversationContextProvider = (props) => {
     // saves user's message
     setSessionConersation((prevState) => [...prevState, userMessage]);
     try {
-      // send post request to local server
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/${endpoint}`,
         {
@@ -98,9 +98,9 @@ const ConversationContextProvider = (props) => {
     setIsLoading(false);
   };
 
+  /* ---- Gets all occupation buttons ---- */
   const getButtons = async () => {
     try {
-      // send post request to local server
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/joblist`
       );
@@ -113,6 +113,7 @@ const ConversationContextProvider = (props) => {
     }
   };
 
+  /* Converts  the date into the Timestamp for saving in the BE  */
   const formatedTimestamp = () => {
     const d = new Date();
     const date = d.toISOString().split("T")[0];
