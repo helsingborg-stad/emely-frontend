@@ -6,7 +6,7 @@ export default function Choices(props) {
 	return (
     <>
       <Link to={props.linkTo}>
-        <button className="shadow-sm border-3 persona-btn">
+        <button className="register-btn w-100">
           {props.children} <span className="px-3">{props.name}</span> 
         </button>
       </Link>

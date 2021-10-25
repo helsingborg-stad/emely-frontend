@@ -17,7 +17,6 @@
     font-size: 1rem;
     display: block ;
     color: rgb(77, 77, 77) !important;
-    text-transform: uppercase;
     letter-spacing: 1px;
 }
 
@@ -28,7 +27,7 @@
 
 
 
-@media (max-width: 768px){
+@media (max-width: 1000px){
     #menu-user-button{
         display: none;
     }

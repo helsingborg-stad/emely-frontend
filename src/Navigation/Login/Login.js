@@ -32,7 +32,7 @@ export default function Login() {
 		} catch (error) {
 			console.log(error.message);
 		}
-	}, []);
+	}, [currentUser]);
 
 	async function handleGuestLogin(e) {
 		e.preventDefault();

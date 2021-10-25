@@ -30,7 +30,7 @@ export default function Dashboard() {
               name={"SÖKA JOBB-ASSISTENT"}
               persona="intervju"
             >
-              <FiBriefcase size={25} />
+              <FiBriefcase size={20} />
             </PersonaButton>
           </Col>
           <Col xs={12} md={6} className="mt-3">
@@ -39,7 +39,7 @@ export default function Dashboard() {
               name={"FIKA KOMPIS"}
               persona="fika"
             >
-              <FiCoffee size={25} />
+              <FiCoffee size={20} />
             </PersonaButton>
           </Col>
         </Row>
