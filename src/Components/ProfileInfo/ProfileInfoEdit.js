@@ -21,8 +21,8 @@ export default function ProfileInfoEdit(props) {
 	const currentOccupationRef = useRef();
 
 	const [msg, setMsg] = useState();
-	const [setMsgVariant] = useState();
-	const [setIsUpdated] = useState(false);
+	const [msgVariant, setMsgVariant] = useState();
+	const [isUpdated, setIsUpdated] = useState(false);
 
 	const {
 		currentUser,
@@ -32,7 +32,7 @@ export default function ProfileInfoEdit(props) {
 		updateBirthYear,
 		updateNativeLanguage,
 	} = useAuth();
-	const [setError] = useState('');
+	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
 
