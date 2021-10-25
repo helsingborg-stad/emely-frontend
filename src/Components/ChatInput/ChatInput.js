@@ -118,9 +118,9 @@ export default function ChatInput({
               setFocused(true);
               setValidationError(false);
             }}
-            // onBlur={() => {
-            //   setFocused(false);
-            // }}
+            onBlur={() => {
+              setFocused(false);
+            }}
           >
             <TextareaAutosize
               onChange={(e) => {
