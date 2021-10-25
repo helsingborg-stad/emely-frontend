@@ -2,11 +2,12 @@ import React, { useEffect, useContext, useState } from "react";
 import { AcapelaContext } from "../contexts/AcapelaContext";
 
 const AcapelaPlayer = ({ message }) => {
-  const { playAcapela, acapelaUrl, activeSound } = useContext(AcapelaContext);
+  const {  getVoiceUrl, acapelaUrl, activeSound } = useContext(AcapelaContext);
 
+  /* ---- Plays Acapela only in case sound is on and Emely message is exist ---- */
   useEffect(() => {
     if (activeSound) {
-      playAcapela(message);
+      getVoiceUrl(message);
       renderPlayer();
     }
   }, [message, activeSound]);
@@ -14,6 +15,7 @@ const AcapelaPlayer = ({ message }) => {
   const renderPlayer = () => {
     return (
       <div style={{height: "60px", visibility: "hidden"}}>
+        {/* ---- Renders audio control only in case sound is on ---- */}
         {activeSound && (
           <audio
             controls="controls"

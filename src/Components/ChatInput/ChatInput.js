@@ -23,7 +23,6 @@ export default function ChatInput({
   const MEDIUM_WIDTH = 800;
   const [activeMicro, setActiveMicro] = useState(true);
 
-
   const { currentWidth } = useWindowDimensions();
   // states && functions for interactive actions with BE
   const {
@@ -45,7 +44,7 @@ export default function ChatInput({
     isBrowserSupportsSpeechApi,
   } = useVoiceToText();
 
-  // send user message to BE
+  /* ---- Send user message to BE ----*/
   const handleSendClick = (e) => {
     e.preventDefault();
     // don't allow clicking send btn if  the recording is in progress
@@ -67,11 +66,11 @@ export default function ChatInput({
     }
   };
 
-  // sets the recordings button active
+  /* ---- Sets the recordings button active ----*/
   const handleClickRecordingBtn = (e) => {
     e.preventDefault();
     // set input onFocus
-    setFocused(true);
+    setFocused((prevState) => !prevState);
     setIsListening((prevState) => !prevState);
     // overwriting userMessage if recording button works
     setUserMessage(recordingNote);
@@ -79,20 +78,19 @@ export default function ChatInput({
     setRecordingNote("");
   };
 
-  // if the user clicks the "enter" btn, his response is sent to the BE
+  /* ---- Sends user's message by clicking "enter" key-button ----*/
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSendClick(e);
     }
   };
 
- 
-
   return (
     <div className="chat-input-wrapper">
+      {/* ---- Class "chat-input_overlay" blokes all buttons and input fields if is loading or error on the page ---- */}
       <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
-        {/* recording button, hides in all browsers except Chrome */}
+        {/* ---- Recording button, hides in all browsers except Chrome ----- */}
         {isBrowserSupportsSpeechApi && activeMicro && (
           <button
             className={
@@ -110,6 +108,7 @@ export default function ChatInput({
           </button>
         )}
 
+        {/* ---- Input filed ---- */}
         <div className="buttons-wrapper">
           <form
             onSubmit={(e) => handleSendClick(e)}
@@ -139,7 +138,7 @@ export default function ChatInput({
             </button>
           </form>
 
-          {/* sound button */}
+          {/* ---- Sound button ---- */}
           <button
             onClick={(e) => handelSound(e)}
             className={
@@ -155,7 +154,7 @@ export default function ChatInput({
             )}
           </button>
 
-          {/* microphone button, hides in all browsers except Chrome */}
+          {/* ---- Microphone button, hides in all browsers except Chrome ---- */}
           {isBrowserSupportsSpeechApi && (
             <button
               onClick={() => setActiveMicro(!activeMicro)}
