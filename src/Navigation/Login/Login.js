@@ -23,7 +23,6 @@ export default function Login() {
 	const history = useHistory();
 
 	useEffect(() => {
-
 		/* If userid is not guest then push to dashboard when on login page */
 		try {
 			if (currentUser.uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
@@ -129,30 +128,40 @@ export default function Login() {
 						<RiLoginCircleLine size={30} /> LOGGA IN
 					</Button>
 				</Form>
-				<div className="w-100 text-center mt-3 fw-bold">
-				<p style={{ fontWeight: '600'}}> <Link id="text-link" to="/forgot-password">Glömt lösenord?</Link></p>
-					<hr />
-					<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
-						ELLER
-					</h4>
+				<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
+					ELLER
+				</h4>
+				{/* Guest login */}
+				<Form onSubmit={handleGuestLogin}>
+					<Button
+						disabled={loading}
+						className="w-100 mt-2 register-btn_light"
+						type="submit"
+						variant="none"
+					>
+						<AiOutlineUser size={30} /> FORTSÄTT SOM GÄST
+					</Button>
+				</Form>
 
-					{/* Guest login */}
-					<Form onSubmit={handleGuestLogin}>
-						<Button
-							disabled={loading}
-							className="w-100 mt-2 register-btn_light"
-							type="submit"
-							variant="none"
-						
-						>
-							<AiOutlineUser size={30} /> LOGGA IN SOM GÄST
-						</Button>
-					</Form>
+				<div className="w-100 text-center mt-3 fw-bold">
+					<p style={{ fontWeight: '600' }}>
+						{' '}
+						<Link id="text-link" to="/forgot-password">
+							Glömt lösenord?
+						</Link>
+					</p>
+					<hr />
 				</div>
 			</AuthLayout>
 
 			<div className="w-100 text-center mt-3 mb-4">
-				<p style={{ fontWeight: '600'}}> Behöver du ett konto? <Link id="text-link" to="/signup">Registrera dig</Link></p>
+				<p style={{ fontWeight: '600' }}>
+					{' '}
+					Behöver du ett konto?{' '}
+					<Link id="text-link" to="/signup">
+						Registrera dig
+					</Link>
+				</p>
 			</div>
 		</>
 	);

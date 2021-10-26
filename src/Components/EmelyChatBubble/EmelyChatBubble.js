@@ -1,5 +1,5 @@
 import React from "react";
-import emely from "../../Assets/images/emely.png";
+import emely from "../../Assets/images/Emely-avatar.png";
 import AcapelaPlayer from "../AcapelaPlayer";
 
 export default function ChatBubble({
