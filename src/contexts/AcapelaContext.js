@@ -5,7 +5,6 @@ export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
   const [acapelaToken, setAcapelaToken] = useState(null);
-  // const [acapelaUrl, setAcapelaUrl] = useState(null);
   const [activeSound, setActiveSound] = useState(true);
 
   useEffect(() => {
