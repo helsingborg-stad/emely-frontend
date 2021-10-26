@@ -5,20 +5,18 @@ export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
   const [acapelaToken, setAcapelaToken] = useState(null);
-  const [acapelaUrl, setAcapelaUrl] = useState(null);
-
   const [activeSound, setActiveSound] = useState(true);
 
   useEffect(() => {
     loginAcapela();
   }, []);
 
+  /* ---- Login Acapela ---- */
   const loginAcapela = async () => {
     const email = process.env.REACT_APP_ACAPELA_EMAIL;
     const password = process.env.REACT_APP_ACAPELA_PASSWORD;
 
     try {
-      // send post request to local server
       const response = await axios.post(
         `${process.env.REACT_APP_ACAPELA_URL}/login/`,
         {
@@ -33,29 +31,9 @@ const AcapelaContextProvider = (props) => {
     }
   };
 
-  const getVoiceUrl = async (stringToSay) => {
-    const voice = "?voice=Mia22k_HQ";
-    const output = "&output=stream";
-    const type = "&type=mp3";
-    const text = encodeURIComponent(stringToSay);
-    // const src_type = "audio/wav";
-    const volume = "&volume=32768";
-
-    let url;
-    if (activeSound) {
-      url = `
-       ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${acapelaToken}`;
-    } else {
-      console.log("muted");
-      url =
-        "https://github.com/anars/blank-audio/blob/master/250-milliseconds-of-silence.mp3?raw=true";
-    }
-    setAcapelaUrl(url);
-  };
-
+  /* Logout Acapela */
   const logoutAcapela = async () => {
     try {
-      // send post request to local server
       const response = await axios.get(
         `${process.env.REACT_APP_ACAPELA_URL}/logout/`,
         {
@@ -73,6 +51,7 @@ const AcapelaContextProvider = (props) => {
     }
   };
 
+  /* ---- Logout  Acapela if the sound button is off ---- */
   const handelSound = (e) => {
     e.preventDefault();
     setActiveSound(!activeSound);
@@ -84,12 +63,11 @@ const AcapelaContextProvider = (props) => {
   };
 
   const values = {
-    playAcapela: getVoiceUrl,
     loginAcapela,
-    acapelaUrl,
     logoutAcapela,
     handelSound,
     activeSound,
+    acapelaToken,
   };
 
   return (

@@ -12,7 +12,7 @@ export default function EmelyChat(props) {
   const [isFocused, setFocused] = useState(false);
   const [isValidationError, setValidationError] = useState(false);
   const { currentUser, userDetails } = useAuth();
-  // get :persona to send to the BE for conversation
+  // get :persona from router-dom (intervju or fika)
   const { persona } = props.match.params;
   const scroll = useRef();
   const {
@@ -26,38 +26,31 @@ export default function EmelyChat(props) {
     setSessionConersation,
   } = useContext(ConversationContext);
 
-  //  gets a user ID and starts a conversation with Emely from the beginning every  first rendering
+  /* ---- Gets a user ID and starts a conversation with Emely from the beginning every  first rendering ---- */
   useEffect(() => {
     setSessionConersation([]);
     setFirstBotMessage(null);
   }, []);
 
-  // runs when userDetails has been known
-  useEffect(() => {
-    try {
+  /* ---- Runs when userDetails has been known ---- */
+  useEffect(() => { 
 
-      if (currentUser && userDetails != null) {
-        console.log('init')
+    try {
+      if (currentUser) {
+        console.log('init');
         initConversation(
-         userDetails.username,
+          userDetails.username,
           currentJob,
           formatedTimestamp(),
           persona
-          );
-        } else {
-          console.log('init')
-          initConversation(
-            '',
-            currentJob,
-            formatedTimestamp(),
-            persona
-            );
-        }
-      } catch(error){
-        console.log(error.message)
+        );
       }
+    } catch (error) {
+      console.log(error.message);
+    }
   }, [userDetails, currentUser]);
 
+  /* ---- Tracks and renders new messages, scrolls them up ---- */
   useEffect(() => {
     renderMessages();
     scrollToTop();
@@ -88,21 +81,23 @@ export default function EmelyChat(props) {
           </Row>
 
           {sessionConversation.length > 0 && renderMessages()}
-          {/* renders Emely loader (waiting for a response from the server )*/}
 
+          {/* ---- Renders Emely loader (waiting for a response from the server ) ---- */}
           {isLoading && (
             <EmelyChatBubble
               isLoading={isLoading}
               loader={<PulseLoader size={6} color={"#979797"} />}
             />
           )}
-          {/* renders user loader (if textarea onFocus) */}
+
+          {/* ---- Renders user loader (if textarea onFocus) ---- */}
           {isFocused && (
             <UserChatBubble
               isFocused={isFocused}
               loader={<PulseLoader size={6} color={"#979797"} />}
             />
           )}
+          {/* ---- Renders Emely warning massage if user message contains a special signs or is empty */}
           {isValidationError && (
             <EmelyChatBubble
               isValidationError={isValidationError}
