@@ -21,7 +21,7 @@ export default function ChatInput({
 }) {
   // states for layout
   const MEDIUM_WIDTH = 800;
-  const [activeMicro, setActiveMicro] = useState(true);
+  // const [activeMicro, setActiveMicro] = useState(true);
 
   const { currentWidth } = useWindowDimensions();
   // states && functions for interactive actions with BE
@@ -80,6 +80,7 @@ export default function ChatInput({
 
   /* ---- Sends user's message by clicking "enter" key-button ----*/
   const handleKeyDown = (e) => {
+  
     if (e.key === "Enter") {
       handleSendClick(e);
     }
@@ -90,24 +91,6 @@ export default function ChatInput({
       {/* ---- Class "chat-input_overlay" blokes all buttons and input fields if is loading or error on the page ---- */}
       <div className={isLoading || isError ? "chat-input_overlay" : ""}></div>
       <div className="container chat-input_container-wrapper">
-        {/* ---- Recording button, hides in all browsers except Chrome ----- */}
-        {isBrowserSupportsSpeechApi && activeMicro && (
-          <button
-            className={
-              isListening
-                ? "navigation_btn recording_btn_active"
-                : "navigation_btn recording_btn"
-            }
-            onClick={(e) => handleClickRecordingBtn(e)}
-          >
-            {isListening ? (
-              <FaStop size={"2rem"} />
-            ) : (
-              <FaPlay className="faPlay-icon" size={"2rem"} />
-            )}
-          </button>
-        )}
-
         {/* ---- Input filed ---- */}
         <div className="buttons-wrapper">
           <form
@@ -153,25 +136,26 @@ export default function ChatInput({
               <IoMdVolumeOff size={"2rem"} />
             )}
           </button>
-
-          {/* ---- Microphone button, hides in all browsers except Chrome ---- */}
-          {isBrowserSupportsSpeechApi && (
+        </div>
+        {/* ---- Recording button, hides in all browsers except Chrome ----- */}
+        {isBrowserSupportsSpeechApi && (
+          <div>
             <button
-              onClick={() => setActiveMicro(!activeMicro)}
               className={
-                isFocused && currentWidth.width < MEDIUM_WIDTH
-                  ? "hide"
-                  : "microphone_btn navigation_btn"
+                isListening
+                  ? "navigation_btn recording_btn_active"
+                  : "navigation_btn recording_btn"
               }
+              onClick={(e) => handleClickRecordingBtn(e)}
             >
-              {activeMicro ? (
-                <BiMicrophone size={"2rem"} />
+              {isListening ? (
+                <FaStop size={"2rem"} />
               ) : (
-                <BiMicrophoneOff size={"2rem"} />
+                <BiMicrophone size={"2rem"} />
               )}
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );
