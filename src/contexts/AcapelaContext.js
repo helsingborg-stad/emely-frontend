@@ -5,7 +5,7 @@ export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
   const [acapelaToken, setAcapelaToken] = useState(null);
-  const [acapelaUrl, setAcapelaUrl] = useState(null);
+  // const [acapelaUrl, setAcapelaUrl] = useState(null);
   const [activeSound, setActiveSound] = useState(true);
 
   useEffect(() => {
@@ -30,20 +30,6 @@ const AcapelaContextProvider = (props) => {
     } catch (err) {
       console.log("Error: ", err);
     }
-  };
-
-  /* ---- Collecting the url to get a Emely voice ---- */
-  const getVoiceUrl = async (stringToSay) => {
-    const voice = "?voice=Mia22k_HQ";
-    const output = "&output=stream";
-    const type = "&type=mp3";
-    const text = encodeURIComponent(stringToSay);
-    // const src_type = "audio/wav";
-    const volume = "&volume=32768";
-
-    const url = `
-       ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${acapelaToken}`;
-    setAcapelaUrl(url);
   };
 
   /* Logout Acapela */
@@ -78,12 +64,11 @@ const AcapelaContextProvider = (props) => {
   };
 
   const values = {
-    getVoiceUrl,
     loginAcapela,
-    acapelaUrl,
     logoutAcapela,
     handelSound,
     activeSound,
+    acapelaToken,
   };
 
   return (
