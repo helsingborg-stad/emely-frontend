@@ -9,10 +9,10 @@
 
 .input-field-small{
 	border-radius: var(--inputFieldBorderRadius) !important;
+	background-color: rgb(245, 245, 245) !important;
 	padding: 10px !important;
 	font-weight: 500 !important;
-	border-color: rgb(153, 153, 153) !important;
-	box-shadow: var(--smallShadow) !important;
+	border-color: rgb(197, 197, 197) !important;
 }
 
 .input-label{
@@ -22,4 +22,9 @@
 
 .input-field::placeholder{
 	font-weight: 400;
+}
+
+.label-icons{
+	margin-right: 8px !important;
+	width: 25px !important;
 }

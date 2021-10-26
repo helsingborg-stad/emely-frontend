@@ -109,7 +109,7 @@ export default function Signup() {
 					{/* ------------ Email form ------------ */}
 					<Form.Group id="email" className="fw-bold">
 						<Form.Label className=" input-label">
-							<HiOutlineMail size={30} /> Vad är din e-postadress?
+							<HiOutlineMail className="label-icons" size={30} /> Vad är din e-postadress?
 						</Form.Label>
 						<Form.Control
 							className="input-field"
@@ -123,7 +123,7 @@ export default function Signup() {
 					{/* ------------ Choose password form ------------ */}
 					<Form.Group id="password" className=" fw-bold">
 						<Form.Label className=" input-label">
-							<RiLockPasswordLine size={30} /> Skapa ett lösenord <small className="fw-normal">(minst 6 karaktärer)</small>
+							<RiLockPasswordLine className="label-icons" size={30} /> Skapa ett lösenord <small className="fw-normal">(minst 6 karaktärer)</small>
 						</Form.Label>
 						<Form.Control
 							className="input-field"
@@ -138,7 +138,7 @@ export default function Signup() {
 					{/* ------------ Confirm password form ------------ */}
 					<Form.Group id="password-confirm" className="fw-bold">
 						<Form.Label className=" input-label">
-							<RiLockPasswordLine size={30} /> Upprepa lösenord
+							<RiLockPasswordLine className="label-icons" size={30} /> Upprepa lösenord
 						</Form.Label>
 						<Form.Control
 							className="input-field"
@@ -154,7 +154,7 @@ export default function Signup() {
 						
 							<Form.Group id="username" className="fw-bold">
 								<Form.Label className="input-label">
-									<AiOutlineUser size={30} /> Vad ska vi kalla dig?
+									<AiOutlineUser className="label-icons" size={30} /> Vad ska vi kalla dig?
 								</Form.Label>
 								<Form.Control
 									className="w-100 input-field"
@@ -170,7 +170,7 @@ export default function Signup() {
 						
 							<Form.Group id="birthYear" className="fw-bold">
 								<Form.Label className="input-label">
-									<AiOutlineCalendar size={30} /> När är du född?
+									<AiOutlineCalendar className="label-icons" size={30} /> När är du född?
 								</Form.Label>
 								<Form.Control
 									className="w-100 input-field"
@@ -189,7 +189,7 @@ export default function Signup() {
 						
 							<Form.Group id="nativeLanguage" className="fw-bold">
 								<Form.Label className="input-label">
-									<GrLanguage size={25} /> Vilket språk talar du hemma?
+									<GrLanguage  className="label-icons" size={20} /> Vilket språk talar du hemma?
 								</Form.Label>
 								<Form.Select
 									ref={nativeLanguageRef}
@@ -212,7 +212,7 @@ export default function Signup() {
 					
 							<Form.Group id="currentOccupation" className="fw-bold">
 								<Form.Label className="input-label">
-									<FaUserTie size={25} /> Vad är din sysselsättning?
+									<FaUserTie className="label-icons" size={20} /> Vad är din sysselsättning?
 								</Form.Label>
 								<Form.Select
 									ref={currentOccupationRef}
