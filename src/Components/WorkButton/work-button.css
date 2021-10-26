@@ -1,118 +1,30 @@
-.dropdown-list__container {
-    max-width: 800px;
-    margin: auto;
-}
 
-.occupation-btn {
-    font-weight: 700;
-    letter-spacing: 1.1px;
-    padding: 0;
-    border-radius: 25px 25px 25px 0px;
-    background: var(--green);
-    color: var(--white);
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    cursor: pointer;
-    padding: 17px 40px
-}
 
-/* List styling */
-
-.work-button_dropdown-list ul {
-    margin: 0;
-    padding: 0;
-    font-size: 0.5em;
+.work-button-list{
     list-style: none;
-    text-align: left;
-    width: 100%;
-    height: 400px;
-    overflow-y: scroll;
-    opacity: 0;
-}
-
-/* hide input checkbox */
-
-.work-button_dropdown-list input {
-    opacity: 0;
-    position: absolute;
-    z-index: -1;
-}
-
-/* nav styling */
-
-.work-button_dropdown-list {
-    color: var(--green);
-    left: 0;
-    position: relative;
-    top: 0;
-    width: 100%;
-    z-index: 5;
-}
-
-.work-button_dropdown-list input:checked~ul {
-    margin: 1em;
-    max-height: inherit;
-    opacity: 1;
-}
-
-.work-button_dropdown-list ul>li {
-    margin: 0.5em 0;
-}
-
-.work-button_dropdown-list ul li {
     cursor: pointer;
-    padding: 10px;
+    line-height: 2;
+    text-transform: capitalize;
+    font-size: 1.1rem;
+    padding: 5px !important;
+    margin-left: 0px !important;
+    font-weight: 400;
+    border-bottom: 1px solid rgb(226, 226, 226);
+    text-align: center !important;
 }
 
-.work-button_dropdown-list ul li:hover {
-    background-color: var(--white);
-}
-
-::-webkit-scrollbar {
-    width: 7px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: var(--scrollbarBackground);
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: var(--scrollbarColor);
-    border-radius: 3px;
-}
-
-.work-button_dropdown-item {
-    text-transform:capitalize;
-}
-
-.work-button_dropdown-item:active {
-    background-color: transparent !important;
+.work-button-ul{
     
 }
+
+.work-button-list:hover{
+    color: var(--green) !important;
+}
+
 
 @media (max-width: 768px) {
     #navbar {
         z-index: 999;
     }
-    .work-button_dropdown-list ul {
-        height: 60vh;
-    }
-    .work-button_dropdown-list ul li {
-        padding: 20px;
-    }
-    /* Overlay */
-    .work-button_dropdown-list input:checked~#overlay {
-        background: var(--mainBackground);
-        bottom: 0;
-        left: 0;
-        height: 100vh;
-        position: fixed;
-        right: 0;
-        top: 0;
-        width: 100vw;
-        z-index: -1;
-    }
+
 }

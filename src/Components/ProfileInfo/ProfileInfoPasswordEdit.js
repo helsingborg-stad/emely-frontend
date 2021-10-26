@@ -103,7 +103,7 @@ export default function ProfilePasswordEdit(props) {
 					</Row>
 
 					<Row className="mb-3 mt-5">
-						<Col className="mb-3" md={6} lg={6} xs="auto">
+						<Col className="mb-3" md={6} lg={6} xs={12}>
 							<Button
 								disabled={loading}
 								type="submit"
@@ -114,7 +114,7 @@ export default function ProfilePasswordEdit(props) {
 							</Button>
 						</Col>
 
-						<Col className="" md={6} lg={6} xs="auto">
+						<Col className="" md={6} lg={6} xs={12}>
 							<Link to="/profile">
 								<Button
 									disabled={loading}

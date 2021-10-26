@@ -5,7 +5,7 @@ import emelyWork from '../../Assets/images/emely_work.png';
 export default function EmelyDialogue(props) {
 	return (
 		<>
-			<Row className="dialogue-row justify-content-center ">
+			<Row className="dialogue-row justify-content-center mt-5">
 				<Col className="items-align-end" lg={3} md={3} xs={6}>
 					<img
 					id="emely-image"
