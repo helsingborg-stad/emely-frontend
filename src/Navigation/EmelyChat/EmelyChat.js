@@ -79,7 +79,7 @@ export default function EmelyChat(props) {
 
   return (
     <>
-      <Container>
+      <Container className="emely-chat-container">
         <div className="emely-chat_wrapper">
           <Row>
             <Col>

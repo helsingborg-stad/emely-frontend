@@ -1,3 +1,7 @@
 .emely-chat_wrapper {
   padding-bottom: 200px;
 }
+
+.emely-chat-container{
+  max-width: 800px !important;
+}
