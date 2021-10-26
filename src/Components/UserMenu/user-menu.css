@@ -4,24 +4,27 @@
     border: 2px solid rgb(167, 167, 167) !important;
     border-radius: 90px !important;
     padding: 10px !important;
-    margin-top: 20px;
     background: white !important;
 }
 
 .navbar{
-    border-bottom: 1px solid rgb(216, 216, 216) !important;
+    border-bottom: none !important;
+    border-radius: 30px !important;
+    max-width: 800px;
+    margin: 0 auto;
+    float: none;
 
 }
 
 #menu-user-button{
     font-size: 1rem;
     display: block ;
-    color: rgb(77, 77, 77) !important;
     letter-spacing: 1px;
+    font-weight: 700 !important;
 }
 
 .offcanvas{
-    text-transform: uppercase;
+
     letter-spacing: 1px;
 }
 

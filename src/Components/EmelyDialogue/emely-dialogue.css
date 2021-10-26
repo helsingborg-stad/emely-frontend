@@ -1,14 +1,14 @@
 #emely-dialogue-card {
-    border-bottom-right-radius: 45px;
-    border-top-right-radius: 45px;
-    border-top-left-radius: 45px;
-    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 35px;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
     max-width: 900px;
     font-size: 1rem !important; 
     margin-bottom: 70px;
-    font-weight: 500;
+    font-weight: 400;
     text-align: left;
-    line-height: 1.8rem;
+    line-height: 1.5rem;
 }
 
 .dialogue-row{

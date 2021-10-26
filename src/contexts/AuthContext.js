@@ -161,11 +161,11 @@ export function AuthProvider({ children }) {
 	async function getUserDetails(userId) {
 		try {
 			/* Get user details from firestore if user is not Guest */
-			if(userId !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2'){
+			
 				onSnapshot(doc(dbUsers, userId), (doc) => {
 					setUserDetails(doc.data())
 				});
-			}
+			
 
 		} catch (error) {
 			console.log(error.message)

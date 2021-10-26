@@ -130,7 +130,7 @@ export default function Login() {
 					</Button>
 				</Form>
 				<div className="w-100 text-center mt-3 fw-bold">
-					<Link to="/forgot-password">Glömt lösenord?</Link>
+				<p style={{ fontWeight: '600'}}> <Link id="text-link" to="/forgot-password">Glömt lösenord?</Link></p>
 					<hr />
 					<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
 						ELLER
@@ -143,7 +143,7 @@ export default function Login() {
 							className="w-100 mt-2 register-btn_light"
 							type="submit"
 							variant="none"
-							onClick={handleGuestLogin}
+						
 						>
 							<AiOutlineUser size={30} /> LOGGA IN SOM GÄST
 						</Button>
@@ -151,8 +151,8 @@ export default function Login() {
 				</div>
 			</AuthLayout>
 
-			<div className="w-100 text-center mt-3 mb-4 fw-bold">
-				Behöver du ett konto? <Link to="/signup">Registrera dig</Link>
+			<div className="w-100 text-center mt-3 mb-4">
+				<p style={{ fontWeight: '600'}}> Behöver du ett konto? <Link id="text-link" to="/signup">Registrera dig</Link></p>
 			</div>
 		</>
 	);

@@ -15,6 +15,7 @@ button:focus {
 	padding: 13px !important;
 	font-weight: 700 !important;
 	letter-spacing: 1px;
+	box-shadow: var(--smallShadow) !important;
 }
 
 .register-btn:hover {
@@ -51,6 +52,7 @@ button:focus {
 	font-weight: 700 !important;
 	letter-spacing: 1px;
 	font-size: 0.9rem !important;
+	
 }
 
 .register-btn_small:hover {
@@ -68,6 +70,22 @@ button:focus {
 	letter-spacing: 0.5px !important;
 	font-weight: 600 !important;
 	font-size: 0.9rem !important;
+	box-shadow: var(--smallShadow) !important;
+}
+
+.register-btn_sidebar {
+	color: var(--black) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 500 !important;
+	font-size: 0.9rem !important;
+	text-decoration: none !important;
+}
+
+.register-btn_sidebar:hover {
+
+	color: var(--green) !important;
+
 }
 
 .register-btn_light_small:hover {

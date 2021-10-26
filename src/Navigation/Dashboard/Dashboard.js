@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import PersonaButton from '../../Components/PersonaButton/PersonaButton';
 import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -9,15 +9,21 @@ import { FiCoffee } from 'react-icons/fi';
 /* Variable declaration */
 export default function Dashboard() {
 	const { userDetails } = useAuth();
+  const [, setCount] = useState(0);
+
+useEffect(() => {
+  setCount(c => c + 1)
+}, [])
+
 	return (
     <>
-      <Container id="dashboard-card">
+      <Container id="dashboard-card" className="p-0">
         <Row className="my-5 align-items-center  justify-content-center button_container">
         <Row>
-          <Col id="emely-dialogue-col" className="">
-            <EmelyDialogue className="m-0">
+          <Col id="emely-dialogue-col" className="p-0">
+            <EmelyDialogue className="">
               <p className="m-3 p-3 emely-dialog_dialogue-text">
-                Hej! {userDetails && userDetails.username} <br/>Jag heter Emely. Jag är en virtuell språkassistent och
+                Hej {userDetails && userDetails.username}! <br/>Jag heter Emely. Jag är en virtuell språkassistent och
                 med mig kan du öva att prata på svenska. Välj nedan vilken av
                 mina personligheter du önskar att prata med.
               </p>

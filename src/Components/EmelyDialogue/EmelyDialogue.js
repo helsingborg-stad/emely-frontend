@@ -5,8 +5,8 @@ import emelyWork from '../../Assets/images/emely_work.png';
 export default function EmelyDialogue(props) {
 	return (
 		<>
-			<Row className="dialogue-row justify-content-center">
-				<Col className="items-align-end" lg={3} md={5} xs={6}>
+			<Row className="dialogue-row justify-content-center ">
+				<Col className="items-align-end" lg={3} md={3} xs={6}>
 					<img
 					id="emely-image"
 					className=""
@@ -15,9 +15,9 @@ export default function EmelyDialogue(props) {
 					/>
 					
 				</Col>
-				<Col>
+				<Col lg={12} md={12} xs={12}>
 					
-					<Card className="" id="emely-dialogue-card">
+					<Card className="shadow-sm" id="emely-dialogue-card">
 						{props.children}
 					</Card>
 				</Col>
