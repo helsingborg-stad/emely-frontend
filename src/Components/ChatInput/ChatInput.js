@@ -115,8 +115,9 @@ export default function ChatInput({
               placeholder={isLoading ? "" : "Skriv meddelande"}
               value={isListening ? recordingNote : userMessage}
               onKeyDown={(e) => handleKeyDown(e)}
+              disabled={isLoading}
             ></TextareaAutosize>
-            <button disabled={isLoading} className="send_message_btn">
+            <button  className="send_message_btn">
               <IoIosSend size={"1.5rem"} />
             </button>
           </form>
