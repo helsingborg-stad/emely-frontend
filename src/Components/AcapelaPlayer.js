@@ -5,19 +5,20 @@ const AcapelaPlayer = ({ message }) => {
   const { activeSound, acapelaToken } = useContext(AcapelaContext);
   /* ---- Plays Acapela only in case sound is on and Emely message is exist ---- */
   useEffect(() => {
-    if (activeSound) {
+    if (activeSound && acapelaToken) {
       renderPlayer();
     }
-  }, [message, activeSound]);
+  }, [message, activeSound, acapelaToken]);
+ 
+  // const handleLoadMetadata = async (meta) => {
+  //   const { duration } = meta.target;
+  //   if (duration) {
+  //     console.log("duration time", duration);
+  //   }
+  // };
 
-  const handleLoadMetadata = async (meta) => {
-    const { duration } = meta.target;
-    if(duration){
-      console.log("duration time", duration);
-    }
-    
-  };
   const renderPlayer = () => {
+  
     const voice = "?voice=Mia22k_HQ";
     const output = "&output=stream";
     const type = "&type=mp3";
@@ -26,23 +27,19 @@ const AcapelaPlayer = ({ message }) => {
     /* ---- Collecting the url to get a Emely voice ---- */
     const url = `
        ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${acapelaToken}`;
-
+ console.log("runs", message, url);
     return (
-      <div style={{ height: "60px", opacity: 0 }}>
-
+      // <div style={{ height: "60px", opacity: 0 }}>
+      <div>
         {/* ---- Renders audio control only in case sound is on ---- */}
         {activeSound && (
           <audio
             controls="controls"
             autobuffer="autobuffer"
             autoPlay="autoplay"
-            onLoadedMetadata={handleLoadMetadata}
+            // onLoadedMetadata={handleLoadMetadata}
           >
-            <source
-              id="player"
-              src={url}
-              type="audio/wav"
-             />
+            <source id="player" src={url} type="audio/wav" />
           </audio>
         )}
       </div>

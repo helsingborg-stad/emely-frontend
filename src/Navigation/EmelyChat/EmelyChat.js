@@ -7,7 +7,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
 import ChatInput from "../../Components/ChatInput/ChatInput";
-import ErrorBoundary from '../../Components/ErrorBoundary'
+import ErrorBoundary from "../../Components/ErrorBoundary";
+import AcapelaPlayer from "../../Components/AcapelaPlayer";
 
 export default function EmelyChat(props) {
   const [isFocused, setFocused] = useState(false);
@@ -19,8 +20,7 @@ export default function EmelyChat(props) {
   const {
     currentJob,
     formatedTimestamp,
-    firstBotMessage,
-    setFirstBotMessage,
+    isEmelyMessage,
     initConversation,
     isLoading,
     sessionConversation,
@@ -30,12 +30,11 @@ export default function EmelyChat(props) {
   /* ---- Gets a user ID and starts a conversation with Emely from the beginning every  first rendering ---- */
   useEffect(() => {
     setSessionConersation([]);
-    setFirstBotMessage(null);
+    // setEmelyMessage,(null);
   }, []);
 
   /* ---- Runs when userDetails has been known ---- */
-  useEffect(() => { 
-
+  useEffect(() => {
     try {
       if (currentUser) {
         initConversation(
@@ -54,7 +53,13 @@ export default function EmelyChat(props) {
   useEffect(() => {
     renderMessages();
     scrollToTop();
+    renderVoice();
   }, [sessionConversation, isValidationError]);
+
+  // useEffect(() => {
+
+  //   console.log("run useEffect", isEmelyMessage);
+  // }, []);
 
   const scrollToTop = () => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
@@ -62,23 +67,46 @@ export default function EmelyChat(props) {
 
   const renderMessages = () => {
     return sessionConversation.map((msg, i) => {
-      if (i % 2 === 0) {
-        return <UserChatBubble message={msg} key={i} />;
+      if (msg.type === "user") {
+        return <UserChatBubble message={msg.text} key={i} />;
       } else {
-        return <EmelyChatBubble message={msg} key={i} />;
+        return <EmelyChatBubble message={msg.text} key={i} />;
       }
     });
+  };
+
+  const renderVoice = () => {
+    console.log(
+      sessionConversation,
+      sessionConversation.length,
+      typeof sessionConversation
+    );
+    if (sessionConversation.length > 0) {
+      const lastMessage = sessionConversation
+        .filter((message) => message.type === "emely")
+        .reverse()
+        .find((message) => message.type === "emely");
+
+      if (lastMessage) {
+        console.log(lastMessage);
+        return <AcapelaPlayer message={lastMessage.text} />;
+      }
+    }
   };
 
   return (
     <>
       <Container className="emely-chat-container">
+        <div style={{ height: "60px", border: "1px solid red" }}>
+          {sessionConversation.length > 0 && renderVoice()}
+        </div>
+
         <div className="emely-chat_wrapper">
-          <Row>
+          {/* <Row>
             <Col>
               <EmelyChatBubble message={firstBotMessage} />
             </Col>
-          </Row>
+          </Row> */}
 
           {sessionConversation.length > 0 && renderMessages()}
 
@@ -107,14 +135,13 @@ export default function EmelyChat(props) {
         </div>
         <div ref={scroll}></div>
         <ErrorBoundary>
-           <ChatInput
-          persona={persona}
-          setFocused={setFocused}
-          isFocused={isFocused}
-          setValidationError={setValidationError}
-        />
+          <ChatInput
+            persona={persona}
+            setFocused={setFocused}
+            isFocused={isFocused}
+            setValidationError={setValidationError}
+          />
         </ErrorBoundary>
-       
       </Container>
     </>
   );

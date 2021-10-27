@@ -4,8 +4,8 @@ import React, { createContext, useState } from "react";
 export const ConversationContext = createContext();
 
 const ConversationContextProvider = (props) => {
-  // state for Emely's first init message
-  const [firstBotMessage, setFirstBotMessage] = useState(null);
+  // state for detect emely message
+  const [isEmelyMessage, setEmelyMessage] = useState(false);
   // saves Emely's and user's messages
   const [sessionConversation, setSessionConersation] = useState([]);
   // state for user's message (invokes in onChange case)
@@ -48,12 +48,18 @@ const ConversationContextProvider = (props) => {
       );
       const result = await response.data;
       setConversationId(result.conversation_id);
-      setFirstBotMessage(result.message);
+      setEmelyMessage((prevState) => !prevState);
+      setSessionConersation([{ text: result.message, type: "emely" }]);
     } catch (err) {
       console.log("Error: ", err);
-      setFirstBotMessage(
-        "Ojoj, mitt stackars huvud... Jag tror jag har bivit sjuk och måste gå till vårdcentralen. Vi får prata en annan dag. Hejdå!"
-      );
+      setSessionConersation((prevState) => [
+        ...prevState,
+        {
+          text:
+            "Ojoj, mitt stackars huvud... Jag tror jag har bivit sjuk och måste gå till vårdcentralen. Vi får prata en annan dag. Hejdå!",
+          type: "emely",
+        },
+      ]);
       setError(true);
       return false;
     }
@@ -68,7 +74,10 @@ const ConversationContextProvider = (props) => {
   ) => {
     setIsLoading(true);
     // saves user's message
-    setSessionConersation((prevState) => [...prevState, userMessage]);
+    setSessionConersation((prevState) => [
+      ...prevState,
+      { text: userMessage, type: "user" },
+    ]);
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/${endpoint}`,
@@ -83,12 +92,20 @@ const ConversationContextProvider = (props) => {
       );
       const result = await response.data;
       // saves Emely's message
-      setSessionConersation((prevState) => [...prevState, result.message]);
+      setSessionConersation((prevState) => [
+        ...prevState,
+        { text: result.message, type: "emely" },
+      ]);
+      setEmelyMessage((prevState) => !prevState);
     } catch (err) {
       console.log("Error: ", err);
       setSessionConersation((prevState) => [
         ...prevState,
-        "Ojoj, mitt stackars huvud... Jag tror jag har bivit sjuk och måste gå till vårdcentralen. Vi får prata en annan dag. Hejdå!",
+        {
+          text:
+            "Ojoj, mitt stackars huvud... Jag tror jag har bivit sjuk och måste gå till vårdcentralen. Vi får prata en annan dag. Hejdå!",
+          type: "emely",
+        },
       ]);
       setError(true);
       setIsLoading(false);
@@ -123,8 +140,8 @@ const ConversationContextProvider = (props) => {
 
   const values = {
     initConversation,
-    firstBotMessage,
-    setFirstBotMessage,
+    isEmelyMessage,
+    setEmelyMessage,
     getButtons,
     jobButtons,
     setCurrentJob,
