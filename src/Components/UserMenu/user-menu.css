@@ -19,8 +19,7 @@
 #menu-user-button{
     font-size: 1rem;
     display: block ;
-    letter-spacing: 1px;
-    font-weight: 700 !important;
+    font-weight: 600 !important;
 }
 
 .offcanvas{

@@ -71,7 +71,7 @@ export default function Profile() {
 
 					
 					{/* --- Edit fields pop up (modal) --- */}
-					<Modal  size="lg" show={show} onHide={handleClose}>
+					<Modal className="profile-info-modal" size="lg" show={show} onHide={handleClose}>
 						<Modal.Body >
                             <ProfileInfoEdit closeModal={handleClose} />
 						</Modal.Body>

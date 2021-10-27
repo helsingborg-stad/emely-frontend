@@ -8,6 +8,8 @@ import PulseLoader from 'react-spinners/PulseLoader';
 import { ConversationContext } from '../../contexts/ConversationContext';
 import { useAuth } from '../../contexts/AuthContext';
 
+
+
 export default function WorkEmely(props) {
 
 	const { userDetails, currentUser } = useAuth();
@@ -38,7 +40,7 @@ export default function WorkEmely(props) {
 	return (
 		<>
 			<Container id="container-work-emely">
-				<Modal size="sm" show={show} onHide={handleClose}>
+				<Modal scrollable={true} className="work-button-modal" size="md" show={show} onHide={handleClose}>
 					<Modal.Body>
 						{jobButtons ? (
 							<WorkButton occupation={jobButtons}></WorkButton>
@@ -66,7 +68,7 @@ export default function WorkEmely(props) {
 					)}
 				</EmelyDialogue>
 
-				<Row className="p-0">
+				<Row className="p-0 mb-5">
 					<Col className="text-center mt-5">
 						<Button
 							variant="none"

@@ -28,6 +28,11 @@
 	letter-spacing: 0.4px;
 }
 
+.profile-info-modal .modal-content {
+	border: 0px !important;
+	border-radius: 25px !important;
+  }
+
 .Link {
 	text-decoration: none;
 }

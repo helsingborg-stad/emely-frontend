@@ -5,12 +5,14 @@
     cursor: pointer;
     line-height: 2;
     text-transform: capitalize;
-    font-size: 1.1rem;
+    font-size: 1.3rem;
+    color: rgb(63, 63, 63) !important;
     padding: 5px !important;
-    margin-left: 0px !important;
-    font-weight: 400;
+    margin-left: 40px !important;
+    font-weight: 500;
+    text-align: left !important;
     border-bottom: 1px solid rgb(226, 226, 226);
-    text-align: center !important;
+
 }
 
 .work-button-ul{
@@ -27,4 +29,7 @@
         z-index: 999;
     }
 
+    .work-button-list{
+        font-size: 1.2rem !important;
+    }
 }

@@ -1,3 +1,5 @@
+
+
 .hide-emely-dialog {
   display: none !important;
 }
@@ -16,6 +18,18 @@
   text-align: left;
   font-weight: 500;
 }
+
+.work-button-modal .modal-content {
+  border: 0px !important;
+  height: 100% !important;
+}
+
+/*
+.modal-backdrop
+{
+    opacity: 0.8 !important;
+}
+*/
 
 #container-work-emely{
   max-width: 800px;
