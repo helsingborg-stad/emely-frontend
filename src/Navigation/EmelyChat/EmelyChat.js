@@ -7,6 +7,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import EmelyChatBubble from "../../Components/EmelyChatBubble/EmelyChatBubble";
 import UserChatBubble from "../../Components/UserChatBubble/UserChatBubble";
 import ChatInput from "../../Components/ChatInput/ChatInput";
+import ErrorBoundary from '../../Components/ErrorBoundary'
 
 export default function EmelyChat(props) {
   const [isFocused, setFocused] = useState(false);
@@ -37,7 +38,6 @@ export default function EmelyChat(props) {
 
     try {
       if (currentUser) {
-        console.log('init');
         initConversation(
           userDetails.username,
           currentJob,
@@ -106,12 +106,15 @@ export default function EmelyChat(props) {
           )}
         </div>
         <div ref={scroll}></div>
-        <ChatInput
+        <ErrorBoundary>
+           <ChatInput
           persona={persona}
           setFocused={setFocused}
           isFocused={isFocused}
           setValidationError={setValidationError}
         />
+        </ErrorBoundary>
+       
       </Container>
     </>
   );
