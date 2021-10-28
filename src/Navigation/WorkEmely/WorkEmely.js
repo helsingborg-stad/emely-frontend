@@ -29,7 +29,7 @@ export default function WorkEmely(props) {
 		/* --- Render text after delay --- */
 		const timer = setTimeout(() => {
 			setIsLoading(false);
-		}, 2000);
+		}, 1000);
 		return timer;
 	}, [currentUser]);
 
@@ -45,7 +45,7 @@ export default function WorkEmely(props) {
 						{jobButtons ? (
 							<WorkButton occupation={jobButtons}></WorkButton>
 						) : (
-							<p>loading...</p>
+							<PulseLoader size={12} color={'gray'} />
 						)}
 					</Modal.Body>
 				</Modal>

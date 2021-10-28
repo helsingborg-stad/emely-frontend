@@ -21,7 +21,8 @@
 
 .work-button-modal .modal-content {
   border: 0px !important;
-  height: 100% !important;
+  max-height: 700px !important;
+  border-radius: 25px !important;
 }
 
 /*
@@ -34,4 +35,12 @@
 #container-work-emely{
   max-width: 800px;
   margin: auto !important;
+}
+
+@media (max-width: 1000px){
+  .work-button-modal .modal-content {
+    max-height: 100% !important;
+
+  }
+
 }

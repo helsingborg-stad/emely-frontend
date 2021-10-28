@@ -3,6 +3,11 @@
   flex-direction: column;
   align-items: flex-end;
   margin-top: -60px;
+  
+}
+
+.user-image{
+  max-width: 40px !important;
 }
 
 .user-dialogue-text {
@@ -22,6 +27,7 @@
   .user-dialogue-text {
     max-width: 100%;
     margin-right: 0;
+    font-size: 0.8rem !important;
   }
   .user-chat-wrapper {
     margin: 0;
