@@ -11,7 +11,7 @@ export default function WorkButton(props) {
   const buttons = props.occupation.occupations;
   const handleClick = (e) => {
     setCurrentJob(e.target.id);
-    history.push("/emely-chat/intervju");
+    history.push("/emely-chat/intervju/");
   };
  
   return (
