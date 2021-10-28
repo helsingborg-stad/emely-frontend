@@ -53,13 +53,12 @@ export default function EmelyChat(props) {
   useEffect(() => {
     renderMessages();
     scrollToTop();
-    renderVoice();
   }, [sessionConversation, isValidationError]);
 
-  // useEffect(() => {
-
-  //   console.log("run useEffect", isEmelyMessage);
-  // }, []);
+  /* ---- Runs when changed the state isEmelyMessage(boolean, changes in ConversationContext when got Emely's answer from BE) ---- */
+  useEffect(() => {
+    renderVoice();
+  }, [isEmelyMessage]);
 
   const scrollToTop = () => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
@@ -75,12 +74,8 @@ export default function EmelyChat(props) {
     });
   };
 
+  /*---- Gets array when has been saved all conversation(Emely's and user's messages), reverse it. Finally, get the last Emely message and sends it (like props) in AcapelaPlayer component */
   const renderVoice = () => {
-    console.log(
-      sessionConversation,
-      sessionConversation.length,
-      typeof sessionConversation
-    );
     if (sessionConversation.length > 0) {
       const lastMessage = sessionConversation
         .filter((message) => message.type === "emely")
@@ -88,7 +83,6 @@ export default function EmelyChat(props) {
         .find((message) => message.type === "emely");
 
       if (lastMessage) {
-        console.log(lastMessage);
         return <AcapelaPlayer message={lastMessage.text} />;
       }
     }
