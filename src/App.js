@@ -12,12 +12,14 @@ import Signup from './Navigation/Signup/Signup';
 import Dashboard from './Navigation/Dashboard/Dashboard';
 import Login from './Navigation/Login/Login';
 import PrivateRoute from './Components/PrivateRoute';
+import KeyRoute from './Components/KeyRoute';
 import ForgotPassword from './Navigation/ForgotPassword/ForgotPassword';
 import ProfileInfoEdit from './Components/ProfileInfo/ProfileInfoEdit';
 import WorkEmely from './Navigation/WorkEmely/WorkEmely';
 import EmelyChat from './Navigation/EmelyChat/EmelyChat';
 import EndUserTerms from './Components/EndUserTerms/EndUserTerms';
 import Profile from './Navigation/Profile/Profile';
+import Home from './Navigation/Home/Home';
 import ConversationContextProvider from './contexts/ConversationContext';
 import AcapelaContextProvider from './contexts/AcapelaContext';
 
@@ -38,6 +40,7 @@ function App() {
 								<AcapelaContextProvider>
 									<Switch>
 										{/* When logged in Routes */}
+
 										<PrivateRoute
 											exact
 											path="/dashboard"
@@ -54,11 +57,11 @@ function App() {
 										/>
 										<PrivateRoute path="/profile" component={Profile} />
 
-										<Route exact path="/" component={Login} />
-										<Route path="/signup" component={Signup} />
-										<Route path="/login" component={Login} />
-										<Route path="/end-user-terms" component={EndUserTerms} />
-										<Route path="/forgot-password" component={ForgotPassword} />
+										<Route exact path="/" component={Home} />
+										<KeyRoute path="/signup" component={Signup} />
+										<KeyRoute path="/login" component={Login} />
+										<KeyRoute path="/end-user-terms" component={EndUserTerms} />
+										<KeyRoute path="/forgot-password" component={ForgotPassword} />
 									</Switch>
 								</AcapelaContextProvider>
 							</ConversationContextProvider>

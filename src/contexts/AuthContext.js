@@ -9,6 +9,7 @@ import {
 	deleteDoc,
 	onSnapshot
 } from 'firebase/firestore';
+
 import {
 	updateEmail,
 	updatePassword,
@@ -30,11 +31,15 @@ export function useAuth() {
 export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
 	const [userDetails, setUserDetails] = useState();
+	const [correctKey, setCorrectKey] = useState(false);
+	const [appKey, setAppKey] = useState(null)
 	const [loading, setLoading] = useState(true);
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
-		
+		if(appKey){
+			setCorrectKey(true)
+		}
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user);
 			try{
@@ -61,6 +66,8 @@ export function AuthProvider({ children }) {
 	}, []);
 
 	/* ---- FIREBASE AUTHENTICATION ---- */
+
+
 
 	/* ---- Sign up new user with email and password ---- */
 	function signup(email, password) {
@@ -260,6 +267,11 @@ export function AuthProvider({ children }) {
 		userDelete,
 		deleteFirestoreUser,
 		translateError,
+		correctKey,
+		setCorrectKey,
+		appKey,
+		setAppKey,
+
 	};
 
 	return (
