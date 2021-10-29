@@ -4,8 +4,6 @@ import React, { createContext, useState } from "react";
 export const ConversationContext = createContext();
 
 const ConversationContextProvider = (props) => {
-  // state for detect emely message
-  const [isEmelyMessage, setEmelyMessage] = useState(false);
   // saves Emely's and user's messages
   const [sessionConversation, setSessionConersation] = useState([]);
   // state for user's message (invokes in onChange case)
@@ -48,7 +46,6 @@ const ConversationContextProvider = (props) => {
       );
       const result = await response.data;
       setConversationId(result.conversation_id);
-      setEmelyMessage((prevState) => !prevState);
       setSessionConersation([{ text: result.message, type: "emely" }]);
     } catch (err) {
       console.log("Error: ", err);
@@ -96,7 +93,6 @@ const ConversationContextProvider = (props) => {
         ...prevState,
         { text: result.message, type: "emely" },
       ]);
-      setEmelyMessage((prevState) => !prevState);
     } catch (err) {
       console.log("Error: ", err);
       setSessionConersation((prevState) => [
@@ -130,7 +126,7 @@ const ConversationContextProvider = (props) => {
     }
   };
 
-  /* Converts  the date into the Timestamp for saving in the BE  */
+  /* ---- Converts  the date into the Timestamp for saving in the BE ---- */
   const formatedTimestamp = () => {
     const d = new Date();
     const date = d.toISOString().split("T")[0];
@@ -140,8 +136,6 @@ const ConversationContextProvider = (props) => {
 
   const values = {
     initConversation,
-    isEmelyMessage,
-    setEmelyMessage,
     getButtons,
     jobButtons,
     setCurrentJob,

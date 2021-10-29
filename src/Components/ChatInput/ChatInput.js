@@ -1,10 +1,8 @@
 import React, { useState, useContext } from "react";
 import { BiMicrophone } from "react-icons/bi";
-import { BiMicrophoneOff } from "react-icons/bi";
 import { IoMdVolumeHigh } from "react-icons/io";
 import { IoMdVolumeOff } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
-import { FaPlay } from "react-icons/fa";
 import { FaStop } from "react-icons/fa";
 
 import useWindowDimensions from "../../customHooks/useWindowDimensions";
@@ -19,11 +17,13 @@ export default function ChatInput({
   isFocused,
   setValidationError,
 }) {
-  // states for layout
+  // variables for layout
   const MEDIUM_WIDTH = 800;
-  // const [activeMicro, setActiveMicro] = useState(true);
-
   const { currentWidth } = useWindowDimensions();
+
+  // state to turn on/of the sound
+  const [activeSound, setActiveSound] = useState(true);
+
   // states && functions for interactive actions with BE
   const {
     userMessage,
@@ -33,7 +33,8 @@ export default function ChatInput({
     isError,
   } = useContext(ConversationContext);
 
-  const { handelSound, activeSound } = useContext(AcapelaContext);
+// function for connecting/disconnecting Acapela
+  const { loginAcapela, logoutAcapela } = useContext(AcapelaContext);
 
   // states && functions for translating voice to text
   const {
@@ -44,9 +45,16 @@ export default function ChatInput({
     isBrowserSupportsSpeechApi,
   } = useVoiceToText();
 
+  //! get element for removing it when sound is off
+  const player = document.getElementById("player");
+  
   /* ---- Send user message to BE ----*/
   const handleSendClick = (e) => {
     e.preventDefault();
+    // remove the current audio control (by ID) so that the voice tracks do not overlap
+    if (player) {
+      player.remove();
+    }
     // don't allow clicking send btn if  the recording is in progress
     if (!isListening) {
       // simple validation
@@ -74,15 +82,28 @@ export default function ChatInput({
     setIsListening((prevState) => !prevState);
     // overwriting userMessage if recording button works
     setUserMessage(recordingNote);
-
     setRecordingNote("");
   };
 
   /* ---- Sends user's message by clicking "enter" key-button ----*/
   const handleKeyDown = (e) => {
-  
     if (e.key === "Enter") {
       handleSendClick(e);
+    }
+  };
+  
+  /* ---- Logout  Acapela if the sound button is off ---- */
+  const handelSound = (e) => {
+    e.preventDefault();
+    setActiveSound(!activeSound);
+    if (activeSound) {
+      logoutAcapela();
+      // remove element by id if sound is off
+      if (player) {
+        player.remove();
+      }
+    } else {
+      loginAcapela();
     }
   };
 
@@ -117,7 +138,7 @@ export default function ChatInput({
               onKeyDown={(e) => handleKeyDown(e)}
               disabled={isLoading}
             ></TextareaAutosize>
-            <button  className="send_message_btn">
+            <button type="submit" className="send_message_btn">
               <IoIosSend size={"1.5rem"} />
             </button>
           </form>
