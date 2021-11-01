@@ -3,16 +3,36 @@ import { Route, Redirect } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import UserMenu from "./UserMenu/UserMenu";
 import GuestMenu from "./GuestMenu/GuestMenu";
+import { Link, useHistory } from 'react-router-dom';
 
 export default function PrivateRoute({ component: Component, ...rest }) {
-  const { currentUser, correctKey } = useAuth()
+  const { currentUser, correctKey, allKeys, getKeys } = useAuth()
   const [userEmail, setUserEmail] = useState('')
+  const [isCorrectKey, setIsCorrectKey] = useState(sessionStorage.getItem('sessionKey'));
+
+  const history = useHistory();
+
+  /* --- Checking if the sessionKey is correct else redirects back to home --- */
+  useEffect(() => {
+    try{
+      getKeys();
+
+    /* Iterates through all keys */
+    for (let key of Object.keys(allKeys)) {
+			if (isCorrectKey === allKeys[key] ) {
+				return history.push('/login');
+			} 
+		}
+      
+    } catch (error){
+      console.log(error)
+    }
+  }, [])
 
   useEffect(() => {
     try{
 
       if(currentUser.email === 'guest@emely.com'){
-        
         setUserEmail('guest@emely.com')
       } else {
         setUserEmail('')
@@ -29,7 +49,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={props => {
-        return currentUser && correctKey  ? <Component {...props} /> : <Redirect to="/login" />
+        return currentUser ? <Component {...props} /> : <Redirect to="/login" />
       }}
     ></Route>
     </>

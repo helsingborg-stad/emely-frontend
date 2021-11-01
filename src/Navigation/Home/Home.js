@@ -1,9 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import { Link, useHistory } from 'react-router-dom';
-
-import { auth, dbUsers, db } from '../../firebase';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
@@ -13,21 +10,13 @@ import { HiOutlineKey } from 'react-icons/hi';
 import { RiLockUnlockLine } from 'react-icons/ri';
 import { RiLockLine } from 'react-icons/ri';
 
-import {
-	collection,
-	getDocs,
-} from 'firebase/firestore';
-
 /* Variable declaration */
 export default function Login() {
 	const keyRef = useRef();
-	const { correctKey, setCorrectKey, appKey, setAppKey } = useAuth();
+	const { correctKey, getKeys, checkKey } = useAuth();
 	const [msg, setMsg] = useState('');
 	const [msgVariant, setMsgVariant] = useState('');
 	const [loading, setLoading] = useState(false);
-	const history = useHistory();
-
-	const [allKeys, setAllKeys] = useState();
 
 	/* Get the keys on page load */
 	useEffect(() => {
@@ -38,64 +27,24 @@ export default function Login() {
 		}
 	}, []);
 
-	/* Get all keys from firestore */
-	async function getKeys() {
-		try {
-			const querySnapshot = await getDocs(collection(db, 'keys'));
-			const allDocs = [];
-			querySnapshot.forEach((doc) => {
-				const data = doc.data();
-				allDocs.push(data);
-
-			});
-			setAllKeys(allDocs);
-		} catch (error) {
-			console.log('Error:' + error.message);
-		}
-		setLoading(false);
-	}
-
-	/* Check if input-key matches one of the keys and todays date matches the deadline in firestore */
-	function checkKey(inputKey, date) {
-		setLoading(true);
-
-		for (let key of allKeys) {
-			if (inputKey === key.key && date <= key.deadline) {
-				setAppKey(inputKey);
-				setCorrectKey(true);
-				return history.push('/login');
-			}
-		}
-
-		/* Set error message if key don't match */
-		setMsgVariant('danger');
-		setMsg('Fel nyckel eller passerat utgånsdatum!');
-		setLoading(false);
-	}
-
 	/* Do this when pressing the submit button */
 	async function handleSubmit(e) {
 		e.preventDefault();
 		try {
-			/* Format the date so it matches the deadline date */
 			const date = new Date();
-			const dd = date.getDate();
-			const mm = date.getMonth() + 1;
-			const y = date.getFullYear();
 
-			const formattedDate = y + '/' + mm + '/' + dd;
 			setLoading(true);
-
 			setMsg('');
 
 			/* Set a timeout on checking the key */
-			const timer = setTimeout(() => {
+			setTimeout(() => {
 				setLoading(false);
-				checkKey(keyRef.current.value, formattedDate);
-			}, 3000);
-
-			return timer;
-
+				checkKey(keyRef.current.value, date);
+				if (correctKey !== true) {
+					setMsgVariant('danger');
+					return setMsg('Fel nyckel eller passerat utgångsdatum!');
+				}
+			}, 1500);
 		} catch (error) {
 			console.log(error.code);
 		}
@@ -123,22 +72,26 @@ export default function Login() {
 							required
 						/>
 					</Form.Group>
-
 					{/* Submit the key */}
-					<Button
-						disabled={loading}
-						className="w-100 mt-5 register-btn"
-						type="submit"
-					>
-
 					{/* Show keypad-icon unlocked if the page is loading else show locked version */}
-						{loading ? (
-							<RiLockUnlockLine className="me-3" size={35} />
-						) : (
-							<RiLockLine className="me-3" size={35} />
-						)}
-						FORTSÄTT TILL APPEN
-					</Button>
+					{loading ? (
+						<Button
+							disabled={loading}
+							className="w-100 mt-5 register-btn"
+							type="submit"
+						>
+							<RiLockUnlockLine className="me-3" size={35} /> LÅSER UPP...
+						</Button>
+					) : (
+						<Button
+							disabled={loading}
+							className="w-100 mt-5 register-btn"
+							type="submit"
+						>
+							<RiLockLine className="me-3" size={35} /> FORTSÄTT TILL APPEN
+						</Button>
+					)}
+					
 				</Form>
 			</AuthLayout>
 		</>
