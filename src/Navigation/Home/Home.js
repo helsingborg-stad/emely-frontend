@@ -80,7 +80,7 @@ export default function Login() {
 							className="w-100 mt-5 register-btn"
 							type="submit"
 						>
-							<RiLockUnlockLine className="me-3" size={35} /> LÅSER UPP...
+							<RiLockUnlockLine className="me-3" size={25} /> LÅSER UPP...
 						</Button>
 					) : (
 						<Button
@@ -88,7 +88,7 @@ export default function Login() {
 							className="w-100 mt-5 register-btn"
 							type="submit"
 						>
-							<RiLockLine className="me-3" size={35} /> FORTSÄTT TILL APPEN
+							<RiLockLine className="me-3" size={25} /> FORTSÄTT TILL APPEN
 						</Button>
 					)}
 					
