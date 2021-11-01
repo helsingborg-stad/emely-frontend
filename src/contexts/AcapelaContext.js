@@ -5,8 +5,7 @@ export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
   const [acapelaToken, setAcapelaToken] = useState(null);
-  const [activeSound, setActiveSound] = useState(true);
-
+  
   useEffect(() => {
     loginAcapela();
   }, []);
@@ -31,7 +30,7 @@ const AcapelaContextProvider = (props) => {
     }
   };
 
-  /* Logout Acapela */
+  /* ---- Logout Acapela ---- */
   const logoutAcapela = async () => {
     try {
       const response = await axios.get(
@@ -51,22 +50,9 @@ const AcapelaContextProvider = (props) => {
     }
   };
 
-  /* ---- Logout  Acapela if the sound button is off ---- */
-  const handelSound = (e) => {
-    e.preventDefault();
-    setActiveSound(!activeSound);
-    if (activeSound) {
-      logoutAcapela();
-    } else {
-      loginAcapela();
-    }
-  };
-
   const values = {
     loginAcapela,
     logoutAcapela,
-    handelSound,
-    activeSound,
     acapelaToken,
   };
 
