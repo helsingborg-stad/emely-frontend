@@ -1,17 +1,15 @@
 import React, {useState, useEffect} from "react"
 import { Route, Redirect } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
-import UserMenu from "./UserMenu/UserMenu";
-import GuestMenu from "./GuestMenu/GuestMenu";
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-export default function PrivateRoute({ component: Component, ...rest }) {
-  const { currentUser, correctKey, allKeys, getKeys } = useAuth()
-  const [userEmail, setUserEmail] = useState('')
+export default function KeyRoute({ component: Component, ...rest }) {
+  const { getKeys, allKeys } = useAuth()
   const [isCorrectKey, setIsCorrectKey] = useState(sessionStorage.getItem('sessionKey'));
-
+  
   const history = useHistory();
 
+  
   /* --- Checking if the sessionKey is correct else redirects back to home --- */
   useEffect(() => {
     try{
@@ -29,27 +27,15 @@ export default function PrivateRoute({ component: Component, ...rest }) {
     }
   }, [])
 
-  useEffect(() => {
-    try{
 
-      if(currentUser.email === 'guest@emely.com'){
-        setUserEmail('guest@emely.com')
-      } else {
-        setUserEmail('')
-      }
-    } catch(error){
-      console.log(error)
-    }
-  }, [])
 
   return (
     <>
   {/* Render GuestMenu if guest is logged in else render regular UserMenu on login */}
-    {userEmail !== '' ?  <GuestMenu /> : <UserMenu /> }
     <Route
       {...rest}
       render={props => {
-        return currentUser ? <Component {...props} /> : <Redirect to="/login" />
+        return isCorrectKey ? <Component {...props} /> : <Redirect to="/" />
       }}
     ></Route>
     </>

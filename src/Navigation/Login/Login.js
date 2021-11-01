@@ -22,9 +22,14 @@ export default function Login() {
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
+
+
 	useEffect(() => {
+		
 		/* If userid is not guest then push to dashboard when on login page */
 		try {
+			
+
 			if (currentUser.uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
 				return history.push('/dashboard');
 			}

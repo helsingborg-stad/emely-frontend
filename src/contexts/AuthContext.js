@@ -1,14 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import { auth, dbUsers } from '../firebase';
+import { Redirect, useHistory } from 'react-router-dom';
+import { auth, dbUsers, db } from '../firebase';
 import {
 	doc,
 	setDoc,
 	updateDoc,
 	increment,
 	deleteDoc,
-	onSnapshot
+	onSnapshot,
+	getDocs,
+	collection,
 } from 'firebase/firestore';
+
 import {
 	updateEmail,
 	updatePassword,
@@ -19,8 +22,6 @@ import {
 	onAuthStateChanged,
 } from 'firebase/auth';
 
-
-
 const AuthContext = React.createContext();
 
 export function useAuth() {
@@ -30,30 +31,33 @@ export function useAuth() {
 export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState();
 	const [userDetails, setUserDetails] = useState();
+	const [correctKey, setCorrectKey] = useState();
+	const [appKey, setAppKey] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [allKeys, setAllKeys] = useState();
+	const history = useHistory();
+	const [keyMsg, setKeyMsg] = useState();
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
-		
+
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user);
-			try{
+			try {
+				setLoading(false);
+				const uid = user.uid;
 
-			setLoading(false);
-				const uid = user.uid
-
-				if(uid === user.uid && uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
-					console.log("You are signed in!")
-					return <Redirect to="/dashboard" />
-				} else if(uid === 'mcK6kHLV4nh33XJmO2tJXzokqpG2'){
-					console.log('You are signed in as guest')
-				} 
-				else {
-					console.log("Signed out!")
-					return <Redirect to="/login" />
+				if (uid === user.uid && uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
+					console.log('You are signed in!');
+					return <Redirect to="/dashboard" />;
+				} else if (uid === 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
+					console.log('You are signed in as guest');
+				} else {
+					console.log('Signed out!');
+					return <Redirect to="/login" />;
 				}
-			} catch(error){
-				console.log("Signed out!")
+			} catch (error) {
+				console.log('Signed out!');
 			}
 		});
 
@@ -101,7 +105,7 @@ export function AuthProvider({ children }) {
 
 	/* ---- Update password ---- */
 	function passwordUpdate(password) {
-		console.log("Password updated")
+		console.log('Password updated');
 		return updatePassword(currentUser, password);
 	}
 
@@ -133,6 +137,46 @@ export function AuthProvider({ children }) {
 
 	/* ---- FIRESTORE QUERIES ---- */
 
+	/* --- Check if the input key matches keys in database --- */
+	function checkKey(inputKey, date) {
+		/* Format the date so it matches the deadline date */
+		const dd = date.getDate();
+		const mm = date.getMonth() + 1;
+		const y = date.getFullYear();
+
+		const formattedDate = y + '/' + mm + '/' + dd;
+
+		/* Iterate through all keys and check if the key matches inputKey and deadline date */
+		for (let key of allKeys) {
+			if (inputKey === key.key && formattedDate <= key.deadline) {
+				setCorrectKey(true);
+				sessionStorage.setItem('sessionKey', inputKey);
+				return history.push('/login');
+			} else {
+				setCorrectKey(false);
+				sessionStorage.setItem('sessionKey', 'false');
+			}
+		}
+	}
+
+	/* --- Get all keys from firestore --- */
+	async function getKeys() {
+		try {
+			const querySnapshot = await getDocs(collection(db, 'keys'));
+			const allDocs = [];
+			querySnapshot.forEach((doc) => {
+				const data = doc.data();
+				allDocs.push(data);
+			});
+			console.log('Keys collected');
+			setAllKeys(allDocs);
+			
+		} catch (error) {
+			console.log('Error:' + error.message);
+		}
+		setLoading(false);
+	}
+
 	/* ---- Create user in Firestore with signup information ---- */
 	async function createUser(
 		email,
@@ -154,21 +198,19 @@ export function AuthProvider({ children }) {
 			created_at: creationTime,
 			last_sign_in: creationTime,
 		});
-		console.log("User created in firestore")
+		console.log('User created in firestore');
 	}
 
 	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
 	async function getUserDetails(userId) {
 		try {
 			/* Get user details from firestore if user is not Guest */
-			
-				onSnapshot(doc(dbUsers, userId), (doc) => {
-					setUserDetails(doc.data())
-				});
-			
 
+			onSnapshot(doc(dbUsers, userId), (doc) => {
+				setUserDetails(doc.data());
+			});
 		} catch (error) {
-			console.log(error.message)
+			console.log(error.message);
 		}
 
 		return userDetails;
@@ -181,7 +223,7 @@ export function AuthProvider({ children }) {
 			login_count: increment(1),
 			last_sign_in: lastSignInTime,
 		});
-		console.log("User info updated on log in");
+		console.log('User info updated on log in');
 	}
 
 	/* ---- Update username ---- */
@@ -190,7 +232,7 @@ export function AuthProvider({ children }) {
 		updateDoc(userRef, {
 			username: username,
 		});
-		console.log("Username updated")
+		console.log('Username updated');
 	}
 
 	/* ---- Update current occupation ---- */
@@ -199,7 +241,7 @@ export function AuthProvider({ children }) {
 		updateDoc(userRef, {
 			current_occupation: currentOccupation,
 		});
-		console.log("Current occupation updated")
+		console.log('Current occupation updated');
 	}
 
 	/* ---- Update native language ---- */
@@ -208,7 +250,7 @@ export function AuthProvider({ children }) {
 		updateDoc(userRef, {
 			native_language: nativeLanguage,
 		});
-		console.log("Native language updated")
+		console.log('Native language updated');
 	}
 
 	/* ---- Update birth date ---- */
@@ -217,7 +259,7 @@ export function AuthProvider({ children }) {
 		updateDoc(userRef, {
 			birth_year: birthYear,
 		});
-		console.log("Birth date updated")
+		console.log('Birth date updated');
 	}
 
 	/* ---- Update email in Firestore ---- */
@@ -238,7 +280,7 @@ export function AuthProvider({ children }) {
 	/* ---- Delete user information from Firestore ---- */
 	function deleteFirestoreUser(uid) {
 		deleteDoc(doc(dbUsers, uid));
-		console.log("User deleted")
+		console.log('User deleted');
 	}
 
 	const value = {
@@ -260,6 +302,9 @@ export function AuthProvider({ children }) {
 		userDelete,
 		deleteFirestoreUser,
 		translateError,
+		getKeys,
+		checkKey,
+		allKeys,
 	};
 
 	return (
