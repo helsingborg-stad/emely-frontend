@@ -1,9 +1,8 @@
 import axios from "axios";
 import React, { createContext, useState } from "react";
-import { useAuth } from './AuthContext';
+import { useAuth } from "./AuthContext";
 
 export const ConversationContext = createContext();
-
 
 const ConversationContextProvider = (props) => {
   const { currentUser } = useAuth();
@@ -24,7 +23,7 @@ const ConversationContextProvider = (props) => {
 
   /* ---- Gets first message from BE ---- */
   const initConversation = async (
-    userName = "Gäst",
+    userName,
     job = null,
     date = formatedTimestamp(),
     persona
@@ -34,22 +33,25 @@ const ConversationContextProvider = (props) => {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/init`,
         {
-          name: `${userName}`,
-          job: `${job}`,
+          brain_url: "null",
           created_at: `${date}`,
-          persona: `${persona}`,
           development_testing: true,
           lang: "sv",
+          name: `${userName}`,
+          persona: `${persona}`,
           user_ip_number: "127.0.0.1",
+          webapp_local: true,
+          webapp_url: "null",
+          webapp_version: "null",
+          job: `${job}`,
           has_experience: true,
           enable_small_talk: true,
           user_id: currentUser.uid,
-
         }
       );
       const result = await response.data;
       setConversationId(result.conversation_id);
-      setSessionConersation([{ text: result.message, type: "emely" }]);
+      setSessionConersation([{ text: result.text, type: "emely" }]);
     } catch (err) {
       console.log("Error: ", err);
       setSessionConersation((prevState) => [
@@ -94,7 +96,7 @@ const ConversationContextProvider = (props) => {
       // saves Emely's message
       setSessionConersation((prevState) => [
         ...prevState,
-        { text: result.message, type: "emely" },
+        { text: result.text, type: "emely" },
       ]);
     } catch (err) {
       console.log("Error: ", err);
