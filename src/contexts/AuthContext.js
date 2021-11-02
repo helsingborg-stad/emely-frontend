@@ -168,12 +168,13 @@ export function AuthProvider({ children }) {
 				const data = doc.data();
 				allDocs.push(data);
 			});
-			console.log('Keys collected');
+
 			setAllKeys(allDocs);
 			
 		} catch (error) {
 			console.log('Error:' + error.message);
 		}
+		
 		setLoading(false);
 	}
 

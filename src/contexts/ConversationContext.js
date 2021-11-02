@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { createContext, useState } from "react";
+import { useAuth } from './AuthContext';
 
 export const ConversationContext = createContext();
 
+
 const ConversationContextProvider = (props) => {
+  const { currentUser } = useAuth();
   // saves Emely's and user's messages
   const [sessionConversation, setSessionConersation] = useState([]);
   // state for user's message (invokes in onChange case)
@@ -36,12 +39,12 @@ const ConversationContextProvider = (props) => {
           created_at: `${date}`,
           persona: `${persona}`,
           development_testing: true,
-          webapp_local: true,
-          webapp_url: "swaggerdocs",
-          webapp_version: "NA",
-          brain_url: "NA",
           lang: "sv",
           user_ip_number: "127.0.0.1",
+          has_experience: true,
+          enable_small_talk: true,
+          user_id: currentUser.uid,
+
         }
       );
       const result = await response.data;
@@ -79,7 +82,7 @@ const ConversationContextProvider = (props) => {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/${endpoint}`,
         {
-          message: `${userMessage}`,
+          text: `${userMessage}`,
           conversation_id: `${id}`,
           response_time: -1,
           created_at: `${date}`,

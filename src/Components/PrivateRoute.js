@@ -49,7 +49,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={props => {
-        return currentUser ? <Component {...props} /> : <Redirect to="/login" />
+        return currentUser && isCorrectKey ? <Component {...props} /> : <Redirect to="/login" />
       }}
     ></Route>
     </>
