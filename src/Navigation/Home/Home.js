@@ -54,8 +54,8 @@ export default function Login() {
 		<>
 			{msg && <AlertMessage message={msg} variant={msgVariant} />}
 			<AuthLayout>
-				<h2 className="text-center mb-4 fw-bold" id="login-header">
-					Skriv in din nyckel för att fortsätta använda appen
+				<h2 className="text-center mb-5 fw-bold" id="login-header">
+					Skriv in din nyckel för att fortsätta vidare till språkroboten Emely
 				</h2>
 
 				{/* Input-key form */}
@@ -88,9 +88,13 @@ export default function Login() {
 							className="w-100 mt-5 register-btn"
 							type="submit"
 						>
-							<RiLockLine className="me-3" size={25} /> FORTSÄTT TILL APPEN
+							<RiLockLine className="me-3" size={25} /> ANVÄND NYCKEL
 						</Button>
 					)}
+					<hr/>
+					<p className="text-center" style={{ fontWeight: '600' }}>
+					Saknar du en nyckel? Kontakta Emely på: <br/>emely@nordaxon.com
+					</p>
 					
 				</Form>
 			</AuthLayout>
