@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 import { BiMicrophone } from "react-icons/bi";
 import { IoMdVolumeHigh } from "react-icons/io";
 import { IoMdVolumeOff } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
 import { FaStop } from "react-icons/fa";
 
-import useWindowDimensions from "../../customHooks/useWindowDimensions";
-import useVoiceToText from "../../customHooks/useVoiceToText";
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
 import { AcapelaContext } from "../../contexts/AcapelaContext";
@@ -17,10 +18,6 @@ export default function ChatInput({
   isFocused,
   setValidationError,
 }) {
-  // variables for layout
-  const MEDIUM_WIDTH = 800;
-  const { currentWidth } = useWindowDimensions();
-
   // state to turn on/of the sound
   const [activeSound, setActiveSound] = useState(true);
 
@@ -33,21 +30,37 @@ export default function ChatInput({
     isError,
   } = useContext(ConversationContext);
 
-// function for connecting/disconnecting Acapela
+  // function for connecting/disconnecting Acapela
   const { loginAcapela, logoutAcapela } = useContext(AcapelaContext);
 
   // states && functions for translating voice to text
+  const [isListening, setIsListening] = useState(false);
+
   const {
-    isListening,
-    recordingNote,
-    setIsListening,
-    setRecordingNote,
-    isBrowserSupportsSpeechApi,
-  } = useVoiceToText();
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+
+  useEffect(() => {
+    if (isListening) {
+      SpeechRecognition.startListening({
+        continuous: true,
+        language: "sv-SV",
+      });
+      console.log(transcript);
+    } else {
+      SpeechRecognition.stopListening();
+    }
+    // overwriting userMessage if recording button works
+    setUserMessage(transcript);
+    resetTranscript();
+  }, [isListening]);
 
   //! get element for removing it when sound is off
   const player = document.getElementById("player");
-  
+
   /* ---- Send user message to BE ----*/
   const handleSendClick = (e) => {
     e.preventDefault();
@@ -56,7 +69,7 @@ export default function ChatInput({
       player.remove();
     }
     // don't allow clicking send btn if  the recording is in progress
-    if (!isListening) {
+    if (!listening) {
       // simple validation
       if (
         userMessage.trim().length > 0 &&
@@ -74,24 +87,13 @@ export default function ChatInput({
     }
   };
 
-  /* ---- Sets the recordings button active ----*/
-  const handleClickRecordingBtn = (e) => {
-    e.preventDefault();
-    // set input onFocus
-    setFocused((prevState) => !prevState);
-    setIsListening((prevState) => !prevState);
-    // overwriting userMessage if recording button works
-    setUserMessage(recordingNote);
-    setRecordingNote("");
-  };
-
   /* ---- Sends user's message by clicking "enter" key-button ----*/
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSendClick(e);
     }
   };
-  
+
   /* ---- Logout  Acapela if the sound button is off ---- */
   const handelSound = (e) => {
     e.preventDefault();
@@ -107,6 +109,10 @@ export default function ChatInput({
     }
   };
 
+  if (!browserSupportsSpeechRecognition) {
+    console.log("Browser doesn't support speech recognition.");
+  }
+
   return (
     <div className="chat-input-wrapper">
       {/* ---- Class "chat-input_overlay" blokes all buttons and input fields if is loading or error on the page ---- */}
@@ -116,7 +122,7 @@ export default function ChatInput({
         <div className="buttons-wrapper">
           <form
             onSubmit={(e) => handleSendClick(e)}
-            className={isFocused ? "input-wrapper expand" : "input-wrapper"}
+            className={"input-wrapper"}
             onFocus={() => {
               setFocused(true);
               setValidationError(false);
@@ -134,7 +140,7 @@ export default function ChatInput({
               minRows={1}
               maxRows={3}
               placeholder={isLoading ? "" : "Skriv meddelande"}
-              value={isListening ? recordingNote : userMessage}
+              value={listening ? transcript : userMessage}
               onKeyDown={(e) => handleKeyDown(e)}
               disabled={isLoading}
             ></TextareaAutosize>
@@ -146,11 +152,7 @@ export default function ChatInput({
           {/* ---- Sound button ---- */}
           <button
             onClick={(e) => handelSound(e)}
-            className={
-              isFocused && currentWidth.width < MEDIUM_WIDTH
-                ? "hide"
-                : "sound_btn navigation_btn"
-            }
+            className={"sound_btn navigation_btn"}
           >
             {activeSound ? (
               <IoMdVolumeHigh size={"2rem"} />
@@ -160,7 +162,7 @@ export default function ChatInput({
           </button>
         </div>
         {/* ---- Recording button, hides in all browsers except Chrome ----- */}
-        {isBrowserSupportsSpeechApi && (
+        {browserSupportsSpeechRecognition && (
           <div>
             <button
               className={
@@ -168,9 +170,11 @@ export default function ChatInput({
                   ? "navigation_btn recording_btn_active"
                   : "navigation_btn recording_btn"
               }
-              onClick={(e) => handleClickRecordingBtn(e)}
+              onClick={() => {
+                setIsListening((prevState) => !prevState);
+              }}
             >
-              {isListening ? (
+              {listening ? (
                 <FaStop size={"2rem"} />
               ) : (
                 <BiMicrophone size={"2rem"} />
