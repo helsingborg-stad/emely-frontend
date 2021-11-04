@@ -7,6 +7,7 @@ import { IoMdVolumeHigh } from "react-icons/io";
 import { IoMdVolumeOff } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
 import { FaStop } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
@@ -19,7 +20,14 @@ export default function ChatInput({
   setValidationError,
 }) {
   // state to turn on/of the sound
-  const [activeSound, setActiveSound] = useState(true);
+  const [activeSound, setActiveSound] = useState(() => {
+    const acapelaToken = Cookies.get("acapelaToken");
+    if (acapelaToken) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   // states && functions for interactive actions with BE
   const {

@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { createContext, useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
-  const [acapelaToken, setAcapelaToken] = useState(null);
-  
   useEffect(() => {
     loginAcapela();
   }, []);
@@ -24,7 +23,7 @@ const AcapelaContextProvider = (props) => {
         }
       );
       const result = await response.data;
-      setAcapelaToken(result.token);
+      Cookies.set("acapelaToken", `${result.token}`);
     } catch (err) {
       console.log("Error: ", err);
     }
@@ -32,6 +31,7 @@ const AcapelaContextProvider = (props) => {
 
   /* ---- Logout Acapela ---- */
   const logoutAcapela = async () => {
+    const acapelaToken = Cookies.get("acapelaToken");
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_ACAPELA_URL}/logout/`,
@@ -44,7 +44,7 @@ const AcapelaContextProvider = (props) => {
       );
       const result = await response.data;
       console.log("logout acapela", result.success);
-      setAcapelaToken(null);
+      Cookies.remove("acapelaToken");
     } catch (err) {
       console.log("Error: ", err);
     }
@@ -53,7 +53,6 @@ const AcapelaContextProvider = (props) => {
   const values = {
     loginAcapela,
     logoutAcapela,
-    acapelaToken,
   };
 
   return (

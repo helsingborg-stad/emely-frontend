@@ -1,17 +1,16 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import { AcapelaContext } from "../contexts/AcapelaContext";
+import Cookies from "js-cookie";
 
 const AcapelaPlayer = ({ message }) => {
-  const { acapelaToken } = useContext(AcapelaContext);
-
+  
   /* ---- Plays Acapela only in case if Emely message is exist and acapela token known ---- */
   useEffect(() => {
-    if (acapelaToken) {
       renderPlayer();
-    }
   }, [message]);
 
   const renderPlayer = () => {
+    const acapelaToken = Cookies.get("acapelaToken");
     const voice = "?voice=Mia22k_HQ";
     const output = "&output=stream";
     const type = "&type=mp3";
