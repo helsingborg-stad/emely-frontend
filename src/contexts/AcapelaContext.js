@@ -1,12 +1,16 @@
 import axios from "axios";
 import React, { createContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import Hashids from "hashids";
 
 export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
+  const hashids = new Hashids();
+  // logs in to acapela when render the first page, log out acapela when user close the window application
   useEffect(() => {
     loginAcapela();
+    return () => logoutAcapela();
   }, []);
 
   /* ---- Login Acapela ---- */
@@ -23,7 +27,10 @@ const AcapelaContextProvider = (props) => {
         }
       );
       const result = await response.data;
-      Cookies.set("acapelaToken", `${result.token}`);
+      // encode acapela token
+      const encodeToken = hashids.encodeHex(`${result.token}`);
+      // saves token in cookies
+      Cookies.set("acapelaToken", encodeToken);
     } catch (err) {
       console.log("Error: ", err);
     }
@@ -31,14 +38,17 @@ const AcapelaContextProvider = (props) => {
 
   /* ---- Logout Acapela ---- */
   const logoutAcapela = async () => {
+    // gets the encoded token that was stored in the cookies
     const acapelaToken = Cookies.get("acapelaToken");
+    // decodes this token
+    const decodeToken = hashids.decodeHex(acapelaToken);
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_ACAPELA_URL}/logout/`,
         {
           headers: {
             "Content-type": "application/json",
-            Authorization: `Token ${acapelaToken}`,
+            Authorization: `Token ${decodeToken}`,
           },
         }
       );
