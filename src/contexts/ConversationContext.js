@@ -33,7 +33,7 @@ const ConversationContextProvider = (props) => {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/init`,
         {
-          brain_url: "null",
+          brain_url: null,
           created_at: `${date}`,
           development_testing: true,
           lang: "sv",
@@ -41,8 +41,8 @@ const ConversationContextProvider = (props) => {
           persona: `${persona}`,
           user_ip_number: "127.0.0.1",
           webapp_local: true,
-          webapp_url: "null",
-          webapp_version: "null",
+          webapp_url: null,
+          webapp_version: null,
           job: `${job}`,
           has_experience: true,
           enable_small_talk: true,

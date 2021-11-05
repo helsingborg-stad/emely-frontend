@@ -6,6 +6,7 @@ import Hashids from "hashids";
 export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
+  const [deleteAcapelaPlayer, setDeleteAcapelaPlayer] = useState(false);
   const hashids = new Hashids();
   // logs in to acapela when render the first page, log out acapela when user close the window application
   useEffect(() => {
@@ -38,17 +39,14 @@ const AcapelaContextProvider = (props) => {
 
   /* ---- Logout Acapela ---- */
   const logoutAcapela = async () => {
-    // gets the encoded token that was stored in the cookies
-    const acapelaToken = Cookies.get("acapelaToken");
-    // decodes this token
-    const decodeToken = hashids.decodeHex(acapelaToken);
+    const decodedToken = decodeTokenAcapela();
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_ACAPELA_URL}/logout/`,
         {
           headers: {
             "Content-type": "application/json",
-            Authorization: `Token ${decodeToken}`,
+            Authorization: `Token ${decodedToken}`,
           },
         }
       );
@@ -60,9 +58,16 @@ const AcapelaContextProvider = (props) => {
     }
   };
 
+  // gets and decodes the encoded token that was stored in the cookies
+  const decodeTokenAcapela = () => {
+    return hashids.decodeHex(Cookies.get("acapelaToken"));
+  };
   const values = {
     loginAcapela,
     logoutAcapela,
+    deleteAcapelaPlayer,
+    setDeleteAcapelaPlayer,
+    decodeTokenAcapela,
   };
 
   return (

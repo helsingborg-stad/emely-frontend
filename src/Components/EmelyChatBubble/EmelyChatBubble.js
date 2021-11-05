@@ -24,7 +24,9 @@ export default function ChatBubble({
           <p className="dialogue-text">{isLoading ? loader : message}</p>
         )}
       </div>
-      {message && <AcapelaPlayer message={message} />}
+      {message && (
+        <AcapelaPlayer message={message} />
+      )}
     </>
   );
 }

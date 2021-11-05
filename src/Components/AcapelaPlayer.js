@@ -1,19 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import Hashids from "hashids";
 import Cookies from "js-cookie";
 
+import { AcapelaContext } from "../contexts/AcapelaContext";
+
 const AcapelaPlayer = ({ message }) => {
-  const hashids = new Hashids();
+  const {
+    deleteAcapelaPlayer,
+    setDeleteAcapelaPlayer,
+    decodeTokenAcapela,
+  } = useContext(AcapelaContext);
+  const elementRef = useRef();
+  
   /* ---- Plays Acapela only in case if Emely message is exist and acapela token known ---- */
   useEffect(() => {
-      renderPlayer();
+    renderPlayer();
   }, [message]);
 
+  // delete <audio></audio> if state is true (user pressed the mute btn or close the browser window)
+  useEffect(() => {
+    if (deleteAcapelaPlayer) {
+      const divElement = elementRef.current;
+      divElement.remove();
+    }
+    setDeleteAcapelaPlayer(false)
+  }, [deleteAcapelaPlayer]);
+
+  
   const renderPlayer = () => {
-    // gets the encoded token that was stored in the cookies
-    const acapelaToken = Cookies.get("acapelaToken");
-    // decodes this token
-    const decodeToken = hashids.decodeHex(acapelaToken);
+    const decodedToken = decodeTokenAcapela();
 
     const voice = "?voice=Mia22k_HQ";
     const output = "&output=stream";
@@ -22,15 +37,14 @@ const AcapelaPlayer = ({ message }) => {
     const volume = "&volume=32768";
     /* ---- Collecting the url to get a Emely voice ---- */
     const url = `
-       ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${decodeToken}`;
-
+       ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${decodedToken}`;
     return (
-      <div style={{ height: "60px", opacity: 0 }}>
+      <div style={{ height: "60px" }}>
         <audio
-          id="player"
           controls="controls"
           autobuffer="autobuffer"
           autoPlay="autoplay"
+          ref={elementRef}
         >
           <source src={url} type="audio/wav" />
         </audio>

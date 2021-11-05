@@ -17,6 +17,7 @@ export default function EmelyChat(props) {
   // get :persona from router-dom (intervju or fika)
   const { persona } = props.match.params;
   const scroll = useRef();
+  
   const {
     currentJob,
     formatedTimestamp,
@@ -62,7 +63,12 @@ export default function EmelyChat(props) {
       if (msg.type === "user") {
         return <UserChatBubble message={msg.text} key={i} />;
       } else {
-        return <EmelyChatBubble message={msg.text} key={i} />;
+        return (
+          <EmelyChatBubble
+            message={msg.text}
+            key={i}
+          />
+        );
       }
     });
   };
@@ -93,6 +99,7 @@ export default function EmelyChat(props) {
             <EmelyChatBubble
               isValidationError={isValidationError}
               loader={<PulseLoader size={6} color={"#979797"} />}
+              
             />
           )}
         </div>
@@ -101,7 +108,6 @@ export default function EmelyChat(props) {
           <ChatInput
             persona={persona}
             setFocused={setFocused}
-            isFocused={isFocused}
             setValidationError={setValidationError}
           />
         </ErrorBoundary>
