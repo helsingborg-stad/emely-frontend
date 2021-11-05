@@ -39,7 +39,7 @@ const AcapelaPlayer = ({ message }) => {
     const url = `
        ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${decodedToken}`;
     return (
-      <div style={{ height: "60px" }}>
+      <div style={{ height: "60px", opacity: 0 }}>
         <audio
           controls="controls"
           autobuffer="autobuffer"
