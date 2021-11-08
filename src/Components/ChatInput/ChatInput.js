@@ -7,6 +7,7 @@ import { IoMdVolumeHigh } from "react-icons/io";
 import { IoMdVolumeOff } from "react-icons/io";
 import { IoIosSend } from "react-icons/io";
 import { FaStop } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
@@ -15,11 +16,18 @@ import { AcapelaContext } from "../../contexts/AcapelaContext";
 export default function ChatInput({
   persona,
   setFocused,
-  isFocused,
   setValidationError,
 }) {
-  // state to turn on/of the sound
-  const [activeSound, setActiveSound] = useState(true);
+  // state to turn on/of the sound button 
+  const [activeSound, setActiveSound] = useState(() => {
+    // checks if exist the token in cookies
+    const acapelaToken = Cookies.get("acapelaToken");
+    if (acapelaToken) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   // states && functions for interactive actions with BE
   const {
@@ -31,7 +39,7 @@ export default function ChatInput({
   } = useContext(ConversationContext);
 
   // function for connecting/disconnecting Acapela
-  const { loginAcapela, logoutAcapela } = useContext(AcapelaContext);
+  const { loginAcapela, logoutAcapela, setDeleteAcapelaPlayer } = useContext(AcapelaContext);
 
   // states && functions for translating voice to text
   const [isListening, setIsListening] = useState(false);
@@ -43,13 +51,14 @@ export default function ChatInput({
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
+  // works if the recording button has been pressed
   useEffect(() => {
     if (isListening) {
       SpeechRecognition.startListening({
         continuous: true,
         language: "sv-SV",
       });
-      console.log(transcript);
+      // console.log(transcript);
     } else {
       SpeechRecognition.stopListening();
     }
@@ -58,16 +67,14 @@ export default function ChatInput({
     resetTranscript();
   }, [isListening]);
 
-  //! get element for removing it when sound is off
-  const player = document.getElementById("player");
+
 
   /* ---- Send user message to BE ----*/
   const handleSendClick = (e) => {
     e.preventDefault();
     // remove the current audio control (by ID) so that the voice tracks do not overlap
-    if (player) {
-      player.remove();
-    }
+    setDeleteAcapelaPlayer(true)
+
     // don't allow clicking send btn if  the recording is in progress
     if (!listening) {
       // simple validation
@@ -101,9 +108,7 @@ export default function ChatInput({
     if (activeSound) {
       logoutAcapela();
       // remove element by id if sound is off
-      if (player) {
-        player.remove();
-      }
+      setDeleteAcapelaPlayer(true);
     } else {
       loginAcapela();
     }
