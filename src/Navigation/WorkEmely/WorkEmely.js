@@ -12,7 +12,7 @@ import useLiveTextDisplaying from "../../customHooks/useLiveTextDisplaying";
 export default function WorkEmely(props) {
   const { userDetails, currentUser } = useAuth();
   const { getButtons, jobButtons } = useContext(ConversationContext);
-  const { renderWords } = useLiveTextDisplaying(
+  const { renderWords, click } = useLiveTextDisplaying(
     `Jag har arbetat med att intervjua folk för jobb i ungefär ett halvår. Eftersom att jag är nybörjare på detta blir jag nervös ibland och glömmer vad jag tidigare har sagt. Det är inte ditt fel om jag råkar glömma något. Vilket arbete söker du?`	
   );
 
@@ -25,6 +25,10 @@ export default function WorkEmely(props) {
     getButtons();
   }, []);
 
+	 useEffect(() => {
+     renderWords();
+	 }, [click]);
+	 
   return (
     <>
       <Container id="container-work-emely">
