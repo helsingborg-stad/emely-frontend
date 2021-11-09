@@ -5,26 +5,15 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { FiBriefcase } from "react-icons/fi";
 import { FiCoffee } from "react-icons/fi";
-import PulseLoader from "react-spinners/PulseLoader";
+
+import useLiveTextDisplaying from '../../customHooks/useLiveTextDisplaying'
 
 /* Variable declaration */
 export default function Dashboard() {
   const { userDetails, currentUser } = useAuth();
-  const [isLoading, setIsLoading] = useState();
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-
-  /* --- Render text after delay --- */
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 2000);
-  //   return timer;
-  // }, [currentUser]);
-
   const [message, setMessage] = useState(null);
-  
-  const [messageIndex, setMessageIndex] = useState(0);
+
+  const {renderWords} = useLiveTextDisplaying(message)
 
   useEffect(() => {
     const text = `Hej ${
@@ -34,27 +23,6 @@ export default function Dashboard() {
 	}, [userDetails]);
 	
 
-  useEffect(() => {
-    // Move on to the next message every `n` milliseconds
-    let timeout;
-    if (message && messageIndex < message.length - 1) {
-      timeout = setTimeout(() => setMessageIndex(messageIndex + 1), 100);
-    }
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [message, messageIndex]);
-
-  const renderWords = () => {
-		if(message){
-			return message.map((word, index) => {
-      if (index <= messageIndex) return word.replace(/([§]+)/g, " ");
-    });
-		}
-    
-  };
-
   return (
     <>
       <Container id="dashboard-card" className="p-0">
@@ -62,16 +30,12 @@ export default function Dashboard() {
           <Row>
             <Col id="emely-dialogue-col" className="p-0">
               <EmelyDialogue className="">
-                {/* --- When loading show pulse loader. Show text after loading --- */}
-                {isLoading ? (
-                  <p className="m-3 p-5 emely-dialog_dialogue-text text-center">
-                    <PulseLoader size={12} color={"gray"} />{" "}
-                  </p>
-                ) : (
+                {/* ---  Text output with animation  --- */}
+                {
                   <p className="m-3 p-3 emely-dialog_dialogue-text">
                     {renderWords()}
                   </p>
-                )}
+                }
               </EmelyDialogue>
             </Col>
           </Row>
