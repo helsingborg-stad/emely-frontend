@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-
-const useLiveTextDisplaying = (message) => {
-  console.log(message);
-
+const useLiveTextDisplaying = (text) => {
+  const [message, setMessage] = useState(null);
   const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
-    console.log("run");
+    const words = text.replace(/([ ]+)/g, "§").split("");
+    setMessage(words);
+  }, [text]);
+
+  useEffect(() => {
+  
     // Move on to the next message every `n` milliseconds
     let timeout;
     if (message && messageIndex < message.length - 1) {
-      timeout = setTimeout(() => setMessageIndex(messageIndex + 1), 100);
+      timeout = setTimeout(() => setMessageIndex(messageIndex + 1), 60);
     }
 
     return () => {
@@ -20,7 +23,6 @@ const useLiveTextDisplaying = (message) => {
   }, [message, messageIndex]);
 
   const renderWords = () => {
-    console.log(message);
     if (message) {
       return message.map((word, index) => {
         if (index <= messageIndex) return word.replace(/([§]+)/g, " ");

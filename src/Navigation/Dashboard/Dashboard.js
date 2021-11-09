@@ -11,17 +11,12 @@ import useLiveTextDisplaying from '../../customHooks/useLiveTextDisplaying'
 /* Variable declaration */
 export default function Dashboard() {
   const { userDetails, currentUser } = useAuth();
-  const [message, setMessage] = useState(null);
 
-  const {renderWords} = useLiveTextDisplaying(message)
-
-  useEffect(() => {
-    const text = `Hej ${
-      userDetails && userDetails.username ? userDetails.username : ""}! Jag heter Emely. Jag är en virtuell språkassistent och med mig kan du öva att prata på svenska. Välj nedan vilken av mina personligheter du önskar att prata med.`;
-    const words = text.replace(/([ ]+)/g, "§").split("");
-    setMessage(words);
-	}, [userDetails]);
-	
+  const {renderWords} = useLiveTextDisplaying(
+   `Hej ${
+    userDetails && userDetails.username ? userDetails.username : ""
+  }! Jag heter Emely. Jag är en virtuell språkassistent och med mig kan du öva att prata på svenska. Välj nedan vilken av mina personligheter du önskar att prata med.`
+)
 
   return (
     <>
