@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useContext } from "react";
 import Hashids from "hashids";
 import Cookies from "js-cookie";
 
+import { ConversationContext } from "../contexts/ConversationContext";
 import { AcapelaContext } from "../contexts/AcapelaContext";
 
 const AcapelaPlayer = ({ message }) => {
@@ -12,6 +13,11 @@ const AcapelaPlayer = ({ message }) => {
   } = useContext(AcapelaContext);
   const elementRef = useRef();
   
+  const {
+    currentSpeed,
+    setCurrentSpeed,
+  } = useContext(ConversationContext);
+
   /* ---- Plays Acapela only in case if Emely message is exist and acapela token known ---- */
   useEffect(() => {
     renderPlayer();
@@ -28,6 +34,8 @@ const AcapelaPlayer = ({ message }) => {
 
   
   const renderPlayer = () => {
+
+    
     const decodedToken = decodeTokenAcapela();
 
     const voice = "?voice=Mia22k_HQ";
@@ -35,9 +43,10 @@ const AcapelaPlayer = ({ message }) => {
     const type = "&type=mp3";
     const text = encodeURIComponent(message);
     const volume = "&volume=32768";
+    const speed = "&speed=" + currentSpeed;
     /* ---- Collecting the url to get a Emely voice ---- */
     const url = `
-       ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${volume}&token=${decodedToken}`;
+       ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${speed}${volume}&token=${decodedToken}`;
     return (
       <div style={{ height: "60px", opacity: 0 }}>
         <audio

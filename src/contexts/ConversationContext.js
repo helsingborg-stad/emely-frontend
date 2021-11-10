@@ -21,6 +21,15 @@ const ConversationContextProvider = (props) => {
   // disable "send" button in error case
   const [isError, setError] = useState(false);
 
+  const [currentProgress, setCurrentProgress] = useState(null);
+
+  /* --- Emely Settings --- */
+  const [emelySlower, setEmelySlower] = useState(false)
+  const [currentSpeed, setCurrentSpeed] = useState(100);
+  const [hasExperience, setHasExperience] = useState(true)
+  const [smallTalk, setSmallTalk] = useState(true)
+
+  
   /* ---- Gets first message from BE ---- */
   const initConversation = async (
     userName,
@@ -44,14 +53,15 @@ const ConversationContextProvider = (props) => {
           webapp_url: null,
           webapp_version: null,
           job: `${job}`,
-          has_experience: true,
-          enable_small_talk: true,
+          has_experience: hasExperience,
+          enable_small_talk: smallTalk,
           user_id: currentUser.uid,
         }
       );
       const result = await response.data;
       setConversationId(result.conversation_id);
       setSessionConersation([{ text: result.text, type: "emely" }]);
+      
     } catch (err) {
       console.log("Error: ", err);
       setSessionConersation((prevState) => [
@@ -94,6 +104,7 @@ const ConversationContextProvider = (props) => {
       );
       const result = await response.data;
       // saves Emely's message
+      setCurrentProgress(result.progress * 100)
       setSessionConersation((prevState) => [
         ...prevState,
         { text: result.text, type: "emely" },
@@ -153,6 +164,16 @@ const ConversationContextProvider = (props) => {
     sessionConversation,
     setSessionConersation,
     isError,
+    setCurrentProgress,
+    currentProgress,
+    emelySlower,
+    setEmelySlower,
+    currentSpeed,
+    setCurrentSpeed,
+    hasExperience,
+    setHasExperience,
+    smallTalk,
+    setSmallTalk,
   };
 
   return (
