@@ -10,6 +10,7 @@ import { HiOutlineKey } from 'react-icons/hi';
 import { RiLockUnlockLine } from 'react-icons/ri';
 import { RiLockLine } from 'react-icons/ri';
 
+
 /* Variable declaration */
 export default function Login() {
 	const keyRef = useRef();
@@ -17,6 +18,7 @@ export default function Login() {
 	const [msg, setMsg] = useState('');
 	const [msgVariant, setMsgVariant] = useState('');
 	const [loading, setLoading] = useState(false);
+
 
 	/* Get the keys on page load */
 	useEffect(() => {

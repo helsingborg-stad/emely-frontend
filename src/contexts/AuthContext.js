@@ -40,7 +40,6 @@ export function AuthProvider({ children }) {
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
-
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setCurrentUser(user);
 			try {
@@ -151,6 +150,13 @@ export function AuthProvider({ children }) {
 			if (inputKey === key.key && formattedDate <= key.deadline) {
 				setCorrectKey(true);
 				sessionStorage.setItem('sessionKey', inputKey);
+
+				/* Update key login-count */
+				const keyRef = doc(db, 'keys', inputKey);
+				updateDoc(keyRef, {
+					login_count: increment(1),
+				});
+
 				return history.push('/login');
 			} else {
 				setCorrectKey(false);
@@ -170,11 +176,10 @@ export function AuthProvider({ children }) {
 			});
 
 			setAllKeys(allDocs);
-			
 		} catch (error) {
 			console.log('Error:' + error.message);
 		}
-		
+
 		setLoading(false);
 	}
 
