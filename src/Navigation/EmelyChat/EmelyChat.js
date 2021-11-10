@@ -37,7 +37,7 @@ export default function EmelyChat(props) {
     try {
       if (currentUser) {
         initConversation(
-         userDetails ? userDetails.username : "Gäst",
+         userDetails.username,
           currentJob,
           formatedTimestamp(),
           persona

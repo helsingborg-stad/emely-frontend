@@ -18,6 +18,7 @@ import ProfileInfoEdit from './Components/ProfileInfo/ProfileInfoEdit';
 import WorkEmely from './Navigation/WorkEmely/WorkEmely';
 import EmelyChat from './Navigation/EmelyChat/EmelyChat';
 import EndUserTerms from './Components/EndUserTerms/EndUserTerms';
+import EmelySettings from './Components/EmelySettings/EmelySettings';
 import Profile from './Navigation/Profile/Profile';
 import Home from './Navigation/Home/Home';
 import ConversationContextProvider from './contexts/ConversationContext';
@@ -56,6 +57,7 @@ function App() {
 											component={EmelyChat}
 										/>
 										<PrivateRoute path="/profile" component={Profile} />
+										<PrivateRoute path="/emely-settings" component={EmelySettings} />
 
 										<Route exact path="/" component={Home} />
 										<KeyRoute path="/signup" component={Signup} />

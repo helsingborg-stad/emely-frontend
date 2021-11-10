@@ -31,7 +31,7 @@ export default function KeyRoute({ component: Component, ...rest }) {
 
   return (
     <>
-  {/* Render GuestMenu if guest is logged in else render regular UserMenu on login */}
+  
     <Route
       {...rest}
       render={props => {

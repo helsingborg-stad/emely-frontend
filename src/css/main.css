@@ -16,6 +16,8 @@
 @import '../Navigation/WorkEmely/work-emely.css';
 @import '../Navigation/Profile/profile.css';
 @import '../Components/Layout/ProfileCard/profile-card.css';
+@import '../Components/ChatMenu/chat-menu.css';
+@import '../Components/EmelySettings/emely-settings.css';
 @import './forms.css';
 @import './buttons.css';
 
@@ -26,9 +28,10 @@
 	font-family: 'Poppins', Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: auto;
 	letter-spacing: 0.4px;
+	box-sizing: border-box;
 }
 
-.profile-info-modal .modal-content {
+.profile-info-modal, .settings-modal .modal-content {
 	border: 0px !important;
 	border-radius: 25px !important;
   }
