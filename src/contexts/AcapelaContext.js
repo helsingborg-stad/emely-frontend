@@ -10,16 +10,16 @@ const AcapelaContextProvider = (props) => {
   const hashids = new Hashids();
   // logs in to acapela when render the first page, log out acapela when user close the window application
   useEffect(() => {
+    console.log("login");
     loginAcapela();
   }, []);
 
-// logs out Acapela when a user closed the browser window 
- useEffect(() => {
+  // logs out Acapela when a user closed the browser window
+  useEffect(() => {
     window.addEventListener("beforeunload", logoutAcapela);
     // should return for avoid memory leak
     return () => window.removeEventListener("beforeunload", logoutAcapela);
   });
-
 
   /* ---- Login Acapela ---- */
   const loginAcapela = async () => {

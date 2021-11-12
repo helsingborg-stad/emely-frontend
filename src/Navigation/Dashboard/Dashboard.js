@@ -23,6 +23,7 @@ export default function Dashboard() {
     renderWords();
   }, [click]);
 
+
   let history = useHistory();
 
   const handleLink = (linkTo) => {
