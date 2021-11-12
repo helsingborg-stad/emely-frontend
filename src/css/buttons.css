@@ -73,6 +73,23 @@ button:focus {
 	box-shadow: var(--smallShadow) !important;
 }
 
+.btn_light_small {
+	border: 1px solid var(--greenLight) !important;
+	color: var(--greenLight) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 600 !important;
+	font-size: 0.9rem !important;
+	box-shadow: var(--smallShadow) !important;
+}
+
+.btn_light_small:hover {
+	background: var(--greenLight) !important;
+	color: var(--green) !important;
+
+}
+
 .register-btn_sidebar {
 	color: var(--black) !important;
 	border-radius: var(--buttonBorderRadius) !important;
@@ -115,5 +132,8 @@ button:focus {
 	color: rgb(255, 255, 255) !important;
 	font-weight: bold !important;
 	margin-right: 5px;
+	border-radius: 50% !important;
+	align-items: center !important;
+	justify-content: center !important;
 
 }

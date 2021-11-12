@@ -66,6 +66,8 @@
 	--gray: #979797;
 	--red: #b95252;
 	--redHover: #ce5c5c;
+	--greenLight: #33e47d;
+	--greenExtraLight: #ddffeb;
 
 	/* Common border radius */
 	--buttonBorderRadius: 25px 25px 25px 0px;
