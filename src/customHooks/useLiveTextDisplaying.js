@@ -29,7 +29,7 @@ const useLiveTextDisplaying = (text) => {
   useEffect(() => {
     /* ---- Stops timeout, renders the entire message ---- */
     function handleClick(e) {
-    // stopps the timeout, provided that the click was not made on the buttons
+      // stopps the timeout, provided that the click was not made on the buttons
       if (
         ref.current !== e.target.closest(".clickBtn") &&
         jobbRef.current !== e.target.closest(".clickBtn")
