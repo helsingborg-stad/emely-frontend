@@ -1,15 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useHistory } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
-export default function Choices(props) {
-    
-	return (
+export default function Choices({ children, name, ref, linkTo }) {
+ 
+  let history = useHistory();
+  const handleLink = () => {
+    history.push(linkTo);
+  };
+
+  return (
     <>
-      <Link to={props.linkTo}>
-        <button className="register-btn w-100">
-          {props.children} <span className="px-3">{props.name}</span> 
-        </button>
-      </Link>
+      <Button
+        className="register-btn w-100"
+        type="button"
+        onClick={handleLink}
+        ref={ref}
+      >
+        {children} <span className="px-3">{name}</span>
+      </Button>
     </>
   );
 }

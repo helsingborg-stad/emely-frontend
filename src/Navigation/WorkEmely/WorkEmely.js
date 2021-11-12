@@ -3,17 +3,14 @@ import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
 import WorkButton from "../../Components/WorkButton/WorkButton";
-import useWindowDimensions from "../../customHooks/useWindowDimensions";
 import PulseLoader from "react-spinners/PulseLoader";
 import { ConversationContext } from "../../contexts/ConversationContext";
-import { useAuth } from "../../contexts/AuthContext";
 import useLiveTextDisplaying from "../../customHooks/useLiveTextDisplaying";
 
 export default function WorkEmely(props) {
-  const { userDetails, currentUser } = useAuth();
   const { getButtons, jobButtons } = useContext(ConversationContext);
-  const { renderWords, click } = useLiveTextDisplaying(
-    `Jag har arbetat med att intervjua folk för jobb i ungefär ett halvår. Eftersom att jag är nybörjare på detta blir jag nervös ibland och glömmer vad jag tidigare har sagt. Det är inte ditt fel om jag råkar glömma något. Vilket arbete söker du?`	
+  const { renderWords, click, ref } = useLiveTextDisplaying(
+    `Jag har arbetat med att intervjua folk för jobb i ungefär ett halvår. Eftersom att jag är nybörjare på detta blir jag nervös ibland och glömmer vad jag tidigare har sagt. Det är inte ditt fel om jag råkar glömma något. Vilket arbete söker du?`
   );
 
   const [show, setShow] = useState(false);
@@ -25,10 +22,10 @@ export default function WorkEmely(props) {
     getButtons();
   }, []);
 
-	 useEffect(() => {
-     renderWords();
-	 }, [click]);
-	 
+  useEffect(() => {
+    renderWords();
+  }, [click]);
+
   return (
     <>
       <Container id="container-work-emely">
@@ -60,9 +57,10 @@ export default function WorkEmely(props) {
           <Col className="text-center mt-5">
             <Button
               variant="none"
-              className="w-100 register-btn"
+              className="w-100 register-btn clickBtn"
               id="edit-button"
               onClick={handleShow}
+              ref={ref}
             >
               Välj yrke
             </Button>
