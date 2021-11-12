@@ -17,6 +17,11 @@ import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsChatRightDots } from 'react-icons/bs';
 import { RiShieldUserLine } from 'react-icons/ri';
+import { AiFillHome } from 'react-icons/ai'
+import { HiOutlineUserCircle } from 'react-icons/hi'
+import { RiRestartFill } from 'react-icons/ri'
+
+
 
 /* Variable declaration */
 export default function UserMenu(props) {
@@ -63,9 +68,11 @@ export default function UserMenu(props) {
 			>
 				<Container>
 					<Navbar.Brand>
-						<Button className="rounded-circle avatar-btn shadow-sm">
+
+						<Button className="avatar-btn shadow-sm">
 							{userDetails && userDetails.username.charAt(0)}
 						</Button>
+						<span className="ms-1" style={{ fontSize: '1rem', fontWeight: '600'}}>{userDetails && userDetails.username}</span>
 					</Navbar.Brand>
 					<Link to="/profile">
 						<Button
@@ -74,7 +81,7 @@ export default function UserMenu(props) {
 							onClick={handleShow}
 							variant="none"
 						>
-							{userDetails && userDetails.username}
+							
 						</Button>
 					</Link>
 
@@ -101,6 +108,8 @@ export default function UserMenu(props) {
 							>
 								<AiOutlineMenu className="ms-2 mb-1 me-2" size={20} />
 							</Button>
+
+							
 
 							{/* Menu from the side */}
 							<Offcanvas placement="end" show={show} onHide={handleClose}>

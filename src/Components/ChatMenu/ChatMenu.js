@@ -7,32 +7,81 @@ import {
 	Row,
 	Modal,
 	Button,
+	Offcanvas,
 } from 'react-bootstrap';
 import { FcSettings } from 'react-icons/fc';
+import { BsCheckCircleFill } from 'react-icons/bs';
 import EmelySettings from '../EmelySettings/EmelySettings';
 import { ConversationContext } from '../../contexts/ConversationContext';
+import { Link } from 'react-router-dom';
 
 export default function ChatMenu() {
-	const { currentProgress, setCurrentProgress, conversationId } =
+	const { currentProgress, setCurrentProgress } =
 		useContext(ConversationContext);
 
 	const [show, setShow] = useState(false);
+	const [showAlert, setShowAlert] = useState(false);
 
+	/* show/hide modal (settings) */
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-    useEffect(() => {
-        /* Reset current progress on new chat */
-        setCurrentProgress(0);
-    }, [])
+	/* show/hide alert on conversation success */
+	const handleCloseAlert = () => setShowAlert(false);
+	const handleShowAlert = () => setShowAlert(true);
+
+	useEffect(() => {
+		/* Reset current progress on new chat */
+		setCurrentProgress(0);
+	}, []);
+
+	useEffect(() => {
+		/* Sets showAlert to true when current progress reaches 100 */
+		if (currentProgress === 100) {
+			handleShowAlert();
+		}
+	}, [currentProgress]);
 
 	return (
 		<>
+			{/* --- Alert pop up --- */}
+			<Offcanvas
+				style={{ backgroundColor: 'var(--green)', color: 'var(--greenExtraLight)' }}
+				show={showAlert}
+				onHide={handleCloseAlert}
+				placement="bottom"
+			>
+				<Offcanvas.Body className="ms-3 fw-bold">
+					<Row className="mt-4">
+						<Col xs={2} md={3} lg={3} className="text-end">
+							<BsCheckCircleFill size={50} />
+						</Col>
+						<Col xs={6} md={6} lg={6} className="mb-3">
+							Bra jobbat!
+							<br />
+							Du har klarat en hel konversation med Emely.
+						</Col>
+						<Col xs="auto" md={3} lg={3}>
+						<Link to="/dashboard">
+						<Button variant="none" className="btn_light_small">
+						NY KONVERSATION
+					</Button>
+					</Link>
+						</Col>
+						<Row>
+
+						</Row>
+					</Row>
+				</Offcanvas.Body>
+			</Offcanvas>
+
+
+			{/* --- The chat menu is shown when you enter a chat with emely --- */}
 			<Navbar className=" fixed-top chat-menu shadow-sm">
 				<Container className="ms-0 me-0">
 					<Col>
 						<ProgressBar
-							className="rounded-pill ms-0"
+							className="rounded-pill ms-1"
 							animated
 							variant="success"
 							now={currentProgress}
@@ -46,6 +95,7 @@ export default function ChatMenu() {
 				</Container>
 			</Navbar>
 
+			{/* --- Modal for the settings --- */}
 			<Modal
 				className="settings-modal"
 				size="lg"
