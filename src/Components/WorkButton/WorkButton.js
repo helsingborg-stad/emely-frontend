@@ -13,31 +13,21 @@ export default function WorkButton(props) {
     setCurrentJob(e.target.id);
     history.push("/emely-chat/intervju/");
   };
- 
+
   return (
     <>
-
-
-
-          <ul className="work-button-ul m-0 ps-0">
-            {buttons.sort().map((job, i) => (
-              <li
-                onClick={(e) => handleClick(e)}
-                key={i}
-                className="work-button-list"
-                id={job}
-              >
-              
-                {job}
-          
-                </li>
-                
-
-              
-            ))}
-          </ul>
-       
-     
+      <ul className="work-button-ul m-0 ps-0">
+        {buttons.sort().map((job, i) => (
+          <li
+            onClick={(e) => handleClick(e)}
+            key={i}
+            className="work-button-list"
+            id={job}
+          >
+            {job}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }

@@ -12,15 +12,15 @@ const AcapelaPlayer = ({ message }) => {
     decodeTokenAcapela,
   } = useContext(AcapelaContext);
   const elementRef = useRef();
-  
-  const {
-    currentSpeed,
-    setCurrentSpeed,
-  } = useContext(ConversationContext);
+
+  const { currentSpeed, setCurrentSpeed } = useContext(ConversationContext);
 
   /* ---- Plays Acapela only in case if Emely message is exist and acapela token known ---- */
   useEffect(() => {
-    renderPlayer();
+    const acapelaToken = Cookies.get("acapelaToken");
+    if (acapelaToken) {
+      renderPlayer();
+    } 
   }, [message]);
 
   // delete <audio></audio> if state is true (user pressed the mute btn or close the browser window)
@@ -29,13 +29,10 @@ const AcapelaPlayer = ({ message }) => {
       const divElement = elementRef.current;
       divElement.remove();
     }
-    setDeleteAcapelaPlayer(false)
+    setDeleteAcapelaPlayer(false);
   }, [deleteAcapelaPlayer]);
 
-  
   const renderPlayer = () => {
-
-    
     const decodedToken = decodeTokenAcapela();
 
     const voice = "?voice=Mia22k_HQ";
@@ -48,7 +45,7 @@ const AcapelaPlayer = ({ message }) => {
     const url = `
        ${process.env.REACT_APP_ACAPELA_URL}/command/${voice}&text=${text}${output}${type}${speed}${volume}&token=${decodedToken}`;
     return (
-      <div style={{ height: "60px", opacity: 0 }}>
+      <div style={{ height: "60px", opacity: "0" }}>
         <audio
           controls="controls"
           autobuffer="autobuffer"

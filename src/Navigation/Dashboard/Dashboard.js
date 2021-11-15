@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
-import PersonaButton from "../../Components/PersonaButton/PersonaButton";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
 import { Container, Row, Col } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { FiBriefcase } from "react-icons/fi";
 import { FiCoffee } from "react-icons/fi";
+import { Button } from "react-bootstrap";
 
 import useLiveTextDisplaying from "../../customHooks/useLiveTextDisplaying";
 
 /* Variable declaration */
 export default function Dashboard() {
-  const { userDetails, currentUser } = useAuth();
+  const { userDetails } = useAuth();
 
-  const { renderWords, click } = useLiveTextDisplaying(
+  const { renderWords, click, ref, jobbRef } = useLiveTextDisplaying(
     `Hej ${
       userDetails && userDetails.username ? userDetails.username : ""
     }! Jag heter Emely. Jag är en virtuell språkassistent och med mig kan du öva att prata på svenska. Välj nedan vilken av mina personligheter du önskar att prata med.`
@@ -21,6 +22,13 @@ export default function Dashboard() {
   useEffect(() => {
     renderWords();
   }, [click]);
+
+
+  let history = useHistory();
+
+  const handleLink = (linkTo) => {
+    history.push(linkTo);
+  };
 
   return (
     <>
@@ -41,24 +49,28 @@ export default function Dashboard() {
 
           {/* --- Work Emely persona-button --- */}
           <Col xs={12} md={6} className="text-center mt-3">
-            <PersonaButton
-              linkTo={"/work-emely"}
-              name={"SÖKA JOBB-ASSISTENT"}
-              persona="intervju"
+            <Button
+              className="register-btn w-100 clickBtn"
+              type="button"
+              onClick={() => handleLink("/work-emely")}
+              ref={jobbRef}
             >
               <FiBriefcase size={20} />
-            </PersonaButton>
+              <span className="px-3">SÖKA JOBB-ASSISTENT</span>
+            </Button>
           </Col>
 
           {/* --- Fika kompis persona-button --- */}
           <Col xs={12} md={6} className="mt-3">
-            <PersonaButton
-              linkTo={"/emely-chat/fika"}
-              name={"FIKA KOMPIS"}
-              persona="fika"
+            <Button
+              className="register-btn w-100 clickBtn"
+              type="button"
+              onClick={() => handleLink("/emely-chat/fika")}
+              ref={ref}
             >
               <FiCoffee size={20} />
-            </PersonaButton>
+              <span className="px-3">FIKA KOMPIS</span>
+            </Button>
           </Col>
         </Row>
       </Container>
