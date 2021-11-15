@@ -10,16 +10,15 @@ const AcapelaContextProvider = (props) => {
   const hashids = new Hashids();
   // logs in to acapela when render the first page, log out acapela when user close the window application
   useEffect(() => {
-    console.log("login");
     loginAcapela();
   }, []);
 
   // logs out Acapela when a user closed the browser window
-  useEffect(() => {
-    window.addEventListener("beforeunload", logoutAcapela);
-    // should return for avoid memory leak
-    return () => window.removeEventListener("beforeunload", logoutAcapela);
-  });
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", logoutAcapela);
+  //   // should return for avoid memory leak
+  //   return () => window.removeEventListener("beforeunload", logoutAcapela);
+  // });
 
   /* ---- Login Acapela ---- */
   const loginAcapela = async () => {
@@ -58,7 +57,7 @@ const AcapelaContextProvider = (props) => {
         }
       );
       const result = await response.data;
-      console.log("logout acapela", result.success);
+      // console.log("logout acapela", result.success);
       Cookies.remove("acapelaToken");
     } catch (err) {
       console.log("Error: ", err);
