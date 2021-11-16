@@ -162,10 +162,9 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
               <IoMdVolumeOff size={"2rem"} />
             )}
           </button>
-        </div>
-        {/* ---- Recording button, hides in all browsers except Chrome ----- */}
-        {browserSupportsSpeechRecognition && (
-          <div>
+
+          {/* ---- Recording button, hides in all browsers except Chrome ----- */}
+          {browserSupportsSpeechRecognition && (
             <button
               className={
                 isListening
@@ -182,8 +181,8 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
                 <BiMicrophone size={"2rem"} />
               )}
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
