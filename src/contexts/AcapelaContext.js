@@ -7,13 +7,17 @@ export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
   const [deleteAcapelaPlayer, setDeleteAcapelaPlayer] = useState(false);
+  // state to turn on/of the sound button
+  const [activeSound, setActiveSound] = useState(true);
   const hashids = new Hashids();
+
   // logs in to acapela when render the first page, log out acapela when user close the window application
   useEffect(() => {
     loginAcapela();
+    setActiveSound(true);
   }, []);
 
-  // logs out Acapela when a user closed the browser window
+  // // logs out Acapela when a user closed the browser window
   // useEffect(() => {
   //   window.addEventListener("beforeunload", logoutAcapela);
   //   // should return for avoid memory leak
@@ -74,6 +78,8 @@ const AcapelaContextProvider = (props) => {
     deleteAcapelaPlayer,
     setDeleteAcapelaPlayer,
     decodeTokenAcapela,
+    activeSound,
+    setActiveSound,
   };
 
   return (

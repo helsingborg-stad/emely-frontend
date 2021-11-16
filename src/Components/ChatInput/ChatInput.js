@@ -14,17 +14,6 @@ import TextareaAutosize from "react-textarea-autosize";
 import { AcapelaContext } from "../../contexts/AcapelaContext";
 
 export default function ChatInput({ persona, setFocused, setValidationError }) {
-  // state to turn on/of the sound button
-  const [activeSound, setActiveSound] = useState(() => {
-    // checks if exist the token in cookies
-    const acapelaToken = Cookies.get("acapelaToken");
-    if (acapelaToken) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-
   // states && functions for interactive actions with BE
   const {
     userMessage,
@@ -35,9 +24,13 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
   } = useContext(ConversationContext);
 
   // function for connecting/disconnecting Acapela
-  const { loginAcapela, logoutAcapela, setDeleteAcapelaPlayer } = useContext(
-    AcapelaContext
-  );
+  const {
+    loginAcapela,
+    logoutAcapela,
+    setDeleteAcapelaPlayer,
+    activeSound,
+    setActiveSound,
+  } = useContext(AcapelaContext);
 
   // states && functions for translating voice to text
   const [isListening, setIsListening] = useState(false);

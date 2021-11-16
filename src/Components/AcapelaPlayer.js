@@ -10,6 +10,7 @@ const AcapelaPlayer = ({ message }) => {
     deleteAcapelaPlayer,
     setDeleteAcapelaPlayer,
     decodeTokenAcapela,
+    activeSound,
   } = useContext(AcapelaContext);
   const elementRef = useRef();
 
@@ -17,7 +18,7 @@ const AcapelaPlayer = ({ message }) => {
 
   /* ---- Plays Acapela only in case if Emely message is exist and acapela token known ---- */
   useEffect(() => {
-    if (acapelaToken) {
+    if (activeSound) {
       renderPlayer();
     }
   }, [message]);
@@ -51,7 +52,10 @@ const AcapelaPlayer = ({ message }) => {
           autoPlay="autoplay"
           ref={elementRef}
         >
-          <source src={acapelaToken ? url : ""} type="audio/wav" />
+          <source
+            src={activeSound ? url : ""}
+            type="audio/wav"
+          />
         </audio>
       </div>
     );
