@@ -95,7 +95,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
     e.preventDefault();
     setActiveSound(!activeSound);
     if (activeSound) {
-      logoutAcapela();
+      // logoutAcapela();
       console.log("sound off, logout acapela");
       // remove element by id if sound is off
       setDeleteAcapelaPlayer(true);
