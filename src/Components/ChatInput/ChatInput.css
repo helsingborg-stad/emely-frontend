@@ -81,11 +81,11 @@
   }
 }
 
-.sound_btn, .microphone_btn {
+.sound_btn {
   background: transparent;
   color: var(--green);
   border: 1px solid var(--gray);
-  padding: 15px;
+  padding: 10px;
   margin-left: 10px;
 }
 
@@ -142,17 +142,14 @@
 }
 
 @media(max-width: 800px) {
-  /* .chat-input_container-wrapper {
-    flex-direction: column-reverse;
-  } */
   .buttons-wrapper {
     width: 100%;
-    /* margin-top: 30px; */
   }
   .hide {
     display: none;
   }
-  .expand {
-    flex-basis: 100%;
+ 
+  .recording_btn, .recording_btn_active {
+    padding: 15px;
   }
 }
