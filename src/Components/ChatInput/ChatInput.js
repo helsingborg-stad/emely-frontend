@@ -13,22 +13,7 @@ import { ConversationContext } from "../../contexts/ConversationContext";
 import TextareaAutosize from "react-textarea-autosize";
 import { AcapelaContext } from "../../contexts/AcapelaContext";
 
-export default function ChatInput({
-  persona,
-  setFocused,
-  setValidationError,
-}) {
-  // state to turn on/of the sound button 
-  const [activeSound, setActiveSound] = useState(() => {
-    // checks if exist the token in cookies
-    const acapelaToken = Cookies.get("acapelaToken");
-    if (acapelaToken) {
-      return true;
-    } else {
-      return false;
-    }
-  });
-
+export default function ChatInput({ persona, setFocused, setValidationError }) {
   // states && functions for interactive actions with BE
   const {
     userMessage,
@@ -39,7 +24,13 @@ export default function ChatInput({
   } = useContext(ConversationContext);
 
   // function for connecting/disconnecting Acapela
-  const { loginAcapela, logoutAcapela, setDeleteAcapelaPlayer } = useContext(AcapelaContext);
+  const {
+    loginAcapela,
+    logoutAcapela,
+    setDeleteAcapelaPlayer,
+    activeSound,
+    setActiveSound,
+  } = useContext(AcapelaContext);
 
   // states && functions for translating voice to text
   const [isListening, setIsListening] = useState(false);
@@ -67,13 +58,11 @@ export default function ChatInput({
     resetTranscript();
   }, [isListening]);
 
-
-
   /* ---- Send user message to BE ----*/
   const handleSendClick = (e) => {
     e.preventDefault();
     // remove the current audio control (by ID) so that the voice tracks do not overlap
-    setDeleteAcapelaPlayer(true)
+    setDeleteAcapelaPlayer(true);
 
     // don't allow clicking send btn if  the recording is in progress
     if (!listening) {
@@ -106,7 +95,8 @@ export default function ChatInput({
     e.preventDefault();
     setActiveSound(!activeSound);
     if (activeSound) {
-      logoutAcapela();
+      // logoutAcapela();
+      console.log("sound off, logout acapela");
       // remove element by id if sound is off
       setDeleteAcapelaPlayer(true);
     } else {
@@ -165,10 +155,9 @@ export default function ChatInput({
               <IoMdVolumeOff size={"2rem"} />
             )}
           </button>
-        </div>
-        {/* ---- Recording button, hides in all browsers except Chrome ----- */}
-        {browserSupportsSpeechRecognition && (
-          <div>
+
+          {/* ---- Recording button, hides in all browsers except Chrome ----- */}
+          {browserSupportsSpeechRecognition && (
             <button
               className={
                 isListening
@@ -185,8 +174,8 @@ export default function ChatInput({
                 <BiMicrophone size={"2rem"} />
               )}
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

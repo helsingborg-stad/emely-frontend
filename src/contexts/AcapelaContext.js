@@ -7,19 +7,22 @@ export const AcapelaContext = createContext();
 
 const AcapelaContextProvider = (props) => {
   const [deleteAcapelaPlayer, setDeleteAcapelaPlayer] = useState(false);
+  // state to turn on/of the sound button
+  const [activeSound, setActiveSound] = useState(true);
   const hashids = new Hashids();
+
   // logs in to acapela when render the first page, log out acapela when user close the window application
   useEffect(() => {
-    console.log("login");
     loginAcapela();
+    setActiveSound(true);
   }, []);
 
-  // logs out Acapela when a user closed the browser window
-  useEffect(() => {
-    window.addEventListener("beforeunload", logoutAcapela);
-    // should return for avoid memory leak
-    return () => window.removeEventListener("beforeunload", logoutAcapela);
-  });
+  // // logs out Acapela when a user closed the browser window
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", logoutAcapela);
+  //   // should return for avoid memory leak
+  //   return () => window.removeEventListener("beforeunload", logoutAcapela);
+  // });
 
   /* ---- Login Acapela ---- */
   const loginAcapela = async () => {
@@ -58,7 +61,7 @@ const AcapelaContextProvider = (props) => {
         }
       );
       const result = await response.data;
-      console.log("logout acapela", result.success);
+      // console.log("logout acapela", result.success);
       Cookies.remove("acapelaToken");
     } catch (err) {
       console.log("Error: ", err);
@@ -75,6 +78,8 @@ const AcapelaContextProvider = (props) => {
     deleteAcapelaPlayer,
     setDeleteAcapelaPlayer,
     decodeTokenAcapela,
+    activeSound,
+    setActiveSound,
   };
 
   return (

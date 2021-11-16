@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useContext } from "react";
-import Hashids from "hashids";
 import Cookies from "js-cookie";
 
 import { ConversationContext } from "../contexts/ConversationContext";
 import { AcapelaContext } from "../contexts/AcapelaContext";
 
 const AcapelaPlayer = ({ message }) => {
+  const acapelaToken = Cookies.get("acapelaToken");
   const {
     deleteAcapelaPlayer,
     setDeleteAcapelaPlayer,
     decodeTokenAcapela,
+    activeSound,
   } = useContext(AcapelaContext);
   const elementRef = useRef();
 
@@ -17,10 +18,9 @@ const AcapelaPlayer = ({ message }) => {
 
   /* ---- Plays Acapela only in case if Emely message is exist and acapela token known ---- */
   useEffect(() => {
-    const acapelaToken = Cookies.get("acapelaToken");
-    if (acapelaToken) {
+    if (activeSound) {
       renderPlayer();
-    } 
+    }
   }, [message]);
 
   // delete <audio></audio> if state is true (user pressed the mute btn or close the browser window)
@@ -52,7 +52,10 @@ const AcapelaPlayer = ({ message }) => {
           autoPlay="autoplay"
           ref={elementRef}
         >
-          <source src={url} type="audio/wav" />
+          <source
+            src={activeSound ? url : ""}
+            type="audio/wav"
+          />
         </audio>
       </div>
     );
