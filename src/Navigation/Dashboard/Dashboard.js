@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
 import { Container, Row, Col } from "react-bootstrap";
@@ -6,12 +6,16 @@ import { useAuth } from "../../contexts/AuthContext";
 import { FiBriefcase } from "react-icons/fi";
 import { FiCoffee } from "react-icons/fi";
 import { Button } from "react-bootstrap";
+import { ConversationContext } from '../../contexts/ConversationContext';
+
 
 import useLiveTextDisplaying from "../../customHooks/useLiveTextDisplaying";
 
 /* Variable declaration */
 export default function Dashboard() {
   const { userDetails } = useAuth();
+  const { currentProgress, setCurrentProgress } =
+  useContext(ConversationContext);
 
   const { renderWords, click, ref, jobbRef } = useLiveTextDisplaying(
     `Hej ${
@@ -23,6 +27,12 @@ export default function Dashboard() {
     renderWords();
   }, [click]);
 
+  useEffect(() => {
+		/* Reset current progress on new chat */
+
+      setCurrentProgress(0);
+
+	}, []);
 
   let history = useHistory();
 

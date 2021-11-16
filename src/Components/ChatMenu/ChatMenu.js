@@ -27,13 +27,9 @@ export default function ChatMenu() {
 	const handleShow = () => setShow(true);
 
 	/* show/hide alert on conversation success */
-	const handleCloseAlert = () => setShowAlert(false);
+
 	const handleShowAlert = () => setShowAlert(true);
 
-	useEffect(() => {
-		/* Reset current progress on new chat */
-		setCurrentProgress(0);
-	}, []);
 
 	useEffect(() => {
 		/* Sets showAlert to true when current progress reaches 100 */
@@ -48,7 +44,6 @@ export default function ChatMenu() {
 			<Offcanvas
 				style={{ backgroundColor: 'var(--green)', color: 'var(--greenExtraLight)' }}
 				show={showAlert}
-				onHide={handleCloseAlert}
 				placement="bottom"
 			>
 				<Offcanvas.Body className="ms-3 fw-bold">
