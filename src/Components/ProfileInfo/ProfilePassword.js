@@ -21,7 +21,7 @@ export default function Profile() {
 			<ProfileCard>
 				<Row className="p-0 m-0">
 					<Col xs="auto" md={8} lg={8}>
-						<h4 className="mb-3 fw-bold">Ändra Lösenord</h4>
+						<h4 className="mb-3 fw-bold"><AiOutlineEdit className="me-2" size={25} /> Ändra Lösenord</h4>
 					</Col>
 					<Col xs="auto" md={4} lg={4} className="text-end p-0">
 						<span>
