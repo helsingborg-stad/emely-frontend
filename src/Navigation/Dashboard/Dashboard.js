@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import EmelyDialogue from "../../Components/EmelyDialogue/EmelyDialogue";
 import { Container, Row, Col } from "react-bootstrap";
@@ -7,31 +7,32 @@ import { FiBriefcase } from "react-icons/fi";
 import { FiCoffee } from "react-icons/fi";
 import { Button } from "react-bootstrap";
 import { ConversationContext } from '../../contexts/ConversationContext';
+import PulseLoader from 'react-spinners/PulseLoader';
 
-
-import useLiveTextDisplaying from "../../customHooks/useLiveTextDisplaying";
 
 /* Variable declaration */
 export default function Dashboard() {
-  const { userDetails } = useAuth();
+  const { userDetails, currentUser } = useAuth();
   const { currentProgress, setCurrentProgress } =
   useContext(ConversationContext);
 
-  const { renderWords, click, ref, jobbRef } = useLiveTextDisplaying(
-    `Hej ${
-      userDetails && userDetails.username ? userDetails.username : ""
-    }! Jag heter Emely. Jag är en virtuell språkassistent och med mig kan du öva att prata på svenska. Välj nedan vilken av mina personligheter du önskar att prata med.`
-  );
+  const [isLoading, setIsLoading] = useState();
 
-  useEffect(() => {
-    renderWords();
-  }, [click]);
+	useEffect(() => {
+		setIsLoading(true);
+
+    /* --- Render text after delay --- */
+		const timer = setTimeout(() => {
+			setIsLoading(false);
+		}, 1500);
+		return timer;
+	}, [currentUser]);
+
+
 
   useEffect(() => {
 		/* Reset current progress on new chat */
-
       setCurrentProgress(0);
-
 	}, []);
 
   let history = useHistory();
@@ -47,12 +48,19 @@ export default function Dashboard() {
           <Row>
             <Col id="emely-dialogue-col" className="p-0">
               <EmelyDialogue className="">
-                {/* ---  Text output with animation  --- */}
-                {
-                  <p className="m-3 p-3 emely-dialog_dialogue-text">
-                    {renderWords()}
-                  </p>
-                }
+              {/* --- When loading show pulse loader. Show text after loading --- */}
+              {isLoading ? (
+                <p className="m-3 p-5 emely-dialog_dialogue-text text-center">
+                  <PulseLoader size={12} color={'gray'} />{' '}
+                </p>
+              ) : (
+                <p className="m-3 p-3 emely-dialog_dialogue-text">
+                  Hej {userDetails && userDetails.username}! <br />
+                  Jag heter Emely. Jag är en virtuell språkassistent och med
+                  mig kan du öva att prata på svenska. Välj nedan vilken av
+                  mina personligheter du önskar att prata med.
+                </p>
+              )}
               </EmelyDialogue>
             </Col>
           </Row>
@@ -63,7 +71,7 @@ export default function Dashboard() {
               className="register-btn w-100 clickBtn"
               type="button"
               onClick={() => handleLink("/work-emely")}
-              ref={jobbRef}
+
             >
               <FiBriefcase size={20} />
               <span className="px-3">SÖKA JOBB-ASSISTENT</span>
@@ -76,7 +84,7 @@ export default function Dashboard() {
               className="register-btn w-100 clickBtn"
               type="button"
               onClick={() => handleLink("/emely-chat/fika")}
-              ref={ref}
+
             >
               <FiCoffee size={20} />
               <span className="px-3">FIKA KOMPIS</span>
