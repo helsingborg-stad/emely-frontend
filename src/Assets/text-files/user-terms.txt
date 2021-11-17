@@ -1,13 +1,13 @@
-					<h1 className="fw-bold">Användningsvillkor för Emely</h1>
-					Genom att registrera dig för eller på annat sätt använda Emely, samtycker du till dessa villkor. Om du inte samtycker till dessa villkor får du inte använda Emely.
-                    <br>
-					<br>
-					<h5 className="fw-bold">Användardata</h5>
-					Vid registrering av ny användare, godkänner du att din e-postadress och ditt användarnamn sparas i vår databas. Användarnamnet du anger ska inte kunna kopplas till din personliga identitet. Om du väljer att radera din användare så kommer all användardata att försvinna. Alla dina uppgifter kopplade till din användare kommer att försvinna från databasen. 
-					<br>
-					<br>
-					<h5 className="fw-bold">Konversation med Emely</h5>
-					Det som du skriver till Emely kommer att sparas, därför är det viktigt att du inte lämnar några personuppgifter. All röstdata kommer att skickas till Google. 
+<h1 className="fw-bold">Användningsvillkor för Emely</h1>
+Genom att registrera dig för eller på annat sätt använda Emely, samtycker du till dessa villkor. Om du inte samtycker till dessa villkor får du inte använda Emely.
+<br>
+<br>
+<h5 className="fw-bold">Användardata</h5>
+Vid registrering av ny användare, godkänner du att din e-postadress och ditt användarnamn sparas i vår databas. Användarnamnet du anger ska inte kunna kopplas till din personliga identitet. Om du väljer att radera din användare så kommer all användardata att försvinna. Alla dina uppgifter kopplade till din användare kommer att försvinna från databasen. 
+<br>
+<br>
+<h5 className="fw-bold">Konversation med Emely</h5>
+Det som du skriver till Emely kommer att sparas, därför är det viktigt att du inte lämnar några personuppgifter. All röstdata kommer att skickas till Google. 
 
 
 
