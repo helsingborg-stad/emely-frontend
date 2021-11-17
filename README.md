@@ -6,6 +6,7 @@ Emely web app is the user interface part of Emely, consisting of this web app an
 ## Windows installation
 
 ### Get started -first time
+
 1. Clone repository.
 2. Download and install NodeJS from https://nodejs.org/en/download/
 3. Go to root-folder and write following command
