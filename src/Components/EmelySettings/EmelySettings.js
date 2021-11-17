@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ConversationContext } from '../../contexts/ConversationContext';
-import { Row, Container } from 'react-bootstrap';
+import { Row, Container, Button } from 'react-bootstrap';
 import Switch from '@mui/material/Switch';
 import { FcSettings } from 'react-icons/fc';
+import { MdKeyboardArrowLeft } from 'react-icons/md';
 
-export default function EmelySettings() {
+export default function EmelySettings(props) {
 	const {
 		emelySlower,
 		setEmelySlower,
@@ -104,6 +105,17 @@ export default function EmelySettings() {
 						intervjun.
 					</small>
 				</Row>
+					<Row>	
+				<span className="text-end">
+				<Button
+				variant="outline-success"
+				className="mt-4 register-btn_small"
+				onClick={props.closeModal}
+			>
+				<MdKeyboardArrowLeft size={25} /> TILLBAKA
+			</Button>
+			</span>
+			</Row>
 			</Container>
 		</>
 	);
