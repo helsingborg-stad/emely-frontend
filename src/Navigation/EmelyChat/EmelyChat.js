@@ -17,7 +17,7 @@ export default function EmelyChat(props) {
   // get :persona from router-dom (intervju or fika)
   const { persona } = props.match.params;
   const scroll = useRef();
-  
+
   const {
     currentJob,
     formatedTimestamp,
@@ -37,7 +37,7 @@ export default function EmelyChat(props) {
     try {
       if (currentUser) {
         initConversation(
-         userDetails.username,
+          userDetails.username,
           currentJob,
           formatedTimestamp(),
           persona
@@ -54,6 +54,13 @@ export default function EmelyChat(props) {
     scrollToTop();
   }, [sessionConversation, isValidationError]);
 
+  useEffect(() => {
+    if (isFocused) {
+      renderMessages();
+      scrollToTop();
+    }
+  }, [isFocused]);
+
   const scrollToTop = () => {
     scroll.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -61,13 +68,16 @@ export default function EmelyChat(props) {
   const renderMessages = () => {
     return sessionConversation.map((msg, i) => {
       if (msg.type === "user") {
-        return <UserChatBubble message={msg.text} key={i} />;
+        return (
+          <div ref={scroll}>
+            <UserChatBubble message={msg.text} key={i} />
+          </div>
+        );
       } else {
         return (
-          <EmelyChatBubble
-            message={msg.text}
-            key={i}
-          />
+          <div ref={scroll}>
+            <EmelyChatBubble message={msg.text} key={i} />
+          </div>
         );
       }
     });
@@ -81,29 +91,34 @@ export default function EmelyChat(props) {
 
           {/* ---- Renders Emely loader (waiting for a response from the server ) ---- */}
           {isLoading && (
-            <EmelyChatBubble
-              isLoading={isLoading}
-              loader={<PulseLoader size={6} color={"#979797"} />}
-            />
+            <div ref={scroll}>
+              <EmelyChatBubble
+                isLoading={isLoading}
+                loader={<PulseLoader size={6} color={"#979797"} />}
+              />
+            </div>
           )}
 
           {/* ---- Renders user loader (if textarea onFocus) ---- */}
           {isFocused && (
-            <UserChatBubble
-              isFocused={isFocused}
-              loader={<PulseLoader size={6} color={"#979797"} />}
-            />
+            <div ref={scroll}>
+              <UserChatBubble
+                isFocused={isFocused}
+                loader={<PulseLoader size={6} color={"#979797"} />}
+              />
+            </div>
           )}
           {/* ---- Renders Emely warning massage if user message contains a special signs or is empty */}
           {isValidationError && (
-            <EmelyChatBubble
-              isValidationError={isValidationError}
-              loader={<PulseLoader size={6} color={"#979797"} />}
-              
-            />
+            <div ref={scroll}>
+              <EmelyChatBubble
+                isValidationError={isValidationError}
+                loader={<PulseLoader size={6} color={"#979797"} ref={scroll} />}
+              />
+            </div>
           )}
         </div>
-        <div ref={scroll}></div>
+        {/* <div style={{border: "1px solid red"}} ref={scroll}></div> */}
         <ErrorBoundary>
           <ChatInput
             persona={persona}
