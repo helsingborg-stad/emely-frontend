@@ -43,7 +43,7 @@ const ConversationContextProvider = (props) => {
         {
           brain_url: null,
           created_at: `${date}`,
-          development_testing: true,
+          development_testing: process.env.REACT_APP_DEV_TESTING,
           lang: "sv",
           name: `${userName}`,
           persona: `${persona}`,
