@@ -35,7 +35,6 @@ export default function ProfileInfoEdit(props) {
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
-
 	async function handleSubmit(e) {
 		e.preventDefault();
 
@@ -159,14 +158,30 @@ export default function ProfileInfoEdit(props) {
 								className="input-field-small"
 								defaultValue={userDetails && userDetails.native_language}
 							>
-								<option>Svenska</option>
-								<option>Engelska</option>
+								<option>Albanska</option>
 								<option>Arabiska</option>
-								<option>Italienska</option>
-								<option>Spanska</option>
+								<option>Arameiska</option>
 								<option>Bosniska</option>
-								<option>Serbiska</option>
+								<option>Danska</option>
+								<option>Engelska</option>
+								<option>Finska</option>
+								<option>Kantonesiska</option>
 								<option>Kroatiska</option>
+								<option>Kurdiska</option>
+								<option>Montenegrinska</option>
+								<option>Norska</option>
+								<option>Persiska</option>
+								<option>Polska</option>
+								<option>Ryska</option>
+								<option>Serbiska</option>
+								<option>Somaliska</option>
+								<option>Spanska</option>
+								<option>Svenska</option>
+								<option>Thailändska</option>
+								<option>Turkiska</option>
+								<option>Tyska</option>
+								<option>Ungerska</option>
+								<option>Annat</option>
 							</Form.Select>
 						</Form.Group>
 					</Row>
@@ -184,12 +199,13 @@ export default function ProfileInfoEdit(props) {
 								defaultValue={userDetails && userDetails.current_occupation}
 							>
 								<option>Arbetssökande</option>
-								<option>Söker arbete</option>
+								<option>Studerande</option>
 								<option>Sjukskriven</option>
 								<option>Heltidsjobb</option>
 								<option>Deltidsjobb</option>
 								<option>Timanställd</option>
 								<option>Föräldraledig</option>
+								<option>Annat</option>
 							</Form.Select>
 						</Form.Group>
 					</Row>
