@@ -10,6 +10,9 @@ import {
 	Col,
 } from 'react-bootstrap';
 
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+
 /* Icon imports */
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
@@ -17,11 +20,9 @@ import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsChatRightDots } from 'react-icons/bs';
 import { RiShieldUserLine } from 'react-icons/ri';
-import { AiFillHome } from 'react-icons/ai'
-import { HiOutlineUserCircle } from 'react-icons/hi'
-import { RiRestartFill } from 'react-icons/ri'
-
-
+import { AiFillHome } from 'react-icons/ai';
+import { HiOutlineUserCircle } from 'react-icons/hi';
+import { RiRestartFill } from 'react-icons/ri';
 
 /* Variable declaration */
 export default function UserMenu(props) {
@@ -68,11 +69,26 @@ export default function UserMenu(props) {
 			>
 				<Container>
 					<Navbar.Brand>
-
-						<Button className="avatar-btn shadow-sm">
-							{userDetails && userDetails.username.charAt(0)}
-						</Button>
-						<span className="ms-1" style={{ fontSize: '1rem', fontWeight: '600'}}>{userDetails && userDetails.username}</span>
+						<Row>
+							<Col xs={2} md={2} lg={2}>
+								<Avatar
+									className="fw-bold"
+									sx={{ width: 35, height: 35 }}
+									style={{ background: 'var(--green)', fontSize: '1rem' }}
+								>
+									{userDetails && userDetails.username.charAt(0)}
+								</Avatar>
+							</Col>
+							<Col
+								xs={5}
+								md={5}
+								lg={5}
+								className="ms-4 mt-1"
+								style={{ fontSize: '1rem', fontWeight: '600' }}
+							>
+								{userDetails && userDetails.username}
+							</Col>
+						</Row>
 					</Navbar.Brand>
 					<Link to="/profile">
 						<Button
@@ -80,9 +96,7 @@ export default function UserMenu(props) {
 							id="menu-user-button"
 							onClick={handleShow}
 							variant="none"
-						>
-							
-						</Button>
+						></Button>
 					</Link>
 
 					{/* Mobile user-menu button */}
@@ -109,18 +123,33 @@ export default function UserMenu(props) {
 								<AiOutlineMenu className="ms-2 mb-1 me-2" size={20} />
 							</Button>
 
-							
-
 							{/* Menu from the side */}
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
 								<Offcanvas.Header className="m-3 " closeButton>
 									<Offcanvas.Title className="">
-										<Button className="rounded-circle avatar-btn">
-											{userDetails && userDetails.username.charAt(0)}
-										</Button>
-										<Button className="fw-bold" variant="none">
-											{userDetails && userDetails.username}
-										</Button>
+										<Row>
+											<Col xs={2} md={2} lg={2}>
+												<Avatar
+													className="fw-bold"
+													sx={{ width: 35, height: 35 }}
+													style={{
+														background: 'var(--green)',
+														fontSize: '1rem',
+													}}
+												>
+													{userDetails && userDetails.username.charAt(0)}
+												</Avatar>
+											</Col>
+											<Col
+												xs={5}
+												md={5}
+												lg={5}
+												className="ms-4 mt-1"
+												style={{ fontSize: '1rem', fontWeight: '600' }}
+											>
+												{userDetails && userDetails.username}
+											</Col>
+										</Row>
 									</Offcanvas.Title>
 								</Offcanvas.Header>
 								<Offcanvas.Body className="m-3">
@@ -136,7 +165,6 @@ export default function UserMenu(props) {
 													className="register-btn_sidebar"
 													variant="none"
 													onClick={handleClose}
-													
 												>
 													<Nav.Item>Användarkonto</Nav.Item>
 												</Button>
