@@ -17,6 +17,7 @@
 @import '../Components/Layout/ProfileCard/profile-card.css';
 @import '../Components/ChatMenu/chat-menu.css';
 @import '../Components/EmelySettings/emely-settings.css';
+@import '../Components/ProfileInfo/profile-info.css';
 @import './forms.css';
 @import './buttons.css';
 
@@ -30,10 +31,7 @@
 	box-sizing: border-box;
 }
 
-.profile-info-modal, .settings-modal .modal-content {
-	border: 0px !important;
-	border-radius: 25px !important;
-  }
+
 
 .Link {
 	text-decoration: none;
