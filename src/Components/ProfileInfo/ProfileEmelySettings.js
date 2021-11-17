@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { Col, Row, Button, Modal } from 'react-bootstrap';
 import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
-import ProfileInfoPasswordEdit from '../../Components/ProfileInfo/ProfileInfoPasswordEdit';
+import EmelySettings from '../EmelySettings/EmelySettings';
+import { IoMdSettings } from 'react-icons/io';
+import { FcSettings } from 'react-icons/fc';
+
 
 /* Icon imports */
 
 
-import { AiOutlineEdit } from 'react-icons/ai';
 
 
-export default function Profile() {
+export default function ProfileEmelySettings() {
 	const [show, setShow] = useState(false);
 
 	const handleShow = () => setShow(true);
@@ -21,7 +23,7 @@ export default function Profile() {
 			<ProfileCard>
 				<Row className="p-0 m-0">
 					<Col xs="auto" md={8} lg={8}>
-						<h4 className="mb-3 fw-bold"><AiOutlineEdit className="me-2" size={25} /> Ändra Lösenord</h4>
+						<h4 className="mb-3 fw-bold"><FcSettings className="me-2" size={25} /> Inställningar för Emely</h4>
 					</Col>
 					<Col xs="auto" md={4} lg={4} className="text-end p-0">
 						<span>
@@ -31,24 +33,29 @@ export default function Profile() {
 								id="edit-button"
 								onClick={handleShow}
 							>
-								<AiOutlineEdit className="me-2" size={15} />
-								Redigera
+								
+								<IoMdSettings className="me-2" size={15} />Inställningar
+								
 							</Button>
 						</span>
 					</Col>
 				</Row>
 				<Row className="mt-3">
 					<p className="card-text" id="delete-text">
-						Vill du ändra ditt lösenord? Tänk på att du loggas ut när lösenordet
-						ändras.
+						Du har möjlighet att ändra vissa inställningar för Emely. Beroende på ditt val av inställning så kommer Emely att bemöta dig annorlunda.
 					</p>
 				</Row>
 			</ProfileCard>
 
-			{/* Confirmation modal */}
-			<Modal className="profile-info-modal" size="lg" show={show} onHide={handleClose}>
+			{/* --- Modal for the settings --- */}
+			<Modal
+				className="settings-modal"
+				size="lg"
+				show={show}
+				onHide={handleClose}
+			>
 				<Modal.Body>
-					<ProfileInfoPasswordEdit closeModal={handleClose} />
+					<EmelySettings closeModal={handleClose} />
 				</Modal.Body>
 			</Modal>
 
