@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
+import Divider from '@mui/material/Divider';
 
 /* Icon Imports */
 import { HiOutlineMail } from 'react-icons/hi';
@@ -134,7 +135,7 @@ export default function Login() {
 					</Button>
 				</Form>
 				<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
-					ELLER
+					<Divider>ELLER</Divider>
 				</h4>
 				{/* Guest login */}
 				<Form onSubmit={handleGuestLogin}>
