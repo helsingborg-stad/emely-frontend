@@ -1,76 +1,321 @@
-import React, { useContext, useState, useEffect } from "react"
-import { auth } from "../firebase"
+import React, { useContext, useState, useEffect } from 'react';
+import { Redirect, useHistory } from 'react-router-dom';
+import { auth, dbUsers, db } from '../firebase';
+import {
+	doc,
+	setDoc,
+	updateDoc,
+	increment,
+	deleteDoc,
+	onSnapshot,
+	getDocs,
+	collection,
+} from 'firebase/firestore';
 
-const AuthContext = React.createContext()
+import {
+	updateEmail,
+	updatePassword,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+	sendPasswordResetEmail,
+	deleteUser,
+	onAuthStateChanged,
+} from 'firebase/auth';
+
+const AuthContext = React.createContext();
 
 export function useAuth() {
-  return useContext(AuthContext)
+	return useContext(AuthContext);
 }
 
-/* Variable declaration */
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState()
-  const [loading, setLoading] = useState(true)
+	const [currentUser, setCurrentUser] = useState();
+	const [userDetails, setUserDetails] = useState();
+	const [correctKey, setCorrectKey] = useState();
+	const [appKey, setAppKey] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [allKeys, setAllKeys] = useState();
+	const history = useHistory();
+	const [keyMsg, setKeyMsg] = useState();
 
-  /* Firebase functions used when handling users */
-  /* Sign up with email and password */
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
-  }
+	/* ---- Check for user changes ---- */
+	useEffect(() => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
+			setCurrentUser(user);
+			try {
+				setLoading(false);
+				const uid = user.uid;
 
-  /* Log in with email and password */
-  function login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password)
-  }
+				if (uid === user.uid && uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
+					console.log('You are signed in!');
+					return <Redirect to="/dashboard" />;
+				} else if (uid === 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
+					console.log('You are signed in as guest');
+				} else {
+					console.log('Signed out!');
+					return <Redirect to="/login" />;
+				}
+			} catch (error) {
+				console.log('Signed out!');
+			}
+		});
 
-  /* Log out current authenticated user */
-  function logout() {
-    return auth.signOut()
-  }
+		return unsubscribe;
+	}, []);
 
-  /* Reset the password with email */
-  function resetPassword(email) {
-    return auth.sendPasswordResetEmail(email)
-  }
+	/* ---- FIREBASE AUTHENTICATION ---- */
 
-  /* Update email */
-  function updateEmail(email) {
-    return currentUser.updateEmail(email)
-  }
+	/* ---- Sign up new user with email and password ---- */
+	function signup(email, password) {
+		return createUserWithEmailAndPassword(auth, email, password);
+	}
 
-  /* Update username */
-  function updateProfile(username) {
-    return currentUser.updateProfile({displayName: username})
-  }
+	/* ---- Log in with email and password ---- */
+	function login(email, password) {
+		return signInWithEmailAndPassword(auth, email, password);
+	}
 
-  /* Update password */
-  function updatePassword(password) {
-    return currentUser.updatePassword(password)
-  }
+	/* ---- Delete user from Firebase Authentication ---- */
+	function userDelete() {
+		deleteUser(auth.currentUser)
+			.then(() => {
+				console.log('User deleted');
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
+	}
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
-      setLoading(false)
-    })
+	/* ---- Log out current authenticated user ---- */
+	function logout() {
+		return auth.signOut();
+	}
 
-    return unsubscribe
-  }, [])
+	/* ---- Reset password with email ---- */
+	function resetPassword(email) {
+		sendPasswordResetEmail(auth, email)
+			.then(() => {
+				console.log('Password reset email sent');
+			})
+			.catch((error) => {
+				console.log(error.code);
+			});
+	}
 
-  const value = {
-    currentUser,
-    login,
-    signup,
-    logout,
-    resetPassword,
-    updateEmail,
-    updatePassword,
-    updateProfile
-  }
+	/* ---- Update password ---- */
+	function passwordUpdate(password) {
+		console.log('Password updated');
+		return updatePassword(currentUser, password);
+	}
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  )
+	/* ---- Translate auth errors ---- */
+	function translateError(errorMessage) {
+		switch (errorMessage) {
+			case 'auth/email-already-in-use':
+				return 'E-postadressen är redan upptagen. Vänligen välj en annan e-postadress.';
+
+			case 'auth/weak-password':
+				return 'Lösenordet måste vara minst 6 karaktärer. Vänligen försök igen.';
+
+			case 'auth/wrong-password':
+				return 'Fel lösenord. Vänligen försök igen';
+
+			case 'auth/user-not-found':
+				return 'E-postadressen du angav finns inte registrerad. Vänligen försök igen';
+
+			case 'auth/too-many-requests':
+				return 'För många försök. Vänligen försök igen lite senare';
+
+			case 'auth/requires-recent-login':
+				return 'Du har blivit utloggad. Logga in igen.';
+
+			default:
+				return 'Opps något gick fel!';
+		}
+	}
+
+	/* ---- FIRESTORE QUERIES ---- */
+
+	/* --- Check if the input key matches keys in database --- */
+	function checkKey(inputKey, date) {
+		/* Format the date so it matches the deadline date */
+		const dd = date.getDate();
+		const mm = date.getMonth() + 1;
+		const y = date.getFullYear();
+
+		const formattedDate = y + '/' + mm + '/' + dd;
+
+		/* Iterate through all keys and check if the key matches inputKey and deadline date */
+		for (let key of allKeys) {
+			if (inputKey === key.key && formattedDate <= key.deadline) {
+				setCorrectKey(true);
+				sessionStorage.setItem('sessionKey', inputKey);
+
+				/* Update key login-count */
+				const keyRef = doc(db, 'keys', inputKey);
+				updateDoc(keyRef, {
+					login_count: increment(1),
+				});
+
+				return history.push('/login');
+			} else {
+				setCorrectKey(false);
+				sessionStorage.setItem('sessionKey', 'false');
+			}
+		}
+	}
+
+	/* --- Get all keys from firestore --- */
+	async function getKeys() {
+		try {
+			const querySnapshot = await getDocs(collection(db, 'keys'));
+			const allDocs = [];
+			querySnapshot.forEach((doc) => {
+				const data = doc.data();
+				allDocs.push(data);
+			});
+
+			setAllKeys(allDocs);
+		} catch (error) {
+			console.log('Error:' + error.message);
+		}
+
+		setLoading(false);
+	}
+
+	/* ---- Create user in Firestore with signup information ---- */
+	async function createUser(
+		email,
+		username,
+		birthYear,
+		nativeLanguage,
+		currentOccupation,
+		uid,
+		creationTime
+	) {
+		await setDoc(doc(dbUsers, uid), {
+			uid: uid,
+			email: email,
+			username: username,
+			birth_year: birthYear,
+			native_language: nativeLanguage,
+			current_occupation: currentOccupation,
+			login_count: 1,
+			created_at: creationTime,
+			last_sign_in: creationTime,
+		});
+		console.log('User created in firestore');
+	}
+
+	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
+	async function getUserDetails(userId) {
+		try {
+			/* Get user details from firestore if user is not Guest */
+
+			onSnapshot(doc(dbUsers, userId), (doc) => {
+				setUserDetails(doc.data());
+			});
+		} catch (error) {
+			console.log(error.message);
+		}
+
+		return userDetails;
+	}
+
+	/* ---- Update user information on login ---- */
+	function updateUserInfo(uid, lastSignInTime) {
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
+			login_count: increment(1),
+			last_sign_in: lastSignInTime,
+		});
+		console.log('User info updated on log in');
+	}
+
+	/* ---- Update username ---- */
+	function updateUsername(uid, username) {
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
+			username: username,
+		});
+		console.log('Username updated');
+	}
+
+	/* ---- Update current occupation ---- */
+	function updateCurrentOccupation(uid, currentOccupation) {
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
+			current_occupation: currentOccupation,
+		});
+		console.log('Current occupation updated');
+	}
+
+	/* ---- Update native language ---- */
+	function updateNativeLanguage(uid, nativeLanguage) {
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
+			native_language: nativeLanguage,
+		});
+		console.log('Native language updated');
+	}
+
+	/* ---- Update birth date ---- */
+	function updateBirthYear(uid, birthYear) {
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
+			birth_year: birthYear,
+		});
+		console.log('Birth date updated');
+	}
+
+	/* ---- Update email in Firestore ---- */
+	function emailUpdate(newEmail) {
+		updateEmail(currentUser, newEmail)
+			.then(() => {
+				const userRef = doc(dbUsers, currentUser.uid);
+				updateDoc(userRef, {
+					email: newEmail,
+				});
+				console.log('Email updated');
+			})
+			.catch((error) => {
+				console.log(error.message);
+			});
+	}
+
+	/* ---- Delete user information from Firestore ---- */
+	function deleteFirestoreUser(uid) {
+		deleteDoc(doc(dbUsers, uid));
+		console.log('User deleted');
+	}
+
+	const value = {
+		currentUser,
+		login,
+		signup,
+		logout,
+		resetPassword,
+		emailUpdate,
+		passwordUpdate,
+		updateUsername,
+		updateCurrentOccupation,
+		updateBirthYear,
+		updateNativeLanguage,
+		createUser,
+		updateUserInfo,
+		getUserDetails,
+		userDetails,
+		userDelete,
+		deleteFirestoreUser,
+		translateError,
+		getKeys,
+		checkKey,
+		allKeys,
+	};
+
+	return (
+		<AuthContext.Provider value={value}>
+			{!loading && children}
+		</AuthContext.Provider>
+	);
 }

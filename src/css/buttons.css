@@ -1,0 +1,139 @@
+button:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+/* ---- BIG BUTTONS ---- */
+
+
+/* ---- Filled big buttons ---- */
+.register-btn {
+	background: var(--green) !important;
+	border: 2px solid var(--green) !important;
+	color: rgb(255, 255, 255) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	padding: 13px !important;
+	font-weight: 700 !important;
+	letter-spacing: 1px;
+	box-shadow: var(--smallShadow) !important;
+}
+
+.register-btn:hover {
+	background: var(--greenHover) !important;
+	color: white !important;
+
+}
+
+
+/* ---- Outline big buttons ---- */
+.register-btn_light {
+	border: 2px solid var(--green) !important;
+	color: var(--green) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	padding: 13px !important;
+	font-weight: 700 !important;
+	letter-spacing: 1px;
+}
+
+
+.register-btn_light:hover {
+	background-color: var(--green) !important;
+	color: var(--white) !important;
+}
+
+/* ---- SMALL BUTTONS ---- */
+
+/* ---- Filled small buttons ---- */
+.register-btn_small {
+	background: var(--green) !important;
+	border: 2px solid var(--green) !important;
+	color: rgb(255, 255, 255) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	font-weight: 700 !important;
+	letter-spacing: 1px;
+	font-size: 0.9rem !important;
+	
+}
+
+.register-btn_small:hover {
+	background: var(--greenHover) !important;
+	color: white !important;
+
+}
+
+/* ---- Outline small buttons ---- */
+.register-btn_light_small {
+	border: 1px solid var(--green) !important;
+	color: var(--green) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 600 !important;
+	font-size: 0.9rem !important;
+	box-shadow: var(--smallShadow) !important;
+}
+
+.btn_light_small {
+	border: 1px solid var(--greenExtraLight) !important;
+	color: var(--greenExtraLight) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 600 !important;
+	font-size: 0.9rem !important;
+	box-shadow: var(--smallShadow) !important;
+}
+
+.btn_light_small:hover {
+	background: var(--greenExtraLight) !important;
+	color: var(--green) !important;
+
+}
+
+.register-btn_sidebar {
+	color: var(--black) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 500 !important;
+	font-size: 0.9rem !important;
+	text-decoration: none !important;
+}
+
+.register-btn_sidebar:hover {
+
+	color: var(--green) !important;
+
+}
+
+.register-btn_light_small:hover {
+	background-color: var(--green) !important;
+	color: var(--white) !important;
+}
+
+.register-btn_light_small-danger {
+	border: 1px solid var(--red) !important;
+	color: var(--red) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 600 !important;
+	font-size: 0.9rem !important;
+}
+
+.register-btn_light_small-danger:hover {
+	background-color: var(--redHover) !important;
+	color: var(--white) !important;
+}
+
+/* ---- Profile/Avatar button ---- */
+.avatar-btn{
+	background: var(--green) !important;
+	border: none !important;
+	color: rgb(255, 255, 255) !important;
+	font-weight: bold !important;
+	margin-right: 5px;
+	border-radius: 50% !important;
+	align-items: center !important;
+	justify-content: center !important;
+
+}

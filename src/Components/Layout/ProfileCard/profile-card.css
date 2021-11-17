@@ -1,0 +1,17 @@
+#profile-card {
+    margin: 0 auto;
+    float: none;
+    margin-bottom: 10px;
+    max-width: 800px;
+    background: white;
+    border-radius: 20px;
+
+
+}
+
+@media (max-width: 768px){
+    #profile-card{
+        font-size: 1rem;
+    }
+
+}

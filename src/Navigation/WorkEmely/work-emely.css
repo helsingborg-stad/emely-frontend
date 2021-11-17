@@ -1,0 +1,46 @@
+
+
+.hide-emely-dialog {
+  display: none !important;
+}
+
+.show-emely-dialog{
+  display: block;
+}
+
+#emely-dialogue-col {
+  width: 90vh;
+}
+
+.emely-dialog_dialogue-text {
+  line-height: 1.8;
+  font-size: 1rem;
+  text-align: left;
+  font-weight: 500;
+}
+
+.work-button-modal .modal-content {
+  border: 0px !important;
+
+  border-radius: 25px !important;
+}
+
+/*
+.modal-backdrop
+{
+    opacity: 0.8 !important;
+}
+*/
+
+#container-work-emely{
+  max-width: 800px;
+  margin: auto !important;
+}
+
+@media (max-width: 1000px){
+  .work-button-modal .modal-content {
+    max-height: 100% !important;
+
+  }
+
+}

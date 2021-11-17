@@ -1,0 +1,30 @@
+.input-field{
+	border-radius: var(--inputFieldBorderRadius) !important;
+	padding: 15px !important;
+	font-weight: 500 !important;
+	border: 2px solid rgb(223, 223, 223) !important;
+	margin-bottom: 25px;
+	box-shadow: var(--smallShadow) !important;
+}
+
+.input-field-small{
+	border-radius: var(--inputFieldBorderRadius) !important;
+	background-color: rgb(245, 245, 245) !important;
+	padding: 10px !important;
+	font-weight: 500 !important;
+	border-color: rgb(197, 197, 197) !important;
+}
+
+.input-label{
+	font-weight: 700;
+	margin-left: 15px !important;
+}
+
+.input-field::placeholder{
+	font-weight: 400;
+}
+
+.label-icons{
+	margin-right: 8px !important;
+	width: 25px !important;
+}

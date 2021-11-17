@@ -4,7 +4,7 @@ export default function AuthLayout(props) {
 	return (
 		<>
         {/* This layout is used for authentication components (Login, Signup, etc.) */}
-			<div className="mt-3 mb-4" id="container-auth">
+			<div className="mb-3" id="container-auth">
 				{props.children}
 			</div>
 		</>

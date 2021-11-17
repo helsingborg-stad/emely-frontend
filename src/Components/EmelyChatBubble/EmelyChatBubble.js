@@ -1,19 +1,31 @@
 import React from "react";
-import emely from "../../Assets/images/emely.png";
+import emely from "../../Assets/images/Emely-avatar.png";
+import AcapelaPlayer from "../AcapelaPlayer";
 
-export default function ChatBubble(props) {
+export default function ChatBubble({
+  isValidationError,
+  isLoading,
+  loader,
+  message,
+  ref,
+}) {
   return (
     <>
-      <div className="mt-3 mb-0" className="emely-chat-wrapper">
+      <div className="mt-3 mb-0 emely-chat-wrapper" ref={ref}>
         <div className="img-wrapper">
-          <img className="emely-image" src={emely} alt="Emely photo" />
+          <img className="emely-image" src={emely} alt="Emely" />
         </div>
-        <p className="dialogue-text">
-          Jag heter Emely. Jag är en virtuell språkassistent och med mig kan du
-          öva att prata på svenska. Välj nedan vilken av mina personligheter du
-          önskar att prata med.
-        </p>
+
+        {isValidationError ? (
+          <p className="alert-danger dialogue-text">
+            Meddelandet kan inte vara tomt eller innehåller &#60; &#62; @ #
+            &#171; &#187; &#38; * &#123; &#125; tecken
+          </p>
+        ) : (
+          <p className="dialogue-text">{isLoading ? loader : message}</p>
+        )}
       </div>
+      {message && <AcapelaPlayer message={message} />}
     </>
   );
 }
