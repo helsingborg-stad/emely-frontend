@@ -64,13 +64,10 @@ export default function WorkEmely(props) {
 						</p>
 					) : (
 						<p className="m-3 p-3 emely-dialog_dialogue-text">
-							Jag har arbetat med att intervjua folk för jobb i ungefär ett
-							halvår. Eftersom att jag är nybörjare på detta blir jag nervös
-							ibland och glömmer vad jag tidigare har sagt. Det är inte ditt fel
-							om jag råkar glömma något.
-							<br />
-							<br />
-							Vilket arbete söker du?
+							Hej igen, vad spännande att du vill gå på en intervju med mig! Jag
+							har arbetat med att hålla i intervjuer i ungefär ett halvår, och
+							försöker hela tiden förbättras. Innan vi startar intervjun undrar
+							jag vilket yrke du är intresserad av.
 						</p>
 					)}
 				</EmelyDialogue>

@@ -19,6 +19,7 @@ import { BsChatRightDots } from 'react-icons/bs';
 import { RiShieldUserLine } from 'react-icons/ri';
 import { RiLoginCircleLine } from 'react-icons/ri';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+import Avatar from '@mui/material/Avatar';
 
 /* Variable declaration */
 export default function UserMenu(props) {
@@ -29,6 +30,25 @@ export default function UserMenu(props) {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+
+	const [showUsername, setShowUsername] = useState(true);
+
+	const handleCloseUsername = () => setShowUsername(false);
+	const handleShowUsername = () => setShowUsername(true);
+
+	useEffect(() => {
+		try {
+			if (window.location.href.indexOf('emely-chat') > -1) {
+				return handleCloseUsername();
+				
+			} else {
+				return handleShowUsername();
+
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}, [window.location.href]);
 
 	/* Getting the current user details on mount */
 	useEffect(() => {
@@ -65,13 +85,38 @@ export default function UserMenu(props) {
 			>
 				<Container>
 					<Navbar.Brand>
-						<Button
-							className="register-btn_sidebar"
-							variant="none"
-							onClick={handleLogout}
+					<Row>
+					<Col xs={2} md={2} lg={2}>
+						<Avatar
+							className="fw-bold"
+							sx={{ width: 35, height: 35 }}
+							style={{ fontSize: '1rem' }}
 						>
-							<RiLoginCircleLine size={20} /> Logga in
-						</Button>
+							G
+						</Avatar>
+					</Col>
+					<Col
+						xs={5}
+						md={5}
+						lg={5}
+						className="ms-4 mt-1"
+						style={{ fontSize: '1rem', fontWeight: '600' }}
+						onClick={handleLogout}
+					>
+					<Button
+					className="register-btn_sidebar p-0"
+					variant="none"
+					onClick={handleLogout}
+				>
+				{showUsername ? <span><RiLoginCircleLine size={20} /> Logga in</span> : null }
+					
+				</Button>
+					</Col>
+				</Row>
+
+
+
+
 						
 					</Navbar.Brand>
 					

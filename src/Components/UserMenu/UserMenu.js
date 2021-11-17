@@ -34,6 +34,25 @@ export default function UserMenu(props) {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	const [showUsername, setShowUsername] = useState(true);
+
+	const handleCloseUsername = () => setShowUsername(false);
+	const handleShowUsername = () => setShowUsername(true);
+
+	useEffect(() => {
+		try {
+			if (window.location.href.indexOf('emely-chat') > -1) {
+				return handleCloseUsername();
+				
+			} else {
+				return handleShowUsername();
+
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}, [window.location.href]);
+
 	/* Getting the current user details on mount */
 	useEffect(() => {
 		try {
@@ -86,7 +105,7 @@ export default function UserMenu(props) {
 								className="ms-4 mt-1"
 								style={{ fontSize: '1rem', fontWeight: '600' }}
 							>
-								{userDetails && userDetails.username}
+							{showUsername ? <span>{userDetails && userDetails.username}</span> : null }
 							</Col>
 						</Row>
 					</Navbar.Brand>

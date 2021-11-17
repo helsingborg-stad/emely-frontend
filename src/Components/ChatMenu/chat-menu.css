@@ -1,6 +1,14 @@
 .chat-menu{
-    max-width: 800px !important;
-    margin-top: 65px !important;
+    max-width: 700px !important;
+    margin-top: 18px !important;
     background: white !important;
 }
 
+
+@media (max-width: 1000px){
+    .chat-menu{
+        max-width: 250px !important;
+
+    }
+
+}
