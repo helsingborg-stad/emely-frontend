@@ -50,7 +50,7 @@ export default function Profile() {
 					{/* --- My information card --- */}
 					<Row className="p-0 m-0">
 						<Col xs="auto" md={8} lg={8}>
-							<h4 className="mb-3 fw-bold">Min uppgifter</h4>
+							<h4 className="mb-3 fw-bold">Mina uppgifter</h4>
 						</Col>
 						<Col xs="auto" md={4} lg={4} className="text-end p-0">
 							<span>
