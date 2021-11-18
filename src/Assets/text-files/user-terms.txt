@@ -4,7 +4,7 @@ Genom att registrera dig för eller på annat sätt använda Emely samtycker du 
 <br>
 <h5 className="fw-bold">Användardata</h5>
 Vid registrering av ny användare, godkänner du att din e-postadress sparas i vår databas tillsammans med den övriga informationen du fyller i vid skapandet av ett 
-nytt konto. Om du väljer att radera din användare så kommer all användardata att försvinna. Alla dina uppgifter och konversationer kopplade till din 
+nytt konto. Om du väljer att radera din användare så kommer all användardata att försvinna. Alla dina uppgifter kopplade till din 
 användare kommer då att försvinna från databasen. 
 <br>
 <br>
