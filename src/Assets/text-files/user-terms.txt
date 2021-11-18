@@ -1,44 +1,18 @@
-					<h1>Användningsvillkor för NordAxon</h1>
-                    
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-					fringilla ultrices dolor, gravida tincidunt elit ultrices in. Aenean a
-					eleifend augue, in lacinia est. Suspendisse aliquet ultrices massa, et
-					mattis nunc facilisis dignissim. Mauris placerat cursus eleifend.
-					Praesent tincidunt, purus id pretium vulputate, est purus luctus
-					lectus, et lobortis nisl turpis in est. Donec sit amet mi efficitur,
-					consequat mauris vitae, tristique ipsum. Aliquam euismod blandit neque
-					quis imperdiet. In nisi velit, dignissim sit amet lacinia vitae,
-					pretium laoreet lorem. Suspendisse sit amet ligula sapien. Phasellus
-					rutrum, nisi at fringilla condimentum, nulla magna feugiat metus, et
-					feugiat tellus sapien sollicitudin diam. Morbi elit nisl, ullamcorper
-					condimentum varius a, placerat sit amet orci. Duis nec euismod ipsum,
-					sed vestibulum tellus. Sed fringilla nunc et arcu dictum dictum.
-					Praesent non mi aliquam erat commodo gravida. Nullam sagittis, mi eget
-					congue consectetur, mauris lorem commodo arcu, non tincidunt ipsum est
-					pharetra neque. 
-
-                    <br>
-                    <br>
-
-                    Maecenas nunc risus, maximus a augue commodo, aliquam
-					rhoncus lacus. Duis mollis blandit sem vitae iaculis. Sed maximus
-					sollicitudin arcu, ut vestibulum nunc commodo non. Nulla vitae enim
-					rutrum, mattis lacus at, tempor massa. Suspendisse at nisl lacus.
-					Praesent ultrices, eros et suscipit auctor, sem nulla rhoncus metus, a
-					luctus libero lectus eu lacus. Sed sed ex ut metus pellentesque
-					fringilla eu in nunc. Nulla fermentum ullamcorper mattis. Nam et nunc
-					vel odio lobortis luctus. Praesent a leo ante. Suspendisse sed sapien
-					maximus, maximus lacus ac, interdum justo. Mauris porttitor velit sit
-					amet tortor ullamcorper molestie. Etiam ut nulla nisi. Suspendisse
-					congue sapien sed tellus cursus, at hendrerit magna semper. Mauris
-					rhoncus, massa sed convallis tristique, lectus neque semper enim, at
-					malesuada ligula enim sed turpis. Quisque quis ex sed dui eleifend
-					convallis sit amet et ante. Curabitur et sollicitudin est. Proin nec
-					arcu in magna tempus imperdiet. Suspendisse at vestibulum velit. Ut
-					porttitor dolor vel enim dapibus, quis feugiat ex accumsan. Morbi
-					vitae iaculis tellus, ut pharetra ipsum. Sed facilisis placerat
-					dictum. Praesent pulvinar magna id molestie aliquam. Suspendisse
-					sollicitudin erat tempus eros tincidunt luctus. Sed sit amet accumsan
-					massa. Aenean nec ex vitae nulla tempus porttitor et a odio. Proin et
-					feugiat mauris, consequat imperdiet odio. Fusce eget lacus sem. Morbi
-					suscipit elit ac facilisis mollis.
+<h1 className="fw-bold">Användningsvillkor för Emely</h1>
+Genom att registrera dig för eller på annat sätt använda Emely samtycker du till dessa villkor.
+<br>
+<br>
+<h5 className="fw-bold">Användardata</h5>
+Vid registrering av ny användare, godkänner du att din e-postadress sparas i vår databas tillsammans med den övriga informationen du fyller i vid skapandet av ett 
+nytt konto. Om du väljer att radera din användare så kommer all användardata att försvinna. Alla dina uppgifter kopplade till din 
+användare kommer då att försvinna från databasen. 
+<br>
+<br>
+Vi sparar användardata i avseende att kunna analysera användarens interaktion med Emely för att kunna förbättra Emely. Personliga identifierare används
+aldrig i analysen för att dra slutsatser kring interaktioner.
+<br>
+<br>
+<h5 className="fw-bold">Konversation med Emely</h5>
+Allt du skriver till Emely kommer att sparas i våra databaser. 
+När du använder taligenkänningen när du pratar med Emely kommer din röstdata att skickas till Google, då vi använder oss av Google Speech To Text för att analysera vad du säger till Emely. 
+För att läsa mer om Google Speech To Text och hur de hanterar röstdata, se https://cloud.google.com/speech-to-text/docs/data-logging.
