@@ -133,12 +133,12 @@ export default function ProfileInfoEdit(props) {
 					<Row className="mt-3">
 						<Form.Group id="birthYear">
 							<Form.Label className="input-label">
-								<AiOutlineCalendar className="me-2" size={20} /> När är du född?
+								<AiOutlineCalendar className="me-2" size={20} /> Vilket år är du född?
 							</Form.Label>
 							<Form.Control
 								className="input-field-small"
 								placeholder="När är du född?"
-								type="date"
+								type="number"
 								defaultValue={userDetails && userDetails.birth_year}
 								ref={birthYearRef}
 								required

@@ -89,7 +89,7 @@ export default function Profile() {
 					</Row>
 
 					<Row className="mt-3">
-						<small className="fw-bold ">Födelsedatum</small>
+						<small className="fw-bold ">Födelseår</small>
 						<p>{userDetails && userDetails.birth_year}</p>
 					</Row>
 					<Row className="mt-3">
