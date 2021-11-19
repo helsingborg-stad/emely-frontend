@@ -166,14 +166,13 @@ export default function Signup() {
 
 						<Form.Group id="birthYear" className="fw-bold">
 							<Form.Label className="input-label">
-								<AiOutlineCalendar className="label-icons" size={30} /> När är
-								du född?
+								<AiOutlineCalendar className="label-icons" size={30} /> Vilket år är du född?
 							</Form.Label>
 							<Form.Control
 								className="w-100 input-field"
 								placeholder="När är du född?"
-								type="date"
-								defaultValue="1990-01-01"
+								type="number"
+								defaultValue="1990"
 								ref={birthYearRef}
 								required
 							/>
