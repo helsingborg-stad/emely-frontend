@@ -51,18 +51,19 @@ export default function EmelyChat(props) {
   /* ---- Tracks and renders new messages, scrolls them up ---- */
   useEffect(() => {
     renderMessages();
-    scrollToTop();
+    scrollToTop(scroll);
   }, [sessionConversation, isValidationError]);
 
   useEffect(() => {
     if (isFocused) {
       renderMessages();
-      scrollToTop();
+      scrollToTop(scroll);
     }
   }, [isFocused]);
 
-  const scrollToTop = () => {
-    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToTop = (ref) => {
+    window.scrollTo(0, ref.current?.offsetTop);
+    // scroll.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const renderMessages = () => {
