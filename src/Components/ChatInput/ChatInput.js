@@ -138,6 +138,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
               value={listening ? transcript : userMessage}
               onKeyDown={(e) => handleKeyDown(e)}
               disabled={isLoading}
+              required
             ></TextareaAutosize>
             <button type="submit" className="send_message_btn">
               <IoIosSend size={"1.5rem"} />
