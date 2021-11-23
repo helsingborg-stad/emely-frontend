@@ -172,8 +172,9 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
               onMouseUp={() => setIsListening(false)}
               onMouseLeave={() => setIsListening(false)}
               onTouchStart={() => setIsListening(true)}
-              onTouchEnd={() => setIsListening(false)}
-              onTouchMove={() => setIsListening(false)}
+              // onTouchEnd={() => setIsListening(false)}
+              // onTouchMove={() => setIsListening(false)}
+              // onTouchCancel={() => setIsListening(false)}
             >
               {listening ? (
                 <FaStop size={"2rem"} />
@@ -182,7 +183,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
               )}
             </button>
           )}
-        </div>
+</div>
       </div>
     </div>
   );
