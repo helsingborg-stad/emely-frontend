@@ -19,6 +19,10 @@ export default function Login() {
 	const [msgVariant, setMsgVariant] = useState('');
 	const [loading, setLoading] = useState(false);
 
+	useEffect(() => {
+		return document.body.style.background = "var(--mainBackground)";
+	}, [])
+
 
 	/* Get the keys on page load */
 	useEffect(() => {

@@ -8,6 +8,8 @@ export default function KeyRoute({ component: Component, ...rest }) {
   const [isCorrectKey, setIsCorrectKey] = useState(sessionStorage.getItem('sessionKey'));
   
   const history = useHistory();
+  var root = document.querySelector(':root');
+
 
   
   /* --- Checking if the sessionKey is correct else redirects back to home --- */
