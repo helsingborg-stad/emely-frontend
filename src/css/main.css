@@ -42,7 +42,7 @@
 }
 
 #root {
-	background: rgb(238, 238, 238);
+	background: none;
 	margin: 0 !important;
 	padding-top: 75px;
  
@@ -65,9 +65,12 @@
 	--redHover: #ce5c5c;
 	--greenLight: #33e47d;
 	--greenExtraLight: #ddffeb;
+	--fika: center / cover fixed no-repeat url(../Assets/images/fika.jpg); /* fika background */
+	--interview: left / cover fixed no-repeat url(../Assets/images/interview.jpeg); /* intervju backgrounds */
+
 
 	/* Common border radius */
-	--buttonBorderRadius: 25px 25px 25px 0px;
+	--buttonBorderRadius: 25px;
 	--inputFieldBorderRadius: 20px;
 
 	/* Common shadow */
@@ -75,9 +78,14 @@
 }
 
 body {
-	background: rgb(238, 238, 238) !important;
-	
+	background: rgb(238, 238, 238) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;	
 }
+
+
 
 a {
 	color: black !important;
