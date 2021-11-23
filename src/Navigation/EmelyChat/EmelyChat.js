@@ -86,48 +86,50 @@ export default function EmelyChat(props) {
 
   return (
     <>
-      <Container className="emely-chat-container">
-        <div className="emely-chat_wrapper">
-          {sessionConversation.length > 0 && renderMessages()}
-
-          {/* ---- Renders Emely loader (waiting for a response from the server ) ---- */}
+    
+    <Container className="emely-chat-container">
+    <div className="emely-chat_wrapper">
+    {sessionConversation.length > 0 && renderMessages()}
+    
+    {/* ---- Renders Emely loader (waiting for a response from the server ) ---- */}
           {isLoading && (
             <div ref={scroll}>
-              <EmelyChatBubble
+            <EmelyChatBubble
                 isLoading={isLoading}
                 loader={<PulseLoader size={6} color={"#979797"} />}
               />
-            </div>
-          )}
+              </div>
+              )}
 
-          {/* ---- Renders user loader (if textarea onFocus) ---- */}
-          {isFocused && (
-            <div ref={scroll}>
+              {/* ---- Renders user loader (if textarea onFocus) ---- */}
+              {isFocused && (
+                <div ref={scroll}>
               <UserChatBubble
-                isFocused={isFocused}
+              isFocused={isFocused}
                 loader={<PulseLoader size={6} color={"#979797"} />}
-              />
+                />
             </div>
-          )}
+            )}
           {/* ---- Renders Emely warning massage if user message contains a special signs or is empty */}
           {isValidationError && (
             <div ref={scroll}>
               <EmelyChatBubble
-                isValidationError={isValidationError}
+              isValidationError={isValidationError}
                 loader={<PulseLoader size={6} color={"#979797"} ref={scroll} />}
-              />
+                />
             </div>
-          )}
-        </div>
+            )}
+            </div>
         {/* <div style={{border: "1px solid red"}} ref={scroll}></div> */}
         <ErrorBoundary>
           <ChatInput
-            persona={persona}
+          persona={persona}
             setFocused={setFocused}
             setValidationError={setValidationError}
           />
-        </ErrorBoundary>
+          </ErrorBoundary>
       </Container>
-    </>
+
+      </>
   );
 }
