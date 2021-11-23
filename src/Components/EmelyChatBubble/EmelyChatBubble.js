@@ -22,7 +22,7 @@ export default function ChatBubble({
             &#171; &#187; &#38; * &#123; &#125; tecken
           </p>
         ) : (
-          <p className="dialogue-text">{isLoading ? loader : message}</p>
+          <p className="dialogue-text shadow-sm">{isLoading ? loader : message}</p>
         )}
       </div>
       {message && <AcapelaPlayer message={message} />}
