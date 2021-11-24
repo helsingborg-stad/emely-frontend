@@ -1,6 +1,6 @@
 .img-wrapper {
     max-width: 50px;
-    border: 2px solid rgb(218, 218, 218) !important;
+    border: 0px solid rgb(218, 218, 218) !important;
     border-radius: 50%;
     
 }
@@ -12,7 +12,7 @@
 .dialogue-text {
     background-color: var(--white);
     border-radius: 0px 40px 40px 40px;
-    border: 0px solid var(--gray);
+    border: 2px solid rgb(209, 209, 209);
     max-width: 60%;
     font-size: 0.9rem;
     margin-top: 5px;

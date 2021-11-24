@@ -21,6 +21,7 @@
   text-align: left;
   overflow: hidden;
   box-shadow: var(--smallShadow);
+  border: 2px solid rgb(209, 209, 209);
 }
 
 @media(max-width: 500px) {

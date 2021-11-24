@@ -1,6 +1,7 @@
 import React from "react";
 import emely from "../../Assets/images/Emely-avatar.png";
 import AcapelaPlayer from "../AcapelaPlayer";
+import Avatar from '@mui/material/Avatar';
 
 export default function ChatBubble({
   isValidationError,
@@ -13,7 +14,14 @@ export default function ChatBubble({
     <>
       <div className="mt-3 mb-0 emely-chat-wrapper" ref={ref}>
         <div className="img-wrapper">
-          <img className="emely-image" src={emely} alt="Emely" />
+          
+          <Avatar
+          alt="Emely"
+          sx={{ width: 40, height: 40 }}
+          src={emely}
+        >
+          
+        </Avatar>
         </div>
 
         {isValidationError ? (

@@ -65,8 +65,8 @@
 	--redHover: #ce5c5c;
 	--greenLight: #33e47d;
 	--greenExtraLight: #ddffeb;
-	--fika: center / cover fixed no-repeat url(../Assets/images/fika.jpg); /* fika background */
-	--interview: left / cover fixed no-repeat url(../Assets/images/interview.jpeg); /* intervju backgrounds */
+	--fika: right / cover fixed no-repeat url(../Assets/images/fika.jpg); /* fika background */
+	--interview: top center / cover fixed no-repeat url(../Assets/images/interview.jpeg); /* intervju backgrounds */
 
 
 	/* Common border radius */
