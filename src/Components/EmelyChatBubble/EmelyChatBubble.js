@@ -1,5 +1,5 @@
 import React from "react";
-import emely from "../../Assets/images/Emely-avatar.png";
+import emely from "../../Assets/images/emely_work.png";
 import AcapelaPlayer from "../AcapelaPlayer";
 import Avatar from '@mui/material/Avatar';
 

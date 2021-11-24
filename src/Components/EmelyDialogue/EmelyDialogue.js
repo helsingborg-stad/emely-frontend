@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
-import emelyWork from '../../Assets/images/emely_work.png';
+import emelyWork from '../../Assets/images/emely.png';
 
 export default function EmelyDialogue(props) {
 	return (
