@@ -27,7 +27,7 @@ export default function Profile() {
 						<span>
 							<Button
 								variant="none"
-								className="register-btn_light_small"
+								className="register-btn_small"
 								id="edit-button"
 								onClick={handleShow}
 							>

@@ -57,12 +57,12 @@ export default function Profile() {
 								
 									<Button
 										variant="none"
-										className="register-btn_light_small"
+										className="register-btn_small"
 										id="edit-button"
                                         onClick={handleShow}
 									>
 										<AiOutlineEdit className="me-2" size={15} />
-										Redigera
+										REDIGERA
 									</Button>
 								
 							</span>
