@@ -101,8 +101,8 @@ export default function EmelyChat(props) {
 						renderMessages()
 					) : (
 						<EmelyChatBubble
-							isLoading={isLoading}
-							message={<PulseLoader size={6} color={'#979797'} />}
+							isLoading="true"
+							loader={<PulseLoader size={6} color={'#979797'} />}
 						/>
 					)}
 
