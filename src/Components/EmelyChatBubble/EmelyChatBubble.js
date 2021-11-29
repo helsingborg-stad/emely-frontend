@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import { RiFlag2Line } from 'react-icons/ri';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { useAuth } from '../../contexts/AuthContext';
-import { Button, Row, Col } from 'react-bootstrap';
+import { Button, Row, Col, OverlayTrigger, Tooltip, Popover } from 'react-bootstrap';
 
 export default function ChatBubble({
 	isValidationError,
@@ -46,6 +46,18 @@ export default function ChatBubble({
           </Col>
           <Col xs={5} md={5} lg={5} className="p-0">
 					{isLoading || isReported ? null : (
+            <OverlayTrigger
+            key="top"
+            placement="top"
+            overlay={
+              <Popover id={`popover-positioned-top`}>
+              <Popover.Header style={{ fontSize: '0.7rem'}}>{`Hjälp oss att bli bättre`}</Popover.Header>
+              <Popover.Body style={{ fontSize: '0.7rem'}}>
+                Klicka på rapportera om du anser att Emelys meddelande är opassande.
+              </Popover.Body>
+            </Popover>
+            }
+          >
 						<Button
               variant="none"
 							className="report-btn_small me-3"
@@ -53,6 +65,7 @@ export default function ChatBubble({
 						>
 							<RiFlag2Line /> Rapportera
 						</Button>
+            </OverlayTrigger>
 					)}
 
           </Col>
