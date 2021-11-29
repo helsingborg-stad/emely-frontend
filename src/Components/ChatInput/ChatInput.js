@@ -138,6 +138,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
               value={listening ? transcript : userMessage}
               onKeyDown={(e) => handleKeyDown(e)}
               disabled={isLoading}
+              required
             ></TextareaAutosize>
             <button type="submit" className="send_message_btn">
               <IoIosSend size={"1.5rem"} />
@@ -164,9 +165,16 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
                   ? "navigation_btn recording_btn_active"
                   : "navigation_btn recording_btn"
               }
-              onClick={() => {
-                setIsListening((prevState) => !prevState);
-              }}
+               onClick={() => {
+                 setIsListening((prevState) => !prevState);
+               }}
+              // onMouseDown={() => setIsListening(true)}
+              // onMouseUp={() => setIsListening(false)}
+              // onMouseLeave={() => setIsListening(false)}
+              // onTouchStart={() => setIsListening(true)}
+              // onTouchEnd={() => setIsListening(false)}
+              // onTouchMove={() => setIsListening(false)}
+              // onTouchCancel={() => setIsListening(false)}
             >
               {listening ? (
                 <FaStop size={"2rem"} />
@@ -175,7 +183,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
               )}
             </button>
           )}
-        </div>
+</div>
       </div>
     </div>
   );

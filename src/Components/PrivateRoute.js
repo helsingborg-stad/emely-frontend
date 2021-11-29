@@ -13,9 +13,34 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 		sessionStorage.getItem('sessionKey')
 	);
 	const [progressOn, setProgressOn] = useState(false);
+	var root = document.querySelector(':root');
 
 
+	
 	const history = useHistory();
+
+	/* Check if you are on fika or intervju and change background */
+	useEffect(() => {
+		try {
+			
+			/* If you are on fika */
+			if (window.location.href.indexOf('fika') > -1) {
+				return document.body.style.background = "var(--fika)";
+				
+			/* If you are on intervju */
+			} else if (window.location.href.indexOf('intervju') > -1) {
+				return document.body.style.background= "var(--interview)";
+			
+			} else {
+				return document.body.style.background = 'var(--mainBackground)';
+
+			}
+		} catch (error) {
+			console.log(error);
+		}
+			
+	}, [window.location.href]);
+
 
   useEffect(() => {
 		try {
@@ -76,6 +101,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 					);
 				}}
 			></Route>
+
 		</>
 	);
 }

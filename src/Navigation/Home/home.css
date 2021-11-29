@@ -6,6 +6,18 @@
     margin-bottom: 10px;
 }
 
+.chat-bubble {
+    background-color: var(--white);
+    border-radius: 0px 40px 40px 40px;
+    max-width: 60%;
+    font-size: 1.5rem;
+    margin-top: 5px;
+    margin-left: 60px;
+    width: 600px !important;
+    padding: 20px;
+    font-weight: 700 !important;
+}
+
 #emely-image{
     width: 50%;
     height: 50%;

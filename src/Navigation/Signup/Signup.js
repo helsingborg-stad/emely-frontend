@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Form, Button, Row} from 'react-bootstrap';
+import { Form, Button, Row } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -34,7 +34,6 @@ export default function Signup() {
 	const history = useHistory();
 	/* ----------------------------------- */
 
-
 	/* ------ Open user terms onClick ------ */
 	function handleEndUserTerms(e) {
 		e.preventDefault();
@@ -50,8 +49,7 @@ export default function Signup() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-
-			/* ------ Start with, checking if the passwords match ------ */
+		/* ------ Start with, checking if the passwords match ------ */
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
 			setMsgVariant('danger');
 			return setMsg('Lösenorden matchar inte');
@@ -87,7 +85,6 @@ export default function Signup() {
 			console.log(error.code);
 			setMsgVariant('danger');
 			setMsg(translateError(error.code));
-			
 		}
 
 		setLoading(false);
@@ -96,9 +93,7 @@ export default function Signup() {
 	return (
 		<>
 			{/* ------------ Alert for error messages: fixed-top ------------ */}
-			{msg && (
-				<AlertMessage message={msg} variant={msgVariant} />
-			  )}
+			{msg && <AlertMessage message={msg} variant={msgVariant} />}
 			<AuthLayout>
 				<h2 className="text-center fw-bold mb-5">
 					Registrera dig för att börja prata med Emely.
@@ -109,7 +104,8 @@ export default function Signup() {
 					{/* ------------ Email form ------------ */}
 					<Form.Group id="email" className="fw-bold">
 						<Form.Label className=" input-label">
-							<HiOutlineMail className="label-icons" size={30} /> Vad är din e-postadress?
+							<HiOutlineMail className="label-icons" size={30} /> Vad är din
+							e-postadress?
 						</Form.Label>
 						<Form.Control
 							className="input-field"
@@ -123,7 +119,8 @@ export default function Signup() {
 					{/* ------------ Choose password form ------------ */}
 					<Form.Group id="password" className=" fw-bold">
 						<Form.Label className=" input-label">
-							<RiLockPasswordLine className="label-icons" size={30} /> Skapa ett lösenord <small className="fw-normal">(minst 6 karaktärer)</small>
+							<RiLockPasswordLine className="label-icons" size={30} /> Skapa ett
+							lösenord <small className="fw-normal">(minst 6 karaktärer)</small>
 						</Form.Label>
 						<Form.Control
 							className="input-field"
@@ -132,13 +129,13 @@ export default function Signup() {
 							ref={passwordRef}
 							required
 						></Form.Control>
-
 					</Form.Group>
 
 					{/* ------------ Confirm password form ------------ */}
 					<Form.Group id="password-confirm" className="fw-bold">
 						<Form.Label className=" input-label">
-							<RiLockPasswordLine className="label-icons" size={30} /> Upprepa lösenord
+							<RiLockPasswordLine className="label-icons" size={30} /> Upprepa
+							lösenord
 						</Form.Label>
 						<Form.Control
 							className="input-field"
@@ -151,86 +148,98 @@ export default function Signup() {
 
 					{/* ------------ Username form ------------ */}
 					<Row>
-						
-							<Form.Group id="username" className="fw-bold">
-								<Form.Label className="input-label">
-									<AiOutlineUser className="label-icons" size={30} /> Vad ska vi kalla dig?
-								</Form.Label>
-								<Form.Control
-									className="w-100 input-field"
-									placeholder="Användarnamn"
-									type="text"
-									ref={usernameRef}
-									required
-								/>
-							</Form.Group>
-						
+						<Form.Group id="username" className="fw-bold">
+							<Form.Label className="input-label">
+								<AiOutlineUser className="label-icons" size={30} /> Vad ska vi
+								kalla dig?
+							</Form.Label>
+							<Form.Control
+								className="w-100 input-field"
+								placeholder="Användarnamn"
+								type="text"
+								ref={usernameRef}
+								required
+							/>
+						</Form.Group>
 
 						{/* ------------ Birth date form ------------ */}
-						
-							<Form.Group id="birthYear" className="fw-bold">
-								<Form.Label className="input-label">
-									<AiOutlineCalendar className="label-icons" size={30} /> När är du född?
-								</Form.Label>
-								<Form.Control
-									className="w-100 input-field"
-									placeholder="När är du född?"
-									type="date"
-									defaultValue="1990-01-01"
-									ref={birthYearRef}
-									required
-								/>
-							</Form.Group>
-						
+
+						<Form.Group id="birthYear" className="fw-bold">
+							<Form.Label className="input-label">
+								<AiOutlineCalendar className="label-icons" size={30} /> Vilket år är du född?
+							</Form.Label>
+							<Form.Control
+								className="w-100 input-field"
+								placeholder="När är du född?"
+								type="number"
+								defaultValue="1990"
+								ref={birthYearRef}
+								required
+							/>
+						</Form.Group>
 					</Row>
 
 					{/* ------------ Native language form ------------ */}
 					<Row>
-						
-							<Form.Group id="nativeLanguage" className="fw-bold">
-								<Form.Label className="input-label">
-									<GrLanguage  className="label-icons" size={20} /> Vilket språk talar du hemma?
-								</Form.Label>
-								<Form.Select
-									ref={nativeLanguageRef}
-									className="input-field"
-									defaultValue="Svenska"
-								>
-									<option>Svenska</option>
-									<option>Engelska</option>
-									<option>Arabiska</option>
-									<option>Italienska</option>
-									<option>Spanska</option>
-									<option>Bosniska</option>
-									<option>Serbiska</option>
-									<option>Kroatiska</option>
-								</Form.Select>
-							</Form.Group>
-						
+						<Form.Group id="nativeLanguage" className="fw-bold">
+							<Form.Label className="input-label">
+								<GrLanguage className="label-icons" size={20} /> Vilket språk
+								talar du hemma?
+							</Form.Label>
+							<Form.Select
+								ref={nativeLanguageRef}
+								className="input-field"
+								defaultValue="Svenska"
+							>
+								<option>Albanska</option>
+								<option>Arabiska</option>
+								<option>Arameiska</option>
+								<option>Bosniska</option>
+								<option>Danska</option>
+								<option>Engelska</option>
+								<option>Finska</option>
+								<option>Kantonesiska</option>
+								<option>Kroatiska</option>
+								<option>Kurdiska</option>
+								<option>Montenegrinska</option>
+								<option>Norska</option>
+								<option>Persiska</option>
+								<option>Polska</option>
+								<option>Ryska</option>
+								<option>Serbiska</option>
+								<option>Somaliska</option>
+								<option>Spanska</option>
+								<option>Svenska</option>
+								<option>Thailändska</option>
+								<option>Turkiska</option>
+								<option>Tyska</option>
+								<option>Ungerska</option>
+								<option>Annat</option>
+							</Form.Select>
+						</Form.Group>
 
 						{/* ------------ Current occupation form ------------ */}
-					
-							<Form.Group id="currentOccupation" className="fw-bold">
-								<Form.Label className="input-label">
-									<FaUserTie className="label-icons" size={20} /> Vad är din sysselsättning?
-								</Form.Label>
-								<Form.Select
-									ref={currentOccupationRef}
-									className="input-field"
-									defaultValue="Arbetslös"
-									
-								>
-								
-									<option>Arbetssökande</option>
-									<option>Studerande</option>
-									<option>Sjukskriven</option>
-									<option>Heltidsjobb</option>
-									<option>Deltidsjobb</option>
-									<option>Timanställd</option>
-									<option>Föräldraledig</option>
-								</Form.Select>
-							</Form.Group>
-						
+
+						<Form.Group id="currentOccupation" className="fw-bold">
+							<Form.Label className="input-label">
+								<FaUserTie className="label-icons" size={20} /> Vad är din
+								sysselsättning?
+							</Form.Label>
+							<Form.Select
+								ref={currentOccupationRef}
+								className="input-field"
+								defaultValue="Arbetssökande"
+							>
+								<option>Arbetssökande</option>
+								<option>Studerande</option>
+								<option>Sjukskriven</option>
+								<option>Heltidsjobb</option>
+								<option>Deltidsjobb</option>
+								<option>Timanställd</option>
+								<option>Föräldraledig</option>
+								<option>Annat</option>
+							</Form.Select>
+						</Form.Group>
 					</Row>
 
 					{/* ------------ Checkbox user terms ------------ */}
@@ -270,7 +279,13 @@ export default function Signup() {
 					</Button>
 				</Form>
 				<div className="w-100 text-center mt-3 fw-bold">
-				<p style={{ fontWeight: '600'}}> Har du ett konto? <Link id="text-link" to="/login">Logga In</Link></p>
+					<p style={{ fontWeight: '600' }}>
+						{' '}
+						Har du ett konto?{' '}
+						<Link id="text-link" to="/login">
+							Logga In
+						</Link>
+					</p>
 				</div>
 			</AuthLayout>
 		</>

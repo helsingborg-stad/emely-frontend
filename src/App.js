@@ -29,12 +29,8 @@ import './css/main.css';
 function App() {
 	return (
 		<>
-			<Container 
-				id="main-container"
-				className="d-flex align-items-center justify-content-center"
-				
-			>
-				<div className="w-100 justify-content-center">
+
+				<div className="w-100 h-100">
 					<Router>
 						<AuthProvider>
 							<ConversationContextProvider>
@@ -70,7 +66,6 @@ function App() {
 						</AuthProvider>
 					</Router>
 				</div>
-			</Container>
 		</>
 	);
 }

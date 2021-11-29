@@ -1,5 +1,5 @@
 .chat-input-wrapper {
-  background-color: var(--mainBackground);
+  background-color: none;
   position: fixed;
   bottom: 0;
   right: 0;
@@ -17,7 +17,6 @@
 }
 
 .chat-input_overlay {
-  background-color: #eeeeee85;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -82,8 +81,8 @@
 }
 
 .sound_btn {
-  background: transparent;
-  color: var(--green);
+  background: var(--green);
+  color: white;
   border: 1px solid var(--gray);
   padding: 10px;
   margin-left: 10px;

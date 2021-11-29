@@ -57,12 +57,12 @@ export default function Profile() {
 								
 									<Button
 										variant="none"
-										className="register-btn_light_small"
+										className="register-btn_small"
 										id="edit-button"
                                         onClick={handleShow}
 									>
 										<AiOutlineEdit className="me-2" size={15} />
-										Redigera
+										REDIGERA
 									</Button>
 								
 							</span>
@@ -89,7 +89,7 @@ export default function Profile() {
 					</Row>
 
 					<Row className="mt-3">
-						<small className="fw-bold ">Födelsedatum</small>
+						<small className="fw-bold ">Födelseår</small>
 						<p>{userDetails && userDetails.birth_year}</p>
 					</Row>
 					<Row className="mt-3">

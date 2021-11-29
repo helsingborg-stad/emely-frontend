@@ -165,7 +165,14 @@ export default function Login() {
 					{' '}
 					Behöver du ett konto?{' '}
 					<Link id="text-link" to="/signup">
-						Registrera dig
+					<Button
+					variant="none"
+					className="register-btn_light_small"
+					id="edit-button"
+				
+				>
+					Registrera dig
+				</Button>
 					</Link>
 				</p>
 			</div>

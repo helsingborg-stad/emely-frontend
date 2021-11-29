@@ -16,11 +16,13 @@ button:focus {
 	font-weight: 700 !important;
 	letter-spacing: 1px;
 	box-shadow: var(--smallShadow) !important;
+	
 }
 
 .register-btn:hover {
 	background: var(--greenHover) !important;
 	color: white !important;
+	border: 2px solid var(--greenHover) !important;
 
 }
 
@@ -52,12 +54,31 @@ button:focus {
 	font-weight: 700 !important;
 	letter-spacing: 1px;
 	font-size: 0.9rem !important;
+	text-transform: uppercase !important;
 	
 }
 
 .register-btn_small:hover {
 	background: var(--greenHover) !important;
 	color: white !important;
+	border: 2px solid var(--greenHover) !important;
+
+}
+
+.report-btn_small {
+	background: var(--white) !important;
+	border: 2px solid rgb(190, 190, 190) !important;
+	color: rgb(83, 83, 83) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	font-weight: 500 !important;
+	font-size: 0.7rem !important;
+	
+}
+
+.report-btn_small:hover {
+	background: var(--gray) !important;
+	color: white !important;
+	border: 2px solid var(--gray) !important;
 
 }
 
@@ -125,6 +146,21 @@ button:focus {
 	color: var(--white) !important;
 }
 
+.register-btn_small-danger {
+	border: 1px solid var(--red) !important;
+	background-color: var(--red) !important;
+	color: var(--white) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 600 !important;
+	font-size: 0.9rem !important;
+}
+
+.register-btn_small-danger:hover {
+	background-color: var(--redHover) !important;
+	color: var(--white) !important;
+}
 /* ---- Profile/Avatar button ---- */
 .avatar-btn{
 	background: var(--green) !important;

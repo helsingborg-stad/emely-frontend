@@ -58,7 +58,7 @@ export default function Profile() {
                         
                     <Button
                     variant="none"
-                    className="register-btn_light_small-danger"
+                    className="register-btn_small-danger"
                     id="delete-user-button"
                     onClick={handleShow}
                 >

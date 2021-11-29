@@ -5,13 +5,13 @@ import { IoIosArrowForward } from "react-icons/io";
 import { ConversationContext } from "../../contexts/ConversationContext";
 
 export default function WorkButton(props) {
-  const { setCurrentJob } = useContext(ConversationContext);
+  const { setCurrentJob, currentJob } = useContext(ConversationContext);
   const history = useHistory();
 
   const buttons = props.occupation.occupations;
   const handleClick = (e) => {
     setCurrentJob(e.target.id);
-    history.push("/emely-chat/intervju/");
+    history.push(`/emely-chat/intervju/${e.target.id}`);
   };
 
   return (

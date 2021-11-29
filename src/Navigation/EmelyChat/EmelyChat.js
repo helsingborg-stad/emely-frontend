@@ -25,6 +25,7 @@ export default function EmelyChat(props) {
     isLoading,
     sessionConversation,
     setSessionConersation,
+    conversationId,
   } = useContext(ConversationContext);
 
   /* ---- Gets a user ID and starts a conversation with Emely from the beginning every  first rendering ---- */
@@ -51,32 +52,35 @@ export default function EmelyChat(props) {
   /* ---- Tracks and renders new messages, scrolls them up ---- */
   useEffect(() => {
     renderMessages();
-    scrollToTop();
+    scrollToTop(scroll);
   }, [sessionConversation, isValidationError]);
 
   useEffect(() => {
     if (isFocused) {
       renderMessages();
-      scrollToTop();
+      scrollToTop(scroll);
     }
   }, [isFocused]);
 
-  const scrollToTop = () => {
-    scroll.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToTop = (ref) => {
+    window.scrollTo(0, ref.current?.offsetTop);
+    // scroll.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const renderMessages = () => {
     return sessionConversation.map((msg, i) => {
       if (msg.type === "user") {
+        
         return (
           <div ref={scroll}>
-            <UserChatBubble message={msg.text} key={i} />
+            <UserChatBubble convId={msg.conversation_id} message={msg.text} key={i} />
           </div>
         );
       } else {
+        
         return (
           <div ref={scroll}>
-            <EmelyChatBubble message={msg.text} key={i} />
+            <EmelyChatBubble convId={msg.conversation_id} message={msg.text} key={i} />
           </div>
         );
       }
@@ -85,48 +89,50 @@ export default function EmelyChat(props) {
 
   return (
     <>
-      <Container className="emely-chat-container">
-        <div className="emely-chat_wrapper">
-          {sessionConversation.length > 0 && renderMessages()}
-
-          {/* ---- Renders Emely loader (waiting for a response from the server ) ---- */}
+    
+    <Container className="emely-chat-container">
+    <div className="emely-chat_wrapper">
+    {sessionConversation.length > 0 && renderMessages()}
+    
+    {/* ---- Renders Emely loader (waiting for a response from the server ) ---- */}
           {isLoading && (
             <div ref={scroll}>
-              <EmelyChatBubble
+            <EmelyChatBubble
                 isLoading={isLoading}
                 loader={<PulseLoader size={6} color={"#979797"} />}
               />
-            </div>
-          )}
+              </div>
+              )}
 
-          {/* ---- Renders user loader (if textarea onFocus) ---- */}
-          {isFocused && (
-            <div ref={scroll}>
+              {/* ---- Renders user loader (if textarea onFocus) ---- */}
+              {isFocused && (
+                <div ref={scroll}>
               <UserChatBubble
-                isFocused={isFocused}
+              isFocused={isFocused}
                 loader={<PulseLoader size={6} color={"#979797"} />}
-              />
+                />
             </div>
-          )}
+            )}
           {/* ---- Renders Emely warning massage if user message contains a special signs or is empty */}
           {isValidationError && (
             <div ref={scroll}>
               <EmelyChatBubble
-                isValidationError={isValidationError}
+              isValidationError={isValidationError}
                 loader={<PulseLoader size={6} color={"#979797"} ref={scroll} />}
-              />
+                />
             </div>
-          )}
-        </div>
+            )}
+            </div>
         {/* <div style={{border: "1px solid red"}} ref={scroll}></div> */}
         <ErrorBoundary>
           <ChatInput
-            persona={persona}
+          persona={persona}
             setFocused={setFocused}
             setValidationError={setValidationError}
           />
-        </ErrorBoundary>
+          </ErrorBoundary>
       </Container>
-    </>
+
+      </>
   );
 }
