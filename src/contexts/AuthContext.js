@@ -37,6 +37,7 @@ export function AuthProvider({ children }) {
 	const [allKeys, setAllKeys] = useState();
 	const history = useHistory();
 	const [keyMsg, setKeyMsg] = useState();
+	const [isGuest, setIsGuest] = useState(false);
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
@@ -47,10 +48,12 @@ export function AuthProvider({ children }) {
 				const uid = user.uid;
 
 				if (uid === user.uid && uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
+					setIsGuest(false)
 					console.log('You are signed in!');
 					return <Redirect to="/dashboard" />;
 				} else if (uid === 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
-					console.log('You are signed in as guest');
+					setIsGuest(true)
+					console.log('You are signed in as Guest');
 				} else {
 					console.log('Signed out!');
 					return <Redirect to="/login" />;
@@ -61,7 +64,7 @@ export function AuthProvider({ children }) {
 		});
 
 		return unsubscribe;
-	}, []);
+	}, [isGuest]);
 
 	/* ---- FIREBASE AUTHENTICATION ---- */
 
@@ -327,6 +330,7 @@ export function AuthProvider({ children }) {
 		checkKey,
 		allKeys,
 		reportMessage,
+		isGuest,
 	};
 
 	return (
