@@ -23,6 +23,7 @@ steps:
     - 'REACT_APP_ACAPELA_PASSWORD=${_REACT_APP_ACAPELA_PASSWORD}'
     - 'REACT_APP_DEV_TESTING=${_REACT_APP_DEV_TESTING}'
     - 'REACT_APP_FIRESTORE_REPORT=${_REACT_APP_FIRESTORE_REPORT}'
+
   # Build the container image
 - id: build-image
   name: 'gcr.io/cloud-builders/docker'

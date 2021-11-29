@@ -16,3 +16,4 @@ aldrig i analysen för att dra slutsatser kring interaktioner.
 Allt du skriver till Emely kommer att sparas i våra databaser. 
 När du använder taligenkänningen när du pratar med Emely kommer din röstdata att skickas till Google, då vi använder oss av Google Speech To Text för att analysera vad du säger till Emely. 
 För att läsa mer om Google Speech To Text och hur de hanterar röstdata, se https://cloud.google.com/speech-to-text/docs/data-logging.
+
