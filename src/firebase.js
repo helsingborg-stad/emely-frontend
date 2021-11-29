@@ -19,6 +19,7 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const analytics = getAnalytics(app);
 export const dbUsers = collection(db, process.env.REACT_APP_FIRESTORE_COLLECTION);
+export const dbReportedMessages = collection(db, process.env.REACT_APP_FIRESTORE_REPORT);
 
 export default app
 

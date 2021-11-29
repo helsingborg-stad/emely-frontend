@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import { auth, dbUsers, db } from '../firebase';
+import { auth, dbUsers, db, dbReportedMessages } from '../firebase';
 import {
 	doc,
 	setDoc,
@@ -183,6 +183,21 @@ export function AuthProvider({ children }) {
 		setLoading(false);
 	}
 
+	/* ---- Send reported message to 'reported-messages' collection  ---- */
+	async function reportMessage(conversationId, text) {
+		try{
+		await setDoc(doc(dbReportedMessages), {
+			conversation_id: conversationId,
+			text: text,
+			created_at: new Date(),
+		});
+		console.log('Message reported, thanks for input!');
+	} catch (error){
+		console.log(error)
+	}
+
+	}
+
 	/* ---- Create user in Firestore with signup information ---- */
 	async function createUser(
 		email,
@@ -311,6 +326,7 @@ export function AuthProvider({ children }) {
 		getKeys,
 		checkKey,
 		allKeys,
+		reportMessage,
 	};
 
 	return (

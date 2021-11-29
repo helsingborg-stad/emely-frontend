@@ -25,6 +25,7 @@ export default function EmelyChat(props) {
     isLoading,
     sessionConversation,
     setSessionConersation,
+    conversationId,
   } = useContext(ConversationContext);
 
   /* ---- Gets a user ID and starts a conversation with Emely from the beginning every  first rendering ---- */
@@ -69,15 +70,17 @@ export default function EmelyChat(props) {
   const renderMessages = () => {
     return sessionConversation.map((msg, i) => {
       if (msg.type === "user") {
+        
         return (
           <div ref={scroll}>
-            <UserChatBubble message={msg.text} key={i} />
+            <UserChatBubble convId={msg.conversation_id} message={msg.text} key={i} />
           </div>
         );
       } else {
+        
         return (
           <div ref={scroll}>
-            <EmelyChatBubble message={msg.text} key={i} />
+            <EmelyChatBubble convId={msg.conversation_id} message={msg.text} key={i} />
           </div>
         );
       }

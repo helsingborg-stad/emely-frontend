@@ -59,7 +59,7 @@ const ConversationContextProvider = (props) => {
       );
       const result = await response.data;
       setConversationId(result.conversation_id);
-      setSessionConersation([{ text: result.text, type: "emely" }]);
+      setSessionConersation([{ text: result.text, type: "emely", conversation_id: conversationId}]);
     } catch (err) {
       console.log("Error: ", err);
       setSessionConersation((prevState) => [
@@ -103,9 +103,10 @@ const ConversationContextProvider = (props) => {
       const result = await response.data;
       // saves Emely's message
       setCurrentProgress(result.progress * 100);
+      setConversationId(result.conversation_id);
       setSessionConersation((prevState) => [
         ...prevState,
-        { text: result.text, type: "emely" },
+        { text: result.text, type: "emely", conversation_id: result.conversation_id },
       ]);
     } catch (err) {
       console.log("Error: ", err);

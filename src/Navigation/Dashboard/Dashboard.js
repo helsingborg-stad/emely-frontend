@@ -70,7 +70,7 @@ export default function Dashboard() {
 							onClick={() => handleLink('/work-emely')}
 						>
 							<FiBriefcase size={20} />
-							<span className="px-3">SÖKA JOBB-ASSISTENT</span>
+							<span className="px-3">Jobbintervju</span>
 						</Button>
 					</Col>
 
@@ -82,7 +82,7 @@ export default function Dashboard() {
 							onClick={() => handleLink('/emely-chat/fika')}
 						>
 							<FiCoffee size={20} />
-							<span className="px-3">FIKA KOMPIS</span>
+							<span className="px-3">Ta en fika</span>
 						</Button>
 					</Col>
 				</Row>

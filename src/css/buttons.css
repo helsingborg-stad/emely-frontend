@@ -65,6 +65,23 @@ button:focus {
 
 }
 
+.report-btn_small {
+	background: var(--white) !important;
+	border: 2px solid rgb(190, 190, 190) !important;
+	color: rgb(83, 83, 83) !important;
+	border-radius: var(--buttonBorderRadius) !important;
+	font-weight: 500 !important;
+	font-size: 0.7rem !important;
+	
+}
+
+.report-btn_small:hover {
+	background: var(--gray) !important;
+	color: white !important;
+	border: 2px solid var(--gray) !important;
+
+}
+
 /* ---- Outline small buttons ---- */
 .register-btn_light_small {
 	border: 1px solid var(--green) !important;

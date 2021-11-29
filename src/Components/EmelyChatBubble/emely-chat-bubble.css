@@ -10,13 +10,21 @@
     width: 100%;
 }
 
+.report-button{
+    color: gray !important;
+    bottom: 0px;
+    position: relative !important;
+    font-weight: 500 !important;
+}
+
+
+
 .dialogue-text {
     background-color: var(--white);
     border-radius: 0px 40px 40px 40px;
     border: 2px solid rgb(209, 209, 209);
     max-width: 60%;
     font-size: 0.9rem;
-    margin-top: 5px;
     margin-left: 60px;
     padding: 20px;
     font-weight: 500 !important;
