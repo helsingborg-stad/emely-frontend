@@ -130,7 +130,7 @@ export default function Login() {
 
 					{/* ---- Forgot password? ---- */}
 					<div className="w-100 text-end fw-bold">
-						<p style={{ fontWeight: '600' }}>
+						<p className="me-4" style={{ fontWeight: '600' }}>
 							{' '}
 							<Link id="text-link" to="/forgot-password">
 								Glömt lösenord?

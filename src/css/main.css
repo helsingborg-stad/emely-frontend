@@ -93,6 +93,8 @@ body {
 a {
 	color: black !important;
 	text-decoration: none !important;
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 a:visited {
@@ -110,10 +112,7 @@ a:visited {
 	color: var(--greenHover) !important;
 }
 
-a:hover {
-	color: var(--greenHover) !important;
-	text-decoration: none !important;
-}
+
 
 
 
