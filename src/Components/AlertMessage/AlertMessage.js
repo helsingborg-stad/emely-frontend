@@ -27,7 +27,7 @@ export default function AlertMessage(props) {
 	return (
 		<>
 			{show ? (
-				<Container className="alert-container fixed-top">
+				<Container className="alert-container fixed-bottom">
 				<Alert
 				className="alert-message text-center mb-5 fw-bold shadow-sm"
 				variant={msgVariant}
