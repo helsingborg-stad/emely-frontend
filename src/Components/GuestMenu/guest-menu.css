@@ -1,3 +1,10 @@
-.nav.item{
-    color: red !important;
+.nav-login-button{
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    font-size: 0.9rem !important;
+}
+
+.nav-login-button:hover{
+    color: var(--green) !important;
 }

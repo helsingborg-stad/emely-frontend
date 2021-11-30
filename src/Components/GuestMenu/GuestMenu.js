@@ -99,18 +99,12 @@ export default function UserMenu(props) {
 						xs={5}
 						md={5}
 						lg={5}
-						className="ms-4 mt-1"
-						style={{ fontSize: '1rem', fontWeight: '600' }}
+						className="ms-4 mt-1 nav-login-button"
 						onClick={handleLogout}
 					>
-					<Button
-					className="register-btn_sidebar p-0"
-					variant="none"
-					onClick={handleLogout}
-				>
 				{showUsername ? <span><RiLoginCircleLine size={20} /> Logga in</span> : null }
 					
-				</Button>
+			
 					</Col>
 				</Row>
 
