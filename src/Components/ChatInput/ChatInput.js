@@ -134,7 +134,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
               type="text"
               minRows={1}
               maxRows={3}
-              placeholder={isLoading ? "" : "Skriv meddelande"}
+              placeholder={isLoading ? "" : "Meddelande"}
               value={listening ? transcript : userMessage}
               onKeyDown={(e) => handleKeyDown(e)}
               disabled={isLoading}

@@ -14,9 +14,7 @@ export default function ProfilePasswordEdit(props) {
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
 
-	const { passwordUpdate, translateError, logout } = useAuth();
-	const [msg, setMsg] = useState('');
-	const [msgVariant, setMsgVariant] = useState('');
+	const { passwordUpdate, translateError, logout, setMsg, setMsgVariant } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
 
@@ -63,8 +61,6 @@ export default function ProfilePasswordEdit(props) {
 		<>
 			<Container className="p-5">
 				<h2 className="text-center mb-4 fw-bold">Ändra Lösenord</h2>
-
-				{msg && <AlertMessage message={msg} variant={msgVariant} />}
 
 				{/* Username form */}
 				<Form onSubmit={handleSubmit} id="update-profile">

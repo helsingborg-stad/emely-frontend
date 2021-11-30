@@ -5,7 +5,14 @@ import Avatar from '@mui/material/Avatar';
 import { RiFlag2Line } from 'react-icons/ri';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { useAuth } from '../../contexts/AuthContext';
-import { Button, Row, Col, OverlayTrigger, Tooltip, Popover } from 'react-bootstrap';
+import {
+	Button,
+	Row,
+	Col,
+	OverlayTrigger,
+	Tooltip,
+	Popover,
+} from 'react-bootstrap';
 
 export default function ChatBubble({
 	isValidationError,
@@ -15,16 +22,19 @@ export default function ChatBubble({
 	ref,
 	convId,
 }) {
-	const { reportMessage } = useAuth();
-  const [isReported, setIsReported] = useState(false)
+	const { reportMessage, setMsg, setMsgVariant } = useAuth();
+	const [isReported, setIsReported] = useState(false);
 
 	function handleReportMessage(e) {
 		e.preventDefault();
+		setMsg('')
 
 		try {
 			/* Report message and add in reported-messages database */
 			reportMessage(convId, message);
-      setIsReported(true);
+			setIsReported(true);
+			setMsg("Meddelandet har rapporterats!")
+			setMsgVariant("warning")
 
 			/*  Catch error & translate in a function */
 		} catch (error) {
@@ -34,43 +44,44 @@ export default function ChatBubble({
 	return (
 		<>
 			<div className="mt-3 mb-0 emely-chat-wrapper" ref={ref}>
-      <Row>
-      <Col xs={7} md={6} lg={6}>
-				<div className="img-wrapper">
-					<Avatar
-						alt="Emely"
-						sx={{ width: 40, height: 40 }}
-						src={emely}
-					></Avatar>
-          </div>
-          </Col>
-          <Col xs={5} md={5} lg={5} className="p-0">
-					{isLoading || isReported ? null : (
-            <OverlayTrigger
-            key="top"
-            placement="top"
-            overlay={
-              <Popover id={`popover-positioned-top`}>
-              <Popover.Header style={{ fontSize: '0.7rem'}}>{`Hjälp oss att bli bättre`}</Popover.Header>
-              <Popover.Body style={{ fontSize: '0.7rem'}}>
-                Klicka på rapportera om du anser att Emelys meddelande är opassande.
-              </Popover.Body>
-            </Popover>
-            }
-          >
-						<Button
-              variant="none"
-							className="report-btn_small me-3"
-							onClick={handleReportMessage}
-						>
-							<RiFlag2Line /> Rapportera
-						</Button>
-            </OverlayTrigger>
-					)}
-
-          </Col>
-				
-        </Row>
+				<Row>
+					<Col xs={7} md={6} lg={6}>
+						<div className="img-wrapper">
+							<Avatar
+								alt="Emely"
+								sx={{ width: 40, height: 40 }}
+								src={emely}
+							></Avatar>
+						</div>
+					</Col>
+					<Col xs={5} md={5} lg={5} className="p-0">
+						{isLoading || isReported ? null : (
+							<OverlayTrigger
+								key="top"
+								placement="top"
+								overlay={
+									<Popover id={`popover-positioned-top`}>
+										<Popover.Header
+											style={{ fontSize: '0.7rem' }}
+										>{`Hjälp oss att bli bättre`}</Popover.Header>
+										<Popover.Body style={{ fontSize: '0.7rem' }}>
+											Klicka på rapportera om du anser att Emelys meddelande är
+											opassande.
+										</Popover.Body>
+									</Popover>
+								}
+							>
+								<Button
+									variant="none"
+									className="report-btn_small me-3"
+									onClick={handleReportMessage}
+								>
+									<RiFlag2Line /> Rapportera
+								</Button>
+							</OverlayTrigger>
+						)}
+					</Col>
+				</Row>
 
 				{isValidationError ? (
 					<p className="alert-danger dialogue-text">

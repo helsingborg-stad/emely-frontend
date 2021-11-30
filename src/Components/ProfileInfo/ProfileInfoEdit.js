@@ -20,8 +20,6 @@ export default function ProfileInfoEdit(props) {
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
 
-	const [msg, setMsg] = useState();
-	const [msgVariant, setMsgVariant] = useState();
 	const [isUpdated, setIsUpdated] = useState(false);
 
 	const {
@@ -31,6 +29,8 @@ export default function ProfileInfoEdit(props) {
 		updateCurrentOccupation,
 		updateBirthYear,
 		updateNativeLanguage,
+		setMsg,
+		setMsgVariant
 	} = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -209,11 +209,6 @@ export default function ProfileInfoEdit(props) {
 							</Form.Select>
 						</Form.Group>
 					</Row>
-					{msg && (
-						<Alert className="mt-4" variant="success">
-							{msg}
-						</Alert>
-					)}
 
 					<Row className="mb-3 mt-5">
 						<Col className="mb-3" md={6} lg={6} xs={12}>

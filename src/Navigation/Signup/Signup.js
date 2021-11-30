@@ -26,11 +26,10 @@ export default function Signup() {
 	const currentOccupationRef = useRef();
 	/* ----------------------------------- */
 
-	/* ------ Hooks ------ */
-	const { signup, createUser, translateError } = useAuth();
-	const [msg, setMsg] = useState('');
+	/* ------ Hooks & State ------ */
+	const { signup, createUser, translateError, setMsg, setMsgVariant } =
+		useAuth();
 	const [loading, setLoading] = useState(false);
-	const [msgVariant, setMsgVariant] = useState('');
 	const history = useHistory();
 	/* ----------------------------------- */
 
@@ -77,7 +76,8 @@ export default function Signup() {
 				uid,
 				creationTime
 			);
-
+			setMsg('Användaren har skapats!');
+			setMsgVariant('success');
 			history.push('/dashboard');
 
 			/*  Catch error & translate in a function */
@@ -92,8 +92,6 @@ export default function Signup() {
 
 	return (
 		<>
-			{/* ------------ Alert for error messages: fixed-top ------------ */}
-			{msg && <AlertMessage message={msg} variant={msgVariant} />}
 			<AuthLayout>
 				<h2 className="text-center fw-bold mb-5">
 					Registrera dig för att börja prata med Emely.
@@ -166,7 +164,8 @@ export default function Signup() {
 
 						<Form.Group id="birthYear" className="fw-bold">
 							<Form.Label className="input-label">
-								<AiOutlineCalendar className="label-icons" size={30} /> Vilket år är du född?
+								<AiOutlineCalendar className="label-icons" size={30} /> Vilket
+								år är du född?
 							</Form.Label>
 							<Form.Control
 								className="w-100 input-field"
@@ -268,7 +267,7 @@ export default function Signup() {
 						</Form.Group>
 					</Row>
 
-					{/* ------------ Login buttons ------------ */}
+					{/* ------------ Submit & Register new user buttons ------------ */}
 					<Button
 						disabled={loading}
 						className="w-100 mt-3 register-btn"
@@ -278,6 +277,8 @@ export default function Signup() {
 						SKAPA ANVÄNDARE
 					</Button>
 				</Form>
+
+				{/* ------------ Login Button ------------ */}
 				<div className="w-100 text-center mt-3 fw-bold">
 					<p style={{ fontWeight: '600' }}>
 						{' '}

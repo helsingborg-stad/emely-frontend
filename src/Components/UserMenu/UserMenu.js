@@ -11,7 +11,6 @@ import {
 } from 'react-bootstrap';
 
 import Avatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
 
 /* Icon imports */
 import { useAuth } from '../../contexts/AuthContext';
@@ -20,14 +19,18 @@ import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsChatRightDots } from 'react-icons/bs';
 import { RiShieldUserLine } from 'react-icons/ri';
-import { AiFillHome } from 'react-icons/ai';
-import { HiOutlineUserCircle } from 'react-icons/hi';
-import { RiRestartFill } from 'react-icons/ri';
 
 /* Variable declaration */
 export default function UserMenu(props) {
 	const [error, setError] = useState('');
-	const { currentUser, logout, userDetails, getUserDetails } = useAuth();
+	const {
+		currentUser,
+		logout,
+		userDetails,
+		getUserDetails,
+		setMsg,
+		setMsgVariant,
+	} = useAuth();
 	const history = useHistory();
 
 	const [show, setShow] = useState(false);
@@ -43,10 +46,8 @@ export default function UserMenu(props) {
 		try {
 			if (window.location.href.indexOf('emely-chat') > -1) {
 				return handleCloseUsername();
-				
 			} else {
 				return handleShowUsername();
-
 			}
 		} catch (error) {
 			console.log(error);
@@ -73,7 +74,8 @@ export default function UserMenu(props) {
 
 			/* Catch error */
 		} catch (error) {
-			setError(error.message);
+			setMsg(error.message);
+			setMsgVariant('danger');
 		}
 	}
 
@@ -105,7 +107,9 @@ export default function UserMenu(props) {
 								className="ms-4 mt-1"
 								style={{ fontSize: '1rem', fontWeight: '600' }}
 							>
-							{showUsername ? <span>{userDetails && userDetails.username}</span> : null }
+								{showUsername ? (
+									<span>{userDetails && userDetails.username}</span>
+								) : null}
 							</Col>
 						</Row>
 					</Navbar.Brand>
@@ -171,61 +175,42 @@ export default function UserMenu(props) {
 										</Row>
 									</Offcanvas.Title>
 								</Offcanvas.Header>
-								<Offcanvas.Body className="m-3">
-									<Row className="mb-2">
-										<Col className="ms-4 p-1" xs={1}>
-											<RiShieldUserLine size={25} />
-										</Col>
-
-										<Col>
-											{/* Profile page menu-button */}
-											<Link to="/profile">
-												<Button
-													className="register-btn_sidebar"
-													variant="none"
-													onClick={handleClose}
-												>
-													<Nav.Item>Användarkonto</Nav.Item>
-												</Button>
-											</Link>
-										</Col>
-									</Row>
-
-									<hr />
-									<Row className="menu-rows ">
-										<Col className="ms-4 p-1" xs={1}>
-											<BsChatRightDots size={25} />
-										</Col>
-										<Col>
-											{/* Update profile menu-button */}
-											<Link id="side-bar-link" to="/dashboard">
-												<Button
-													className="register-btn_sidebar"
-													variant="none"
-													onClick={handleClose}
-												>
-													<Nav.Item>Prata med Emely</Nav.Item>
-												</Button>
-											</Link>
-										</Col>
-									</Row>
-
-									<hr />
-
-									<Row className="mb-2">
-										<Col className="ms-4 p-1" xs={1}>
-											<BiLogOutCircle size={25} />
-										</Col>
-										<Col>
-											{/* Log out menu-button */}
-											<Button
+								<Offcanvas.Body>
+									<Row className="">
+										{/* Profile page menu-button */}
+										<Link to="/profile">
+											<Nav.Item
+												onClick={handleClose}
 												className="register-btn_sidebar"
-												variant="none"
-												onClick={handleLogout}
 											>
-												Logga ut
-											</Button>
-										</Col>
+												<RiShieldUserLine className="me-4" size={25} />
+												Användarkonto
+											</Nav.Item>
+										</Link>
+									</Row>
+									<Row>
+										{/* Chat with emely button*/}
+										<Link to="/dashboard">
+											<Nav.Item
+												onClick={handleClose}
+												className="register-btn_sidebar"
+											>
+												<BsChatRightDots className="me-4" size={22} />
+												Prata med Emely
+											</Nav.Item>
+										</Link>
+									</Row>
+
+
+									<Row onClick={handleLogout}>
+										{/* Log out menu-button */}
+										<Nav.Item
+											onClick={handleClose}
+											className="register-btn_sidebar"
+										>
+											<BiLogOutCircle className="me-4" size={25} />
+											Logga ut
+										</Nav.Item>
 									</Row>
 								</Offcanvas.Body>
 							</Offcanvas>
@@ -233,7 +218,6 @@ export default function UserMenu(props) {
 					</Navbar.Collapse>
 				</Container>
 			</Navbar>
-			{error && <Alert variant="danger">{error}</Alert>}
 		</>
 	);
 }

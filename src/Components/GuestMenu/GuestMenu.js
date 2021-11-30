@@ -149,63 +149,44 @@ export default function UserMenu(props) {
 								<Offcanvas.Header className="m-3 " closeButton>
 									<Offcanvas.Title className=""></Offcanvas.Title>
 								</Offcanvas.Header>
-								<Offcanvas.Body className="m-3">
-									<Row className="mb-2">
-										<Col className="ms-4 p-1" xs={1}>
-											<AiOutlineUserAdd size={25} />
-										</Col>
+								<Offcanvas.Body className="">
+								<Row className="">
+								{/* Profile page menu-button */}
+								<Link to="/signup">
+									<Nav.Item
+										onClick={handleClose}
+										className="register-btn_sidebar"
+									>
+										<AiOutlineUserAdd className="me-4" size={25} />
+										Registrera konto
+									</Nav.Item>
+								</Link>
+							</Row>
+							<Row>
+								{/* Chat with emely button*/}
+								<Link to="/dashboard">
+									<Nav.Item
+										onClick={handleClose}
+										className="register-btn_sidebar"
+									>
+										<BsChatRightDots className="me-4" size={22} />
+										Prata med Emely
+									</Nav.Item>
+								</Link>
+							</Row>
 
-										<Col>
-											{/* Profile page menu-button */}
-											<Link to="/signup">
-												<Button
-													className="register-btn_sidebar"
-													variant="none"
-													onClick={handleClose}
-												>
-													<Nav.Item>Registrera konto</Nav.Item>
-												</Button>
-											</Link>
-										</Col>
-									</Row>
 
-									<hr />
-									<Row className="menu-rows ">
-										<Col className="ms-4 p-1" xs={1}>
-										
-											<BsChatRightDots size={25} />
-										</Col>
-										<Col>
-											{/* Update profile menu-button */}
-											<Link id="side-bar-link" to="/dashboard">
-												<Button
-													className="register-btn_sidebar"
-													variant="none"
-													onClick={handleClose}
-												>
-													<Nav.Item>Prata med Emely</Nav.Item>
-												</Button>
-											</Link>
-										</Col>
-									</Row>
-
-									<hr />
-
-									<Row className="mb-2">
-										<Col className="ms-4 p-1" xs={1}>
-											<RiLoginCircleLine size={25} />
-										</Col>
-										<Col>
-											{/* Log out menu-button */}
-											<Button
-												className="register-btn_sidebar"
-												variant="none"
-												onClick={handleLogout}
-											>
-												Logga in
-											</Button>
-										</Col>
-									</Row>
+							<Row onClick={handleLogout}>
+								{/* Log out menu-button */}
+								<Nav.Item
+									onClick={handleClose}
+									className="register-btn_sidebar"
+								>
+									<BiLogOutCircle className="me-4" size={25} />
+									Logga in
+								</Nav.Item>
+								
+							</Row>
 								</Offcanvas.Body>
 							</Offcanvas>
 						</Nav>

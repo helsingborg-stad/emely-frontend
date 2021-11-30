@@ -134,10 +134,11 @@
   padding: 10px 50px 10px 20px;
   width: 100%;
   outline: none;
+  border: 1px solid rgb(180, 180, 180);
 }
 
 .user-message_input:focus {
-  border: 1px solid var(--inputMessageFocus);
+  border: 1px solid var(--green) !important;
 }
 
 @media(max-width: 800px) {

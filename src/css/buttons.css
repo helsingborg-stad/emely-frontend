@@ -112,17 +112,20 @@ button:focus {
 }
 
 .register-btn_sidebar {
-	color: var(--black) !important;
-	border-radius: var(--buttonBorderRadius) !important;
 	letter-spacing: 0.5px !important;
 	font-weight: 500 !important;
 	font-size: 0.9rem !important;
 	text-decoration: none !important;
+	margin-bottom: 0px !important;
+	padding: 15px 15px 15px 25px!important;
+	border-bottom: 1px solid rgb(182, 182, 182) !important;
 }
 
 .register-btn_sidebar:hover {
-
-	color: var(--green) !important;
+	transition: 0.3s;
+	background: var(--green) !important;
+	color: var(--greenExtraLight) !important;
+	padding: 15px 15px 15px 45px!important;
 
 }
 

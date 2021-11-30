@@ -29,15 +29,19 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+
+	/* --- Variables, States & Hooks --- */
 	const [currentUser, setCurrentUser] = useState();
 	const [userDetails, setUserDetails] = useState();
 	const [correctKey, setCorrectKey] = useState();
-	const [appKey, setAppKey] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const [allKeys, setAllKeys] = useState();
 	const history = useHistory();
-	const [keyMsg, setKeyMsg] = useState();
 	const [isGuest, setIsGuest] = useState(false);
+	const [guestId] = useState("mcK6kHLV4nh33XJmO2tJXzokqpG2")
+
+	const [msg, setMsg] = useState('');
+	const [msgVariant, setMsgVariant] = useState('');
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
@@ -47,11 +51,11 @@ export function AuthProvider({ children }) {
 				setLoading(false);
 				const uid = user.uid;
 
-				if (uid === user.uid && uid !== 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
+				if (uid === user.uid && uid !== guestId) {
 					setIsGuest(false)
 					console.log('You are signed in!');
 					return <Redirect to="/dashboard" />;
-				} else if (uid === 'mcK6kHLV4nh33XJmO2tJXzokqpG2') {
+				} else if (uid === guestId) {
 					setIsGuest(true)
 					console.log('You are signed in as Guest');
 				} else {
@@ -159,11 +163,14 @@ export function AuthProvider({ children }) {
 				updateDoc(keyRef, {
 					login_count: increment(1),
 				});
-
+				setMsgVariant('success');
+				setMsg('Du har nu tillgång till appen')
 				return history.push('/login');
 			} else {
 				setCorrectKey(false);
 				sessionStorage.setItem('sessionKey', 'false');
+				setMsgVariant('danger');
+				setMsg('Fel nyckel eller passerat utgångsdatum!')
 			}
 		}
 	}
@@ -331,6 +338,11 @@ export function AuthProvider({ children }) {
 		allKeys,
 		reportMessage,
 		isGuest,
+		guestId,
+		msg,
+		setMsg,
+		msgVariant,
+		setMsgVariant,
 	};
 
 	return (
