@@ -1,24 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, CloseButton } from 'react-bootstrap';
+import { useAuth } from '../../contexts/AuthContext';
+import { Container } from 'react-bootstrap';
 
 export default function AlertMessage(props) {
 	const [show, setShow] = useState(true);
+	const { msg, setMsg, msgVariant } = useAuth();
 
 	function handleDismiss() {
 		setShow(false);
+		setMsg('')
 	}
+
+	useEffect(() => {
+		setShow(true);
+		const timer = setTimeout(() => {
+			setShow(false);
+			setMsg('')
+		}, 3000);
+		return timer;
+
+	}, [msg])
+
+
 
 	return (
 		<>
-			<Alert
-				className="fixed-top text-center fw-bold "
-				variant={props.variant}
-				style={{ display: show ? 'block' : 'none' }}
+			{show ? (
+				<Container className="alert-container fixed-bottom">
+				<Alert
+				className="alert-message text-center mb-5 fw-bold shadow-sm"
+				variant={msgVariant}
 				dismissible
-			>
-				{props.message}
+				
+				>
+				{msg}
 				<CloseButton aria-label="Hide" onClick={handleDismiss} />
-			</Alert>
+				</Alert>
+				</Container>
+				) : null }
 		</>
 	);
 }

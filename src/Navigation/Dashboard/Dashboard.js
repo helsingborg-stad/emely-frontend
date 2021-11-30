@@ -1,42 +1,42 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import { FiBriefcase } from 'react-icons/fi';
-import { FiCoffee } from 'react-icons/fi';
-import { Button } from 'react-bootstrap';
 import { ConversationContext } from '../../contexts/ConversationContext';
+import { Button } from 'react-bootstrap';
+
+import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
 import PulseLoader from 'react-spinners/PulseLoader';
 
-/* Variable declaration */
+/* --- Icon imports --- */
+import { FiBriefcase } from 'react-icons/fi';
+import { FiCoffee } from 'react-icons/fi';
+
+/* --- Variables, State & Hooks --- */
 export default function Dashboard() {
 	const { userDetails, currentUser } = useAuth();
 	const { currentProgress, setCurrentProgress } =
 		useContext(ConversationContext);
-
 	const [isLoading, setIsLoading] = useState();
+	const history = useHistory();
+	const handleLink = (linkTo) => {
+		history.push(linkTo);
+	};
 
+
+	/* --- Add loader before rendering text --- */
 	useEffect(() => {
 		setIsLoading(true);
-
-		/* --- Render text after delay --- */
 		const timer = setTimeout(() => {
 			setIsLoading(false);
 		}, 1500);
 		return timer;
 	}, [currentUser]);
 
+	/* --- Reset progress before entering new chat --- */
 	useEffect(() => {
-		/* Reset current progress on new chat */
 		setCurrentProgress(0);
 	}, []);
-
-	let history = useHistory();
-
-	const handleLink = (linkTo) => {
-		history.push(linkTo);
-	};
 
 	return (
 		<>

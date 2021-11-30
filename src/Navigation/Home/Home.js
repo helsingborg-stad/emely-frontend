@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
@@ -14,10 +15,9 @@ import { RiLockLine } from 'react-icons/ri';
 /* Variable declaration */
 export default function Login() {
 	const keyRef = useRef();
-	const { correctKey, getKeys, checkKey } = useAuth();
-	const [msg, setMsg] = useState('');
-	const [msgVariant, setMsgVariant] = useState('');
+	const { correctKey, getKeys, checkKey, msg, setMsg, setMsgVariant } = useAuth();
 	const [loading, setLoading] = useState(false);
+	const history = useHistory();
 
 	useEffect(() => {
 		return document.body.style.background = "var(--mainBackground)";
@@ -46,10 +46,7 @@ export default function Login() {
 			setTimeout(() => {
 				setLoading(false);
 				checkKey(keyRef.current.value, date);
-				if (correctKey !== true) {
-					setMsgVariant('danger');
-					return setMsg('Fel nyckel eller passerat utgångsdatum!');
-				}
+
 			}, 1500);
 		} catch (error) {
 			console.log(error.code);
@@ -58,7 +55,7 @@ export default function Login() {
 
 	return (
 		<>
-			{msg && <AlertMessage message={msg} variant={msgVariant} />}
+			{msg && <AlertMessage />}
 			<AuthLayout>
 				<h2 className="text-center mb-5 fw-bold" id="login-header">
 					Skriv in din nyckel för att fortsätta vidare till språkroboten Emely
