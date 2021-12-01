@@ -171,7 +171,7 @@ export default function UserMenu(props) {
 											<Link to="/signup">
 												<Nav.Item
 													onClick={handleClose}
-													className="register-btn_sidebar"
+													className="register-btn_sidebar "
 												>
 													<RiUserAddFill className="me-4" size={25} />
 													Registrera konto
@@ -206,7 +206,7 @@ export default function UserMenu(props) {
 								</Offcanvas.Header>
 
 								<Offcanvas.Body className="">
-									<Row className="menu-rows border-0">
+									<Row className="menu-rows">
 										{/* Chat with emely button*/}
 										<Link to="/dashboard">
 											<Nav.Item
@@ -219,12 +219,12 @@ export default function UserMenu(props) {
 										</Link>
 									</Row>
 									{isGuest ? null : (
-										<Row className="menu-rows border-0">
+										<Row className="menu-rows">
 											{/* Profile page menu-button */}
 											<Link to="/profile">
 												<Nav.Item
 													onClick={handleClose}
-													className="register-btn_sidebar border-top"
+													className="register-btn_sidebar"
 												>
 													<RiShieldUserFill className="me-4" size={25} />
 													Användarkonto
@@ -257,12 +257,12 @@ export default function UserMenu(props) {
 									<Divider>
 										<small className="fw-bold mt-4 mb-3">EMELY</small>
 									</Divider>
-									<Row className="menu-rows border-0 ">
+									<Row className="menu-rows border-top-0">
 										{/* Chat with emely button*/}
 										<Link to="/work-emely">
 											<Nav.Item
 												onClick={handleClose}
-												className="register-btn_sidebar border-bottom"
+												className="register-btn_sidebar"
 											>
 												<ImBriefcase className="me-4" size={22} />
 												Jobbintervju
@@ -270,7 +270,7 @@ export default function UserMenu(props) {
 										</Link>
 									</Row>
 
-									<Row className="menu-rows border-0">
+									<Row className="menu-rows">
 										<Link to="/emely-chat/fika">
 											<Nav.Item
 												onClick={handleClose}
