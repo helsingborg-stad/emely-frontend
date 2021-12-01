@@ -166,13 +166,13 @@ export function AuthProvider({ children }) {
 					login_count: increment(1),
 				});
 				setMsgVariant('success');
-				setMsg('Du har nu tillgång till appen')
+				setMsg(`Giltig nyckel! Utgår ${key.deadline}.`)
 				return history.push('/login');
 			} else {
 				setCorrectKey(false);
 				sessionStorage.setItem('sessionKey', 'false');
 				setMsgVariant('danger');
-				setMsg('Fel nyckel eller passerat utgångsdatum!')
+				setMsg('Fel nyckel eller passerat utgångsdatum! Vänligen försök igen')
 			}
 		}
 	}

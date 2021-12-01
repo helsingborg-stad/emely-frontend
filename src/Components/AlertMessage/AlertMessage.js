@@ -17,7 +17,7 @@ export default function AlertMessage(props) {
 		const timer = setTimeout(() => {
 			setShow(false);
 			setMsg('')
-		}, 3000);
+		}, 4000);
 		return timer;
 
 	}, [msg])
