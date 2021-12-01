@@ -173,7 +173,7 @@ export default function UserMenu(props) {
 									</Row>
 									<Row className="menu-rows ">
 										{/* Chat with emely button*/}
-										<Link to="/emely-chat/intervju">
+										<Link to="/work-emely">
 											<Nav.Item
 												onClick={handleClose}
 												className="register-btn_sidebar"

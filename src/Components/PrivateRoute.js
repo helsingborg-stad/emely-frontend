@@ -69,7 +69,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 
 		{msg && <AlertMessage />}
 			{/* --- Render GuestMenu if guest is logged in else render regular UserMenu on login --- */}
-			{isGuest ? <GuestMenu /> : <UserMenu />}
+			 <UserMenu />
 
 			{/* --- If you are chatting with Emely render ChatMenu --- */}
 			{enableChatMenu ? <ChatMenu /> : null}

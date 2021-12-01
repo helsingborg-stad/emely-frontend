@@ -4,23 +4,25 @@ import {
 	Navbar,
 	Nav,
 	Button,
-	Alert,
 	Offcanvas,
 	Row,
 	Col,
 } from 'react-bootstrap';
 
 import Avatar from '@mui/material/Avatar';
+import Divider from '@mui/material/Divider';
 
 /* Icon imports */
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
-import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { RiShieldUserFill } from 'react-icons/ri';
 import { SiHomeadvisor } from 'react-icons/si';
 import { ImBriefcase } from 'react-icons/im';
 import { SiCoffeescript } from 'react-icons/si';
+import { RiUserAddFill } from 'react-icons/ri';
+import { BsArrowDownCircleFill } from 'react-icons/bs';
+import { BsArrowUpCircleFill } from 'react-icons/bs';
 
 /* Variable declaration */
 export default function UserMenu(props) {
@@ -32,6 +34,7 @@ export default function UserMenu(props) {
 		getUserDetails,
 		setMsg,
 		setMsgVariant,
+		isGuest,
 	} = useAuth();
 	const history = useHistory();
 
@@ -94,24 +97,36 @@ export default function UserMenu(props) {
 					<Navbar.Brand>
 						<Row>
 							<Col xs={2} md={2} lg={2}>
-								<Avatar
-									className="fw-bold"
-									sx={{ width: 35, height: 35 }}
-									style={{ background: 'var(--green)', fontSize: '1rem' }}
-								>
-									{userDetails && userDetails.username.charAt(0)}
-								</Avatar>
+								{isGuest ? (
+									<Avatar
+										className="fw-bold"
+										sx={{ width: 35, height: 35 }}
+										style={{ fontSize: '1rem' }}
+									>
+										G
+									</Avatar>
+								) : (
+									<Avatar
+										className="fw-bold"
+										sx={{ width: 35, height: 35 }}
+										style={{ background: 'var(--green)', fontSize: '1rem' }}
+									>
+										{userDetails && userDetails.username.charAt(0)}
+									</Avatar>
+								)}
 							</Col>
 							<Col
 								xs={5}
 								md={5}
 								lg={5}
 								className="ms-4 mt-1"
-								style={{ fontSize: '1rem', fontWeight: '600' }}
+								style={{ fontSize: '1rem', fontWeight: '500' }}
 							>
-								{showUsername ? (
+								{showUsername && isGuest ? (
+									null
+								) : (
 									<span>{userDetails && userDetails.username}</span>
-								) : null}
+								)}
 							</Col>
 						</Row>
 					</Navbar.Brand>
@@ -150,69 +165,104 @@ export default function UserMenu(props) {
 
 							{/* Menu from the side */}
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
-								<Offcanvas.Header className="m-3 " closeButton>
+								<Offcanvas.Header className="m-0 ps-0 " closeButton>
 									<Offcanvas.Title className="">
-										<Row>
-											<Col xs={2} md={2} lg={2}>
-												<Avatar
-													className="fw-bold"
-													sx={{ width: 35, height: 35 }}
-													style={{
-														background: 'var(--green)',
-														fontSize: '1rem',
-													}}
+										{isGuest ? (
+											<Link to="/signup">
+												<Nav.Item
+													onClick={handleClose}
+													className="register-btn_sidebar"
 												>
-													{userDetails && userDetails.username.charAt(0)}
-												</Avatar>
-											</Col>
-											<Col
-												xs={8}
-												md={8}
-												lg={8}
-												className="ms-4 mt-1"
-												style={{ fontSize: '1rem', fontWeight: '600' }}
-											>
-												{userDetails && userDetails.username}
-											</Col>
-										</Row>
-										
+													<RiUserAddFill className="me-4" size={25} />
+													Registrera konto
+												</Nav.Item>
+											</Link>
+										) : (
+											<Row className="ms-3">
+												<Col xs={2} md={2} lg={2}>
+													<Avatar
+														className="fw-bold "
+														sx={{ width: 35, height: 35 }}
+														style={{
+															background: 'var(--green)',
+															fontSize: '1rem',
+														}}
+													>
+														{userDetails && userDetails.username.charAt(0)}
+													</Avatar>
+												</Col>
+												<Col
+													xs={8}
+													md={8}
+													lg={8}
+													className="ms-4 mt-1"
+													style={{ fontSize: '1rem', fontWeight: '600' }}
+												>
+													{userDetails && userDetails.username}
+												</Col>
+											</Row>
+										)}
 									</Offcanvas.Title>
-
 								</Offcanvas.Header>
-								
 
 								<Offcanvas.Body className="">
 									<Row className="menu-rows border-0">
-										{/* Profile page menu-button */}
-										<Link to="/profile">
+										{/* Chat with emely button*/}
+										<Link to="/dashboard">
 											<Nav.Item
 												onClick={handleClose}
 												className="register-btn_sidebar"
 											>
-												<RiShieldUserFill className="me-4" size={25} />
-												Användarkonto
+												<SiHomeadvisor className="me-4" size={25} />
+												Hem
 											</Nav.Item>
 										</Link>
 									</Row>
+									{isGuest ? null : (
+										<Row className="menu-rows border-0">
+											{/* Profile page menu-button */}
+											<Link to="/profile">
+												<Nav.Item
+													onClick={handleClose}
+													className="register-btn_sidebar border-top"
+												>
+													<RiShieldUserFill className="me-4" size={25} />
+													Användarkonto
+												</Nav.Item>
+											</Link>
+										</Row>
+									)}
 
-									<Row className="menu-rows border-0">
-									{/* Chat with emely button*/}
-									<Link to="/dashboard">
-										<Nav.Item
-											onClick={handleClose}
-											className="register-btn_sidebar"
-										>
-											<SiHomeadvisor className="me-4" size={25} />
-											Hem
-										</Nav.Item>
-									</Link>
-								</Row>
-									<Row className="menu-rows ">
+									<Row onClick={handleLogout} className="menu-rows mb-4">
+										{/* Log out menu-button */}
+										{isGuest ? (
+											<Nav.Item
+												onClick={handleClose}
+												className="register-btn_sidebar"
+											>
+												<BsArrowDownCircleFill className="me-4" size={23} />{' '}
+												Logga in
+											</Nav.Item>
+										) : (
+											<Nav.Item
+												onClick={handleClose}
+												className="register-btn_sidebar"
+											>
+												<BsArrowUpCircleFill className="me-4" size={23} />{' '}
+												Logga ut
+											</Nav.Item>
+										)}
+									</Row>
+
+									<Divider>
+										<small className="fw-bold mt-4 mb-3">EMELY</small>
+									</Divider>
+									<Row className="menu-rows border-0 ">
 										{/* Chat with emely button*/}
 										<Link to="/work-emely">
 											<Nav.Item
 												onClick={handleClose}
-												className="register-btn_sidebar"
+												className="register-btn_sidebar border-bottom"
 											>
 												<ImBriefcase className="me-4" size={22} />
 												Jobbintervju
@@ -221,30 +271,15 @@ export default function UserMenu(props) {
 									</Row>
 
 									<Row className="menu-rows border-0">
-									{/* Chat with emely button*/}
-									<Link to="/emely-chat/fika">
-										<Nav.Item
-											onClick={handleClose}
-											className="register-btn_sidebar"
-										>
-											<SiCoffeescript className="me-4" size={22} />
-											Fika
-										</Nav.Item>
-									</Link>
-								</Row>
-
-									
-
-
-									<Row onClick={handleLogout} className="menu-rows">
-										{/* Log out menu-button */}
-										<Nav.Item
-											onClick={handleClose}
-											className="register-btn_sidebar"
-										>
-											<BiLogOutCircle className="me-4" size={25} />
-											Logga ut
-										</Nav.Item>
+										<Link to="/emely-chat/fika">
+											<Nav.Item
+												onClick={handleClose}
+												className="register-btn_sidebar"
+											>
+												<SiCoffeescript className="me-4" size={22} />
+												Fika
+											</Nav.Item>
+										</Link>
 									</Row>
 								</Offcanvas.Body>
 							</Offcanvas>

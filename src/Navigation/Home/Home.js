@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
+import Divider from '@mui/material/Divider';
 
 /* Icon Imports */
 import { HiOutlineKey } from 'react-icons/hi';
@@ -57,9 +58,11 @@ export default function Login() {
 		<>
 			{msg && <AlertMessage />}
 			<AuthLayout>
-				<h2 className="text-center mb-5 fw-bold" id="login-header">
-					Skriv in din nyckel för att fortsätta vidare till språkroboten Emely
-				</h2>
+
+			
+				<h4 className="text-center mb-5 fw-bold" id="login-header">
+					Skriv in din nyckel för att fortsätta vidare <br/> till språkroboten Emely.
+				</h4>
 
 				{/* Input-key form */}
 				<Form onSubmit={handleSubmit}>
@@ -94,10 +97,13 @@ export default function Login() {
 							<RiLockLine className="me-3" size={25} /> ANVÄND NYCKEL
 						</Button>
 					)}
-					<hr/>
-					<p className="text-center" style={{ fontWeight: '600' }}>
-					Saknar du en nyckel? Kontakta Emely på: <br/>emely@nordaxon.com
-					</p>
+					<h6 className="text-center mb-2 mt-4 fw-bold" id="eller">
+					<Divider>SAKNAR DU EN NYCKEL? KONTAKTA EMELY</Divider>
+				</h6>
+				<p className="text-center" style={{ fontWeight: '500' }}>
+				emely@nordaxon.com
+				</p>
+
 					
 				</Form>
 			</AuthLayout>
