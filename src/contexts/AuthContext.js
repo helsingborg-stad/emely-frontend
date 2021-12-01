@@ -84,9 +84,11 @@ export function AuthProvider({ children }) {
 
 	/* ---- Delete user from Firebase Authentication ---- */
 	function userDelete() {
+		deleteFirestoreUser(currentUser.uid);
 		deleteUser(auth.currentUser)
 			.then(() => {
-				console.log('User deleted');
+				console.log('User deleted from Firebase');
+				
 			})
 			.catch((error) => {
 				console.log(error.message);
@@ -311,7 +313,7 @@ export function AuthProvider({ children }) {
 	/* ---- Delete user information from Firestore ---- */
 	function deleteFirestoreUser(uid) {
 		deleteDoc(doc(dbUsers, uid));
-		console.log('User deleted');
+		console.log('User deleted from Firestore');
 	}
 
 	const value = {

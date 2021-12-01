@@ -11,7 +11,7 @@ import { FaRegTimesCircle } from 'react-icons/fa';
 import { useAuth } from '../../contexts/AuthContext';
 
 export default function Profile() {
-	const { currentUser, userDelete, deleteFirestoreUser } = useAuth();
+	const { currentUser, userDelete, deleteFirestoreUser, logout } = useAuth();
 	const history = useHistory();
 	const [show, setShow] = useState(false);
 
@@ -25,10 +25,8 @@ export default function Profile() {
 
 		try {
 			await userDelete();
-			await deleteFirestoreUser(currentUser.uid);
-			setMsg('Användarkontot är raderat! Skapa ett nytt konto för bäst upplevelse med Emely.');
+			setMsg('Användarkontot är raderat! Skapa ett nytt konto för bästa upplevelsen med Emely.');
 			setMsgVariant('danger');
-			history.push('/login');
 
 			/* Catch error */
 		} catch (error) {

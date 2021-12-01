@@ -12,6 +12,9 @@ import PulseLoader from 'react-spinners/PulseLoader';
 import { FiBriefcase } from 'react-icons/fi';
 import { FiCoffee } from 'react-icons/fi';
 
+import { ImBriefcase } from 'react-icons/im';
+import { SiCoffeescript } from 'react-icons/si';
+
 /* --- Variables, State & Hooks --- */
 export default function Dashboard() {
 	const { userDetails, currentUser } = useAuth();
@@ -69,7 +72,7 @@ export default function Dashboard() {
 							type="button"
 							onClick={() => handleLink('/work-emely')}
 						>
-							<FiBriefcase size={20} />
+							<ImBriefcase size={20} />
 							<span className="px-3">Jobbintervju</span>
 						</Button>
 					</Col>
@@ -81,7 +84,7 @@ export default function Dashboard() {
 							type="button"
 							onClick={() => handleLink('/emely-chat/fika')}
 						>
-							<FiCoffee size={20} />
+							<SiCoffeescript size={20} />
 							<span className="px-3">Ta en fika</span>
 						</Button>
 					</Col>
