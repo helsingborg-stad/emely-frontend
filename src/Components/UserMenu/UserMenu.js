@@ -17,8 +17,10 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
-import { BsChatRightDots } from 'react-icons/bs';
-import { RiShieldUserLine } from 'react-icons/ri';
+import { RiShieldUserFill } from 'react-icons/ri';
+import { SiHomeadvisor } from 'react-icons/si';
+import { ImBriefcase } from 'react-icons/im';
+import { SiCoffeescript } from 'react-icons/si';
 
 /* Variable declaration */
 export default function UserMenu(props) {
@@ -164,45 +166,77 @@ export default function UserMenu(props) {
 												</Avatar>
 											</Col>
 											<Col
-												xs={5}
-												md={5}
-												lg={5}
+												xs={8}
+												md={8}
+												lg={8}
 												className="ms-4 mt-1"
 												style={{ fontSize: '1rem', fontWeight: '600' }}
 											>
 												{userDetails && userDetails.username}
 											</Col>
 										</Row>
+										
 									</Offcanvas.Title>
+
 								</Offcanvas.Header>
-								<Offcanvas.Body>
-									<Row className="">
+								
+
+								<Offcanvas.Body className="">
+									<Row className="menu-rows border-0">
 										{/* Profile page menu-button */}
 										<Link to="/profile">
 											<Nav.Item
 												onClick={handleClose}
 												className="register-btn_sidebar"
 											>
-												<RiShieldUserLine className="me-4" size={25} />
+												<RiShieldUserFill className="me-4" size={25} />
 												Användarkonto
 											</Nav.Item>
 										</Link>
 									</Row>
-									<Row>
+
+									<Row className="menu-rows border-0">
+									{/* Chat with emely button*/}
+									<Link to="/dashboard">
+										<Nav.Item
+											onClick={handleClose}
+											className="register-btn_sidebar"
+										>
+											<SiHomeadvisor className="me-4" size={25} />
+											Hem
+										</Nav.Item>
+									</Link>
+								</Row>
+									<Row className="menu-rows ">
 										{/* Chat with emely button*/}
-										<Link to="/dashboard">
+										<Link to="/work-emely">
 											<Nav.Item
 												onClick={handleClose}
 												className="register-btn_sidebar"
 											>
-												<BsChatRightDots className="me-4" size={22} />
-												Prata med Emely
+												<ImBriefcase className="me-4" size={22} />
+												Jobbintervju
 											</Nav.Item>
 										</Link>
 									</Row>
 
+									<Row className="menu-rows border-0">
+									{/* Chat with emely button*/}
+									<Link to="/emely-chat/fika">
+										<Nav.Item
+											onClick={handleClose}
+											className="register-btn_sidebar"
+										>
+											<SiCoffeescript className="me-4" size={22} />
+											Fika
+										</Nav.Item>
+									</Link>
+								</Row>
 
-									<Row onClick={handleLogout}>
+									
+
+
+									<Row onClick={handleLogout} className="menu-rows">
 										{/* Log out menu-button */}
 										<Nav.Item
 											onClick={handleClose}

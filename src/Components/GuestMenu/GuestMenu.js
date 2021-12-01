@@ -13,12 +13,19 @@ import {
 /* Icon imports */
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+
 import { BiLogOutCircle } from 'react-icons/bi';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { BsChatRightDots } from 'react-icons/bs';
 import { RiShieldUserLine } from 'react-icons/ri';
 import { RiLoginCircleLine } from 'react-icons/ri';
 import { AiOutlineUserAdd } from 'react-icons/ai';
+
+import { SiHomeadvisor } from 'react-icons/si';
+import { ImBriefcase } from 'react-icons/im';
+import { SiCoffeescript } from 'react-icons/si';
+import { RiUserAddFill } from 'react-icons/ri';
+
 import Avatar from '@mui/material/Avatar';
 
 /* Variable declaration */
@@ -40,10 +47,8 @@ export default function UserMenu(props) {
 		try {
 			if (window.location.href.indexOf('emely-chat') > -1) {
 				return handleCloseUsername();
-				
 			} else {
 				return handleShowUsername();
-
 			}
 		} catch (error) {
 			console.log(error);
@@ -85,35 +90,32 @@ export default function UserMenu(props) {
 			>
 				<Container>
 					<Navbar.Brand>
-					<Row>
-					<Col xs={2} md={2} lg={2}>
-						<Avatar
-							className="fw-bold"
-							sx={{ width: 35, height: 35 }}
-							style={{ fontSize: '1rem' }}
-						>
-							G
-						</Avatar>
-					</Col>
-					<Col
-						xs={5}
-						md={5}
-						lg={5}
-						className="ms-4 mt-1 nav-login-button"
-						onClick={handleLogout}
-					>
-				{showUsername ? <span><RiLoginCircleLine size={20} /> Logga in</span> : null }
-					
-			
-					</Col>
-				</Row>
-
-
-
-
-						
+						<Row>
+							<Col xs={2} md={2} lg={2}>
+								<Avatar
+									className="fw-bold"
+									sx={{ width: 35, height: 35 }}
+									style={{ fontSize: '1rem' }}
+								>
+									G
+								</Avatar>
+							</Col>
+							<Col
+								xs={5}
+								md={5}
+								lg={5}
+								className="ms-4 mt-1 nav-login-button"
+								onClick={handleLogout}
+							>
+								{showUsername ? (
+									<span>
+										<RiLoginCircleLine size={20} /> Logga in
+									</span>
+								) : null}
+							</Col>
+						</Row>
 					</Navbar.Brand>
-					
+
 					{/* Mobile user-menu button */}
 					<Navbar.Toggle
 						className="avatar-btn shadow-sm"
@@ -140,47 +142,71 @@ export default function UserMenu(props) {
 
 							{/* Menu from the side */}
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
-								<Offcanvas.Header className="m-3 " closeButton>
-									<Offcanvas.Title className=""></Offcanvas.Title>
+								<Offcanvas.Header className="m-0 ps-0" closeButton>
+									<Offcanvas.Title className="">
+										{' '}
+										<Link to="/signup">
+											<Nav.Item
+												onClick={handleClose}
+												className="register-btn_sidebar"
+											>
+												<RiUserAddFill className="me-4" size={25} />
+												Registrera konto
+											</Nav.Item>
+										</Link>
+									</Offcanvas.Title>
 								</Offcanvas.Header>
 								<Offcanvas.Body className="">
-								<Row className="">
-								{/* Profile page menu-button */}
-								<Link to="/signup">
-									<Nav.Item
-										onClick={handleClose}
-										className="register-btn_sidebar"
-									>
-										<AiOutlineUserAdd className="me-4" size={25} />
-										Registrera konto
-									</Nav.Item>
-								</Link>
-							</Row>
-							<Row>
-								{/* Chat with emely button*/}
-								<Link to="/dashboard">
-									<Nav.Item
-										onClick={handleClose}
-										className="register-btn_sidebar"
-									>
-										<BsChatRightDots className="me-4" size={22} />
-										Prata med Emely
-									</Nav.Item>
-								</Link>
-							</Row>
 
 
-							<Row onClick={handleLogout}>
-								{/* Log out menu-button */}
-								<Nav.Item
-									onClick={handleClose}
-									className="register-btn_sidebar"
-								>
-									<BiLogOutCircle className="me-4" size={25} />
-									Logga in
-								</Nav.Item>
-								
-							</Row>
+									<Row className="menu-rows border-0">
+										{/* Chat with emely button*/}
+										<Link to="/dashboard">
+											<Nav.Item
+												onClick={handleClose}
+												className="register-btn_sidebar"
+											>
+												<SiHomeadvisor className="me-4" size={25} />
+												Hem
+											</Nav.Item>
+										</Link>
+									</Row>
+									<Row className="menu-rows ">
+										{/* Chat with emely button*/}
+										<Link to="/emely-chat/intervju">
+											<Nav.Item
+												onClick={handleClose}
+												className="register-btn_sidebar"
+											>
+												<ImBriefcase className="me-4" size={22} />
+												Jobbintervju
+											</Nav.Item>
+										</Link>
+									</Row>
+
+									<Row className="menu-rows border-0">
+										{/* Chat with emely button*/}
+										<Link to="/emely-chat/fika">
+											<Nav.Item
+												onClick={handleClose}
+												className="register-btn_sidebar"
+											>
+												<SiCoffeescript className="me-4" size={22} />
+												Fika
+											</Nav.Item>
+										</Link>
+									</Row>
+
+									<Row onClick={handleLogout} className="menu-rows">
+										{/* Log out menu-button */}
+										<Nav.Item
+											onClick={handleClose}
+											className="register-btn_sidebar"
+										>
+											<RiLoginCircleLine className="me-4" size={25} />
+											Logga in
+										</Nav.Item>
+									</Row>
 								</Offcanvas.Body>
 							</Offcanvas>
 						</Nav>
