@@ -3,6 +3,7 @@ import { Alert, CloseButton } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Container } from 'react-bootstrap';
 
+
 export default function AlertMessage(props) {
 	const [show, setShow] = useState(true);
 	const { msg, setMsg, msgVariant } = useAuth();
