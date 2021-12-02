@@ -257,12 +257,13 @@ export default function UserMenu(props) {
 									<Divider>
 										<small className="fw-bold mt-4 mb-3">EMELY</small>
 									</Divider>
-									<Row className="menu-rows border-0">
+									<Row className="menu-rows" id="top-menu-item">
 										{/* Chat with emely button*/}
 										<Link to="/work-emely">
 											<Nav.Item
 												onClick={handleClose}
 												className="register-btn_sidebar"
+												
 											>
 												<ImBriefcase className="me-4" size={22} />
 												Jobbintervju
