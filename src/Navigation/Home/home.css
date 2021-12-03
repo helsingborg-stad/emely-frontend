@@ -6,26 +6,23 @@
     margin-bottom: 10px;
 }
 
-.chat-bubble {
-    background-color: var(--white);
-    border-radius: 0px 40px 40px 40px;
-    max-width: 60%;
-    font-size: 1.5rem;
-    margin-top: 5px;
-    margin-left: 60px;
-    width: 600px !important;
-    padding: 20px;
-    font-weight: 700 !important;
+
+.image-row{
+    border-bottom: 1px solid rgb(180, 180, 180) !important;
+    margin: 0px 25px 20px 25px !important;
 }
 
-#emely-image{
-    width: 50%;
-    height: 50%;
+.home-emely{
+    max-width: 200px!important;
 }
 
 @media (max-width: 768px){
     .divider-text{
         font-size: 0.5rem !important;
+    }
+
+    .home-emely{
+        max-width: 150px!important;
     }
 
 }
