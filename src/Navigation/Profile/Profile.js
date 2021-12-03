@@ -10,7 +10,7 @@ export default function Profile() {
 
 	return (
 		<>
-
+			{/* Components for different profile-settings */}
 			<Container>
 
 				<h2 className="fw-bold text-center mt-3 mb-3">Mitt Användarkonto</h2>

@@ -2,24 +2,19 @@ import React, { useState } from 'react';
 import { Col, Row, Button, Modal } from 'react-bootstrap';
 import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import EmelySettings from '../EmelySettings/EmelySettings';
+
+/* --- Icon imports --- */
 import { IoMdSettings } from 'react-icons/io';
 import { FcSettings } from 'react-icons/fc';
 
-
-/* Icon imports */
-
-
-
-
 export default function ProfileEmelySettings() {
 	const [show, setShow] = useState(false);
-
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 
 	return (
 		<>
-
+			{/* --- Emely settings profile card ---  */}
 			<ProfileCard>
 				<Row className="p-0 m-0">
 					<Col xs="auto" md={8} lg={8}>

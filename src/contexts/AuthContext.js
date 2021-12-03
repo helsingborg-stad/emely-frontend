@@ -29,7 +29,6 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-
 	/* --- Variables, States & Hooks --- */
 	const [currentUser, setCurrentUser] = useState();
 	const [userDetails, setUserDetails] = useState();
@@ -38,7 +37,7 @@ export function AuthProvider({ children }) {
 	const [allKeys, setAllKeys] = useState();
 	const history = useHistory();
 	const [isGuest, setIsGuest] = useState(false);
-	const [guestId] = useState("mcK6kHLV4nh33XJmO2tJXzokqpG2")
+	const [guestId] = useState('mcK6kHLV4nh33XJmO2tJXzokqpG2');
 
 	const [msg, setMsg] = useState('');
 	const [msgVariant, setMsgVariant] = useState('');
@@ -53,11 +52,11 @@ export function AuthProvider({ children }) {
 				const uid = user.uid;
 
 				if (uid === user.uid && uid !== guestId) {
-					setIsGuest(false)
+					setIsGuest(false);
 					console.log('You are signed in!');
 					return <Redirect to="/dashboard" />;
 				} else if (uid === guestId) {
-					setIsGuest(true)
+					setIsGuest(true);
 					console.log('You are signed in as Guest');
 				} else {
 					console.log('Signed out!');
@@ -90,7 +89,9 @@ export function AuthProvider({ children }) {
 			.then(() => {
 				console.log('User deleted from Firebase');
 				setMsgVariant('danger');
-				setMsg('Ditt konto har raderats. Skapa ett nytt konto om du vill ha den bästa upplevelsen med Emely.');
+				setMsg(
+					'Ditt konto har raderats. Skapa ett nytt konto om du vill ha den bästa upplevelsen med Emely.'
+				);
 			})
 			.catch((error) => {
 				console.log(error.message);
@@ -114,9 +115,18 @@ export function AuthProvider({ children }) {
 	}
 
 	/* ---- Update password ---- */
-	function passwordUpdate(password) {
-		console.log('Password updated');
-		return updatePassword(currentUser, password);
+	async function passwordUpdate(password) {
+		try {
+			console.log('Password updated');
+			await updatePassword(currentUser, password);
+			setMsgVariant('success')
+			setMsg('Du har ändrat ditt lösenord. Vänligen logga in igen med ditt nya lösenord.')
+			return logout();
+		} catch (error) {
+			console.log(error.code);
+			setMsgVariant('danger');
+			setMsg(translateError(error.code));
+		}
 	}
 
 	/* ---- Translate auth errors ---- */
@@ -163,10 +173,10 @@ export function AuthProvider({ children }) {
 				sessionStorage.setItem('sessionKey', inputKey);
 
 				/* If key doesnt have useHuggingFace set it to false */
-				if (key.useHuggingFace != null){
-					setUseHuggingFace(key.useHuggingFace)
+				if (key.useHuggingFace != null) {
+					setUseHuggingFace(key.useHuggingFace);
 				} else {
-					setUseHuggingFace(false)
+					setUseHuggingFace(false);
 				}
 
 				/* Update key login-count */
@@ -175,13 +185,13 @@ export function AuthProvider({ children }) {
 					login_count: increment(1),
 				});
 				setMsgVariant('success');
-				setMsg(`Giltig nyckel! Utgångsdatum: ${key.deadline}.`)
+				setMsg(`Giltig nyckel! Utgångsdatum: ${key.deadline}.`);
 				return history.push('/login');
 			} else {
 				setCorrectKey(false);
 				sessionStorage.setItem('sessionKey', 'false');
 				setMsgVariant('danger');
-				setMsg('Fel nyckel eller passerat utgångsdatum! Vänligen försök igen')
+				setMsg('Fel nyckel eller passerat utgångsdatum! Vänligen försök igen');
 			}
 		}
 	}
@@ -206,17 +216,16 @@ export function AuthProvider({ children }) {
 
 	/* ---- Send reported message to 'reported-messages' collection  ---- */
 	async function reportMessage(conversationId, text) {
-		try{
-		await setDoc(doc(dbReportedMessages), {
-			conversation_id: conversationId,
-			text: text,
-			created_at: new Date(),
-		});
-		console.log('Message reported, thanks for input!');
-	} catch (error){
-		console.log(error)
-	}
-
+		try {
+			await setDoc(doc(dbReportedMessages), {
+				conversation_id: conversationId,
+				text: text,
+				created_at: new Date(),
+			});
+			console.log('Message reported, thanks for input!');
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	/* ---- Create user in Firestore with signup information ---- */

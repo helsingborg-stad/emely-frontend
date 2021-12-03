@@ -1,25 +1,20 @@
 import React, { useState } from 'react';
 import { Col, Row, Button, Modal } from 'react-bootstrap';
 import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
-import AlertMessage from '../../Components/AlertMessage/AlertMessage';
-import { useHistory } from 'react-router-dom';
-
-/* Icon imports */
-
-import { FaRegTimesCircle } from 'react-icons/fa';
-
 import { useAuth } from '../../contexts/AuthContext';
 
+/* Icon imports */
+import { FaRegTimesCircle } from 'react-icons/fa';
+
+/* --- Variables, State & Hooks --- */
 export default function Profile() {
-	const { currentUser, userDelete, deleteFirestoreUser, logout } = useAuth();
-	const history = useHistory();
+	const { userDelete } = useAuth();
 	const [show, setShow] = useState(false);
-
 	const { translateError, setMsg, setMsgVariant } = useAuth();
-
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	/* --- Delete user --- */
 	async function handleDeleteUser() {
 		setMsg('');
 
@@ -37,8 +32,7 @@ export default function Profile() {
 	return (
 		<>
 			<ProfileCard>
-				{/* Delete user card */}
-
+			{/* --- Delete user profile-card --- */}
 				<Row className="p-0 m-0">
 					<Col xs="auto" md={8} lg={8}>
 						<h4 className="mb-3 fw-bold ">
@@ -60,6 +54,7 @@ export default function Profile() {
 						</span>
 					</Col>
 				</Row>
+				{/* --- Confirmation message --- */}
 				<Row className="mt-3">
 					<p className="card-text" id="delete-text">
 						Om du raderar din användare så kommer all användarinformation att
@@ -68,7 +63,7 @@ export default function Profile() {
 				</Row>
 			</ProfileCard>
 
-			{/* Confirmation modal */}
+			{/* --- Confirm Delete --- */}
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
 					<Modal.Title>Radera användarkonto</Modal.Title>
