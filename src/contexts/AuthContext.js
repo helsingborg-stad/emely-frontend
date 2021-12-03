@@ -42,6 +42,7 @@ export function AuthProvider({ children }) {
 
 	const [msg, setMsg] = useState('');
 	const [msgVariant, setMsgVariant] = useState('');
+	const [useHuggingFace, setUseHuggingFace] = useState(false);
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
@@ -83,12 +84,13 @@ export function AuthProvider({ children }) {
 	}
 
 	/* ---- Delete user from Firebase Authentication ---- */
-	function userDelete() {
+	async function userDelete() {
 		deleteFirestoreUser(currentUser.uid);
-		deleteUser(auth.currentUser)
+		await deleteUser(auth.currentUser)
 			.then(() => {
 				console.log('User deleted from Firebase');
-				
+				setMsgVariant('danger');
+				setMsg('Ditt konto har raderats. Skapa ett nytt konto om du vill ha den bästa upplevelsen med Emely.');
 			})
 			.catch((error) => {
 				console.log(error.message);
@@ -160,13 +162,20 @@ export function AuthProvider({ children }) {
 				setCorrectKey(true);
 				sessionStorage.setItem('sessionKey', inputKey);
 
+				/* If key doesnt have useHuggingFace set it to false */
+				if (key.useHuggingFace != null){
+					setUseHuggingFace(key.useHuggingFace)
+				} else {
+					setUseHuggingFace(false)
+				}
+
 				/* Update key login-count */
 				const keyRef = doc(db, 'keys', inputKey);
 				updateDoc(keyRef, {
 					login_count: increment(1),
 				});
 				setMsgVariant('success');
-				setMsg(`Giltig nyckel! Utgår ${key.deadline}.`)
+				setMsg(`Giltig nyckel! Utgångsdatum: ${key.deadline}.`)
 				return history.push('/login');
 			} else {
 				setCorrectKey(false);
@@ -345,6 +354,8 @@ export function AuthProvider({ children }) {
 		setMsg,
 		msgVariant,
 		setMsgVariant,
+		useHuggingFace,
+		setUseHuggingFace,
 	};
 
 	return (

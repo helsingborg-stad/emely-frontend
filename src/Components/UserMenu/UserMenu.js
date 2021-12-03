@@ -8,13 +8,13 @@ import {
 	Row,
 	Col,
 } from 'react-bootstrap';
+import { useAuth } from '../../contexts/AuthContext';
+import { Link, useHistory } from 'react-router-dom';
 
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
 
-/* Icon imports */
-import { useAuth } from '../../contexts/AuthContext';
-import { Link, useHistory } from 'react-router-dom';
+/* --- Icon imports --- */
 import { AiOutlineMenu } from 'react-icons/ai';
 import { RiShieldUserFill } from 'react-icons/ri';
 import { SiHomeadvisor } from 'react-icons/si';
@@ -24,9 +24,8 @@ import { RiUserAddFill } from 'react-icons/ri';
 import { BsArrowDownCircleFill } from 'react-icons/bs';
 import { BsArrowUpCircleFill } from 'react-icons/bs';
 
-/* Variable declaration */
+/* --- Variables, Hooks & State --- */
 export default function UserMenu(props) {
-	const [error, setError] = useState('');
 	const {
 		currentUser,
 		logout,
@@ -37,16 +36,16 @@ export default function UserMenu(props) {
 		isGuest,
 	} = useAuth();
 	const history = useHistory();
-
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	/* --- show/hide username --- */
 	const [showUsername, setShowUsername] = useState(true);
-
 	const handleCloseUsername = () => setShowUsername(false);
 	const handleShowUsername = () => setShowUsername(true);
 
+	/* --- When in chat -> hide username else show --- */
 	useEffect(() => {
 		try {
 			if (window.location.href.indexOf('emely-chat') > -1) {
@@ -59,7 +58,7 @@ export default function UserMenu(props) {
 		}
 	}, [window.location.href]);
 
-	/* Getting the current user details on mount */
+	/* --- Get currentUser details from database on login --- */
 	useEffect(() => {
 		try {
 			getUserDetails(currentUser.uid);
@@ -70,8 +69,9 @@ export default function UserMenu(props) {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	/* --- Logout current authenticated user --- */
 	async function handleLogout() {
-		setError('');
+		setMsg('');
 
 		try {
 			await logout();
@@ -97,6 +97,7 @@ export default function UserMenu(props) {
 					<Navbar.Brand>
 						<Row>
 							<Col xs={2} md={2} lg={2}>
+								{/* --- Conditional rendering -> Guest/User avatar */}
 								{isGuest ? (
 									<Avatar
 										className="fw-bold"
@@ -122,24 +123,15 @@ export default function UserMenu(props) {
 								className="ms-4 mt-1"
 								style={{ fontSize: '1rem', fontWeight: '500' }}
 							>
-								{showUsername && isGuest ? (
-									null
-								) : (
+								{/* --- Conditional rendering -> if Guest no username else username */}
+								{showUsername && isGuest ? null : (
 									<span>{userDetails && userDetails.username}</span>
 								)}
 							</Col>
 						</Row>
 					</Navbar.Brand>
-					<Link to="/profile">
-						<Button
-							className="fw-bold"
-							id="menu-user-button"
-							onClick={handleShow}
-							variant="none"
-						></Button>
-					</Link>
 
-					{/* Mobile user-menu button */}
+					{/* --- Mobile menu button: open sidebar --- */}
 					<Navbar.Toggle
 						className="avatar-btn shadow-sm"
 						onClick={handleShow}
@@ -152,8 +144,8 @@ export default function UserMenu(props) {
 
 					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
 						<Nav className="ms-auto ">
-							{/* Menu-button */}
 
+							{/* --- Menu-button: open sidebar --- */}
 							<Button
 								className=""
 								id="menu-user-button"
@@ -163,11 +155,13 @@ export default function UserMenu(props) {
 								<AiOutlineMenu className="ms-2 mb-1 me-2" size={20} />
 							</Button>
 
-							{/* Menu from the side */}
+							{/* --- Sidebar code. --- */}
 							<Offcanvas placement="end" show={show} onHide={handleClose}>
 								<Offcanvas.Header className="m-0 ps-0 " closeButton>
 									<Offcanvas.Title className="">
+										{/* Conditional rendering -> */}
 										{isGuest ? (
+											/* Guest ->'Registrera konto' */
 											<Link to="/signup">
 												<Nav.Item
 													onClick={handleClose}
@@ -178,7 +172,11 @@ export default function UserMenu(props) {
 												</Nav.Item>
 											</Link>
 										) : (
-											<Row className="ms-3">
+											/* User -> avatar + username */
+											<Row
+												className="ms-3"
+												style={{ fontSize: '1rem', fontWeight: '600' }}
+											>
 												<Col xs={2} md={2} lg={2}>
 													<Avatar
 														className="fw-bold "
@@ -192,9 +190,6 @@ export default function UserMenu(props) {
 													</Avatar>
 												</Col>
 												<Col
-													xs={8}
-													md={8}
-													lg={8}
 													className="ms-4 mt-1"
 													style={{ fontSize: '1rem', fontWeight: '600' }}
 												>
@@ -205,9 +200,10 @@ export default function UserMenu(props) {
 									</Offcanvas.Title>
 								</Offcanvas.Header>
 
+								{/* --- Menu body starts here --- */}
 								<Offcanvas.Body className="">
+									{/* --- Home: go back to dashboard --- */}
 									<Row className="menu-rows">
-										{/* Chat with emely button*/}
 										<Link to="/dashboard">
 											<Nav.Item
 												onClick={handleClose}
@@ -218,7 +214,11 @@ export default function UserMenu(props) {
 											</Nav.Item>
 										</Link>
 									</Row>
-									{isGuest ? null : (
+
+									{/* Conditional rendering -> */}
+									{isGuest ? /* Guest -> show nothing */
+									null : (
+										/* User -> Användarkonto: Go to profile page  */
 										<Row className="menu-rows">
 											{/* Profile page menu-button */}
 											<Link to="/profile">
@@ -234,8 +234,9 @@ export default function UserMenu(props) {
 									)}
 
 									<Row onClick={handleLogout} className="menu-rows mb-4">
-										{/* Log out menu-button */}
+										{/* Conditional rendering -> */}
 										{isGuest ? (
+											/* Guest -> Logga in */
 											<Nav.Item
 												onClick={handleClose}
 												className="register-btn_sidebar"
@@ -244,26 +245,28 @@ export default function UserMenu(props) {
 												Logga in
 											</Nav.Item>
 										) : (
+											/* Guest -> Logga ut */
 											<Nav.Item
 												onClick={handleClose}
 												className="register-btn_sidebar"
 											>
-												<BsArrowUpCircleFill className="me-4" size={23} />{' '}
-												Logga ut
+												<BsArrowUpCircleFill className="me-4" size={23} /> Logga
+												ut
 											</Nav.Item>
 										)}
 									</Row>
 
+									{/* --- Chat with emely buttons --- */}
 									<Divider>
 										<small className="fw-bold mt-4 mb-3">EMELY</small>
 									</Divider>
+									
+										{/* --- Jobbintervju --- */}	
 									<Row className="menu-rows" id="top-menu-item">
-										{/* Chat with emely button*/}
 										<Link to="/work-emely">
 											<Nav.Item
 												onClick={handleClose}
 												className="register-btn_sidebar"
-												
 											>
 												<ImBriefcase className="me-4" size={22} />
 												Jobbintervju
@@ -271,6 +274,7 @@ export default function UserMenu(props) {
 										</Link>
 									</Row>
 
+									{/* --- Fika --- */}	
 									<Row className="menu-rows">
 										<Link to="/emely-chat/fika">
 											<Nav.Item
@@ -284,6 +288,7 @@ export default function UserMenu(props) {
 									</Row>
 								</Offcanvas.Body>
 							</Offcanvas>
+		
 						</Nav>
 					</Navbar.Collapse>
 				</Container>

@@ -5,7 +5,7 @@ import { useAuth } from "./AuthContext";
 export const ConversationContext = createContext();
 
 const ConversationContextProvider = (props) => {
-  const { currentUser } = useAuth();
+  const { currentUser, useHuggingFace } = useAuth();
   // saves Emely's and user's messages
   const [sessionConversation, setSessionConersation] = useState([]);
   // state for user's message (invokes in onChange case)
@@ -55,6 +55,7 @@ const ConversationContextProvider = (props) => {
           has_experience: hasExperience,
           enable_small_talk: smallTalk,
           user_id: currentUser.uid,
+          use_huggingface: useHuggingFace,
         }
       );
       const result = await response.data;

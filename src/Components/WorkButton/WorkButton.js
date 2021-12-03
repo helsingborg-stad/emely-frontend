@@ -1,14 +1,15 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { IoIosArrowForward } from "react-icons/io";
-
 import { ConversationContext } from "../../contexts/ConversationContext";
 
 export default function WorkButton(props) {
-  const { setCurrentJob, currentJob } = useContext(ConversationContext);
+  /* --- Variables, Hooks & State --- */
+  const { setCurrentJob } = useContext(ConversationContext);
   const history = useHistory();
-
   const buttons = props.occupation.occupations;
+
+
+  /* --- When choosing job, setCurrentJob state to target --- */
   const handleClick = (e) => {
     setCurrentJob(e.target.id);
     history.push(`/emely-chat/intervju/${e.target.id}`);
@@ -17,11 +18,13 @@ export default function WorkButton(props) {
   return (
     <>
       <ul className="work-button-ul m-0 ps-0">
+
+      {/* --- Loop through all jobs and render from job-list --- */}
         {buttons.sort().map((job, i) => (
           <li
             onClick={(e) => handleClick(e)}
             key={i}
-            className="work-button-list"
+            className="register-btn_occupation_sidebar"
             id={job}
           >
             {job}

@@ -22,3 +22,10 @@
     width: 50%;
     height: 50%;
 }
+
+@media (max-width: 768px){
+    .divider-text{
+        font-size: 0.5rem !important;
+    }
+
+}
