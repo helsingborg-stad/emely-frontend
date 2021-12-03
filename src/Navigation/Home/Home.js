@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import { useHistory } from 'react-router-dom';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 import Divider from '@mui/material/Divider';
+import emely from '../../Assets/images/emely_work.png';
 
 /* --- Icon Imports --- */
 import { HiOutlineKey } from 'react-icons/hi';
@@ -16,9 +16,8 @@ import { RiLockLine } from 'react-icons/ri';
 /* --- Variables, Hooks & State --- */
 export default function Login() {
 	const keyRef = useRef();
-	const { correctKey, getKeys, checkKey, msg, setMsg, setMsgVariant } = useAuth();
+	const { getKeys, checkKey, msg, setMsg } = useAuth();
 	const [loading, setLoading] = useState(false);
-	const history = useHistory();
 
 	useEffect(() => {
 		return document.body.style.background = "var(--mainBackground)";
@@ -61,9 +60,15 @@ export default function Login() {
 	return (
 		<>
 			{msg && <AlertMessage />}
-			<AuthLayout>
 
-			
+			<AuthLayout>
+			<Row className="image-row justify-content-center ">
+			<img
+			className="home-emely"
+			src={emely}
+			alt=""
+			/>
+			</Row>
 				<h4 className="text-center mb-5 fw-bold" id="login-header">
 					Skriv in din nyckel för att fortsätta vidare <br/> till språkroboten Emely.
 				</h4>
