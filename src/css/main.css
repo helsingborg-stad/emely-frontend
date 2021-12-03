@@ -32,7 +32,6 @@
 	box-sizing: border-box;
 }
 
-
 .Link {
 	text-decoration: none;
 }
@@ -40,7 +39,6 @@
 .link:hover{
 	color: var(--green) !important;
 }
-
 
 
 #root {
@@ -69,7 +67,6 @@
 	--fika: right / cover fixed no-repeat url(../Assets/images/fika.jpg); /* fika background */
 	--interview: top center / cover fixed no-repeat url(../Assets/images/interview.jpeg); /* intervju backgrounds */
 
-
 	/* Common border radius */
 	--buttonBorderRadius: 25px;
 	--inputFieldBorderRadius: 20px;
@@ -86,9 +83,6 @@ body {
 	background-size: cover;	
 	height: 100% !important;
 }
-
-
-
 
 a {
 	color: black !important;
@@ -111,11 +105,6 @@ a:visited {
 #text-link:hover{
 	color: var(--greenHover) !important;
 }
-
-
-
-
-
 
 
 @media (max-width: 768px){

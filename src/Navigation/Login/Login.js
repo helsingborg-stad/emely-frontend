@@ -4,7 +4,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
-import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 import Divider from '@mui/material/Divider';
 
 /* Icon Imports */
@@ -23,10 +22,9 @@ export default function Login() {
 
 	/* ------ Hooks & State ------ */
 	const { login, updateUserInfo, translateError, currentUser, guestId, setMsg, setMsgVariant } = useAuth();
-
+	const { useHuggingFace } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
-
 
 
 	useEffect(() => {
@@ -98,6 +96,8 @@ export default function Login() {
 				<h2 className="text-center mb-4 fw-bold" id="login-header">
 					Logga in för att fortsätta
 				</h2>
+
+
 				{/* ---- Login form ---- */}
 				<Form onSubmit={handleSubmit}>
 					{/* ---- Email form ---- */}

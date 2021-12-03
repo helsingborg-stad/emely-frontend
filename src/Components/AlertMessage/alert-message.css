@@ -1,16 +1,18 @@
 
 
 .alert-container{
-    max-width: 800px !important;
+    max-width: 820px !important;
     margin: 0 auto;
     float: none;
     z-index: 9999 !important;
     font-size: 1rem;
-    padding: 10px !important;
+    padding: 8px !important;
 
 }
 
 .alert-message{
+    padding: 20px !important;
+    cursor: pointer!important;
 }
 
 

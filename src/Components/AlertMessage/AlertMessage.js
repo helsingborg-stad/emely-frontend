@@ -32,11 +32,10 @@ export default function AlertMessage(props) {
 				<Alert
 				className="alert-message text-center mb-5 fw-bold shadow-sm"
 				variant={msgVariant}
-				dismissible
+				onClick={handleDismiss}
 				
 				>
 				{msg}
-				<CloseButton aria-label="Hide" onClick={handleDismiss} />
 				</Alert>
 				</Container>
 				) : null }

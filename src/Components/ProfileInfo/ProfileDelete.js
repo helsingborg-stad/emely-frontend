@@ -25,8 +25,6 @@ export default function Profile() {
 
 		try {
 			await userDelete();
-			setMsg('Användarkontot är raderat! Skapa ett nytt konto för bästa upplevelsen med Emely.');
-			setMsgVariant('danger');
 
 			/* Catch error */
 		} catch (error) {

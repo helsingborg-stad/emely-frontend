@@ -13,7 +13,6 @@ import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
-import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 export default function Signup() {
 	/* ------ Form value variables ------ */
@@ -24,16 +23,14 @@ export default function Signup() {
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
-	/* ----------------------------------- */
 
-	/* ------ Hooks & State ------ */
+	/* --- Hooks & State --- */
 	const { signup, createUser, translateError, setMsg, setMsgVariant } =
 		useAuth();
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
-	/* ----------------------------------- */
 
-	/* ------ Open user terms onClick ------ */
+	/* --- Open user terms onClick --- */
 	function handleEndUserTerms(e) {
 		e.preventDefault();
 
@@ -45,10 +42,11 @@ export default function Signup() {
 		);
 	}
 
+	/* --- Do this when submitting --- */
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-		/* ------ Start with, checking if the passwords match ------ */
+		/* --- Start with, checking if the passwords match --- */
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
 			setMsgVariant('danger');
 			return setMsg('Lösenorden matchar inte');
@@ -58,7 +56,7 @@ export default function Signup() {
 			setMsg('');
 			setLoading(true);
 
-			/* Run sign-up function from context which communicates with Firebase */
+			/* --- Signup Firebase auth function --- */
 			const credential = await signup(
 				emailRef.current.value,
 				passwordRef.current.value
@@ -66,7 +64,7 @@ export default function Signup() {
 			const uid = credential.user.uid;
 			const creationTime = credential.user.metadata.creationTime;
 
-			/*  When signing up, send information to Firestore  */
+			/* --- Send sign up information to Firestore database (users or users-debug) --- */
 			await createUser(
 				emailRef.current.value,
 				usernameRef.current.value,
@@ -76,11 +74,11 @@ export default function Signup() {
 				uid,
 				creationTime
 			);
-			setMsg('Användaren har skapats!');
+			setMsg('Välkommen till språkroboten Emely! Ditt konto har nu skapats.');
 			setMsgVariant('success');
 			history.push('/dashboard');
 
-			/*  Catch error & translate in a function */
+			/*  --- Catch error & translate --- */
 		} catch (error) {
 			console.log(error.code);
 			setMsgVariant('danger');
