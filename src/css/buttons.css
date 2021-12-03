@@ -184,11 +184,12 @@ button:focus {
 	font-weight: 500 !important;
 	font-size: 1rem !important;
 	text-decoration: none !important;
-	padding: 10px 10px 10px 50px!important;
+	padding: 10px 10px 10px 30px!important;
 	color:rgb(65, 65, 65);
 	transition: 0.6s !important;
 	list-style-type: none;
 	cursor: pointer !important;
+	border-bottom: 1px solid rgb(233, 233, 233) !important;
 
 }
 
@@ -196,6 +197,6 @@ button:focus {
 	transition: 1.2s;
 	background: rgb(241, 241, 241) !important;
 	color: var(--black) !important;
-	border-right: 10px solid var(--green) !important;	
-	padding: 10px 10px 10px 60px!important;
+	border-left: 10px solid var(--green) !important;	
+	padding: 10px 10px 10px 40px!important;
 }

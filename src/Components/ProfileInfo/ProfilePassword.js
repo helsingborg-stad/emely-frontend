@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
 import { Col, Row, Button, Modal } from 'react-bootstrap';
+
 import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import ProfileInfoPasswordEdit from '../../Components/ProfileInfo/ProfileInfoPasswordEdit';
 
-/* Icon imports */
-
-
+/* --- Icon imports --- */
 import { AiOutlineEdit } from 'react-icons/ai';
 
-
+/* --- Variables, Hooks & State --- */
 export default function Profile() {
 	const [show, setShow] = useState(false);
-
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 
 	return (
 		<>
-
+			{/* --- Profile password card --- */}
 			<ProfileCard>
 				<Row className="p-0 m-0">
 					<Col xs="auto" md={8} lg={8}>
 						<h4 className="mb-3 fw-bold"><AiOutlineEdit className="me-2" size={25} /> Ändra Lösenord</h4>
 					</Col>
+
+					{/* --- Change password button --- */}
 					<Col xs="auto" md={4} lg={4} className="text-end p-0">
 						<span>
 							<Button
@@ -32,7 +32,7 @@ export default function Profile() {
 								onClick={handleShow}
 							>
 								<AiOutlineEdit className="me-2" size={15} />
-								Redigera
+								Ändra lösenord
 							</Button>
 						</span>
 					</Col>
@@ -45,7 +45,7 @@ export default function Profile() {
 				</Row>
 			</ProfileCard>
 
-			{/* Confirmation modal */}
+			{/* --- Modal (popup) for changing password */}
 			<Modal className="profile-info-modal" size="lg" show={show} onHide={handleClose}>
 				<Modal.Body>
 					<ProfileInfoPasswordEdit closeModal={handleClose} />

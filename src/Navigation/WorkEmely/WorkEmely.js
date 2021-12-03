@@ -44,8 +44,8 @@ export default function WorkEmely(props) {
 		<>
 			<Container id="container-work-emely">
 				<Offcanvas show={show} onHide={handleClose}>
-					<Offcanvas.Header closeButton>
-						<Offcanvas.Title className="fw-bold"><ImBriefcase className="me-2 mt-0" size={25} /> Välj yrke </Offcanvas.Title>
+					<Offcanvas.Header className="border-bottom" closeButton>
+					<ImBriefcase className="me-2 mt-0 p-0" size={30} /><Offcanvas.Title className="fw-bold mt-1">Välj yrke </Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
 						{jobButtons ? (

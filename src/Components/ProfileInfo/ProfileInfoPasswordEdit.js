@@ -1,40 +1,28 @@
 import React, { useRef, useState } from 'react';
 import { Form, Button, Row, Container, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import AlertMessage from '../AlertMessage/AlertMessage';
+import { Link } from 'react-router-dom';
 
-import { useHistory, Link } from 'react-router-dom';
-
+/* --- Icon imports --- */
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
-/* Variable declaration */
+/* --- Variables, Hooks & State --- */
 export default function ProfilePasswordEdit(props) {
+
+	/* --- Form references --- */
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
 
-	const { passwordUpdate, translateError, logout, setMsg, setMsgVariant } = useAuth();
+	const { passwordUpdate, translateError, setMsg, setMsgVariant } = useAuth();
 	const [loading, setLoading] = useState(false);
-	const history = useHistory();
 
-	async function handleLogout() {
-		setMsg('');
 
-		try {
-			await logout();
-			history.push('/login');
-
-			/* Catch error */
-		} catch (error) {
-			console.log(error.code);
-			setMsgVariant('danger');
-			setMsg(translateError(error.code));
-		}
-	}
-
+	/* --- On submit --- */
 	async function handleSubmit(e) {
 		e.preventDefault();
+		setMsg('');
 
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
 			setMsgVariant('danger');
@@ -46,8 +34,6 @@ export default function ProfilePasswordEdit(props) {
 			setLoading(true);
 
 			await passwordUpdate(passwordRef.current.value);
-
-			handleLogout();
 			
 		} catch (error) {
 			console.log(error.code);
@@ -62,9 +48,10 @@ export default function ProfilePasswordEdit(props) {
 			<Container className="p-5">
 				<h2 className="text-center mb-4 fw-bold">Ändra Lösenord</h2>
 
-				{/* Username form */}
+				{/* --- Username form --- */}
 				<Form onSubmit={handleSubmit} id="update-profile">
-					{/* Password form */}
+
+					{/* --- Password form --- */}
 					<Row className="mt-3">
 						<Form.Group className="" id="password">
 							<Form.Label className="input-label">
@@ -75,13 +62,13 @@ export default function ProfilePasswordEdit(props) {
 								className="input-field-small"
 								type="password"
 								ref={passwordRef}
-								placeholder="Lämna blankt för att behålla lösenord"
+								placeholder="Skriv in ditt nya lösenord"
 								required
 							/>
 						</Form.Group>
 					</Row>
 
-					{/* Password confirm form */}
+					{/* --- Password confirm form --- */}
 					<Row className="mt-3">
 						<Form.Group className="" id="password-confirm">
 							<Form.Label className="input-label">
@@ -92,12 +79,13 @@ export default function ProfilePasswordEdit(props) {
 								className="input-field-small"
 								type="password"
 								ref={passwordConfirmRef}
-								placeholder="Lämna blankt för att behålla lösenord"
+								placeholder="Upprepa ditt nya lösenord"
 								required
 							/>
 						</Form.Group>
 					</Row>
 
+					{/* --- Save password changes --- */}
 					<Row className="mb-3 mt-5">
 						<Col className="mb-3" md={6} lg={6} xs={12}>
 							<Button
@@ -110,6 +98,7 @@ export default function ProfilePasswordEdit(props) {
 							</Button>
 						</Col>
 
+						{/* --- Back button --- */}
 						<Col className="" md={6} lg={6} xs={12}>
 							<Link to="/profile">
 								<Button
