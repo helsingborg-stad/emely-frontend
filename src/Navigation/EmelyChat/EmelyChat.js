@@ -47,7 +47,7 @@ export default function EmelyChat(props) {
 		} catch (error) {
 			console.log(error.message);
 		}
-	}, [userDetails, currentUser]);
+	}, [userDetails, currentUser, window.location.href]);
 
 	/* ---- Tracks and renders new messages, scrolls them up ---- */
 	useEffect(() => {

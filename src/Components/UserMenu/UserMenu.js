@@ -39,11 +39,17 @@ export default function UserMenu(props) {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	
 
 	/* --- show/hide username --- */
 	const [showUsername, setShowUsername] = useState(true);
 	const handleCloseUsername = () => setShowUsername(false);
 	const handleShowUsername = () => setShowUsername(true);
+
+	const handleLink = (linkTo) => {
+		history.push(linkTo);
+		handleClose();
+	};
 
 	/* --- When in chat -> hide username else show --- */
 	useEffect(() => {
@@ -263,28 +269,24 @@ export default function UserMenu(props) {
 									
 										{/* --- Jobbintervju --- */}	
 									<Row className="menu-rows" id="top-menu-item">
-										<Link to="/work-emely">
 											<Nav.Item
-												onClick={handleClose}
+												onClick={() => handleLink('/work-emely')}
 												className="register-btn_sidebar"
 											>
 												<ImBriefcase className="me-4" size={22} />
 												Jobbintervju
 											</Nav.Item>
-										</Link>
 									</Row>
 
 									{/* --- Fika --- */}	
 									<Row className="menu-rows">
-										<Link to="/emely-chat/fika">
 											<Nav.Item
-												onClick={handleClose}
+												onClick={() => handleLink('/emely-chat/fika')}
 												className="register-btn_sidebar"
 											>
 												<SiCoffeescript className="me-4" size={22} />
 												Fika
 											</Nav.Item>
-										</Link>
 									</Row>
 								</Offcanvas.Body>
 							</Offcanvas>
