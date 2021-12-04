@@ -119,8 +119,8 @@ export function AuthProvider({ children }) {
 		try {
 			console.log('Password updated');
 			await updatePassword(currentUser, password);
-			setMsgVariant('success')
-			setMsg('Du har ändrat ditt lösenord. Vänligen logga in igen med ditt nya lösenord.')
+			setMsgVariant('success');
+			setMsg('Du har ändrat ditt lösenord. Vänligen logga in igen med ditt nya lösenord.');
 			return logout();
 		} catch (error) {
 			console.log(error.code);
@@ -157,14 +157,11 @@ export function AuthProvider({ children }) {
 
 	/* ---- FIRESTORE QUERIES ---- */
 
+
 	/* --- Check if the input key matches keys in database --- */
 	function checkKey(inputKey, date) {
 		/* Format the date so it matches the deadline date */
-		const dd = date.getDate();
-		const mm = date.getMonth() + 1;
-		const y = date.getFullYear();
-
-		const formattedDate = y + '/' + mm + '/' + dd;
+		const formattedDate = date.toLocaleDateString('se-SE')
 
 		/* Iterate through all keys and check if the key matches inputKey and deadline date */
 		for (let key of allKeys) {
