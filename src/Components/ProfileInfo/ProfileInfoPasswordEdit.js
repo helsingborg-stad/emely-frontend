@@ -39,6 +39,7 @@ export default function ProfilePasswordEdit(props) {
 			console.log(error.code);
 			setMsgVariant('danger');
 			setMsg(translateError(error.code));
+
 		}
 		setLoading(false);
 	}
