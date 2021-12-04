@@ -126,6 +126,11 @@ export function AuthProvider({ children }) {
 			console.log(error.code);
 			setMsgVariant('danger');
 			setMsg(translateError(error.code));
+
+			/* --- If login-token expires, logout user and try again --- */
+			if(error.code === "auth/requires-recent-login"){
+				return logout();
+			}
 		}
 	}
 
