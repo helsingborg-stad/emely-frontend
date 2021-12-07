@@ -38,6 +38,7 @@ export default function Login() {
 		}
 	}, [currentUser]);
 
+
 	/* --- Running this function on "Fortsätt som Gäst" --- */
 	async function handleGuestLogin(e) {
 		e.preventDefault();
