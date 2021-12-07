@@ -41,7 +41,8 @@ export function AuthProvider({ children }) {
 
 	const [msg, setMsg] = useState('');
 	const [msgVariant, setMsgVariant] = useState('');
-	const [useHuggingFace, setUseHuggingFace] = useState(false);
+	const [useHuggingFace, setUseHuggingFace] = useState(sessionStorage.getItem('useHuggingFace'));
+
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
@@ -176,9 +177,11 @@ export function AuthProvider({ children }) {
 
 				/* If key doesnt have useHuggingFace set it to false */
 				if (key.useHuggingFace != null) {
-					setUseHuggingFace(key.useHuggingFace);
+					sessionStorage.setItem('useHuggingFace', key.useHuggingFace);
+					setUseHuggingFace(sessionStorage.getItem('useHuggingFace'));
 				} else {
-					setUseHuggingFace(false);
+					sessionStorage.setItem('useHuggingFace', false);
+					setUseHuggingFace(sessionStorage.getItem('useHuggingFace'));
 				}
 
 				/* Update key login-count */
