@@ -154,7 +154,7 @@ export function AuthProvider({ children }) {
 				return 'För många försök. Vänligen försök igen lite senare';
 
 			case 'auth/requires-recent-login':
-				return 'Du har blivit utloggad. Logga in igen.';
+				return 'Ändring av lösenord misslyckades. Du har blivit utloggad. Logga in igen för att ändra lösenord.';
 
 			default:
 				return 'Opps något gick fel!';
