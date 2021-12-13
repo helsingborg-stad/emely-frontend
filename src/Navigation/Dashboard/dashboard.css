@@ -8,10 +8,10 @@
 }
 
 .emely-dialog_dialogue-text {
-    line-height: 1.8;
+    line-height: 1.6 !important;
     font-size: 1rem !important;
     text-align: left;
-    font-weight: 500 !important;
+    font-weight: 400 !important;
 }
 
 .button_container {

@@ -1,55 +1,47 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import UserMenu from './UserMenu/UserMenu';
 import GuestMenu from './GuestMenu/GuestMenu';
 import ChatMenu from './ChatMenu/ChatMenu';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import AlertMessage from './AlertMessage/AlertMessage';
 
 export default function PrivateRoute({ component: Component, ...rest }) {
-	const { currentUser, correctKey, allKeys, getKeys } = useAuth();
-	const [userEmail, setUserEmail] = useState('');
-	const [isCorrectKey, setIsCorrectKey] = useState(
-		sessionStorage.getItem('sessionKey')
-	);
-	const [progressOn, setProgressOn] = useState(false);
-	var root = document.querySelector(':root');
-
-
-	
+	/* ------ Variables, Hooks & State ------ */
+	const { currentUser, allKeys, getKeys, isGuest, msg, msgVariant } = useAuth();
+	const [isCorrectKey] = useState(sessionStorage.getItem('sessionKey'));
+	const [enableChatMenu, setEnableChatMenu] = useState(false);
 	const history = useHistory();
 
-	/* Check if you are on fika or intervju and change background */
+	/* --- Check if you are on fika or intervju and change background accordingly --- */
 	useEffect(() => {
 		try {
-			
-			/* If you are on fika */
+			/* --- If you are on fika --- */
 			if (window.location.href.indexOf('fika') > -1) {
-				return document.body.style.background = "var(--fika)";
-				
-			/* If you are on intervju */
-			} else if (window.location.href.indexOf('intervju') > -1) {
-				return document.body.style.background= "var(--interview)";
-			
-			} else {
-				return document.body.style.background = 'var(--mainBackground)';
+				const fikaBackground = document.body.style.background = 'var(--fika)';
+				return fikaBackground;
 
+				/* --- If you are on intervju --- */
+			} else if (window.location.href.indexOf('intervju') > -1) {
+				const interviewBackground = document.body.style.background = 'var(--interview)';
+				return interviewBackground;
+			} else {
+				const mainBackground = document.body.style.background = 'var(--mainBackground)';
+				return mainBackground;
 			}
 		} catch (error) {
 			console.log(error);
 		}
-			
 	}, [window.location.href]);
 
-
-  useEffect(() => {
+	/* --- Check if you have started chatting with Emely and enable ChatMenu --- */
+	useEffect(() => {
 		try {
 			if (window.location.href.indexOf('emely-chat') > -1) {
-				return setProgressOn(true);
-				
+				return setEnableChatMenu(true);
 			} else {
-				return setProgressOn(false);
-
+				return setEnableChatMenu(false);
 			}
 		} catch (error) {
 			console.log(error);
@@ -72,25 +64,17 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 		}
 	}, []);
 
-	useEffect(() => {
-		try {
-			if (currentUser.email === 'guest@emely.com') {
-				setUserEmail('guest@emely.com');
-			} else {
-				setUserEmail('');
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	}, []);
-
-
-
 	return (
 		<>
-			{/* Render GuestMenu if guest is logged in else render regular UserMenu on login */}
-			{userEmail !== '' ? <GuestMenu /> : <UserMenu />}
-			{progressOn ? <ChatMenu /> : null}
+
+		{msg && <AlertMessage />}
+			{/* --- Render GuestMenu if guest is logged in else render regular UserMenu on login --- */}
+			 <UserMenu />
+
+			{/* --- If you are chatting with Emely render ChatMenu --- */}
+			{enableChatMenu ? <ChatMenu /> : null}
+
+			{/* --- Render page if you are logged in & sessionKey is correct, else redirect back to login --- */}
 			<Route
 				{...rest}
 				render={(props) => {
@@ -101,7 +85,6 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 					);
 				}}
 			></Route>
-
 		</>
 	);
 }

@@ -1,23 +1,23 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import PulseLoader from 'react-spinners/PulseLoader';
-
 import { ConversationContext } from '../../contexts/ConversationContext';
 import { useAuth } from '../../contexts/AuthContext';
+
 import EmelyChatBubble from '../../Components/EmelyChatBubble/EmelyChatBubble';
 import UserChatBubble from '../../Components/UserChatBubble/UserChatBubble';
 import ChatInput from '../../Components/ChatInput/ChatInput';
 import ErrorBoundary from '../../Components/ErrorBoundary';
+import PulseLoader from 'react-spinners/PulseLoader';
+
 
 export default function EmelyChat(props) {
+	/* === Variables, Hooks & State === */
 	const [isFocused, setFocused] = useState(false);
 	const [isValidationError, setValidationError] = useState(false);
 	const { currentUser, userDetails } = useAuth();
-
 	// get :persona from router-dom (intervju or fika)
 	const { persona } = props.match.params;
 	const scroll = useRef();
-
 	const {
 		currentJob,
 		formatedTimestamp,
@@ -47,7 +47,7 @@ export default function EmelyChat(props) {
 		} catch (error) {
 			console.log(error.message);
 		}
-	}, [userDetails, currentUser]);
+	}, [userDetails, currentUser, window.location.href]);
 
 	/* ---- Tracks and renders new messages, scrolls them up ---- */
 	useEffect(() => {
@@ -67,10 +67,12 @@ export default function EmelyChat(props) {
 		// scroll.current?.scrollIntoView({ behavior: "smooth" });
 	};
 
+	/* Renders messages user/emely */
 	const renderMessages = () => {
 		return sessionConversation.map((msg, i) => {
 			if (msg.type === 'user') {
 				return (
+					/* User messages */
 					<div ref={scroll}>
 						<UserChatBubble
 							convId={msg.conversation_id}
@@ -81,6 +83,7 @@ export default function EmelyChat(props) {
 				);
 			} else {
 				return (
+					/* Emely messages */
 					<div ref={scroll}>
 						<EmelyChatBubble
 							convId={msg.conversation_id}

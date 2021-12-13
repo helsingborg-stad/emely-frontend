@@ -4,8 +4,6 @@ button:focus {
 }
 
 /* ---- BIG BUTTONS ---- */
-
-
 /* ---- Filled big buttons ---- */
 .register-btn {
 	background: var(--green) !important;
@@ -16,14 +14,14 @@ button:focus {
 	font-weight: 700 !important;
 	letter-spacing: 1px;
 	box-shadow: var(--smallShadow) !important;
-	
+	transition: 0.4s !important;
 }
 
 .register-btn:hover {
 	background: var(--greenHover) !important;
 	color: white !important;
 	border: 2px solid var(--greenHover) !important;
-
+	transition: 0.4s !important;
 }
 
 
@@ -35,6 +33,7 @@ button:focus {
 	padding: 13px !important;
 	font-weight: 700 !important;
 	letter-spacing: 1px;
+	
 }
 
 
@@ -111,21 +110,6 @@ button:focus {
 
 }
 
-.register-btn_sidebar {
-	color: var(--black) !important;
-	border-radius: var(--buttonBorderRadius) !important;
-	letter-spacing: 0.5px !important;
-	font-weight: 500 !important;
-	font-size: 0.9rem !important;
-	text-decoration: none !important;
-}
-
-.register-btn_sidebar:hover {
-
-	color: var(--green) !important;
-
-}
-
 .register-btn_light_small:hover {
 	background-color: var(--green) !important;
 	color: var(--white) !important;
@@ -161,7 +145,8 @@ button:focus {
 	background-color: var(--redHover) !important;
 	color: var(--white) !important;
 }
-/* ---- Profile/Avatar button ---- */
+
+/* Profile/Avatar button  */
 .avatar-btn{
 	background: var(--green) !important;
 	border: none !important;
@@ -172,4 +157,46 @@ button:focus {
 	align-items: center !important;
 	justify-content: center !important;
 
+}
+
+/* Sidebar menu-button */
+.register-btn_sidebar {
+	letter-spacing: 0.5px !important;
+	font-weight: 500 !important;
+	font-size: 0.9rem !important;
+	text-decoration: none !important;
+	padding: 10px 10px 10px 50px!important;
+	color:rgb(65, 65, 65);
+	transition: 0.6s !important;
+	
+}
+
+.register-btn_sidebar:hover {
+	transition: 1.2s;
+	background: rgb(241, 241, 241) !important;
+	color: var(--black) !important;
+	border-left: 10px solid var(--green) !important;	
+	padding: 10px 10px 10px 60px!important;
+}
+
+.register-btn_occupation_sidebar {
+	letter-spacing: 0.5px !important;
+	font-weight: 500 !important;
+	font-size: 1rem !important;
+	text-decoration: none !important;
+	padding: 10px 10px 10px 30px!important;
+	color:rgb(65, 65, 65);
+	transition: 0.6s !important;
+	list-style-type: none;
+	cursor: pointer !important;
+	border-bottom: 1px solid rgb(233, 233, 233) !important;
+
+}
+
+.register-btn_occupation_sidebar:hover {
+	transition: 1.2s;
+	background: rgb(241, 241, 241) !important;
+	color: var(--black) !important;
+	border-left: 10px solid var(--green) !important;	
+	padding: 10px 10px 10px 40px!important;
 }

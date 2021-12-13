@@ -1,49 +1,52 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-import { FiBriefcase } from 'react-icons/fi';
-import { FiCoffee } from 'react-icons/fi';
-import { Button } from 'react-bootstrap';
 import { ConversationContext } from '../../contexts/ConversationContext';
+import { Button } from 'react-bootstrap';
+
+import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
 import PulseLoader from 'react-spinners/PulseLoader';
 
-/* Variable declaration */
+/* --- Icon imports --- */
+import { ImBriefcase } from 'react-icons/im';
+import { SiCoffeescript } from 'react-icons/si';
+
+/* --- Variables, State & Hooks --- */
 export default function Dashboard() {
 	const { userDetails, currentUser } = useAuth();
-	const { currentProgress, setCurrentProgress } =
-		useContext(ConversationContext);
-
+	const { setCurrentProgress } = useContext(ConversationContext);
 	const [isLoading, setIsLoading] = useState();
+	const history = useHistory();
+	const handleLink = (linkTo) => {
+		history.push(linkTo);
+	};
 
+
+	/* --- Added loader before rendering text --- */
 	useEffect(() => {
 		setIsLoading(true);
-
-		/* --- Render text after delay --- */
 		const timer = setTimeout(() => {
 			setIsLoading(false);
 		}, 1500);
 		return timer;
 	}, [currentUser]);
 
+	/* --- Reset progress before entering new chat --- */
 	useEffect(() => {
-		/* Reset current progress on new chat */
 		setCurrentProgress(0);
 	}, []);
 
-	let history = useHistory();
-
-	const handleLink = (linkTo) => {
-		history.push(linkTo);
-	};
-
 	return (
 		<>
+
 			<Container id="dashboard-card" className="p-0">
 				<Row className="my-5 align-items-center  justify-content-center button_container">
 					<Row>
+
 						<Col id="emely-dialogue-col" className="p-0">
+
+						{/* --- EmelyDialogue component -> Components/EmelyDialogue --- */}
 							<EmelyDialogue className="">
 								{/* --- When loading show pulse loader. Show text after loading --- */}
 								{isLoading ? (
@@ -69,7 +72,7 @@ export default function Dashboard() {
 							type="button"
 							onClick={() => handleLink('/work-emely')}
 						>
-							<FiBriefcase size={20} />
+							<ImBriefcase size={20} />
 							<span className="px-3">Jobbintervju</span>
 						</Button>
 					</Col>
@@ -81,7 +84,7 @@ export default function Dashboard() {
 							type="button"
 							onClick={() => handleLink('/emely-chat/fika')}
 						>
-							<FiCoffee size={20} />
+							<SiCoffeescript size={20} />
 							<span className="px-3">Ta en fika</span>
 						</Button>
 					</Col>

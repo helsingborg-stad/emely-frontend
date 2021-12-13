@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
 import { Col, Row, Button, Modal } from 'react-bootstrap';
-import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
-import AlertMessage from '../../Components/AlertMessage/AlertMessage';
-import ProfileInfoEdit from './ProfileInfoEdit';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
+import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
+import ProfileInfoEdit from './ProfileInfoEdit';
 
-/* Icon imports */
+/* --- Icon imports ---*/
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BiLogOutCircle } from 'react-icons/bi';
 
-import { useAuth } from '../../contexts/AuthContext';
-
+/* --- Variables, Hooks & State --- */
 export default function Profile() {
-	const { userDetails, logout } = useAuth();
+	const { userDetails, logout, setMsg, setMsgVariant } = useAuth();
 	const history = useHistory();
-
 	const { translateError } = useAuth();
-	const [msg, setMsg] = useState('');
-	const [msgVariant, setMsgVariant] = useState('');
     const [show, setShow] = useState(false);
-
 	
+	/* show/hide modal */
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
     
+
+	/* --- Log out --- */
 	async function handleLogout() {
 		setMsg('');
 
@@ -42,9 +40,6 @@ export default function Profile() {
 
 	return (
 		<>
-			{/* ------------ Alert for error messages: fixed-top ------------ */}
-			{msg && <AlertMessage message={msg} variant={msgVariant} />}
-		
 				<ProfileCard>
 
 					{/* --- My information card --- */}
@@ -83,23 +78,31 @@ export default function Profile() {
 						<p>{userDetails && userDetails.username}</p>
 					</Row>
 
+					{/* --- Email --- */}
 					<Row className="mt-3 ">
-						<small className="fw-bold">Användarnamn</small>
+						<small className="fw-bold">Email</small>
 						<p>{userDetails && userDetails.email}</p>
 					</Row>
 
+					{/* --- Birth year --- */}
 					<Row className="mt-3">
 						<small className="fw-bold ">Födelseår</small>
 						<p>{userDetails && userDetails.birth_year}</p>
 					</Row>
+
+					{/* --- Native Language --- */}
 					<Row className="mt-3">
 						<small className="fw-bold ">Modersmål</small>
 						<p>{userDetails && userDetails.native_language}</p>
 					</Row>
+
+					{/* --- Current occupation --- */}
 					<Row className="mt-3">
 						<small className="fw-bold ">Sysselsättning</small>
 						<p>{userDetails && userDetails.current_occupation}</p>
 					</Row>
+
+					{/* --- Log out button --- */}
 					<Row className="mb-3 mt-5">
 						<span>
 							<Button

@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
-import { Form, Button, Alert, Row, Container, Col } from 'react-bootstrap';
+import { Form, Button, Row, Container, Col } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
-
 import { Link } from 'react-router-dom';
 
-/* Icon imports */
+/* --- Icon imports --- */
 import { AiOutlineUser } from 'react-icons/ai';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { AiOutlineCalendar } from 'react-icons/ai';
@@ -12,17 +11,12 @@ import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 
-/* Variable declaration */
-
+/* --- Variables, Hooks & State --- */
 export default function ProfileInfoEdit(props) {
 	const usernameRef = useRef();
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
-
-	const [msg, setMsg] = useState();
-	const [msgVariant, setMsgVariant] = useState();
-	const [isUpdated, setIsUpdated] = useState(false);
 
 	const {
 		currentUser,
@@ -31,24 +25,26 @@ export default function ProfileInfoEdit(props) {
 		updateCurrentOccupation,
 		updateBirthYear,
 		updateNativeLanguage,
+		setMsg,
+		setMsgVariant,
 	} = useAuth();
-	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 
+	/* --- Submit information --- */
 	async function handleSubmit(e) {
 		e.preventDefault();
+		setMsg('');
 
-		setIsUpdated('');
-
-		const promises = [];
-		const updates = [];
+		const promises = []; // Changes
+		const updates = []; // Message for update
 
 		setLoading(true);
-		setError('');
-		setIsUpdated(false);
 
-		/* Run update methods from AuthContext */
+		/* --- Functions to update user information from Firestore ---*/
 		try {
+			/* --- If changes has been made to field push change and message to array ---*/
+
+			/* --- Username --- */
 			if (usernameRef.current.value !== userDetails.username) {
 				promises.push(
 					updateUsername(currentUser.uid, usernameRef.current.value)
@@ -56,6 +52,7 @@ export default function ProfileInfoEdit(props) {
 				updates.push('Användarnamn');
 			}
 
+			/* --- Current occupation --- */
 			if (
 				currentOccupationRef.current.value !== userDetails.current_occupation
 			) {
@@ -68,11 +65,12 @@ export default function ProfileInfoEdit(props) {
 				updates.push('Sysselsättning');
 			}
 
+			/* --- Birth year --- */
 			if (birthYearRef.current.value !== userDetails.birth_year) {
 				promises.push(
 					updateBirthYear(currentUser.uid, birthYearRef.current.value)
 				);
-				updates.push('Födelsedatum');
+				updates.push('Födelseår');
 			}
 
 			if (nativeLanguageRef.current.value !== userDetails.native_language) {
@@ -82,26 +80,27 @@ export default function ProfileInfoEdit(props) {
 				updates.push('Modersmål');
 			}
 
+			/* --- Update all saved changes from array --- */
 			await Promise.all(promises)
 				.then(() => {})
 				.catch((error) => {
-					setError(error.message);
+					setMsg(error.message);
+					setMsgVariant('danger');
 				})
 				.finally(() => {
 					setLoading(false);
 
+					/* --- When finished updating. Loop through all update-messages and set to msg alert --- */
 					for (let i of updates) {
 						const updatesToString = updates.join(' - ').toString();
-
 						setMsg(updatesToString + ' har uppdaterats');
 					}
 
-					setIsUpdated(true);
 					setMsgVariant('success');
 				});
 		} catch (error) {
-			console.log(error.code);
 			setMsg(error.message);
+			setMsgVariant('danger');
 		}
 	}
 
@@ -110,7 +109,7 @@ export default function ProfileInfoEdit(props) {
 			<Container className="p-5">
 				<h2 className="text-center mb-2 fw-bold">Redigera profil</h2>
 
-				{/* Username form */}
+				{/* --- Username form --- */}
 				<Form onSubmit={handleSubmit} id="update-profile">
 					<Row className="mt-5">
 						<Form.Group className="" id="username">
@@ -118,6 +117,7 @@ export default function ProfileInfoEdit(props) {
 								<AiOutlineUser className="me-2" size={20} />
 								Användarnamn
 							</Form.Label>
+
 							<Form.Control
 								className="input-field-small"
 								type="text"
@@ -129,11 +129,12 @@ export default function ProfileInfoEdit(props) {
 						</Form.Group>
 					</Row>
 
-					{/* Birth year form */}
+					{/* --- Birth year form --- */}
 					<Row className="mt-3">
 						<Form.Group id="birthYear">
 							<Form.Label className="input-label">
-								<AiOutlineCalendar className="me-2" size={20} /> Vilket år är du född?
+								<AiOutlineCalendar className="me-2" size={20} /> Vilket år är du
+								född?
 							</Form.Label>
 							<Form.Control
 								className="input-field-small"
@@ -146,7 +147,7 @@ export default function ProfileInfoEdit(props) {
 						</Form.Group>
 					</Row>
 
-					{/* Native language form */}
+					{/* --- Native language form --- */}
 					<Row className="mt-3">
 						<Form.Group id="nativeLanguage">
 							<Form.Label className="input-label">
@@ -186,7 +187,7 @@ export default function ProfileInfoEdit(props) {
 						</Form.Group>
 					</Row>
 
-					{/* Current occupation form */}
+					{/* --- Current occupation form --- */}
 					<Row className="mt-3">
 						<Form.Group id="currentOccupation">
 							<Form.Label className="input-label">
@@ -209,12 +210,8 @@ export default function ProfileInfoEdit(props) {
 							</Form.Select>
 						</Form.Group>
 					</Row>
-					{msg && (
-						<Alert className="mt-4" variant="success">
-							{msg}
-						</Alert>
-					)}
 
+					{/* --- Save changes button --- */}
 					<Row className="mb-3 mt-5">
 						<Col className="mb-3" md={6} lg={6} xs={12}>
 							<Button
@@ -227,6 +224,7 @@ export default function ProfileInfoEdit(props) {
 							</Button>
 						</Col>
 
+						{/* --- Back button (close modal) --- */}
 						<Col className="" md={6} lg={6} xs={12}>
 							<Link to="/profile">
 								<Button

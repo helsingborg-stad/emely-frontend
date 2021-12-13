@@ -16,13 +16,23 @@
 
 }
 
+.menu-rows{
+    border-top: 1px solid rgb(226, 226, 226) !important;
+}
+
+#top-menu-item{
+    border-top: 0px !important;
+}
+
 #menu-user-button{
     font-size: 1rem;
     display: block ;
     font-weight: 600 !important;
 }
 
-
+.nav-item{
+    cursor: pointer !important;
+}
 
 
 @media (max-width: 1000px){

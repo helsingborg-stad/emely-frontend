@@ -1,22 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Row } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
 import AlertMessage from '../../Components/AlertMessage/AlertMessage';
+import Divider from '@mui/material/Divider';
+import emely from '../../Assets/images/emely_work.png';
 
-/* Icon Imports */
+/* --- Icon Imports --- */
 import { HiOutlineKey } from 'react-icons/hi';
 import { RiLockUnlockLine } from 'react-icons/ri';
 import { RiLockLine } from 'react-icons/ri';
 
 
-/* Variable declaration */
+/* --- Variables, Hooks & State --- */
 export default function Login() {
 	const keyRef = useRef();
-	const { correctKey, getKeys, checkKey } = useAuth();
-	const [msg, setMsg] = useState('');
-	const [msgVariant, setMsgVariant] = useState('');
+	const { getKeys, checkKey, msg, setMsg } = useAuth();
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -24,7 +24,7 @@ export default function Login() {
 	}, [])
 
 
-	/* Get the keys on page load */
+/* --- Get the keys on page load --- */
 	useEffect(() => {
 		try {
 			getKeys();
@@ -33,7 +33,9 @@ export default function Login() {
 		}
 	}, []);
 
-	/* Do this when pressing the submit button */
+
+
+	/* --- Do this on submit button --- */
 	async function handleSubmit(e) {
 		e.preventDefault();
 		try {
@@ -42,14 +44,13 @@ export default function Login() {
 			setLoading(true);
 			setMsg('');
 
-			/* Set a timeout on checking the key */
+			/* --- Set a timeout on checking the key --- */
 			setTimeout(() => {
 				setLoading(false);
+
+				/* --- Check if the key is correct --- */
 				checkKey(keyRef.current.value, date);
-				if (correctKey !== true) {
-					setMsgVariant('danger');
-					return setMsg('Fel nyckel eller passerat utgångsdatum!');
-				}
+
 			}, 1500);
 		} catch (error) {
 			console.log(error.code);
@@ -58,13 +59,21 @@ export default function Login() {
 
 	return (
 		<>
-			{msg && <AlertMessage message={msg} variant={msgVariant} />}
-			<AuthLayout>
-				<h2 className="text-center mb-5 fw-bold" id="login-header">
-					Skriv in din nyckel för att fortsätta vidare till språkroboten Emely
-				</h2>
+			{msg && <AlertMessage />}
 
-				{/* Input-key form */}
+			<AuthLayout>
+			<Row className="image-row justify-content-center ">
+			<img
+			className="home-emely"
+			src={emely}
+			alt=""
+			/>
+			</Row>
+				<h4 className="text-center mb-5 fw-bold" id="login-header">
+					Skriv in din nyckel för att fortsätta vidare <br/> till språkroboten Emely.
+				</h4>
+
+				{/* --- Input-key form --- */}
 				<Form onSubmit={handleSubmit}>
 					<Form.Group id="password" className="mt-4 fw-bold">
 						<Form.Label className="input-label">
@@ -78,7 +87,8 @@ export default function Login() {
 							required
 						/>
 					</Form.Group>
-					{/* Submit the key */}
+
+					{/* --- Submit the key --- */}
 					{/* Show keypad-icon unlocked if the page is loading else show locked version */}
 					{loading ? (
 						<Button
@@ -97,10 +107,14 @@ export default function Login() {
 							<RiLockLine className="me-3" size={25} /> ANVÄND NYCKEL
 						</Button>
 					)}
-					<hr/>
-					<p className="text-center" style={{ fontWeight: '600' }}>
-					Saknar du en nyckel? Kontakta Emely på: <br/>emely@nordaxon.com
-					</p>
+
+					{/* --- Missing key? --- */}
+					<Divider className=" text-center divider-text mb-2 mt-4 fw-bold">SAKNAR DU EN NYCKEL? </Divider>
+					<p className="text-center fw-bold mt-3 mb-0" style={{ fontSize: '0.9rem' }}>KONTAKTA EMELY</p>
+				<p className="text-center mt-0" style={{ fontWeight: '500' }}>
+				emely@nordaxon.com
+				</p>
+
 					
 				</Form>
 			</AuthLayout>

@@ -13,7 +13,6 @@ import { GrLanguage } from 'react-icons/gr';
 import { FaUserTie } from 'react-icons/fa';
 
 import AuthLayout from '../../Components/Layout/AuthLayout/AuthLayout';
-import AlertMessage from '../../Components/AlertMessage/AlertMessage';
 
 export default function Signup() {
 	/* ------ Form value variables ------ */
@@ -24,17 +23,14 @@ export default function Signup() {
 	const birthYearRef = useRef();
 	const nativeLanguageRef = useRef();
 	const currentOccupationRef = useRef();
-	/* ----------------------------------- */
 
-	/* ------ Hooks ------ */
-	const { signup, createUser, translateError } = useAuth();
-	const [msg, setMsg] = useState('');
+	/* --- Hooks & State --- */
+	const { signup, createUser, translateError, setMsg, setMsgVariant } =
+		useAuth();
 	const [loading, setLoading] = useState(false);
-	const [msgVariant, setMsgVariant] = useState('');
 	const history = useHistory();
-	/* ----------------------------------- */
 
-	/* ------ Open user terms onClick ------ */
+	/* --- Open user terms onClick --- */
 	function handleEndUserTerms(e) {
 		e.preventDefault();
 
@@ -46,10 +42,11 @@ export default function Signup() {
 		);
 	}
 
+	/* --- Do this when submitting --- */
 	async function handleSubmit(e) {
 		e.preventDefault();
 
-		/* ------ Start with, checking if the passwords match ------ */
+		/* --- Start with, checking if the passwords match --- */
 		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
 			setMsgVariant('danger');
 			return setMsg('Lösenorden matchar inte');
@@ -59,7 +56,7 @@ export default function Signup() {
 			setMsg('');
 			setLoading(true);
 
-			/* Run sign-up function from context which communicates with Firebase */
+			/* --- Signup Firebase auth function --- */
 			const credential = await signup(
 				emailRef.current.value,
 				passwordRef.current.value
@@ -67,7 +64,7 @@ export default function Signup() {
 			const uid = credential.user.uid;
 			const creationTime = credential.user.metadata.creationTime;
 
-			/*  When signing up, send information to Firestore  */
+			/* --- Send sign up information to Firestore database (users or users-debug) --- */
 			await createUser(
 				emailRef.current.value,
 				usernameRef.current.value,
@@ -77,10 +74,11 @@ export default function Signup() {
 				uid,
 				creationTime
 			);
-
+			setMsg('Välkommen till språkroboten Emely! Ditt konto har nu skapats.');
+			setMsgVariant('success');
 			history.push('/dashboard');
 
-			/*  Catch error & translate in a function */
+			/*  --- Catch error & translate --- */
 		} catch (error) {
 			console.log(error.code);
 			setMsgVariant('danger');
@@ -92,8 +90,6 @@ export default function Signup() {
 
 	return (
 		<>
-			{/* ------------ Alert for error messages: fixed-top ------------ */}
-			{msg && <AlertMessage message={msg} variant={msgVariant} />}
 			<AuthLayout>
 				<h2 className="text-center fw-bold mb-5">
 					Registrera dig för att börja prata med Emely.
@@ -166,7 +162,8 @@ export default function Signup() {
 
 						<Form.Group id="birthYear" className="fw-bold">
 							<Form.Label className="input-label">
-								<AiOutlineCalendar className="label-icons" size={30} /> Vilket år är du född?
+								<AiOutlineCalendar className="label-icons" size={30} /> Vilket
+								år är du född?
 							</Form.Label>
 							<Form.Control
 								className="w-100 input-field"
@@ -268,7 +265,7 @@ export default function Signup() {
 						</Form.Group>
 					</Row>
 
-					{/* ------------ Login buttons ------------ */}
+					{/* ------------ Submit & Register new user buttons ------------ */}
 					<Button
 						disabled={loading}
 						className="w-100 mt-3 register-btn"
@@ -278,6 +275,8 @@ export default function Signup() {
 						SKAPA ANVÄNDARE
 					</Button>
 				</Form>
+
+				{/* ------------ Login Button ------------ */}
 				<div className="w-100 text-center mt-3 fw-bold">
 					<p style={{ fontWeight: '600' }}>
 						{' '}
