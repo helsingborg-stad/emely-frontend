@@ -12,6 +12,9 @@ NordAxon AB sparar användardata samt alla konversationer en användare har med 
 inte i analysen för att dra slutsatser kring interaktioner. Din data samt alla tillhörande konversationer sparas så länge din inloggning finns aktiv eller så länge som Emely-projektet finns aktivt, dock max 5 år.
 <br>
 <br>
+Emely är ett projekt mellan NordAxon AB och Helsingborgs stad. Vid enstaka tillfällen kan utdrag ur konversationer med Emely delas med Helsingborgs stad, men i sådana fall anonymiseras utdragen så att de inte går att härleda till en specifik person.
+<br>
+<br>
 Du kan ladda ner all data vi har sparad som är kopplad till din användare genom att gå in på din användarprofil och välja alternativet "Ladda ner min data". Observera att detta inte raderar datan ur NordAxon ABs databas.
 <br>
 <br>
