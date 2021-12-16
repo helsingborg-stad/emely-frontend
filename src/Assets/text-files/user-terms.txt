@@ -3,17 +3,24 @@ Genom att registrera dig för eller på annat sätt använda Emely samtycker du 
 <br>
 <br>
 <h5 className="fw-bold">Användardata</h5>
-Vid registrering av ny användare, godkänner du att din e-postadress sparas i vår databas tillsammans med den övriga informationen du fyller i vid skapandet av ett 
+Vid registrering av ny användare, godkänner du att din e-postadress sparas i NordAxon ABs databas tillsammans med den övriga informationen du fyller i vid skapandet av ett 
 nytt konto. Om du väljer att radera din användare så kommer all användardata att försvinna. Alla dina uppgifter kopplade till din 
 användare kommer då att försvinna från databasen. 
 <br>
 <br>
-Vi sparar användardata i avseende att kunna analysera användarens interaktion med Emely för att kunna förbättra Emely. Personliga identifierare används
-aldrig i analysen för att dra slutsatser kring interaktioner.
+NordAxon AB sparar användardata samt alla konversationer en användare har med Emely i avseende att kunna analysera användarens interaktion med Emely samt Emelys svar, för att i framtiden kunna förbättra Emely. Personliga identifierare används
+inte i analysen för att dra slutsatser kring interaktioner. Din data samt alla tillhörande konversationer sparas så länge din inloggning finns aktiv eller så länge som Emely-projektet finns aktivt, dock max 5 år.
+<br>
+<br>
+Emely är ett projekt mellan NordAxon AB och Helsingborgs stad. Vid enstaka tillfällen kan utdrag ur konversationer med Emely delas med Helsingborgs stad, men i sådana fall anonymiseras utdragen så att de inte går att härleda till en specifik person.
+<br>
+<br>
+Du kan ladda ner all data vi har sparad som är kopplad till din användare genom att gå in på din användarprofil och välja alternativet "Ladda ner min data". Observera att detta inte raderar datan ur NordAxon ABs databas.
 <br>
 <br>
 <h5 className="fw-bold">Konversation med Emely</h5>
-Allt du skriver till Emely kommer att sparas i våra databaser. 
-När du använder taligenkänningen när du pratar med Emely kommer din röstdata att skickas till Google, då vi använder oss av Google Speech To Text för att analysera vad du säger till Emely. 
-För att läsa mer om Google Speech To Text och hur de hanterar röstdata, se https://cloud.google.com/speech-to-text/docs/data-logging.
+Allt du skriver till Emely kommer att sparas i NordAxon ABs databaser. 
+När du använder taligenkänningen när du pratar med Emely kommer din röstdata att skickas till Google, då NordAxon AB använder sig av Google Speech To Text för att analysera vad du säger till Emely. 
+Om du inte vill att din röstdata ska skickas till Google använder du inte taligenkänningen.
 
+Vid frågor om datahantering, kontakta info@nordaxon.com
