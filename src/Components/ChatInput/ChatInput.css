@@ -16,6 +16,10 @@
   align-items: center;
 }
 
+.hide-chat-input{
+  display: none !important;
+}
+
 .chat-input_overlay {
   position: absolute;
   top: 0;
