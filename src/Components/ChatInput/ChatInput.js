@@ -24,6 +24,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 		getContinueСonversation,
 		isLoading,
 		isError,
+		currentProgress,
 	} = useContext(ConversationContext);
 
 	/* --- Functions from acapela context --- */
@@ -43,6 +44,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 		resetTranscript,
 		browserSupportsSpeechRecognition,
 	} = useSpeechRecognition();
+
 
 	/* --- Works if the recording button has been pressed --- */
 	useEffect(() => {
@@ -112,7 +114,10 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 	}
 
 	return (
-		<div className="chat-input-wrapper">
+
+		<>
+		{/* --- Hide the whole chat-input if progress is 100 --- */}
+		<div className={currentProgress === 100 ? "hide-chat-input" : "chat-input-wrapper"}>
 			{/* ---- Class "chat-input_overlay" blocks all buttons and input fields if is loading or error on the page ---- */}
 			<div className={isLoading || isError ? 'chat-input_overlay' : ''}></div>
 			<div className="container chat-input_container-wrapper">
@@ -140,7 +145,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 							placeholder={isLoading ? '' : 'Meddelande'}
 							value={listening ? transcript : userMessage}
 							onKeyDown={(e) => handleKeyDown(e)}
-							disabled={isLoading}
+							disabled={currentProgress === 100 ? true : isLoading}
 							required
 						></TextareaAutosize>
 						<button type="submit" className="send_message_btn">
@@ -189,5 +194,6 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 				</div>
 			</div>
 		</div>
+		</>
 	);
 }
