@@ -41,8 +41,9 @@ export function AuthProvider({ children }) {
 
 	const [msg, setMsg] = useState('');
 	const [msgVariant, setMsgVariant] = useState('');
-	const [useHuggingFace, setUseHuggingFace] = useState(sessionStorage.getItem('useHuggingFace'));
-
+	const [useHuggingFace, setUseHuggingFace] = useState(
+		sessionStorage.getItem('useHuggingFace')
+	);
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
@@ -121,7 +122,9 @@ export function AuthProvider({ children }) {
 			console.log('Password updated');
 			await updatePassword(currentUser, password);
 			setMsgVariant('success');
-			setMsg('Du har ändrat ditt lösenord. Vänligen logga in igen med ditt nya lösenord.');
+			setMsg(
+				'Du har ändrat ditt lösenord. Vänligen logga in igen med ditt nya lösenord.'
+			);
 			return logout();
 		} catch (error) {
 			console.log(error.code);
@@ -129,7 +132,7 @@ export function AuthProvider({ children }) {
 			setMsg(translateError(error.code));
 
 			/* --- If login-token expires, logout user and try again --- */
-			if(error.code === "auth/requires-recent-login"){
+			if (error.code === 'auth/requires-recent-login') {
 				return logout();
 			}
 		}
@@ -163,11 +166,10 @@ export function AuthProvider({ children }) {
 
 	/* ---- FIRESTORE QUERIES ---- */
 
-
 	/* --- Check if the input key matches keys in database --- */
 	function checkKey(inputKey, date) {
 		/* Format the date so it matches the deadline date */
-		const formattedDate = date.toLocaleDateString('se-SE')
+		const formattedDate = date.toLocaleDateString('se-SE');
 
 		/* Iterate through all keys and check if the key matches inputKey and deadline date */
 		for (let key of allKeys) {
@@ -256,6 +258,7 @@ export function AuthProvider({ children }) {
 		});
 		console.log('User created in firestore');
 	}
+
 
 	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
 	async function getUserDetails(userId) {

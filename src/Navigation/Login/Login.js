@@ -152,13 +152,12 @@ export default function Login() {
 						<RiLoginCircleLine size={30} /> LOGGA IN
 					</Button>
 				</Form>
+				
 
-				<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
-					<Divider>ELLER</Divider>
-				</h4>
+
 
 				{/* ---- Guest login ---- */}
-				<Form onSubmit={handleGuestLogin}>
+				{/* <Form onSubmit={handleGuestLogin}>
 					<Button
 						disabled={loading}
 						className="w-100 mt-2 register-btn_light"
@@ -167,19 +166,22 @@ export default function Login() {
 					>
 						<AiOutlineUser size={30} /> FORTSÄTT SOM GÄST
 					</Button>
-				</Form>
+					</Form>  
+				*/}
+				
 
 				{/* ---- Need an account? ---- */}
 
-				<h6 className="text-center mb-4 mt-5 fw-bold" id="eller">
+				<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
 					<Divider>BEHÖVER DU ETT KONTO?</Divider>
-				</h6>
+				</h4>
+
 
 				{/* ---- Create new account button ---- */}
 				<Link id="text-link" to="/signup">
 					<Button
 						variant="none"
-						className="w-100 register-btn"
+						className="w-100 register-btn_light"
 						id="edit-button"
 					>
 						<AiOutlineUserAdd size={30} /> SKAPA NY ANVÄNDARE

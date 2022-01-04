@@ -7,6 +7,7 @@ import { AcapelaContext } from '../../contexts/AcapelaContext';
 
 import Cookies from 'js-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
+import { useAuth } from '../../contexts/AuthContext';
 
 /* --- Icon imports --- */
 import { BiMicrophone } from 'react-icons/bi';
@@ -17,6 +18,11 @@ import { FaStop } from 'react-icons/fa';
 
 /* --- Variables, Hooks & State --- */
 export default function ChatInput({ persona, setFocused, setValidationError }) {
+	const {
+		saveMessage,
+		currentUser,
+	} = useAuth();
+
 	/* --- Functions from ConversationContext --- */
 	const {
 		userMessage,
@@ -66,6 +72,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 	/* --- Send user message to BE ---*/
 	const handleSendClick = (e) => {
 		e.preventDefault();
+		saveMessage(currentUser.uid, userMessage);
 		/* --- Remove the current audio control (by ID) so that the voice tracks do not overlap --- */
 		setDeleteAcapelaPlayer(true);
 
