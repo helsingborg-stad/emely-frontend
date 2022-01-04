@@ -130,9 +130,9 @@ export default function UserMenu(props) {
 								style={{ fontSize: '1rem', fontWeight: '500' }}
 							>
 								{/* --- Conditional rendering -> if Guest no username else username */}
-								{showUsername && isGuest ? null : (
+								{showUsername && isGuest ? (
 									<span>{userDetails && userDetails.username}</span>
-								)}
+								) : null}
 							</Col>
 						</Row>
 					</Navbar.Brand>

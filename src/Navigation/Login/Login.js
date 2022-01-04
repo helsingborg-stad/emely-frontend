@@ -15,17 +15,23 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 
 /* Variable declaration */
 export default function Login() {
-
 	/* ------ Form references ------ */
 	const emailRef = useRef();
 	const passwordRef = useRef();
 
 	/* ------ Hooks & State ------ */
-	const { login, updateUserInfo, translateError, currentUser, guestId, setMsg, setMsgVariant } = useAuth();
+	const {
+		login,
+		updateUserInfo,
+		translateError,
+		currentUser,
+		guestId,
+		setMsg,
+		setMsgVariant,
+	} = useAuth();
 	const { useHuggingFace } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
-
 
 	useEffect(() => {
 		/* --- If userid is not guest then push to dashboard when on login page --- */
@@ -37,7 +43,6 @@ export default function Login() {
 			console.log(error.message);
 		}
 	}, [currentUser]);
-
 
 	/* --- Running this function on "Fortsätt som Gäst" --- */
 	async function handleGuestLogin(e) {
@@ -98,7 +103,6 @@ export default function Login() {
 					Logga in för att fortsätta
 				</h2>
 
-
 				{/* ---- Login form ---- */}
 				<Form onSubmit={handleSubmit}>
 					{/* ---- Email form ---- */}
@@ -150,10 +154,7 @@ export default function Login() {
 				</Form>
 				
 
-				{/* ---- Need an account? ---- */}
-				<h6 className="text-center mb-4 mt-5 fw-bold" id="eller">
-					<Divider>BEHÖVER DU ETT KONTO?</Divider>
-				</h6>
+
 
 				{/* ---- Guest login ---- */}
 				{/* <Form onSubmit={handleGuestLogin}>
@@ -168,6 +169,12 @@ export default function Login() {
 					</Form>  
 				*/}
 				
+
+				{/* ---- Need an account? ---- */}
+
+				<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
+					<Divider>BEHÖVER DU ETT KONTO?</Divider>
+				</h4>
 
 
 				{/* ---- Create new account button ---- */}
