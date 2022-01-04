@@ -172,9 +172,9 @@ export default function Login() {
 
 				{/* ---- Need an account? ---- */}
 
-				<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
+				<h6 className="text-center mb-4 mt-5 fw-bold" id="eller">
 					<Divider>BEHÖVER DU ETT KONTO?</Divider>
-				</h4>
+				</h6>
 
 
 				{/* ---- Create new account button ---- */}
