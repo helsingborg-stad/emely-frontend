@@ -12,7 +12,7 @@ import { BiLogOutCircle } from 'react-icons/bi';
 
 /* --- Variables, Hooks & State --- */
 export default function Profile() {
-	const { userDetails, logout, setMsg, setMsgVariant, getUserMessages, currentUser } = useAuth();
+	const { userDetails, logout, setMsg, setMsgVariant } = useAuth();
 	const history = useHistory();
 	const { translateError } = useAuth();
     const [show, setShow] = useState(false);
@@ -22,20 +22,6 @@ export default function Profile() {
 	const handleShow = () => setShow(true);
     
 
-		/* --- Get messages --- */
-		async function handleGetMessages() {
-			setMsg('');
-	
-			try {
-				await getUserMessages(currentUser.uid);
-	
-				/* Catch error */
-			} catch (error) {
-				console.log(error.code);
-				setMsgVariant('danger');
-				setMsg(error.message);
-			}
-		}
 
 	/* --- Log out --- */
 	async function handleLogout() {
@@ -117,20 +103,6 @@ export default function Profile() {
 						<p>{userDetails && userDetails.current_occupation}</p>
 					</Row>
 
-					{/* --- Get messages button --- */}
-					<Row className="mb-3 mt-5">
-						<span>
-							<Button
-								variant="none"
-								className="register-btn_small"
-								id="log-out-button-profile"
-								onClick={handleGetMessages}
-							>
-								
-								Get messages
-							</Button>
-						</span>
-					</Row>
 
 					{/* --- Log out button --- */}
 					<Row className="mb-3 mt-5">

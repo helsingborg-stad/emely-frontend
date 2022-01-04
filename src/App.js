@@ -21,6 +21,7 @@ import EndUserTerms from './Components/EndUserTerms/EndUserTerms';
 import EmelySettings from './Components/EmelySettings/EmelySettings';
 import Profile from './Navigation/Profile/Profile';
 import Home from './Navigation/Home/Home';
+import Instructions from './Navigation/Instructions/Instructions';
 import ConversationContextProvider from './contexts/ConversationContext';
 import AcapelaContextProvider from './contexts/AcapelaContext';
 
@@ -42,6 +43,12 @@ function App() {
 											exact
 											path="/dashboard"
 											component={Dashboard}
+										/>
+										
+										<PrivateRoute
+											exact
+											path="/instructions"
+											component={Instructions}
 										/>
 										<PrivateRoute
 											path="/update-profile"
