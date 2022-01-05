@@ -9,3 +9,7 @@
 .instruction-text{
     font-size: 1rem !important;
 }
+
+.instruction-image{
+    max-width: 100% !important;
+}

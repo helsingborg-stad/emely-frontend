@@ -28,6 +28,7 @@ const ConversationContextProvider = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(100);
   const [hasExperience, setHasExperience] = useState(true);
   const [smallTalk, setSmallTalk] = useState(true);
+  const [userConversations, setUserConversations] = useState("");
 
   /* ---- Gets first message from BE ---- */
   const initConversation = async (
@@ -127,6 +128,21 @@ const ConversationContextProvider = (props) => {
     setIsLoading(false);
   };
 
+    /* ---- Get all user-conversations  ---- */
+    const getUserConversations = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/user_conversations?user_id=${currentUser.uid}`
+        );
+        const result = await response.data;
+  
+        await setUserConversations(JSON.stringify(result));
+      } catch (err) {
+        console.log("Error: ", err);
+        return false;
+      }
+    };
+
   /* ---- Gets all occupation buttons ---- */
   const getButtons = async () => {
     try {
@@ -174,6 +190,8 @@ const ConversationContextProvider = (props) => {
     setHasExperience,
     smallTalk,
     setSmallTalk,
+    getUserConversations,
+    userConversations,
   };
 
   return (

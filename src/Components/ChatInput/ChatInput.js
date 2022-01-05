@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import SpeechRecognition, {
 	useSpeechRecognition,
 } from 'react-speech-recognition';
@@ -18,6 +18,7 @@ import { FaStop } from 'react-icons/fa';
 
 /* --- Variables, Hooks & State --- */
 export default function ChatInput({ persona, setFocused, setValidationError }) {
+	const textRef = useRef();
 	const {
 		currentUser,
 	} = useAuth();
@@ -50,6 +51,12 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 		browserSupportsSpeechRecognition,
 	} = useSpeechRecognition();
 
+useEffect(() => {
+	if(!isLoading){
+		textRef.current.focus();
+	}
+
+}, [isLoading])
 
 	/* --- Works if the recording button has been pressed --- */
 	useEffect(() => {
@@ -91,6 +98,7 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 			}
 			setUserMessage('');
 			setFocused(false);
+			
 		}
 	};
 
@@ -133,12 +141,13 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 						onSubmit={(e) => handleSendClick(e)}
 						className={'input-wrapper'}
 						onFocus={() => {
-							setFocused(true);
+							
 							setValidationError(false);
 						}}
 						onBlur={() => {
 							setFocused(false);
 						}}
+						
 					>
 						<TextareaAutosize
 							onChange={(e) => {
@@ -148,11 +157,13 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 							type="text"
 							minRows={1}
 							maxRows={3}
-							placeholder={isLoading ? '' : 'Meddelande'}
+							placeholder={'Meddelande'}
 							value={listening ? transcript : userMessage}
 							onKeyDown={(e) => handleKeyDown(e)}
-							disabled={currentProgress === 100 ? true : isLoading}
+							disabled={isLoading}
+							ref={textRef}
 							required
+							autoFocus
 						></TextareaAutosize>
 						<button type="submit" className="send_message_btn">
 							<IoIosSend size={'1.5rem'} />

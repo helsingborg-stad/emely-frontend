@@ -27,7 +27,7 @@ const UserChatBubble = ({ message, isFocused, loader }) => {
 				)}
 			</div>
 
-			<p className="user-dialogue-text">{isFocused ? loader : message}</p>
+			<p className="user-dialogue-text">{message}</p>
 		</div>
 	);
 };
