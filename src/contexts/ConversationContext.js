@@ -28,7 +28,7 @@ const ConversationContextProvider = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(100);
   const [hasExperience, setHasExperience] = useState(true);
   const [smallTalk, setSmallTalk] = useState(true);
-  const [userConversations, setUserConversations] = useState("");
+  const [userConversations, setUserConversations] = useState();
 
   /* ---- Gets first message from BE ---- */
   const initConversation = async (
@@ -129,14 +129,24 @@ const ConversationContextProvider = (props) => {
   };
 
     /* ---- Get all user-conversations  ---- */
-    const getUserConversations = async () => {
+    async function getUserConversations() {
       try {
+        setIsLoading(true)
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/user_conversations?user_id=${currentUser.uid}`
         );
         const result = await response.data;
   
-        await setUserConversations(JSON.stringify(result));
+        const text = JSON.stringify(result.user_conversations);
+        const replaceNewLine = text.replaceAll(/(\\n)/g, "\n");
+        const usrConv = replaceNewLine.replaceAll(/(\\t)/g, "\t");
+      
+
+          setUserConversations(usrConv);
+  
+
+        console.log(userConversations)
+        setIsLoading(false)
       } catch (err) {
         console.log("Error: ", err);
         return false;
@@ -192,6 +202,7 @@ const ConversationContextProvider = (props) => {
     setSmallTalk,
     getUserConversations,
     userConversations,
+    setUserConversations,
   };
 
   return (

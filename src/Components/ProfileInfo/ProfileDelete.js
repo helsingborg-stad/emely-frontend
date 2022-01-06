@@ -48,7 +48,7 @@ export default function Profile() {
 								id="delete-user-button"
 								onClick={handleShow}
 							>
-								<FaRegTimesCircle className="me-2" size={15} />
+								<FaRegTimesCircle className="me-2" size={20} />
 								Radera
 							</Button>
 						</span>

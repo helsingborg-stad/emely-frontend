@@ -116,7 +116,7 @@ export default function UserMenu(props) {
 									<Avatar
 										className="fw-bold"
 										sx={{ width: 35, height: 35 }}
-										style={{ background: 'var(--green)', fontSize: '1rem' }}
+										style={{ background: 'var(--green)', fontSize: '1rem', textTransform: 'uppercase' }}
 									>
 										{userDetails && userDetails.username.charAt(0)}
 									</Avatar>

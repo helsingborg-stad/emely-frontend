@@ -31,7 +31,7 @@ export default function Profile() {
 								id="edit-button"
 								onClick={handleShow}
 							>
-								<AiOutlineEdit className="me-2" size={15} />
+								<AiOutlineEdit className="me-2" size={20} />
 								Ändra lösenord
 							</Button>
 						</span>

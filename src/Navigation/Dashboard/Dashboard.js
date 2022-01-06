@@ -20,9 +20,11 @@ export default function Dashboard() {
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
+	const [getData, setGetData] = useState(false);
+
 
 	const { userDetails, currentUser } = useAuth();
-	const { setCurrentProgress, getUserConversations, userConversations } =
+	const { setCurrentProgress, getUserConversations, userConversations, setUserConversations } =
 		useContext(ConversationContext);
 	const [isLoading, setIsLoading] = useState();
 	const history = useHistory();
@@ -30,25 +32,33 @@ export default function Dashboard() {
 		history.push(linkTo);
 	};
 
+
+
 	async function handleGetConversations() {
 		try {
+			setIsLoading(true);
 			await getUserConversations();
-			console.log('conversations fetched');
+			console.log(userConversations)
+
+			setIsLoading(false);
+
 		} catch (error) {
 			console.log(error.message);
 		}
+
 	}
 
 	const downloadTextFile = () => {
 		try {
 			var zip = new JSZip();
 
+			console.log(userConversations)
 			zip.file(`${currentUser.uid}-conversations.txt`, userConversations);
 
 			zip.generateAsync({ type: 'blob' }).then(function (content) {
 				// see FileSaver.js
 				saveAs(content, `${currentUser.uid}-conversations.zip`);
-			});
+			}); 
 
 			/*
 		const element = document.createElement("a");
@@ -93,11 +103,9 @@ export default function Dashboard() {
 				<Row className="my-5 align-items-center  justify-content-center button_container">
 					<Row>
 						<Col id="emely-dialogue-col" className="p-0">
-							<Button onClick={handleGetConversations}>
-								Get Conversations
+							<Button className="register-btn" onClick={handleGetConversations}>
+								{isLoading ? <PulseLoader size={8} color={'white'} /> : 'Get Conversations' }
 							</Button>
-
-							<Button onClick={downloadTextFile}>Downlad</Button>
 
 							{/* --- EmelyDialogue component -> Components/EmelyDialogue --- */}
 							<EmelyDialogue className="">
