@@ -27,8 +27,8 @@ export default function PersonaInstructions() {
 
 				<p className="instruction-text mt-3">
 					Vill du träna på att gå på en jobbintervju eller bara ta en fika och
-					prata om vad som helst? Välj persona genom att trycka på någon av
-					alternativen.
+					prata om vad som helst? Börja med att välja genom att trycka på någon av
+					alternativen!
 				</p>
 
 				<Row lg={2} md={2} xs={1}>
@@ -60,9 +60,8 @@ export default function PersonaInstructions() {
 				<h5 className="fw-bold mt-5">2. Jobbintervju</h5>
 
 				<p className="instruction-text mt-3">
-					Om du har valt Jobbintervju så kommer du att få välja vilket yrke du
-					är intresserad av. När du trycker på "Välj yrke" så kommer du få upp
-					en lista på olika yrken. Välj det yrke du skulle vilja träna
+					Om du väljer Jobbintervju så kommer du att få välja vilket yrke du
+					är intresserad av. Välj det yrke du skulle vilja träna
 					jobbintervjun på.
 				</p>
 
@@ -79,17 +78,27 @@ export default function PersonaInstructions() {
 				</Row>
 
 				<Row lg={1} md={1} sm={1} className="mb-4 mt-5">
-					<h5 className="fw-bold ">3. Chatta med Emely</h5>
+					<h5 className="fw-bold ">3. Prata med Emely</h5>
 					<p className="instruction-text mt-2">
-						Vid val av yrke eller persona så kommer du att gå vidare till
-						chatten. Emely kommer att initiera samtalet med dig och ställa den
-						första frågan.
+						När du har valt yrke eller fika-persona så kommer du att komma vidare till
+						chatten. Då kommer Emely att börja prata med dig.
 					</p>
-					<h6 className="fw-bold mt-2">3.1 Skriv meddelande</h6>
+					<h6 className="fw-bold mt-4">3.1 Röstinspelning</h6>{' '}
 					<p className="instruction-text mt-1 mb-2">
-						Svara tillbaka genom att skriva något i meddelande rutan, därefter
-						kan du välja att trycka på "Enter" på tangentbordet eller klicka på
-						knappen.
+						Genom att klicka på mikrofonknappen kan du spela in ditt meddelande till Emely. 
+						Tryck på knappen igen för att avsluta inspelningen. Om du vill kan du redigera 
+						ditt meddelande i text innan du skickar det vidare till Emely!
+					</p>
+					<form className={'input-wrapper'}>
+						<button className="navigation_btn recording_btn">
+							<BiMicrophone size={'2rem'} />
+						</button>
+					</form>
+					<h6 className="fw-bold mt-2">3.2 Skriv meddelande</h6>
+					<p className="instruction-text mt-1 mb-2">
+						Om du inte vill prata med Emely kan du skriva istället. Svara tillbaka 
+						genom att skriva något i meddelande rutan, därefter kan du välja att trycka på "Enter" 
+						på tangentbordet eller klicka på knappen.
 					</p>
 					<form className={'input-wrapper'}>
 						<TextareaAutosize
@@ -109,22 +118,9 @@ export default function PersonaInstructions() {
 							<IoIosSend size={'1.5rem'} />
 						</button>
 					</form>
-					<h6 className="fw-bold mt-4">3.2 Röstinspelning</h6>{' '}
-					<p className="instruction-text mt-1 mb-2">
-						Om du inte vill skriva till Emely så har du möjlighet att klicka på
-						mikrofonknappen och spela in ditt meddelande till henne. När du är
-						klar tryck på knappen igen för att avsluta inspelningen. Slutligen
-						har du möjlighet att redigera din röstinspelning och eventuellt
-						ändra något som inte uppfattades korrekt.
-					</p>
-					<form className={'input-wrapper'}>
-						<button className="navigation_btn recording_btn">
-							<BiMicrophone size={'2rem'} />
-						</button>
-					</form>
 					<h6 className="fw-bold mt-4">3.3 Stäng av ljud</h6>{' '}
 					<p className="instruction-text mt-1 mb-2">
-						Om du inte vill lyssna på Emely så har du möjgliheten att stänga av
+						Om du inte vill lyssna på Emelys röst så kan du stänga av
 						ljudet genom att klicka på ljudknappen.
 					</p>
 					<form className={'input-wrapper'}>
@@ -135,7 +131,7 @@ export default function PersonaInstructions() {
 					<h6 className="fw-bold mt-4">3.4 Framstegsmätare</h6>{' '}
 					<p className="instruction-text mt-1 mb-2">
 						När Emely ställer den första frågan så startar framstegsmätare. När
-						mätaren är full, då har du klarat en hel kovnersation med Emely.
+						mätaren är full, då har du klarat en hel kovnersation med Emely!
 						Därefter kan du välja att starta en ny konversation.
 					</p>
 					<Col className="text-center mt-3">
