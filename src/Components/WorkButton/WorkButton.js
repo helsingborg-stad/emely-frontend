@@ -12,7 +12,7 @@ export default function WorkButton(props) {
   /* --- When choosing job, setCurrentJob state to target --- */
   const handleClick = (e) => {
     setCurrentJob(e.target.id);
-    history.push(`/emely-chat/intervju/${e.target.id}`);
+    history.push(`/emely-chat/intervju`);
   };
 
   return (
