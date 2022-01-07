@@ -235,6 +235,8 @@ export function AuthProvider({ children }) {
 		}
 	}
 
+
+
 	/* ---- Create user in Firestore with signup information ---- */
 	async function createUser(
 		email,
@@ -255,6 +257,7 @@ export function AuthProvider({ children }) {
 			login_count: 1,
 			created_at: creationTime,
 			last_sign_in: creationTime,
+			show_instructions: true,
 		});
 		console.log('User created in firestore');
 	}
@@ -274,6 +277,15 @@ export function AuthProvider({ children }) {
 
 		return userDetails;
 	}
+
+		/* ---- Update show instructions ---- */
+		function showInstructions(uid) {
+			const userRef = doc(dbUsers, uid);
+			updateDoc(userRef, {
+				show_instructions: false,
+			});
+			console.log('User info updated');
+		}
 
 	/* ---- Update user information on login ---- */
 	function updateUserInfo(uid, lastSignInTime) {
@@ -373,6 +385,7 @@ export function AuthProvider({ children }) {
 		setMsgVariant,
 		useHuggingFace,
 		setUseHuggingFace,
+		showInstructions,
 	};
 
 	return (

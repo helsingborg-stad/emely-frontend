@@ -44,16 +44,16 @@ export default function Profile() {
 				<ProfileCard>
 
 					{/* --- My information card --- */}
-					<Row className="p-0 m-0">
-						<Col xs="auto" md={8} lg={8}>
-							<h4 className="mb-3 fw-bold">Mina uppgifter</h4>
+					<Row className="p-0 m-0" xs={1} md={2} lg={2}>
+						<Col >
+							<h4 className="profile-headline mb-3 fw-bold">Mina uppgifter</h4>
 						</Col>
-						<Col xs="auto" md={4} lg={4} className="text-end p-0">
+						<Col xs='auto' className="text-end pe-0 ps-2">
 							<span>
 								
 									<Button
 										variant="none"
-										className="register-btn_small"
+										className="register-btn_small ms-2"
 										id="edit-button"
                                         onClick={handleShow}
 									>
@@ -76,31 +76,31 @@ export default function Profile() {
 					{/* --- Information rows --- */}
 					<Row className="mt-3 ">
 						<small className="fw-bold">Användarnamn</small>
-						<p>{userDetails && userDetails.username}</p>
+						<p className="card-text">{userDetails && userDetails.username}</p>
 					</Row>
 
 					{/* --- Email --- */}
 					<Row className="mt-3 ">
 						<small className="fw-bold">Email</small>
-						<p>{userDetails && userDetails.email}</p>
+						<p className="card-text">{userDetails && userDetails.email}</p>
 					</Row>
 
 					{/* --- Birth year --- */}
 					<Row className="mt-3">
 						<small className="fw-bold ">Födelseår</small>
-						<p>{userDetails && userDetails.birth_year}</p>
+						<p className="card-text">{userDetails && userDetails.birth_year}</p>
 					</Row>
 
 					{/* --- Native Language --- */}
 					<Row className="mt-3">
 						<small className="fw-bold ">Modersmål</small>
-						<p>{userDetails && userDetails.native_language}</p>
+						<p className="card-text">{userDetails && userDetails.native_language}</p>
 					</Row>
 
 					{/* --- Current occupation --- */}
 					<Row className="mt-3">
 						<small className="fw-bold ">Sysselsättning</small>
-						<p>{userDetails && userDetails.current_occupation}</p>
+						<p className="card-text">{userDetails && userDetails.current_occupation}</p>
 					</Row>
 
 
