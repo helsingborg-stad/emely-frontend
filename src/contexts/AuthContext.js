@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { auth, dbUsers, db, dbReportedMessages } from '../firebase';
+import axios from "axios";
+
 import {
 	doc,
 	setDoc,
@@ -86,7 +88,9 @@ export function AuthProvider({ children }) {
 
 	/* ---- Delete user from Firebase Authentication ---- */
 	async function userDelete() {
-		deleteFirestoreUser(currentUser.uid);
+		await deleteFirestoreUser(currentUser.uid);
+		await deleteAllUserConversations(currentUser.uid)
+
 		await deleteUser(auth.currentUser)
 			.then(() => {
 				console.log('User deleted from Firebase');
@@ -351,8 +355,28 @@ export function AuthProvider({ children }) {
 	/* ---- Delete user information from Firestore ---- */
 	function deleteFirestoreUser(uid) {
 		deleteDoc(doc(dbUsers, uid));
-		console.log('User deleted from Firestore');
+		console.log('User information deleted from database');
 	}
+
+	    /* ---- Delete all user conversations  ---- */
+		async function deleteAllUserConversations(uid) {
+			try {
+			  setLoading(true)
+			  const response = await axios.post(
+				`${process.env.REACT_APP_API_URL}/user_delete?user_id=${currentUser.uid}`
+			  ).then((response) => {
+				
+				console.log('All conversations deleted form database')
+				setLoading(false)
+			  })
+			  .catch(function (error) {
+				console.log("Error fetching conversations")
+			  });
+			  
+			} catch (err) {
+			  console.log("Error: ", err);
+			}
+		  };
 
 	const value = {
 		currentUser,
@@ -386,6 +410,7 @@ export function AuthProvider({ children }) {
 		useHuggingFace,
 		setUseHuggingFace,
 		showInstructions,
+		deleteAllUserConversations,
 	};
 
 	return (
