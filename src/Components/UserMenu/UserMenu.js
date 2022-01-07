@@ -46,7 +46,10 @@ export default function UserMenu(props) {
 
 	const [showInstructions, setShowInstructions] = useState(false);
 	const handleCloseInstructions = () => setShowInstructions(false);
-	const handleShowInstructions = () => setShowInstructions(true);
+	const handleShowInstructions = () => {
+		setShowInstructions(true);
+		setShow(false);
+}
 
 	/* --- show/hide username --- */
 	const [showUsername, setShowUsername] = useState(true);
