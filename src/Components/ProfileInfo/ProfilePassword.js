@@ -6,6 +6,7 @@ import ProfileInfoPasswordEdit from '../../Components/ProfileInfo/ProfileInfoPas
 
 /* --- Icon imports --- */
 import { AiOutlineEdit } from 'react-icons/ai';
+import { RiLockPasswordFill } from 'react-icons/ri';
 
 /* --- Variables, Hooks & State --- */
 export default function Profile() {
@@ -18,8 +19,11 @@ export default function Profile() {
 			{/* --- Profile password card --- */}
 			<ProfileCard>
 				<Row className="p-0 m-0" xs={1} md={2} lg={2}>
-					<Col  >
-						<h4 className="profile-headline mb-3 fw-bold"><AiOutlineEdit className="me-2" size={25} /> Ändra Lösenord</h4>
+					<Col>
+						<h4 className="profile-headline mb-3 fw-bold">
+							<RiLockPasswordFill className="label-icons" size={25} />
+							Lösenord
+						</h4>
 					</Col>
 
 					{/* --- Change password button --- */}
@@ -46,7 +50,12 @@ export default function Profile() {
 			</ProfileCard>
 
 			{/* --- Modal (popup) for changing password */}
-			<Modal className="profile-info-modal" size="lg" show={show} onHide={handleClose}>
+			<Modal
+				className="profile-info-modal"
+				size="lg"
+				show={show}
+				onHide={handleClose}
+			>
 				<Modal.Body>
 					<ProfileInfoPasswordEdit closeModal={handleClose} />
 				</Modal.Body>

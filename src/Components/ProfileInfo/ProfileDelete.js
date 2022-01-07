@@ -4,7 +4,7 @@ import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import { useAuth } from '../../contexts/AuthContext';
 
 /* Icon imports */
-import { FaRegTimesCircle } from 'react-icons/fa';
+import { FaTimesCircle } from 'react-icons/fa';
 
 /* --- Variables, State & Hooks --- */
 export default function Profile() {
@@ -36,7 +36,7 @@ export default function Profile() {
 				<Row className="p-0 m-0" xs={1} md={2} lg={2}>
 					<Col className="">
 						<h4 className="mb-3 fw-bold profile-headline ">
-							<FaRegTimesCircle className="me-3" size={25} />
+							<FaTimesCircle className="me-3" size={25} />
 							Radera användare
 						</h4>
 					</Col>
@@ -48,7 +48,7 @@ export default function Profile() {
 								id="delete-user-button"
 								onClick={handleShow}
 							>
-								<FaRegTimesCircle className="me-2" size={20} />
+								<FaTimesCircle className="me-2" size={20} />
 								Radera
 							</Button>
 						</span>
