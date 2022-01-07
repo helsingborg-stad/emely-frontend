@@ -8,25 +8,22 @@ import { Button } from 'react-bootstrap';
 import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
 import PersonaInstructions from '../../Components/Instructions/PersonaInstructions';
 import PulseLoader from 'react-spinners/PulseLoader';
-import { saveAs } from 'file-saver';
-import JSZip from 'jszip';
 
 /* --- Icon imports --- */
 import { ImBriefcase } from 'react-icons/im';
 import { SiCoffeescript } from 'react-icons/si';
+
+import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 /* --- Variables, State & Hooks --- */
 export default function Dashboard() {
 	const [show, setShow] = useState(false);
 	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
-	const [getData, setGetData] = useState(false);
-
-
-	const { userDetails, currentUser } = useAuth();
-	const { setCurrentProgress, getUserConversations, userConversations, setUserConversations } =
+	const { userDetails, currentUser, showInstructions } = useAuth();
+	const { setCurrentProgress, getUserConversations, isLoading } =
 		useContext(ConversationContext);
-	const [isLoading, setIsLoading] = useState();
+	const [loading, setLoading] = useState();
 	const history = useHistory();
 	const handleLink = (linkTo) => {
 		history.push(linkTo);
@@ -34,50 +31,12 @@ export default function Dashboard() {
 
 
 
-	async function handleGetConversations() {
-		try {
-			setIsLoading(true);
-			await getUserConversations();
-			console.log(userConversations)
-
-			setIsLoading(false);
-
-		} catch (error) {
-			console.log(error.message);
-		}
-
-	}
-
-	const downloadTextFile = () => {
-		try {
-			var zip = new JSZip();
-
-			console.log(userConversations)
-			zip.file(`${currentUser.uid}-conversations.txt`, userConversations);
-
-			zip.generateAsync({ type: 'blob' }).then(function (content) {
-				// see FileSaver.js
-				saveAs(content, `${currentUser.uid}-conversations.zip`);
-			}); 
-
-			/*
-		const element = document.createElement("a");
-		const file = new Blob([userConversations], {
-			type: "text/plain;charset=utf-8",
-		});
-		element.href = URL.createObjectURL(file);
-		element.download = `${currentUser.uid}-conversations.zip`
-		document.body.appendChild(element);
-		element.click(); */
-		} catch (error) {
-			console.log(error.message);
-		}
-	};
-
+	/* --- Show instructions if new user --- */
 	useEffect(() => {
-		if (userDetails?.login_count <= 1) {
+		if (userDetails?.login_count <= 1 && userDetails?.show_instructions === true) {
 			const timer = setTimeout(() => {
 				setShow(true);
+				showInstructions(currentUser.uid);
 			}, 1500);
 			return timer;
 		}
@@ -85,9 +44,9 @@ export default function Dashboard() {
 
 	/* --- Added loader before rendering text --- */
 	useEffect(() => {
-		setIsLoading(true);
+		setLoading(true);
 		const timer = setTimeout(() => {
-			setIsLoading(false);
+			setLoading(false);
 		}, 1500);
 		return timer;
 	}, [currentUser]);
@@ -103,14 +62,11 @@ export default function Dashboard() {
 				<Row className="my-5 align-items-center  justify-content-center button_container">
 					<Row>
 						<Col id="emely-dialogue-col" className="p-0">
-							<Button className="register-btn" onClick={handleGetConversations}>
-								{isLoading ? <PulseLoader size={8} color={'white'} /> : 'Get Conversations' }
-							</Button>
 
 							{/* --- EmelyDialogue component -> Components/EmelyDialogue --- */}
 							<EmelyDialogue className="">
 								{/* --- When loading show pulse loader. Show text after loading --- */}
-								{isLoading ? (
+								{loading ? (
 									<p className="m-3 p-5 emely-dialog_dialogue-text text-center">
 										<PulseLoader size={12} color={'gray'} />{' '}
 									</p>
@@ -152,6 +108,7 @@ export default function Dashboard() {
 				</Row>
 			</Container>
 
+			{/* --- Instructions --- */}
 			<Modal
 				className="settings-modal"
 				size="lg"
@@ -159,8 +116,19 @@ export default function Dashboard() {
 				onHide={handleClose}
 			>
 				<Modal.Body>
-					<PersonaInstructions closeModal={handleClose} />
+					<PersonaInstructions />
 				</Modal.Body>
+				<Modal.Footer>
+				<Button
+				disabled={loading}
+				variant="outline-success"
+				className="register-btn"
+				onClick={handleClose}
+			>
+				<MdKeyboardArrowLeft size={25} /> TILLBAKA
+			</Button>
+
+			  </Modal.Footer>
 			</Modal>
 		</>
 	);

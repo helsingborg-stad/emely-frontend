@@ -4,6 +4,8 @@
 
 .card-text{
     font-size: 1rem !important;
+    line-height: 1.5 !important;
+    font-weight: 400 
 }
 
 @media (max-width: 768px){
@@ -12,4 +14,9 @@
         font-size: 0.9rem !important;
     }
 
+    .card-text{
+        font-size: 0.8rem !important;
+        line-height: 1.5 !important;
+        font-weight: 400 
+    }
 }

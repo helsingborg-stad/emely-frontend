@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { createContext, useState } from "react";
 import { useAuth } from "./AuthContext";
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 
 export const ConversationContext = createContext();
 
@@ -28,7 +30,6 @@ const ConversationContextProvider = (props) => {
   const [currentSpeed, setCurrentSpeed] = useState(100);
   const [hasExperience, setHasExperience] = useState(true);
   const [smallTalk, setSmallTalk] = useState(true);
-  const [userConversations, setUserConversations] = useState();
 
   /* ---- Gets first message from BE ---- */
   const initConversation = async (
@@ -134,22 +135,36 @@ const ConversationContextProvider = (props) => {
         setIsLoading(true)
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}/user_conversations?user_id=${currentUser.uid}`
-        );
-        const result = await response.data;
-  
-        const text = JSON.stringify(result.user_conversations);
-        const replaceNewLine = text.replaceAll(/(\\n)/g, "\n");
-        const usrConv = replaceNewLine.replaceAll(/(\\t)/g, "\t");
-      
-
-          setUserConversations(usrConv);
-  
-
-        console.log(userConversations)
-        setIsLoading(false)
+        ).then((response) => {
+          downloadTextFile(response.data.user_conversations)
+          
+          setIsLoading(false)
+        })
+        .catch(function (error) {
+          console.log("Error fetching conversations")
+        });
+        
       } catch (err) {
         console.log("Error: ", err);
-        return false;
+      }
+    };
+
+    /* ---- Download all conversations into a zip file  ---- */
+    const downloadTextFile = (allConversations) => {
+      try {
+        var zip = new JSZip();
+  
+  
+        const textFileId = Math.floor(Math.random() * 1000000) + 100000;
+        zip.file(`my-conversations-${textFileId}.txt`, allConversations);
+  
+        zip.generateAsync({ type: 'blob' }).then(function (content) {
+          // see FileSaver.js
+          saveAs(content, `my-conversations-${textFileId}.zip`);
+        }); 
+  
+      } catch (error) {
+        console.log(error.message);
       }
     };
 
@@ -201,8 +216,6 @@ const ConversationContextProvider = (props) => {
     smallTalk,
     setSmallTalk,
     getUserConversations,
-    userConversations,
-    setUserConversations,
   };
 
   return (

@@ -5,7 +5,7 @@ export default function ProfileCard(props) {
 	return (
 		<>
 			<Container className="shadow-sm" id="profile-card">
-				<Row className="p-4">
+				<Row className="p-3">
 
 					{props.children}
 					

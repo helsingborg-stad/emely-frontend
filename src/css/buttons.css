@@ -100,13 +100,12 @@ button:focus {
 
 /* ---- Outline small buttons ---- */
 .register-btn_light_small {
-	border: 1px solid var(--green) !important;
+	border: 2px solid var(--green) !important;
 	color: var(--green) !important;
 	border-radius: var(--buttonBorderRadius) !important;
 	text-transform: uppercase !important;
-	font-weight: 600 !important;
+	font-weight: 700 !important;
 	font-size: 0.9rem !important;
-	box-shadow: var(--smallShadow) !important;
 	padding: 8px 20px 8px 20px !important;
 }
 
@@ -115,7 +114,7 @@ button:focus {
 	color: var(--greenExtraLight) !important;
 	border-radius: var(--buttonBorderRadius) !important;
 	text-transform: uppercase !important;
-	font-weight: 600 !important;
+	font-weight: 700 !important;
 	font-size: 0.9rem !important;
 	box-shadow: var(--smallShadow) !important;
 	padding: 8px 20px 8px 20px !important;
@@ -142,7 +141,7 @@ button:focus {
 	border-radius: var(--buttonBorderRadius) !important;
 	text-transform: uppercase !important;
 	letter-spacing: 0.5px !important;
-	font-weight: 600 !important;
+	font-weight: 700 !important;
 	font-size: 0.9rem !important;
 }
 
@@ -158,7 +157,7 @@ button:focus {
 	border-radius: var(--buttonBorderRadius) !important;
 	text-transform: uppercase !important;
 	letter-spacing: 0.5px !important;
-	font-weight: 600 !important;
+	font-weight: 700 !important;
 	font-size: 0.9rem !important;
 	padding: 8px 20px 8px 20px !important;
 }

@@ -2,3 +2,10 @@
 	border: 0px !important;
 	border-radius: 25px !important;
   }
+
+  @media (max-width: 768px){
+   .profile-headline{
+	   font-size: 1.2rem !important;
+   }
+
+}

@@ -5,7 +5,6 @@ import EmelySettings from '../EmelySettings/EmelySettings';
 
 /* --- Icon imports --- */
 import { IoMdSettings } from 'react-icons/io';
-import { FcSettings } from 'react-icons/fc';
 
 export default function ProfileEmelySettings() {
 	const [show, setShow] = useState(false);
@@ -16,11 +15,11 @@ export default function ProfileEmelySettings() {
 		<>
 			{/* --- Emely settings profile card ---  */}
 			<ProfileCard>
-				<Row className="p-0 m-0">
-					<Col xs="auto" md={8} lg={8}>
-						<h4 className="mb-3 fw-bold"><FcSettings className="me-2" size={25} /> Inställningar för Emely</h4>
+				<Row className="p-0 m-0" xs={1} md={2} lg={2}>
+					<Col >
+						<h4 className="profile-headline mb-3 fw-bold"><IoMdSettings className="me-2" size={25} /> Inställningar </h4>
 					</Col>
-					<Col xs="auto" md={4} lg={4} className="text-end p-0">
+					<Col xs="auto" className="text-end pe-0 ps-2">
 						<span>
 							<Button
 								variant="none"
