@@ -3,6 +3,20 @@ button:focus {
 	box-shadow: none !important;
 }
 
+.tip-button{
+
+ 
+}
+
+.tip-button-wrapper{
+
+    border-bottom: none !important;
+    border-radius: 30px !important;
+    max-width: 800px;
+    margin: 0 auto;
+    float: none;
+}
+
 /* ---- BIG BUTTONS ---- */
 /* ---- Filled big buttons ---- */
 .register-btn {
@@ -32,10 +46,8 @@ button:focus {
 	border-radius: var(--buttonBorderRadius) !important;
 	padding: 13px !important;
 	font-weight: 700 !important;
-	letter-spacing: 1px;
-	
+	letter-spacing: 1px;	
 }
-
 
 .register-btn_light:hover {
 	background-color: var(--green) !important;
@@ -94,7 +106,6 @@ button:focus {
 .btn_small:hover {
 	background: none !important;
 	color: var(--greenExtraLight)  !important;
-
 }
 
 

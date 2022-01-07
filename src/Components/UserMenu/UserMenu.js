@@ -151,6 +151,7 @@ export default function UserMenu(props) {
 						</Row>
 					</Navbar.Brand>
 
+
 					{/* --- Mobile menu button: open sidebar --- */}
 					<Navbar.Toggle
 						className="avatar-btn shadow-sm"
@@ -164,6 +165,7 @@ export default function UserMenu(props) {
 
 					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
 						<Nav className="ms-auto ">
+						
 							{/* --- Menu-button: open sidebar --- */}
 							<Button
 								className=""

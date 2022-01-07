@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
 import WorkButton from '../../Components/WorkButton/WorkButton';
 import PulseLoader from 'react-spinners/PulseLoader';
+import introJs from 'intro.js';
 
 /* --- Icon imports --- */
 import { ImBriefcase } from 'react-icons/im';
@@ -19,6 +20,15 @@ export default function WorkEmely(props) {
 	const { currentUser } = useAuth();
 	const { getButtons, jobButtons, setCurrentProgress } =
 		useContext(ConversationContext);
+
+	function handleIntro() {
+		introJs()
+			.setOptions({
+				showProgress: true,
+				tooltipClass: 'customTooltip',
+			})
+			.start();
+	}
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -45,7 +55,10 @@ export default function WorkEmely(props) {
 			<Container id="container-work-emely">
 				<Offcanvas show={show} onHide={handleClose}>
 					<Offcanvas.Header className="border-bottom" closeButton>
-					<ImBriefcase className="me-2 mt-0 p-0" size={30} /><Offcanvas.Title className="fw-bold mt-1">Välj yrke </Offcanvas.Title>
+						<ImBriefcase className="me-2 mt-0 p-0" size={30} />
+						<Offcanvas.Title className="fw-bold mt-1">
+							Välj yrke{' '}
+						</Offcanvas.Title>
 					</Offcanvas.Header>
 					<Offcanvas.Body>
 						{jobButtons ? (
@@ -73,8 +86,12 @@ export default function WorkEmely(props) {
 				</EmelyDialogue>
 
 				{/* --- Choose job button --- */}
-				<Row className="p-0 mb-5">
-					<Col className="text-center mt-5">
+				<Row className="p-0 mb-1">
+					<Col
+						className="text-center mt-5"
+						data-title="2. Välj yrke"
+						data-intro="Du har valt jobbintervju och kommer att få välja vilket yrke du är intresserad av. Välj det yrke du skulle vilja träna jobbintervjun på."
+					>
 						<Button
 							variant="none"
 							className="w-100 register-btn"

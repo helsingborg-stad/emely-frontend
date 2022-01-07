@@ -85,6 +85,9 @@ export default function ChatMenu() {
 				<Container className="ms-0 me-0">
 					<Col>
 						<ProgressBar
+						data-title="Framstegsmätare"
+						data-intro="När Emely ställer den första frågan så startar framstegsmätare. När mätaren är full, då har du klarat en hel kovnersation med Emely! Därefter kan du välja att starta en ny konversation."
+						data-step="4"
 							className="rounded-pill ms-1"
 							animated
 							variant="success"
