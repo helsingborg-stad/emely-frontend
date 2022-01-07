@@ -46,7 +46,7 @@ export default function ProfilePasswordEdit(props) {
 
 	return (
 		<>
-			<Container className="p-5">
+			<Container className="p-5" id="profile-info-password-edit">
 				<h2 className="text-center mb-4 fw-bold">Ändra Lösenord</h2>
 
 				{/* --- Username form --- */}
