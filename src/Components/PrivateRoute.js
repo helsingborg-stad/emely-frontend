@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Row, Col, OverlayTrigger, Popover } from 'react-bootstrap';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import UserMenu from './UserMenu/UserMenu';
 import ChatMenu from './ChatMenu/ChatMenu';
@@ -29,6 +29,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 	const [isCorrectKey] = useState(sessionStorage.getItem('sessionKey'));
 	const [enableChatMenu, setEnableChatMenu] = useState(false);
 	const history = useHistory();
+	const location = useLocation();
 
 	/* --- Check if you are on fika or intervju and change background accordingly --- */
 	useEffect(() => {
@@ -54,20 +55,18 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 	}, [window.location.href]);
 
 	useEffect(() => {
-		if (
-			userDetails?.login_count <= 1 &&
-			userDetails?.show_instructions === true
-		) {
-			const timer = setTimeout(() => {
-				handleIntro();
-				if (window.location.href.indexOf('emely-chat') > -1) {
-					return showInstructions(currentUser.uid);
-				} 
+		try {
+			if (userDetails?.login_count <= 1 && userDetails?.show_instructions === true) {
+				setTimeout(() => {
+					handleIntro();
+					
+				}, 1500);
 				
-			}, 1500);
-			return timer;
+			}
+		} catch (error) {
+			console.log(error);
 		}
-	}, [window.location.href]);
+	}, [userDetails?.login_count, window.location.href]);
 
 	function handleIntro() {
 		introJs()
@@ -87,6 +86,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 	useEffect(() => {
 		try {
 			if (window.location.href.indexOf('emely-chat') > -1) {
+				showInstructions(currentUser.uid)
 				return setEnableChatMenu(true);
 			} else {
 				return setEnableChatMenu(false);
@@ -135,7 +135,11 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 							</Popover>
 						}
 					>
-						<Button onClick={handleIntro} variant="light" className="help-button">
+						<Button
+							onClick={handleIntro}
+							variant="light"
+							className="help-button"
+						>
 							?
 						</Button>
 					</OverlayTrigger>
