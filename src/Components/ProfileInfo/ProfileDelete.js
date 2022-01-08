@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { Col, Row, Button, Modal } from 'react-bootstrap';
 import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import { useAuth } from '../../contexts/AuthContext';
+import Spinner from 'react-bootstrap/Spinner';
 
 /* Icon imports */
 import { FaTimesCircle } from 'react-icons/fa';
 
 /* --- Variables, State & Hooks --- */
 export default function Profile() {
-	const { userDelete } = useAuth();
+	const { userDelete, loading } = useAuth();
 	const [show, setShow] = useState(false);
 	const { translateError, setMsg, setMsgVariant } = useAuth();
 	const handleClose = () => setShow(false);
@@ -32,7 +33,7 @@ export default function Profile() {
 	return (
 		<>
 			<ProfileCard>
-			{/* --- Delete user profile-card --- */}
+				{/* --- Delete user profile-card --- */}
 				<Row className="p-0 m-0" xs={1} md={2} lg={2}>
 					<Col className="">
 						<h4 className="mb-3 fw-bold profile-headline ">
@@ -40,8 +41,23 @@ export default function Profile() {
 							Radera användare
 						</h4>
 					</Col>
-					<Col xs="auto" className="text-end pe-0 ps-2 " >
+					<Col xs="auto" className="text-end pe-0 ps-2 ">
 						<span>
+
+
+						{loading ? 
+							<Button
+							variant="none"
+							className="register-btn_small-danger"
+							id="delete-user-button"
+							onClick={handleShow}
+							disabled={loading}
+						>
+							
+						<Spinner className="me-2" animation="border" size="sm" />
+						Raderar...
+						</Button>
+						:
 							<Button
 								variant="none"
 								className="register-btn_small-danger"
@@ -51,6 +67,8 @@ export default function Profile() {
 								<FaTimesCircle className="me-2" size={20} />
 								Radera
 							</Button>
+						}
+
 						</span>
 					</Col>
 				</Row>
@@ -80,14 +98,18 @@ export default function Profile() {
 					>
 						Avbryt
 					</Button>
-					<Button
-						variant="outline-danger"
-						className="rounded-pill pe-3 ps-3 fw-bold"
-						id="delete-user-button"
-						onClick={handleDeleteUser}
-					>
-						Radera
-					</Button>
+
+						<Button
+							variant="outline-danger"
+							className="rounded-pill pe-3 ps-3 fw-bold register-btn_small-danger"
+							id="delete-user-button"
+							onClick={handleDeleteUser}
+							disabled={loading}
+						>
+							<FaTimesCircle className="me-2" size={20} />
+							Radera
+						</Button>
+				
 				</Modal.Footer>
 			</Modal>
 

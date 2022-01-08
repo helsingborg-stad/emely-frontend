@@ -88,16 +88,18 @@ export function AuthProvider({ children }) {
 
 	/* ---- Delete user from Firebase Authentication ---- */
 	async function userDelete() {
+		setLoading(true);
 		await deleteFirestoreUser(currentUser.uid);
 		await deleteAllUserConversations(currentUser.uid)
 
-		await deleteUser(auth.currentUser)
+		deleteUser(auth.currentUser)
 			.then(() => {
 				console.log('User deleted from Firebase');
 				setMsgVariant('danger');
 				setMsg(
 					'Ditt konto har raderats. Skapa ett nytt konto om du vill ha den bästa upplevelsen med Emely.'
 				);
+				setLoading(false);
 			})
 			.catch((error) => {
 				console.log(error.message);
