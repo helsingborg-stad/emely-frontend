@@ -89,37 +89,38 @@ export function AuthProvider({ children }) {
 	}
 
 	/* ---- Delete user from Firebase Authentication ---- */
-	async function userDelete(emailInput, passwordInput) {
-		setLoading(true);
-		const credential = await login(
-			emailInput,
-			passwordInput
-		);
-		const user = auth.currentUser;
-		reauthenticateWithCredential(user, credential).then(() => {
-			// User re-authenticated.
-		  }).catch((error) => {
-			// An error ocurred
-			// ...
-		  });
+	async function userDelete(password) {
+		try{
+			setLoading(true);
 
-		await deleteFirestoreUser(currentUser.uid);
-		await deleteAllUserConversations(currentUser.uid)
+			
+			await deleteFirestoreUser(currentUser.uid);
+			await deleteAllUserConversations(currentUser.uid)
+	
 
+	
+			deleteUser(auth.currentUser)
+				.then(() => {
+					console.log('User deleted from Firebase');
+					setMsgVariant('danger');
+					setMsg(
+						'Ditt konto har raderats. Skapa ett nytt konto om du vill använda Emely.'
+					);
+					setLoading(false);
+				})
+				.catch((error) => {
+					console.log(error.message);
+					setMsgVariant('danger');
+					setMsg(translateError(error.code));
+		
+					if (error.code === 'auth/requires-recent-login') {
+						return logout();
+					}
+				});
+		} catch(error){
+			console.log(error)
+		}
 
-
-		deleteUser(auth.currentUser)
-			.then(() => {
-				console.log('User deleted from Firebase');
-				setMsgVariant('danger');
-				setMsg(
-					'Ditt konto har raderats. Skapa ett nytt konto om du vill använda Emely.'
-				);
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.log(error.message);
-			});
 	}
 
 	/* ---- Log out current authenticated user ---- */
@@ -179,7 +180,7 @@ export function AuthProvider({ children }) {
 				return 'För många försök. Vänligen försök igen lite senare';
 
 			case 'auth/requires-recent-login':
-				return 'Ändring av lösenord misslyckades. Du har blivit utloggad. Logga in igen för att ändra lösenord.';
+				return 'Du har varit inloggad för länge. Logga in igen för att slutföra.';
 
 			default:
 				return 'Opps något gick fel!';
