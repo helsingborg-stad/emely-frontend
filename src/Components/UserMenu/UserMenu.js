@@ -303,7 +303,7 @@ export default function UserMenu(props) {
 										</Nav.Item>
 									</Row>
 
-									<Row className="menu-rows">
+									{/* <Row className="menu-rows">
 										<Nav.Item
 											onClick={handleShowInstructions}
 											className="register-btn_sidebar"
@@ -311,7 +311,7 @@ export default function UserMenu(props) {
 											<FaBookReader className="me-4" size={22} />
 											Instruktioner
 										</Nav.Item>
-									</Row>
+									</Row>*/} 
 								</Offcanvas.Body>
 							</Offcanvas>
 						</Nav>
