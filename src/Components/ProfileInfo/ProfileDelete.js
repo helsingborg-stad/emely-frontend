@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
-import { Col, Row, Button, Modal } from 'react-bootstrap';
+import React, { useState, useRef } from 'react';
+import { Col, Row, Button, Modal, Form } from 'react-bootstrap';
 import ProfileCard from '../../Components/Layout/ProfileCard/ProfileCard';
 import { useAuth } from '../../contexts/AuthContext';
 import Spinner from 'react-bootstrap/Spinner';
 
 /* Icon imports */
 import { FaTimesCircle } from 'react-icons/fa';
+import { RiLockPasswordLine } from 'react-icons/ri';
 
 /* --- Variables, State & Hooks --- */
 export default function Profile() {
-	const { userDelete, loading } = useAuth();
+	const passwordRef = useRef();
+
+	const { userDelete, loading, currentUser } = useAuth();
 	const [show, setShow] = useState(false);
 	const { translateError, setMsg, setMsgVariant } = useAuth();
 	const handleClose = () => setShow(false);
@@ -20,7 +23,7 @@ export default function Profile() {
 		setMsg('');
 
 		try {
-			await userDelete();
+			await userDelete(currentUser.email, passwordRef.current.value);
 
 			/* Catch error */
 		} catch (error) {
@@ -88,7 +91,25 @@ export default function Profile() {
 				</Modal.Header>
 				<Modal.Body>
 					Är du säker på att du vill radera ditt användarkonto? All
-					användarinformation kommer att försvinna.
+					användarinformation kommer att försvinna. Skriv in ditt lösenord för att bekräfta.
+
+					<Row className="mt-5">
+					<Form.Group className="" id="username">
+						<Form.Label className="input-label">
+							<RiLockPasswordLine className="me-2" size={20} />
+							Lösenord
+						</Form.Label>
+
+						<Form.Control
+							className="input-field-small"
+							type="password"
+							ref={passwordRef}
+							required
+							
+							placeholder="Ditt lösenord"
+						/>
+					</Form.Group>
+				</Row>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button

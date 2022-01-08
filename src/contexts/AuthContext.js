@@ -22,6 +22,8 @@ import {
 	sendPasswordResetEmail,
 	deleteUser,
 	onAuthStateChanged,
+	reauthenticateWithCredential,
+	promptForCredentials,
 } from 'firebase/auth';
 
 const AuthContext = React.createContext();
@@ -87,17 +89,31 @@ export function AuthProvider({ children }) {
 	}
 
 	/* ---- Delete user from Firebase Authentication ---- */
-	async function userDelete() {
+	async function userDelete(emailInput, passwordInput) {
 		setLoading(true);
+		const credential = await login(
+			emailInput,
+			passwordInput
+		);
+		const user = auth.currentUser;
+		reauthenticateWithCredential(user, credential).then(() => {
+			// User re-authenticated.
+		  }).catch((error) => {
+			// An error ocurred
+			// ...
+		  });
+
 		await deleteFirestoreUser(currentUser.uid);
 		await deleteAllUserConversations(currentUser.uid)
+
+
 
 		deleteUser(auth.currentUser)
 			.then(() => {
 				console.log('User deleted from Firebase');
 				setMsgVariant('danger');
 				setMsg(
-					'Ditt konto har raderats. Skapa ett nytt konto om du vill ha den bästa upplevelsen med Emely.'
+					'Ditt konto har raderats. Skapa ett nytt konto om du vill använda Emely.'
 				);
 				setLoading(false);
 			})
