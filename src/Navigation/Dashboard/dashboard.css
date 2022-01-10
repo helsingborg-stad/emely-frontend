@@ -72,15 +72,15 @@
     display: flex !important;
     float: right;
     margin: 0px 20px 0px 0px !important;
-    background: var(--white) !important;
-	border: 2px solid rgb(190, 190, 190) !important;
-	color: rgb(83, 83, 83) !important;
+    background: none !important;
+	border: 2px solid var(--green) !important;
+	color: var(--green) !important;
 }
 
 .help-button:hover{
-	background: none !important;
-    color: rgb(190, 190, 190) !important;
-	border: 2px solid var(--gray) !important;
+	background: var(--green) !important;
+    color: var(--white) !important;
+	border: 2px solid var(--green) !important;
 }
 
 .customTooltip .introjs-prevbutton {

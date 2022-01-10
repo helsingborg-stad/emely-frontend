@@ -23,7 +23,7 @@ import {
 	deleteUser,
 	onAuthStateChanged,
 	reauthenticateWithCredential,
-	promptForCredentials,
+
 } from 'firebase/auth';
 
 const AuthContext = React.createContext();
@@ -89,34 +89,30 @@ export function AuthProvider({ children }) {
 	}
 
 	/* ---- Delete user from Firebase Authentication ---- */
-	async function userDelete(password) {
+	async function userDelete() {
 		try{
 			setLoading(true);
-
-			
-			await deleteFirestoreUser(currentUser.uid);
-			await deleteAllUserConversations(currentUser.uid)
 	
 
-	
-			deleteUser(auth.currentUser)
-				.then(() => {
-					console.log('User deleted from Firebase');
-					setMsgVariant('danger');
-					setMsg(
-						'Ditt konto har raderats. Skapa ett nytt konto om du vill använda Emely.'
-					);
-					setLoading(false);
-				})
-				.catch((error) => {
-					console.log(error.message);
-					setMsgVariant('danger');
-					setMsg(translateError(error.code));
-		
-					if (error.code === 'auth/requires-recent-login') {
-						return logout();
-					}
-				});
+			  await deleteUser(auth.currentUser)
+			  .then(() => {
+				  console.log('User deleted from Firebase Auth');
+				  setMsgVariant('warning');
+				  setMsg(
+					  'Ditt konto har raderats. Skapa ett nytt konto om du vill använda Emely.'
+				  );
+				  setLoading(false);
+			  })
+			  .catch((error) => {
+				  console.log(error.message);
+				  setMsgVariant('danger');
+				  setMsg(translateError(error.code));
+	  
+				  if (error.code === 'auth/requires-recent-login') {
+					  return logout();
+				  }
+			  });
+
 		} catch(error){
 			console.log(error)
 		}
@@ -174,7 +170,7 @@ export function AuthProvider({ children }) {
 				return 'Fel lösenord. Vänligen försök igen';
 
 			case 'auth/user-not-found':
-				return 'E-postadressen du angav finns inte registrerad. Vänligen försök igen';
+				return 'E-postadressen du angav finns inte registrerad.';
 
 			case 'auth/too-many-requests':
 				return 'För många försök. Vänligen försök igen lite senare';
@@ -372,8 +368,8 @@ export function AuthProvider({ children }) {
 	}
 
 	/* ---- Delete user information from Firestore ---- */
-	function deleteFirestoreUser(uid) {
-		deleteDoc(doc(dbUsers, uid));
+	async function deleteFirestoreUser(uid) {
+		await deleteDoc(doc(dbUsers, uid));
 		console.log('User information deleted from database');
 	}
 
@@ -430,6 +426,8 @@ export function AuthProvider({ children }) {
 		setUseHuggingFace,
 		showInstructions,
 		deleteAllUserConversations,
+		loading,
+		setLoading,
 	};
 
 	return (

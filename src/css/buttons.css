@@ -156,6 +156,21 @@ button:focus {
 	font-size: 0.9rem !important;
 }
 
+.register-btn_grey_light_small {
+	border: 2px solid grey !important;
+	color: grey!important;
+	border-radius: var(--buttonBorderRadius) !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.5px !important;
+	font-weight: 700 !important;
+	font-size: 0.9rem !important;
+}
+
+.register-btn_grey_light_small:hover {
+	background-color: grey!important;
+	color: var(--white) !important;
+}
+
 .register-btn_light_small-danger:hover {
 	background-color: var(--redHover) !important;
 	color: var(--white) !important;

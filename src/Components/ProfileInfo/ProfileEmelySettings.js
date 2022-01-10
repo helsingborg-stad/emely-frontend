@@ -16,8 +16,10 @@ export default function ProfileEmelySettings() {
 			{/* --- Emely settings profile card ---  */}
 			<ProfileCard>
 				<Row className="p-0 m-0" xs={1} md={2} lg={2}>
-					<Col >
-						<h4 className="profile-headline mb-3 fw-bold"><IoMdSettings className="me-2" size={25} /> Inställningar </h4>
+					<Col>
+						<h4 className="profile-headline mb-3 fw-bold">
+							<IoMdSettings className="me-2" size={25} /> Inställningar
+						</h4>
 					</Col>
 					<Col xs="auto" className="text-end pe-0 ps-2">
 						<span>
@@ -27,16 +29,17 @@ export default function ProfileEmelySettings() {
 								id="edit-button"
 								onClick={handleShow}
 							>
-								
-								<IoMdSettings className="me-2" size={15} />Inställningar
-								
+								<IoMdSettings className="me-2" size={15} />
+								Inställningar
 							</Button>
 						</span>
 					</Col>
 				</Row>
 				<Row className="mt-3">
 					<p className="card-text" id="delete-text">
-						Du har möjlighet att ändra vissa inställningar för Emely. Beroende på ditt val av inställning så kommer Emely att bemöta dig annorlunda.
+						Du har möjlighet att ändra vissa inställningar för Emely. Beroende
+						på ditt val av inställning så kommer Emely att bemöta dig
+						annorlunda.
 					</p>
 				</Row>
 			</ProfileCard>
