@@ -70,7 +70,7 @@ export default function ProfilePasswordEdit(props) {
 								className="input-field-small"
 								type="password"
 								ref={oldPasswordRef}
-								placeholder="Skriv in ditt nya lösenord"
+								placeholder="Nuvarande lösenord"
 								required
 							/>
 						</Form.Group>
@@ -87,7 +87,7 @@ export default function ProfilePasswordEdit(props) {
 								className="input-field-small"
 								type="password"
 								ref={passwordRef}
-								placeholder="Skriv in ditt nya lösenord"
+								placeholder="Nytt lösenord"
 								required
 							/>
 						</Form.Group>
@@ -104,7 +104,7 @@ export default function ProfilePasswordEdit(props) {
 								className="input-field-small"
 								type="password"
 								ref={passwordConfirmRef}
-								placeholder="Upprepa ditt nya lösenord"
+								placeholder="Upprepa nytt lösenord"
 								required
 							/>
 						</Form.Group>
