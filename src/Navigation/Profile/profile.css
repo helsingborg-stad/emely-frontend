@@ -8,6 +8,13 @@
     font-weight: 400;
 }
 
+.deleting-account-container{
+    justify-content: center !important;
+    text-align: center !important;
+    color: rgb(131, 131, 131) !important;
+    margin-top: 300px !important;
+}
+
 @media (max-width: 768px){
     #edit-button,
     #log-out-button-profile{

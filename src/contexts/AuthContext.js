@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { auth, dbUsers, db, dbReportedMessages } from '../firebase';
-import axios from "axios";
+import axios from 'axios';
 
 import {
 	doc,
@@ -23,7 +23,6 @@ import {
 	deleteUser,
 	onAuthStateChanged,
 	reauthenticateWithCredential,
-
 } from 'firebase/auth';
 
 const AuthContext = React.createContext();
@@ -38,9 +37,12 @@ export function AuthProvider({ children }) {
 	const [userDetails, setUserDetails] = useState();
 	const [correctKey, setCorrectKey] = useState();
 	const [loading, setLoading] = useState(true);
+
+	const [isDeleting, setIsDeleting] = useState(false);
 	const [allKeys, setAllKeys] = useState();
 	const history = useHistory();
 	const [isGuest, setIsGuest] = useState(false);
+	const [lockingUp, setLockingUp] = useState(false);
 	const [guestId] = useState('mcK6kHLV4nh33XJmO2tJXzokqpG2');
 
 	const [msg, setMsg] = useState('');
@@ -48,6 +50,7 @@ export function AuthProvider({ children }) {
 	const [useHuggingFace, setUseHuggingFace] = useState(
 		sessionStorage.getItem('useHuggingFace')
 	);
+
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
@@ -90,33 +93,30 @@ export function AuthProvider({ children }) {
 
 	/* ---- Delete user from Firebase Authentication ---- */
 	async function userDelete() {
-		try{
-			setLoading(true);
-	
+		try {
+			setIsDeleting(true);
 
-			  await deleteUser(auth.currentUser)
-			  .then(() => {
-				  console.log('User deleted from Firebase Auth');
-				  setMsgVariant('warning');
-				  setMsg(
-					  'Ditt konto har raderats. Skapa ett nytt konto om du vill använda Emely.'
-				  );
-				  setLoading(false);
-			  })
-			  .catch((error) => {
-				  console.log(error.message);
-				  setMsgVariant('danger');
-				  setMsg(translateError(error.code));
-	  
-				  if (error.code === 'auth/requires-recent-login') {
-					  return logout();
-				  }
-			  });
+			await deleteUser(auth.currentUser)
+				.then(() => {
+					console.log('User deleted from Firebase Auth');
+					setMsgVariant('warning');
+					setMsg(
+						'Ditt konto har raderats. Skapa ett nytt konto om du vill använda Emely.'
+					);
+					setIsDeleting(false);
+				})
+				.catch((error) => {
+					console.log(error.message);
+					setMsgVariant('danger');
+					setMsg(translateError(error.code));
 
-		} catch(error){
-			console.log(error)
+					if (error.code === 'auth/requires-recent-login') {
+						return logout();
+					}
+				});
+		} catch (error) {
+			console.log(error);
 		}
-
 	}
 
 	/* ---- Log out current authenticated user ---- */
@@ -187,39 +187,44 @@ export function AuthProvider({ children }) {
 
 	/* --- Check if the input key matches keys in database --- */
 	function checkKey(inputKey, date) {
-		/* Format the date so it matches the deadline date */
-		const formattedDate = date.toLocaleDateString('se-SE');
+		
+		
+			/* Format the date so it matches the deadline date */
+			const formattedDate = date.toLocaleDateString('se-SE');
 
-		/* Iterate through all keys and check if the key matches inputKey and deadline date */
-		for (let key of allKeys) {
-			if (inputKey === key.key && formattedDate <= key.deadline) {
-				setCorrectKey(true);
-				sessionStorage.setItem('sessionKey', inputKey);
+			/* Iterate through all keys and check if the key matches inputKey and deadline date */
+			for (let key of allKeys) {
+				if (inputKey === key.key && formattedDate <= key.deadline) {
+					
+					sessionStorage.setItem('sessionKey', inputKey);
 
-				/* If key doesnt have useHuggingFace set it to false */
-				if (key.useHuggingFace != null) {
-					sessionStorage.setItem('useHuggingFace', key.useHuggingFace);
-					setUseHuggingFace(sessionStorage.getItem('useHuggingFace'));
+					/* If key doesnt have useHuggingFace set it to false */
+					if (key.useHuggingFace != null) {
+						sessionStorage.setItem('useHuggingFace', key.useHuggingFace);
+						setUseHuggingFace(sessionStorage.getItem('useHuggingFace'));
+					} else {
+						sessionStorage.setItem('useHuggingFace', false);
+						setUseHuggingFace(sessionStorage.getItem('useHuggingFace'));
+					}
+
+					/* Update key login-count */
+					const keyRef = doc(db, 'keys', inputKey);
+					updateDoc(keyRef, {
+						login_count: increment(1),
+					});
+					setMsgVariant('success');
+					setMsg(`Giltig nyckel! Utgångsdatum: ${key.deadline}.`);
+					
+					return history.push('/login');
 				} else {
-					sessionStorage.setItem('useHuggingFace', false);
-					setUseHuggingFace(sessionStorage.getItem('useHuggingFace'));
+					sessionStorage.setItem('sessionKey', "wrong key");
+					setMsgVariant('danger');
+					setMsg(
+						'Fel nyckel eller passerat utgångsdatum! Vänligen försök igen'
+					);
 				}
-
-				/* Update key login-count */
-				const keyRef = doc(db, 'keys', inputKey);
-				updateDoc(keyRef, {
-					login_count: increment(1),
-				});
-				setMsgVariant('success');
-				setMsg(`Giltig nyckel! Utgångsdatum: ${key.deadline}.`);
-				return history.push('/login');
-			} else {
-				setCorrectKey(false);
-				sessionStorage.setItem('sessionKey', 'false');
-				setMsgVariant('danger');
-				setMsg('Fel nyckel eller passerat utgångsdatum! Vänligen försök igen');
 			}
-		}
+
 	}
 
 	/* --- Get all keys from firestore --- */
@@ -254,8 +259,6 @@ export function AuthProvider({ children }) {
 		}
 	}
 
-
-
 	/* ---- Create user in Firestore with signup information ---- */
 	async function createUser(
 		email,
@@ -281,7 +284,6 @@ export function AuthProvider({ children }) {
 		console.log('User created in firestore');
 	}
 
-
 	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
 	async function getUserDetails(userId) {
 		try {
@@ -297,14 +299,14 @@ export function AuthProvider({ children }) {
 		return userDetails;
 	}
 
-		/* ---- Update show instructions ---- */
-		function showInstructions(uid) {
-			const userRef = doc(dbUsers, uid);
-			updateDoc(userRef, {
-				show_instructions: false,
-			});
-			console.log('User info updated');
-		}
+	/* ---- Update show instructions ---- */
+	function showInstructions(uid) {
+		const userRef = doc(dbUsers, uid);
+		updateDoc(userRef, {
+			show_instructions: false,
+		});
+		console.log('User info updated');
+	}
 
 	/* ---- Update user information on login ---- */
 	function updateUserInfo(uid, lastSignInTime) {
@@ -369,29 +371,35 @@ export function AuthProvider({ children }) {
 
 	/* ---- Delete user information from Firestore ---- */
 	async function deleteFirestoreUser(uid) {
-		await deleteDoc(doc(dbUsers, uid));
-		console.log('User information deleted from database');
+		setIsDeleting(true);
+		try {
+			await deleteDoc(doc(dbUsers, uid));
+			console.log('User info deleted from firestore');
+			setIsDeleting(false);
+		} catch (error) {
+			console.log('Error: User info not deleted from firestore');
+		}
 	}
 
-	    /* ---- Delete all user conversations  ---- */
-		async function deleteAllUserConversations(uid) {
-			try {
-			  setLoading(true)
-			  const response = await axios.post(
-				`${process.env.REACT_APP_API_URL}/user_delete?user_id=${currentUser.uid}`
-			  ).then((response) => {
-				
-				console.log('All conversations deleted form database')
-				setLoading(false)
-			  })
-			  .catch(function (error) {
-				console.log("Error fetching conversations")
-			  });
-			  
-			} catch (err) {
-			  console.log("Error: ", err);
-			}
-		  };
+	/* ---- Delete all user conversations  ---- */
+	async function deleteAllUserConversations(uid) {
+		try {
+			setIsDeleting(true);
+			const response = await axios
+				.post(
+					`${process.env.REACT_APP_API_URL}/user_delete?user_id=${currentUser.uid}`
+				)
+				.then((response) => {
+					console.log('All conversations deleted form database');
+					setIsDeleting(false);
+				})
+				.catch(function (error) {
+					console.log('Error fetching conversations');
+				});
+		} catch (err) {
+			console.log('Error: ', err);
+		}
+	}
 
 	const value = {
 		currentUser,
@@ -428,6 +436,9 @@ export function AuthProvider({ children }) {
 		deleteAllUserConversations,
 		loading,
 		setLoading,
+		isDeleting,
+		lockingUp,
+		setLockingUp,
 	};
 
 	return (

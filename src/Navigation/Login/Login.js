@@ -34,6 +34,7 @@ export default function Login() {
 	const history = useHistory();
 
 	useEffect(() => {
+		emailRef.current.focus();
 		/* --- If userid is not guest then push to dashboard when on login page --- */
 		try {
 			if (currentUser.uid !== guestId) {
