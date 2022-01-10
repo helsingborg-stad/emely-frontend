@@ -35,7 +35,7 @@ export default function Conversations() {
 					<Col>
 						<h4 className="profile-headline mb-3 fw-bold">
 							<BsChatQuoteFill className="me-3" size={25} />
-							Samtalshistorik
+							Konversationer
 						</h4>
 					</Col>
 					<Col xs="auto" className="text-end pe-0 ps-2">

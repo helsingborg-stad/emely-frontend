@@ -10,14 +10,20 @@ import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 /* --- Variables, Hooks & State --- */
 export default function ProfilePasswordEdit(props) {
-
 	/* --- Form references --- */
+	const oldPasswordRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
 
-	const { passwordUpdate, translateError, setMsg, setMsgVariant } = useAuth();
+	const {
+		passwordUpdate,
+		translateError,
+		setMsg,
+		setMsgVariant,
+		login,
+		currentUser,
+	} = useAuth();
 	const [loading, setLoading] = useState(false);
-
 
 	/* --- On submit --- */
 	async function handleSubmit(e) {
@@ -32,14 +38,16 @@ export default function ProfilePasswordEdit(props) {
 		try {
 			setMsg('');
 			setLoading(true);
+			const credential = await login(
+				currentUser.email,
+				oldPasswordRef.current.value
+			);
 
 			await passwordUpdate(passwordRef.current.value);
-			
 		} catch (error) {
 			console.log(error.code);
 			setMsgVariant('danger');
 			setMsg(translateError(error.code));
-
 		}
 		setLoading(false);
 	}
@@ -49,8 +57,24 @@ export default function ProfilePasswordEdit(props) {
 			<Container className="p-5" id="profile-info-password-edit">
 				<h2 className="text-center mb-4 fw-bold">Ändra Lösenord</h2>
 
-				{/* --- Username form --- */}
+				
 				<Form onSubmit={handleSubmit} id="update-profile">
+					{/* --- Old Password form --- */}
+					<Row className="mt-3 mb-3">
+						<Form.Group className="" id="password">
+							<Form.Label className="input-label">
+								<RiLockPasswordLine className="me-2" size={20} />
+								Nuvarande lösenord
+							</Form.Label>
+							<Form.Control
+								className="input-field-small"
+								type="password"
+								ref={oldPasswordRef}
+								placeholder="Skriv in ditt nya lösenord"
+								required
+							/>
+						</Form.Group>
+					</Row>
 
 					{/* --- Password form --- */}
 					<Row className="mt-3">
@@ -73,7 +97,7 @@ export default function ProfilePasswordEdit(props) {
 					<Row className="mt-3">
 						<Form.Group className="" id="password-confirm">
 							<Form.Label className="input-label">
-								<RiLockPasswordLine className="me-2" size={20} /> Upprepa
+								<RiLockPasswordLine className="me-2" size={20} /> Upprepa nytt
 								lösenord
 							</Form.Label>
 							<Form.Control

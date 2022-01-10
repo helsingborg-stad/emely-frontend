@@ -28,6 +28,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 	} = useAuth();
 	const [isCorrectKey] = useState(sessionStorage.getItem('sessionKey'));
 	const [enableChatMenu, setEnableChatMenu] = useState(false);
+	const [disableHelp, setDisableHelp] = useState(false);
 	const history = useHistory();
 	const location = useLocation();
 
@@ -56,12 +57,13 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 
 	useEffect(() => {
 		try {
-			if (userDetails?.login_count <= 1 && userDetails?.show_instructions === true) {
+			if (
+				userDetails?.login_count <= 1 &&
+				userDetails?.show_instructions === true
+			) {
 				setTimeout(() => {
 					handleIntro();
-					
 				}, 1500);
-				
 			}
 		} catch (error) {
 			console.log(error);
@@ -82,11 +84,24 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 			.start();
 	}
 
+	useEffect(() => {
+		try {
+			if (window.location.href.indexOf('profile') > -1) {
+				showInstructions(currentUser.uid);
+				return setDisableHelp(false);
+			} else {
+				return setDisableHelp(true);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}, [window.location.href]);
+
 	/* --- Check if you have started chatting with Emely and enable ChatMenu --- */
 	useEffect(() => {
 		try {
 			if (window.location.href.indexOf('emely-chat') > -1) {
-				showInstructions(currentUser.uid)
+				showInstructions(currentUser.uid);
 				return setEnableChatMenu(true);
 			} else {
 				return setEnableChatMenu(false);
@@ -120,29 +135,31 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 
 			<HideScroll variant="down">
 				<div id="hide" className="fixed-top help-button-wrapper">
-					<OverlayTrigger
-						key="top"
-						placement="bottom"
-						overlay={
-							<Popover id={`popover-positioned-top`}>
-								<Popover.Header
-									style={{ fontSize: '0.7rem' }}
-								>{`Instruktioner`}</Popover.Header>
-								<Popover.Body style={{ fontSize: '0.7rem' }}>
-									Klicka på frågetecknet för att få tips och instruktioner kring
-									interaktionen med Emely.
-								</Popover.Body>
-							</Popover>
-						}
-					>
-						<Button
-							onClick={handleIntro}
-							variant="light"
-							className="help-button"
+					{disableHelp ? (
+						<OverlayTrigger
+							key="top"
+							placement="bottom"
+							overlay={
+								<Popover id={`popover-positioned-top`}>
+									<Popover.Header
+										style={{ fontSize: '0.7rem' }}
+									>{`Instruktioner`}</Popover.Header>
+									<Popover.Body style={{ fontSize: '0.7rem' }}>
+										Klicka på frågetecknet för att få tips och instruktioner
+										kring interaktionen med Emely.
+									</Popover.Body>
+								</Popover>
+							}
 						>
-							?
-						</Button>
-					</OverlayTrigger>
+							<Button
+								onClick={handleIntro}
+								variant="light"
+								className="help-button"
+							>
+								?
+							</Button>
+						</OverlayTrigger>
+					) : null}
 				</div>
 			</HideScroll>
 
