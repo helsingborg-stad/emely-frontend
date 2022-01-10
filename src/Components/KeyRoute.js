@@ -6,9 +6,18 @@ import AlertMessage from './AlertMessage/AlertMessage';
 
 export default function KeyRoute({ component: Component, ...rest }) {
 	/* ------ Variables, Hooks & State ------ */
-	const { getKeys, allKeys, msg, msgVariant } = useAuth();
+	const { getKeys, allKeys, msg, setMsgVariant, setMsg } = useAuth();
 	const [isCorrectKey] = useState(sessionStorage.getItem('sessionKey'));
 	const history = useHistory();
+
+	useEffect( () => {
+		try {
+			getKeys();
+		} catch (error) {
+			console.log(error.code);
+		}
+	}, []);
+
 
 	/* --- Check if you are on fika or intervju and change background accordingly --- */
 	useEffect(() => {
@@ -31,22 +40,6 @@ export default function KeyRoute({ component: Component, ...rest }) {
 		}
 	}, [window.location.href]);
 
-	/* --- Checking if the sessionKey is correct else redirects back to home --- */
-	useEffect(() => {
-		try {
-			getKeys();
-
-			/* --- Iterates through all keys --- */
-			for (let key of Object.keys(allKeys)) {
-				if (isCorrectKey === allKeys[key]) {
-					/* --- If correct push to login page. --- */
-					return history.push('/login');
-				}
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	}, []);
 
 	return (
 		<>
@@ -56,7 +49,7 @@ export default function KeyRoute({ component: Component, ...rest }) {
 				render={(props) => {
 
           {/* If key is correct render page else redirect back to home */}
-					return isCorrectKey ? <Component {...props} /> : <Redirect to="/" />;
+					return isCorrectKey !== "wrong key" ? <Component {...props} /> : <Redirect to="/" />;
 				}}
 			></Route>
 		</>

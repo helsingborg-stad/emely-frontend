@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Form, Button, Row } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
@@ -29,6 +29,10 @@ export default function Signup() {
 		useAuth();
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
+
+	useEffect(() => {
+		emailRef.current.focus();
+	}, [])
 
 	/* --- Open user terms onClick --- */
 	function handleEndUserTerms(e) {

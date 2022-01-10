@@ -81,7 +81,6 @@ export default function Profile() {
 			</ProfileCard>
 
 			{/* --- Confirm Delete --- */}
-			<Container className="p-3">
 				<Modal show={show} onHide={handleClose}>
 					<Modal.Header closeButton>
 						<Modal.Title>
@@ -133,7 +132,6 @@ export default function Profile() {
 						</Form>
 					</Modal.Body>
 				</Modal>
-			</Container>
 
 			<br />
 		</>
