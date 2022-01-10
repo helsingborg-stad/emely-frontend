@@ -106,7 +106,7 @@ export default function ProfileInfoEdit(props) {
 
 	return (
 		<>
-			<Container className="p-5">
+			<Container className="p-5" id="profile-info-edit">
 				<h2 className="text-center mb-2 fw-bold">Redigera profil</h2>
 
 				{/* --- Username form --- */}

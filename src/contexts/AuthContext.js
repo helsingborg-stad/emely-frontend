@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { auth, dbUsers, db, dbReportedMessages } from '../firebase';
+import axios from "axios";
+
 import {
 	doc,
 	setDoc,
@@ -20,6 +22,8 @@ import {
 	sendPasswordResetEmail,
 	deleteUser,
 	onAuthStateChanged,
+	reauthenticateWithCredential,
+
 } from 'firebase/auth';
 
 const AuthContext = React.createContext();
@@ -41,8 +45,9 @@ export function AuthProvider({ children }) {
 
 	const [msg, setMsg] = useState('');
 	const [msgVariant, setMsgVariant] = useState('');
-	const [useHuggingFace, setUseHuggingFace] = useState(sessionStorage.getItem('useHuggingFace'));
-
+	const [useHuggingFace, setUseHuggingFace] = useState(
+		sessionStorage.getItem('useHuggingFace')
+	);
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
@@ -85,18 +90,33 @@ export function AuthProvider({ children }) {
 
 	/* ---- Delete user from Firebase Authentication ---- */
 	async function userDelete() {
-		deleteFirestoreUser(currentUser.uid);
-		await deleteUser(auth.currentUser)
-			.then(() => {
-				console.log('User deleted from Firebase');
-				setMsgVariant('danger');
-				setMsg(
-					'Ditt konto har raderats. Skapa ett nytt konto om du vill ha den bästa upplevelsen med Emely.'
-				);
-			})
-			.catch((error) => {
-				console.log(error.message);
-			});
+		try{
+			setLoading(true);
+	
+
+			  await deleteUser(auth.currentUser)
+			  .then(() => {
+				  console.log('User deleted from Firebase Auth');
+				  setMsgVariant('warning');
+				  setMsg(
+					  'Ditt konto har raderats. Skapa ett nytt konto om du vill använda Emely.'
+				  );
+				  setLoading(false);
+			  })
+			  .catch((error) => {
+				  console.log(error.message);
+				  setMsgVariant('danger');
+				  setMsg(translateError(error.code));
+	  
+				  if (error.code === 'auth/requires-recent-login') {
+					  return logout();
+				  }
+			  });
+
+		} catch(error){
+			console.log(error)
+		}
+
 	}
 
 	/* ---- Log out current authenticated user ---- */
@@ -121,7 +141,9 @@ export function AuthProvider({ children }) {
 			console.log('Password updated');
 			await updatePassword(currentUser, password);
 			setMsgVariant('success');
-			setMsg('Du har ändrat ditt lösenord. Vänligen logga in igen med ditt nya lösenord.');
+			setMsg(
+				'Du har ändrat ditt lösenord. Vänligen logga in igen med ditt nya lösenord.'
+			);
 			return logout();
 		} catch (error) {
 			console.log(error.code);
@@ -129,7 +151,7 @@ export function AuthProvider({ children }) {
 			setMsg(translateError(error.code));
 
 			/* --- If login-token expires, logout user and try again --- */
-			if(error.code === "auth/requires-recent-login"){
+			if (error.code === 'auth/requires-recent-login') {
 				return logout();
 			}
 		}
@@ -148,13 +170,13 @@ export function AuthProvider({ children }) {
 				return 'Fel lösenord. Vänligen försök igen';
 
 			case 'auth/user-not-found':
-				return 'E-postadressen du angav finns inte registrerad. Vänligen försök igen';
+				return 'E-postadressen du angav finns inte registrerad.';
 
 			case 'auth/too-many-requests':
 				return 'För många försök. Vänligen försök igen lite senare';
 
 			case 'auth/requires-recent-login':
-				return 'Ändring av lösenord misslyckades. Du har blivit utloggad. Logga in igen för att ändra lösenord.';
+				return 'Du har varit inloggad för länge. Logga in igen för att slutföra.';
 
 			default:
 				return 'Opps något gick fel!';
@@ -163,11 +185,10 @@ export function AuthProvider({ children }) {
 
 	/* ---- FIRESTORE QUERIES ---- */
 
-
 	/* --- Check if the input key matches keys in database --- */
 	function checkKey(inputKey, date) {
 		/* Format the date so it matches the deadline date */
-		const formattedDate = date.toLocaleDateString('se-SE')
+		const formattedDate = date.toLocaleDateString('se-SE');
 
 		/* Iterate through all keys and check if the key matches inputKey and deadline date */
 		for (let key of allKeys) {
@@ -233,6 +254,8 @@ export function AuthProvider({ children }) {
 		}
 	}
 
+
+
 	/* ---- Create user in Firestore with signup information ---- */
 	async function createUser(
 		email,
@@ -253,9 +276,11 @@ export function AuthProvider({ children }) {
 			login_count: 1,
 			created_at: creationTime,
 			last_sign_in: creationTime,
+			show_instructions: true,
 		});
 		console.log('User created in firestore');
 	}
+
 
 	/* ---- Fetch information from firestore, with user id & set userDetails ---- */
 	async function getUserDetails(userId) {
@@ -271,6 +296,15 @@ export function AuthProvider({ children }) {
 
 		return userDetails;
 	}
+
+		/* ---- Update show instructions ---- */
+		function showInstructions(uid) {
+			const userRef = doc(dbUsers, uid);
+			updateDoc(userRef, {
+				show_instructions: false,
+			});
+			console.log('User info updated');
+		}
 
 	/* ---- Update user information on login ---- */
 	function updateUserInfo(uid, lastSignInTime) {
@@ -334,10 +368,30 @@ export function AuthProvider({ children }) {
 	}
 
 	/* ---- Delete user information from Firestore ---- */
-	function deleteFirestoreUser(uid) {
-		deleteDoc(doc(dbUsers, uid));
-		console.log('User deleted from Firestore');
+	async function deleteFirestoreUser(uid) {
+		await deleteDoc(doc(dbUsers, uid));
+		console.log('User information deleted from database');
 	}
+
+	    /* ---- Delete all user conversations  ---- */
+		async function deleteAllUserConversations(uid) {
+			try {
+			  setLoading(true)
+			  const response = await axios.post(
+				`${process.env.REACT_APP_API_URL}/user_delete?user_id=${currentUser.uid}`
+			  ).then((response) => {
+				
+				console.log('All conversations deleted form database')
+				setLoading(false)
+			  })
+			  .catch(function (error) {
+				console.log("Error fetching conversations")
+			  });
+			  
+			} catch (err) {
+			  console.log("Error: ", err);
+			}
+		  };
 
 	const value = {
 		currentUser,
@@ -370,6 +424,10 @@ export function AuthProvider({ children }) {
 		setMsgVariant,
 		useHuggingFace,
 		setUseHuggingFace,
+		showInstructions,
+		deleteAllUserConversations,
+		loading,
+		setLoading,
 	};
 
 	return (

@@ -29,10 +29,13 @@
     font-weight: 500 !important;
 }
 
+
 @media(max-width: 500px) {
     .dialogue-text {
         max-width: 100%;
         margin-left: 0;
         font-size: 0.8rem !important;
     }
+
+    
 }

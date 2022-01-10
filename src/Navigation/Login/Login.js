@@ -15,17 +15,23 @@ import { AiOutlineUserAdd } from 'react-icons/ai';
 
 /* Variable declaration */
 export default function Login() {
-
 	/* ------ Form references ------ */
 	const emailRef = useRef();
 	const passwordRef = useRef();
 
 	/* ------ Hooks & State ------ */
-	const { login, updateUserInfo, translateError, currentUser, guestId, setMsg, setMsgVariant } = useAuth();
+	const {
+		login,
+		updateUserInfo,
+		translateError,
+		currentUser,
+		guestId,
+		setMsg,
+		setMsgVariant,
+	} = useAuth();
 	const { useHuggingFace } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const history = useHistory();
-
 
 	useEffect(() => {
 		/* --- If userid is not guest then push to dashboard when on login page --- */
@@ -37,7 +43,6 @@ export default function Login() {
 			console.log(error.message);
 		}
 	}, [currentUser]);
-
 
 	/* --- Running this function on "Fortsätt som Gäst" --- */
 	async function handleGuestLogin(e) {
@@ -98,7 +103,6 @@ export default function Login() {
 					Logga in för att fortsätta
 				</h2>
 
-
 				{/* ---- Login form ---- */}
 				<Form onSubmit={handleSubmit}>
 					{/* ---- Email form ---- */}
@@ -148,13 +152,12 @@ export default function Login() {
 						<RiLoginCircleLine size={30} /> LOGGA IN
 					</Button>
 				</Form>
+				
 
-				<h4 className="text-center mb-4 mt-5 fw-bold" id="eller">
-					<Divider>ELLER</Divider>
-				</h4>
+
 
 				{/* ---- Guest login ---- */}
-				<Form onSubmit={handleGuestLogin}>
+				{/* <Form onSubmit={handleGuestLogin}>
 					<Button
 						disabled={loading}
 						className="w-100 mt-2 register-btn_light"
@@ -163,18 +166,22 @@ export default function Login() {
 					>
 						<AiOutlineUser size={30} /> FORTSÄTT SOM GÄST
 					</Button>
-				</Form>
+					</Form>  
+				*/}
+				
 
 				{/* ---- Need an account? ---- */}
+
 				<h6 className="text-center mb-4 mt-5 fw-bold" id="eller">
 					<Divider>BEHÖVER DU ETT KONTO?</Divider>
 				</h6>
+
 
 				{/* ---- Create new account button ---- */}
 				<Link id="text-link" to="/signup">
 					<Button
 						variant="none"
-						className="w-100 register-btn"
+						className="w-100 register-btn_light"
 						id="edit-button"
 					>
 						<AiOutlineUserAdd size={30} /> SKAPA NY ANVÄNDARE

@@ -43,6 +43,7 @@ function App() {
 											path="/dashboard"
 											component={Dashboard}
 										/>
+										
 										<PrivateRoute
 											path="/update-profile"
 											component={ProfileInfoEdit}

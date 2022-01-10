@@ -1,33 +1,42 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Modal } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { ConversationContext } from '../../contexts/ConversationContext';
 import { Button } from 'react-bootstrap';
 
 import EmelyDialogue from '../../Components/EmelyDialogue/EmelyDialogue';
+import PersonaInstructions from '../../Components/Instructions/PersonaInstructions';
 import PulseLoader from 'react-spinners/PulseLoader';
 
 /* --- Icon imports --- */
 import { ImBriefcase } from 'react-icons/im';
 import { SiCoffeescript } from 'react-icons/si';
 
+import { MdKeyboardArrowLeft } from 'react-icons/md';
+import introJs from 'intro.js';
+
 /* --- Variables, State & Hooks --- */
 export default function Dashboard() {
-	const { userDetails, currentUser } = useAuth();
-	const { setCurrentProgress } = useContext(ConversationContext);
-	const [isLoading, setIsLoading] = useState();
+	const [show, setShow] = useState(false);
+	const handleShow = () => setShow(true);
+	const handleClose = () => setShow(false);
+	const { userDetails, currentUser, showInstructions } = useAuth();
+	const { setCurrentProgress, getUserConversations, isLoading } =
+		useContext(ConversationContext);
+	const [loading, setLoading] = useState();
 	const history = useHistory();
 	const handleLink = (linkTo) => {
 		history.push(linkTo);
 	};
 
 
+
 	/* --- Added loader before rendering text --- */
 	useEffect(() => {
-		setIsLoading(true);
+		setLoading(true);
 		const timer = setTimeout(() => {
-			setIsLoading(false);
+			setLoading(false);
 		}, 1500);
 		return timer;
 	}, [currentUser]);
@@ -39,17 +48,15 @@ export default function Dashboard() {
 
 	return (
 		<>
-
 			<Container id="dashboard-card" className="p-0">
+			
 				<Row className="my-5 align-items-center  justify-content-center button_container">
 					<Row>
-
 						<Col id="emely-dialogue-col" className="p-0">
-
-						{/* --- EmelyDialogue component -> Components/EmelyDialogue --- */}
+							{/* --- EmelyDialogue component -> Components/EmelyDialogue --- */}
 							<EmelyDialogue className="">
 								{/* --- When loading show pulse loader. Show text after loading --- */}
-								{isLoading ? (
+								{loading ? (
 									<p className="m-3 p-5 emely-dialog_dialogue-text text-center">
 										<PulseLoader size={12} color={'gray'} />{' '}
 									</p>
@@ -66,30 +73,63 @@ export default function Dashboard() {
 					</Row>
 
 					{/* --- Work Emely persona-button --- */}
-					<Col xs={12} md={6} className="text-center mt-3">
-						<Button
-							className="register-btn w-100 clickBtn"
-							type="button"
-							onClick={() => handleLink('/work-emely')}
-						>
-							<ImBriefcase size={20} />
-							<span className="px-3">Jobbintervju</span>
-						</Button>
-					</Col>
+					<Row
+						className="mt-2 p-0"
+						lg={2}
+						md={2}
+						xs={1}
+						data-title="1. Välj persona"
+						data-intro="Vill du träna på att gå på en jobbintervju eller bara ta en fika och prata om vad som helst? Börja med att välja genom att trycka på någon av alternativen!"
+					>
+						<Col className="text-center mb-2 ">
+							<Button
+								className="register-btn w-100 clickBtn"
+								type="button"
+								onClick={() => handleLink('/work-emely')}
+							>
+								<ImBriefcase className="me-2" size={20} />
+								Jobbintervju
+							</Button>
+						</Col>
 
-					{/* --- Fika kompis persona-button --- */}
-					<Col xs={12} md={6} className="mt-3">
-						<Button
-							className="register-btn w-100 clickBtn"
-							type="button"
-							onClick={() => handleLink('/emely-chat/fika')}
+						{/* --- Fika kompis persona-button --- */}
+						<Col
+							className=""
 						>
-							<SiCoffeescript size={20} />
-							<span className="px-3">Ta en fika</span>
-						</Button>
-					</Col>
+							<Button
+								className="register-btn w-100 clickBtn"
+								type="button"
+								onClick={() => handleLink('/emely-chat/fika')}
+							>
+								<SiCoffeescript className="me-2" size={20} />
+								Ta en fika
+							</Button>
+						</Col>
+					</Row>
 				</Row>
 			</Container>
+
+			{/* --- Instructions --- */}
+			<Modal
+				className="settings-modal"
+				size="lg"
+				show={show}
+				onHide={handleClose}
+			>
+				<Modal.Body>
+					<PersonaInstructions />
+				</Modal.Body>
+				<Modal.Footer>
+					<Button
+						disabled={loading}
+						variant="outline-success"
+						className="register-btn"
+						onClick={handleClose}
+					>
+						<MdKeyboardArrowLeft size={25} /> TILLBAKA
+					</Button>
+				</Modal.Footer>
+			</Modal>
 		</>
 	);
 }

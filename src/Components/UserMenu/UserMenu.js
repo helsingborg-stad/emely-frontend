@@ -7,12 +7,14 @@ import {
 	Offcanvas,
 	Row,
 	Col,
+	Modal,
 } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
 import Avatar from '@mui/material/Avatar';
 import Divider from '@mui/material/Divider';
+import PersonaInstructions from '../../Components/Instructions/PersonaInstructions';
 
 /* --- Icon imports --- */
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -23,6 +25,8 @@ import { SiCoffeescript } from 'react-icons/si';
 import { RiUserAddFill } from 'react-icons/ri';
 import { BsArrowDownCircleFill } from 'react-icons/bs';
 import { BsArrowUpCircleFill } from 'react-icons/bs';
+import { FaBookReader } from 'react-icons/fa';
+import { MdKeyboardArrowLeft } from 'react-icons/md';
 
 /* --- Variables, Hooks & State --- */
 export default function UserMenu(props) {
@@ -39,7 +43,13 @@ export default function UserMenu(props) {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	
+
+	const [showInstructions, setShowInstructions] = useState(false);
+	const handleCloseInstructions = () => setShowInstructions(false);
+	const handleShowInstructions = () => {
+		setShowInstructions(true);
+		setShow(false);
+}
 
 	/* --- show/hide username --- */
 	const [showUsername, setShowUsername] = useState(true);
@@ -116,7 +126,11 @@ export default function UserMenu(props) {
 									<Avatar
 										className="fw-bold"
 										sx={{ width: 35, height: 35 }}
-										style={{ background: 'var(--green)', fontSize: '1rem' }}
+										style={{
+											background: 'var(--green)',
+											fontSize: '1rem',
+											textTransform: 'uppercase',
+										}}
 									>
 										{userDetails && userDetails.username.charAt(0)}
 									</Avatar>
@@ -130,12 +144,13 @@ export default function UserMenu(props) {
 								style={{ fontSize: '1rem', fontWeight: '500' }}
 							>
 								{/* --- Conditional rendering -> if Guest no username else username */}
-								{showUsername && isGuest ? null : (
+								{showUsername ? (
 									<span>{userDetails && userDetails.username}</span>
-								)}
+								) : null}
 							</Col>
 						</Row>
 					</Navbar.Brand>
+
 
 					{/* --- Mobile menu button: open sidebar --- */}
 					<Navbar.Toggle
@@ -150,7 +165,7 @@ export default function UserMenu(props) {
 
 					<Navbar.Collapse bg="dark" id="basic-navbar-nav">
 						<Nav className="ms-auto ">
-
+						
 							{/* --- Menu-button: open sidebar --- */}
 							<Button
 								className=""
@@ -222,8 +237,7 @@ export default function UserMenu(props) {
 									</Row>
 
 									{/* Conditional rendering -> */}
-									{isGuest ? /* Guest -> show nothing */
-									null : (
+									{isGuest /* Guest -> show nothing */ ? null : (
 										/* User -> Användarkonto: Go to profile page  */
 										<Row className="menu-rows">
 											{/* Profile page menu-button */}
@@ -266,34 +280,64 @@ export default function UserMenu(props) {
 									<Divider>
 										<small className="fw-bold mt-4 mb-3">EMELY</small>
 									</Divider>
-									
-										{/* --- Jobbintervju --- */}	
+
+									{/* --- Jobbintervju --- */}
 									<Row className="menu-rows" id="top-menu-item">
-											<Nav.Item
-												onClick={() => handleLink('/work-emely')}
-												className="register-btn_sidebar"
-											>
-												<ImBriefcase className="me-4" size={22} />
-												Jobbintervju
-											</Nav.Item>
+										<Nav.Item
+											onClick={() => handleLink('/work-emely')}
+											className="register-btn_sidebar"
+										>
+											<ImBriefcase className="me-4" size={22} />
+											Jobbintervju
+										</Nav.Item>
 									</Row>
 
-									{/* --- Fika --- */}	
+									{/* --- Fika --- */}
 									<Row className="menu-rows">
-											<Nav.Item
-												onClick={() => handleLink('/emely-chat/fika')}
-												className="register-btn_sidebar"
-											>
-												<SiCoffeescript className="me-4" size={22} />
-												Fika
-											</Nav.Item>
+										<Nav.Item
+											onClick={() => handleLink('/emely-chat/fika')}
+											className="register-btn_sidebar"
+										>
+											<SiCoffeescript className="me-4" size={22} />
+											Fika
+										</Nav.Item>
 									</Row>
+
+									{/* <Row className="menu-rows">
+										<Nav.Item
+											onClick={handleShowInstructions}
+											className="register-btn_sidebar"
+										>
+											<FaBookReader className="me-4" size={22} />
+											Instruktioner
+										</Nav.Item>
+									</Row>*/} 
 								</Offcanvas.Body>
 							</Offcanvas>
-		
 						</Nav>
 					</Navbar.Collapse>
 				</Container>
+
+				{/* --- Instructions --- */}
+				<Modal
+					className="settings-modal"
+					size="lg"
+					show={showInstructions}
+					onHide={handleCloseInstructions}
+				>
+					<Modal.Body>
+						<PersonaInstructions />
+					</Modal.Body>
+					<Modal.Footer>
+						<Button
+							variant="outline-success"
+							className="register-btn"
+							onClick={handleCloseInstructions}
+						>
+							<MdKeyboardArrowLeft size={25} /> TILLBAKA
+						</Button>
+					</Modal.Footer>
+				</Modal>
 			</Navbar>
 		</>
 	);

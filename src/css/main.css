@@ -13,6 +13,7 @@
 @import '../Components/ChatInput/ChatInput.css';
 @import '../Navigation/EmelyChat/EmelyChat.css';
 @import '../Navigation/WorkEmely/work-emely.css';
+@import '../Components/Instructions/instructions.css';
 @import '../Navigation/Profile/profile.css';
 @import '../Components/Layout/ProfileCard/profile-card.css';
 @import '../Components/ChatMenu/chat-menu.css';

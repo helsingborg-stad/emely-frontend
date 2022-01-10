@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { createContext, useState } from "react";
 import { useAuth } from "./AuthContext";
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 
 export const ConversationContext = createContext();
 
@@ -127,6 +129,45 @@ const ConversationContextProvider = (props) => {
     setIsLoading(false);
   };
 
+    /* ---- Get all user-conversations  ---- */
+    async function getUserConversations() {
+      try {
+        setIsLoading(true)
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/user_conversations?user_id=${currentUser.uid}`
+        ).then((response) => {
+          downloadTextFile(response.data.user_conversations)
+          
+          setIsLoading(false)
+        })
+        .catch(function (error) {
+          console.log("Error fetching conversations")
+        });
+        
+      } catch (err) {
+        console.log("Error: ", err);
+      }
+    };
+
+    /* ---- Download all conversations into a zip file  ---- */
+    const downloadTextFile = (allConversations) => {
+      try {
+        var zip = new JSZip();
+  
+  
+        const textFileId = Math.floor(Math.random() * 1000000) + 100000;
+        zip.file(`my-conversations-${textFileId}.txt`, allConversations);
+  
+        zip.generateAsync({ type: 'blob' }).then(function (content) {
+          // see FileSaver.js
+          saveAs(content, `my-conversations-${textFileId}.zip`);
+        }); 
+  
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
   /* ---- Gets all occupation buttons ---- */
   const getButtons = async () => {
     try {
@@ -174,6 +215,7 @@ const ConversationContextProvider = (props) => {
     setHasExperience,
     smallTalk,
     setSmallTalk,
+    getUserConversations,
   };
 
   return (
