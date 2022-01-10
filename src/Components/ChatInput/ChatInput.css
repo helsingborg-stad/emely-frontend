@@ -50,6 +50,8 @@
   background-color: var(--green);
   padding: 26px;
   position: relative;
+  margin-left: 50% !important;
+  margin-bottom: 10px !important;
 }
 
 .recording_btn_active {
@@ -57,6 +59,8 @@
   padding: 26px;
   z-index: 99;
   position: relative;
+  margin-left: 50% !important;
+  margin-bottom: 10px !important;
 }
 
 .recording_btn_active::before {
@@ -90,13 +94,14 @@
   border: 1px solid var(--gray);
   padding: 10px;
   margin-left: 10px;
+  float: right !important;
+  bottom: 78px !important;
 }
 
 .buttons-wrapper {
-  display: flex;
-  flex-basis: 100%;
+  width: 100%;
   align-items: center;
-  justify-content: space-between;
+
 }
 
 .input-wrapper {
