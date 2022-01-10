@@ -72,14 +72,14 @@
     display: flex !important;
     float: right;
     margin: 0px 20px 0px 0px !important;
-    background: var(--green) !important;
+    background: var(--white) !important;
 	border: 2px solid var(--green) !important;
-	color: var(--white) !important;
+	color: var(--green) !important;
 }
 
 .help-button:hover{
-	background: none !important;
-    color: var(--green) !important;
+	background: var(--green) !important;
+    color: var(--white) !important;
 	border: 2px solid var(--green) !important;
 }
 
