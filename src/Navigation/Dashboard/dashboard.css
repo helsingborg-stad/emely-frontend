@@ -61,7 +61,7 @@
     max-width: 800px;
     margin: 0 auto;
     float: none;
-    top: 78px !important;
+    top: 80px !important;
 }
 
 .help-button{
@@ -72,14 +72,14 @@
     display: flex !important;
     float: right;
     margin: 0px 20px 0px 0px !important;
-    background: none !important;
+    background: var(--green) !important;
 	border: 2px solid var(--green) !important;
-	color: var(--green) !important;
+	color: var(--white) !important;
 }
 
 .help-button:hover{
-	background: var(--green) !important;
-    color: var(--white) !important;
+	background: none !important;
+    color: var(--green) !important;
 	border: 2px solid var(--green) !important;
 }
 
