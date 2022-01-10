@@ -50,7 +50,7 @@
   background-color: var(--green);
   padding: 26px;
   position: relative;
-  margin-left: 50% !important;
+  margin-left: 46% !important;
   margin-bottom: 10px !important;
 }
 
@@ -95,7 +95,6 @@
   padding: 10px;
   margin-left: 10px;
   float: right !important;
-  bottom: 78px !important;
 }
 
 .buttons-wrapper {
