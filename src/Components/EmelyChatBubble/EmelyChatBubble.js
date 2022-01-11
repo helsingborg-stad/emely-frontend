@@ -27,14 +27,14 @@ export default function ChatBubble({
 
 	function handleReportMessage(e) {
 		e.preventDefault();
-		setMsg('')
+		setMsg('');
 
 		try {
 			/* Report message and add in reported-messages database */
 			reportMessage(convId, message);
 			setIsReported(true);
-			setMsg("Meddelandet har rapporterats!")
-			setMsgVariant("warning")
+			setMsg('Meddelandet har rapporterats!');
+			setMsgVariant('warning');
 
 			/*  Catch error & translate in a function */
 		} catch (error) {
@@ -59,13 +59,12 @@ export default function ChatBubble({
 							<OverlayTrigger
 								key="top"
 								placement="top"
-								
 								overlay={
-									<Popover  id={`popover-positioned-top`}>
+									<Popover id={`popover-positioned-top`}>
 										<Popover.Header
-										
+											style={{ fontSize: '0.7rem' }}
 										>{`Hjälp oss att bli bättre`}</Popover.Header>
-										<Popover.Body>
+										<Popover.Body style={{ fontSize: '0.7rem' }}>
 											Klicka på rapportera om du anser att Emelys meddelande är
 											opassande.
 										</Popover.Body>

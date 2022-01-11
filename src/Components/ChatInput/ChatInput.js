@@ -136,6 +136,50 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 				<div className="container chat-input_container-wrapper">
 					{/* ---- Input fields ---- */}
 					<div className="buttons-wrapper">
+						{/* ---- Recording button, hides in all browsers except Chrome ----- */}
+						{browserSupportsSpeechRecognition && (
+							<button
+								data-title="Röstinspelning"
+								data-intro="Genom att klicka på mikrofonknappen kan du spela in ditt meddelande till Emely. Tryck på knappen igen för att avsluta inspelningen. Om du vill kan du redigera ditt meddelande i text innan du skickar det vidare till Emely!"
+								data-step="1"
+								className={
+									isListening
+										? 'navigation_btn recording_btn_active'
+										: 'navigation_btn recording_btn'
+								}
+								onClick={() => {
+									setIsListening((prevState) => !prevState);
+								}}
+								// onMouseDown={() => setIsListening(true)}
+								// onMouseUp={() => setIsListening(false)}
+								// onMouseLeave={() => setIsListening(false)}
+								// onTouchStart={() => setIsListening(true)}
+								// onTouchEnd={() => setIsListening(false)}
+								// onTouchMove={() => setIsListening(false)}
+								// onTouchCancel={() => setIsListening(false)}
+							>
+								{listening ? (
+									<FaStop size={'2rem'} />
+								) : (
+									<BiMicrophone size={'2rem'} />
+								)}
+							</button>
+						)}
+
+						{/* ---- Sound button ---- */}
+						<button
+							data-title="Stäng av ljud"
+							data-intro="Om du inte vill lyssna på Emelys röst så kan du stänga av ljudet genom att klicka på ljudknappen."
+							data-step="3"
+							onClick={(e) => handelSound(e)}
+							className={'sound_btn navigation_btn'}
+						>
+							{activeSound ? (
+								<IoMdVolumeHigh size={'2rem'} />
+							) : (
+								<IoMdVolumeOff size={'2rem'} />
+							)}
+						</button>
 						<form
 							data-title="Skriv meddelande"
 							data-intro="Om du inte vill prata med Emely kan du skriva istället. Svara tillbaka genom att skriva något i meddelande rutan, därefter kan du välja att trycka på 'Enter' på tangentbordet eller klicka på knappen."
@@ -169,51 +213,6 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 								<IoIosSend size={'1.5rem'} />
 							</button>
 						</form>
-
-						{/* ---- Sound button ---- */}
-						<button
-							data-title="Stäng av ljud"
-							data-intro="Om du inte vill lyssna på Emelys röst så kan du stänga av ljudet genom att klicka på ljudknappen."
-							data-step="3"
-							onClick={(e) => handelSound(e)}
-							className={'sound_btn navigation_btn'}
-						>
-							{activeSound ? (
-								<IoMdVolumeHigh size={'2rem'} />
-							) : (
-								<IoMdVolumeOff size={'2rem'} />
-							)}
-						</button>
-
-						{/* ---- Recording button, hides in all browsers except Chrome ----- */}
-						{browserSupportsSpeechRecognition && (
-							<button
-								data-title="Röstinspelning"
-								data-intro="Genom att klicka på mikrofonknappen kan du spela in ditt meddelande till Emely. Tryck på knappen igen för att avsluta inspelningen. Om du vill kan du redigera ditt meddelande i text innan du skickar det vidare till Emely!"
-								data-step="1"
-								className={
-									isListening
-										? 'navigation_btn recording_btn_active'
-										: 'navigation_btn recording_btn'
-								}
-								onClick={() => {
-									setIsListening((prevState) => !prevState);
-								}}
-								// onMouseDown={() => setIsListening(true)}
-								// onMouseUp={() => setIsListening(false)}
-								// onMouseLeave={() => setIsListening(false)}
-								// onTouchStart={() => setIsListening(true)}
-								// onTouchEnd={() => setIsListening(false)}
-								// onTouchMove={() => setIsListening(false)}
-								// onTouchCancel={() => setIsListening(false)}
-							>
-								{listening ? (
-									<FaStop size={'2rem'} />
-								) : (
-									<BiMicrophone size={'2rem'} />
-								)}
-							</button>
-						)}
 					</div>
 				</div>
 			</div>
