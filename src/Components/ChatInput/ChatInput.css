@@ -54,6 +54,10 @@
   margin-bottom: 10px !important;
 }
 
+.recording_btn:hover {
+  background-color: var(--greenHover);
+}
+
 .recording_btn_active {
   background: var(--activeRecording);
   padding: 26px;
@@ -95,6 +99,12 @@
   padding: 10px;
   margin-left: 10px;
   float: right !important;
+  border: 0 !important;
+}
+
+.sound_btn:hover {
+  background: var(--greenHover);
+
 }
 
 .buttons-wrapper {
