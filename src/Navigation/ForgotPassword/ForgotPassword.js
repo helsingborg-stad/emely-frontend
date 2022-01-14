@@ -75,11 +75,11 @@ export default function ForgotPassword() {
           </Button>
         </Form>
         <div className="w-100 text-center mt-3 fw-bold">
-          <Link id="text-link" to="/login">Login</Link>
+          <Link id="text-link" to="/login">Logga in</Link>
         </div>
 
         <div className="w-100 text-center mt-2 fw-bold">
-        <p style={{ fontWeight: '600'}}> Behöver ett konto? <Link id="text-link" to="/signup">Registrera dig</Link></p>
+        <p style={{ fontWeight: '600'}}> Behöver du ett konto? <Link id="text-link" to="/signup">Registrera dig</Link></p>
         </div>
       </AuthLayout>
     </>
