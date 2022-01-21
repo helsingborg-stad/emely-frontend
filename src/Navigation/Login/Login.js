@@ -81,7 +81,12 @@ export default function Login() {
 				passwordRef.current.value
 			);
 			const userId = credentials.user.uid;
-			const lastSignInTime = credentials.user.metadata.creationTime;
+
+			const d = new Date();
+			const date = d.toISOString().split("T")[0];
+			const time = d.toTimeString().split(" ")[0];
+
+			const lastSignInTime = `${date} ${time}`;
 
 			/* --- Run updateUserInfo to update appropriate fields on login --- */
 			await updateUserInfo(userId, lastSignInTime);

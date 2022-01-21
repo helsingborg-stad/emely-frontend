@@ -248,10 +248,14 @@ export function AuthProvider({ children }) {
 	/* ---- Send reported message to 'reported-messages' collection  ---- */
 	async function reportMessage(conversationId, text) {
 		try {
+			const d = new Date();
+			const date = d.toISOString().split("T")[0];
+			const time = d.toTimeString().split(" ")[0];
+
 			await setDoc(doc(dbReportedMessages), {
 				conversation_id: conversationId,
 				text: text,
-				created_at: new Date(),
+				created_at: `${date} ${time}`,
 			});
 			console.log('Message reported, thanks for input!');
 		} catch (error) {

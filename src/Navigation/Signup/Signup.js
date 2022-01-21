@@ -66,7 +66,12 @@ export default function Signup() {
 				passwordRef.current.value
 			);
 			const uid = credential.user.uid;
-			const creationTime = credential.user.metadata.creationTime;
+
+			const d = new Date();
+			const date = d.toISOString().split("T")[0];
+			const time = d.toTimeString().split(" ")[0];
+
+			const creationTime = `${date} ${time}`;
 
 			/* --- Send sign up information to Firestore database (users or users-debug) --- */
 			await createUser(
