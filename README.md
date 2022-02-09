@@ -1,5 +1,6 @@
 # Emely WebApp
 
+
 Emely web app is the user interface part of Emely, consisting of this web app and the Brain. The web app is mainly based on the JavaScript framework **React** but also uses GCP services such as Firebase Authentication, Firestore etc. There is some backend logic created in Python. 
 
 
