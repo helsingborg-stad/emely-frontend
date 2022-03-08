@@ -197,6 +197,7 @@ export function AuthProvider({ children }) {
 				if (inputKey === key.key && formattedDate <= key.deadline) {
 					
 					sessionStorage.setItem('sessionKey', inputKey);
+					sessionStorage.setItem('customer', key.customer);
 
 					/* If key doesnt have useHuggingFace set it to false */
 					if (key.useHuggingFace != null) {
@@ -284,6 +285,7 @@ export function AuthProvider({ children }) {
 			created_at: creationTime,
 			last_sign_in: creationTime,
 			show_instructions: true,
+			customer: sessionStorage.getItem('customer'),
 		});
 		console.log('User created in firestore');
 	}
