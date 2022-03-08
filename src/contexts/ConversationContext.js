@@ -7,7 +7,7 @@ import JSZip from 'jszip';
 export const ConversationContext = createContext();
 
 const ConversationContextProvider = (props) => {
-  const { currentUser, useHuggingFace } = useAuth();
+  const { currentUser, useHuggingFace, userDetails } = useAuth();
   // saves Emely's and user's messages
   const [sessionConversation, setSessionConersation] = useState([]);
   // state for user's message (invokes in onChange case)
@@ -58,6 +58,7 @@ const ConversationContextProvider = (props) => {
           enable_small_talk: smallTalk,
           user_id: currentUser.uid,
           use_huggingface: useHuggingFace,
+          customer: userDetails.customer,
         }
       );
       const result = await response.data;
