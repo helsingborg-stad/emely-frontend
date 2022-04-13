@@ -40,6 +40,9 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 		setActiveSound,
 	} = useContext(AcapelaContext);
 
+	/* --- Variable that checks if voice recording has been used --- */
+	const [recordingUsed, setRecordingUsed] = useState(false);
+
 	/* states && functions for translating voice to text */
 	const [isListening, setIsListening] = useState(false);
 	const {
@@ -63,12 +66,14 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 				language: 'sv-SV',
 			});
 			// console.log(transcript);
+			setRecordingUsed(true);
 		} else {
 			SpeechRecognition.stopListening();
 		}
 
 		/* --- Overwriting userMessage if recording button works --- */
 		setUserMessage(transcript);
+		
 		resetTranscript();
 	}, [isListening]);
 
@@ -86,13 +91,14 @@ export default function ChatInput({ persona, setFocused, setValidationError }) {
 				userMessage.trim().length > 0 &&
 				userMessage.trim().match(/^[^><#@*&«»{}]+$/)
 			) {
-				getContinueСonversation(persona, userMessage);
+				getContinueСonversation(persona, userMessage, recordingUsed);
 				setValidationError(false);
 			} else {
 				/* --- if user's message contains "< > @ # « » & * {} " symbols --- */
 				setValidationError(true);
 				console.log('failed validation', userMessage);
 			}
+			setRecordingUsed(false);
 			setUserMessage('');
 			setFocused(false);
 		}
