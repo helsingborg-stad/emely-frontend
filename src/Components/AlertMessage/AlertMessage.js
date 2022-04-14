@@ -3,9 +3,11 @@ import { Alert } from 'react-bootstrap';
 import { useAuth } from '../../contexts/AuthContext';
 import { Container } from 'react-bootstrap';
 
+import { MdOutlineClose } from 'react-icons/md'
+
 export default function AlertMessage(props) {
 	/* --- Variables, Hooks & State --- */
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 	const { msg, setMsg, msgVariant } = useAuth();
 
 	/* Close Alert */
@@ -20,23 +22,26 @@ export default function AlertMessage(props) {
 		const timer = setTimeout(() => {
 			setShow(false);
 			setMsg('');
-		}, 4000);
+		}, 30000);
+
 		return timer;
+
 	}, [msg]);
 
 	return (
 		<>
 			{/* --- Displays Alert if msg is not empty --- */}
 			{show ? (
-				<Container className="alert-container fixed-top">
 					<Alert
-						className="alert-message text-center mb-5 fw-bold shadow-sm"
+						className="alert-message mb-5 fw-bold shadow-sm d-flex fixed-top"
 						variant={msgVariant}
 						onClick={handleDismiss}
 					>
-						{msg}
+						<span></span>
+						<span className="text-center">{msg}</span>
+						<MdOutlineClose className="fw-bold" size={'1.5rem'}/>
+						
 					</Alert>
-				</Container>
 			) : null}
 		</>
 	);
