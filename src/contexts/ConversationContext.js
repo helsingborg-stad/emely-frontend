@@ -83,6 +83,7 @@ const ConversationContextProvider = (props) => {
   const getContinueСonversation = async (
     endpoint,
     userMessage,
+	recordingUsed,
     id = conversationId,
     date = formatedTimestamp()
   ) => {
@@ -100,7 +101,7 @@ const ConversationContextProvider = (props) => {
           conversation_id: `${id}`,
           response_time: -1,
           created_at: `${date}`,
-          recording_used: false,
+          recording_used: recordingUsed,
           lang: "sv",
         }
       );

@@ -129,9 +129,15 @@ export function AuthProvider({ children }) {
 		sendPasswordResetEmail(auth, email)
 			.then(() => {
 				console.log('Password reset email sent');
+				setMsgVariant('success');
+				setMsg(
+					'Ett återställningsemail har skickats till den angivna e-postadressen (glöm inte att kolla skräpposten).'
+				);
 			})
 			.catch((error) => {
 				console.log(error.code);
+				setMsgVariant('danger');
+				setMsg(translateError(error.code));
 			});
 	}
 
