@@ -35,11 +35,12 @@ export function AuthProvider({ children }) {
 	/* --- Variables, States & Hooks --- */
 	const [currentUser, setCurrentUser] = useState();
 	const [userDetails, setUserDetails] = useState();
-	const [correctKey, setCorrectKey] = useState();
+	const [correctKey, setCorrectKey] = useState(true);
 	const [loading, setLoading] = useState(true);
 
 	const [isDeleting, setIsDeleting] = useState(false);
-	const [allKeys, setAllKeys] = useState();
+	const [allKeys, setAllKeys] = useState([]);
+	const [allDocs, setAllDocs] = useState([]);
 	const history = useHistory();
 	const [isGuest, setIsGuest] = useState(false);
 	const [lockingUp, setLockingUp] = useState(false);
@@ -51,6 +52,9 @@ export function AuthProvider({ children }) {
 		sessionStorage.getItem('useHuggingFace')
 	);
 
+	useEffect(() => {
+		getKeys();
+	}, []);
 
 	/* ---- Check for user changes ---- */
 	useEffect(() => {
@@ -60,13 +64,9 @@ export function AuthProvider({ children }) {
 				setLoading(false);
 				const uid = user.uid;
 
-				if (uid === user.uid && uid !== guestId) {
-					setIsGuest(false);
+				if (currentUser) {
 					console.log('You are signed in!');
 					return <Redirect to="/dashboard" />;
-				} else if (uid === guestId) {
-					setIsGuest(true);
-					console.log('You are signed in as Guest');
 				} else {
 					console.log('Signed out!');
 					return <Redirect to="/login" />;
@@ -77,7 +77,7 @@ export function AuthProvider({ children }) {
 		});
 
 		return unsubscribe;
-	}, [isGuest]);
+	}, [currentUser]);
 
 	/* ---- FIREBASE AUTHENTICATION ---- */
 
@@ -192,22 +192,23 @@ export function AuthProvider({ children }) {
 	/* ---- FIRESTORE QUERIES ---- */
 
 	/* --- Check if the input key matches keys in database --- */
-	function checkKey(inputKey, date) {
-		
-		
-			/* Format the date so it matches the deadline date */
-			const formattedDate = date.toLocaleDateString('se-SE');
+	function checkKey(inputKey) {
+		/* Format the date so it matches the deadline date */
+		const date = new Date();
+		var dateInSeconds = date.getTime() / 1000; // format date in seconds
 
-			/* Iterate through all keys and check if the key matches inputKey and deadline date */
-			for (let key of allKeys) {
-				if (inputKey === key.key && formattedDate <= key.deadline) {
-					
+		allKeys.every((item) => {
+			if (inputKey === item.key) { // if key matches
+				if (dateInSeconds <= item.deadline.seconds) {
+					sessionStorage.setItem('customer', item.customer);
 					sessionStorage.setItem('sessionKey', inputKey);
-					sessionStorage.setItem('customer', key.customer);
+					setCorrectKey(true);
+					setMsgVariant('success');
+					setMsg('Giltig nyckel!');
 
 					/* If key doesnt have useHuggingFace set it to false */
-					if (key.useHuggingFace != null) {
-						sessionStorage.setItem('useHuggingFace', key.useHuggingFace);
+					if (item.useHuggingFace != null) { // if key + date matches
+						sessionStorage.setItem('useHuggingFace', item.useHuggingFace);
 						setUseHuggingFace(sessionStorage.getItem('useHuggingFace'));
 					} else {
 						sessionStorage.setItem('useHuggingFace', false);
@@ -219,26 +220,32 @@ export function AuthProvider({ children }) {
 					updateDoc(keyRef, {
 						login_count: increment(1),
 					});
-					setMsgVariant('success');
-					setMsg(`Giltig nyckel! Utgångsdatum: ${key.deadline}.`);
-					
-					return history.push('/login');
-				} else {
-					sessionStorage.setItem('sessionKey', "wrong key");
-					setMsgVariant('danger');
-					setMsg(
-						'Fel nyckel eller passerat utgångsdatum! Vänligen försök igen'
-					);
-				}
-			}
 
+					history.push('/login');
+					return false;
+				} else {
+					setMsgVariant('danger');
+					setMsg('Passerat utgångsdatum');
+					console.log('out of date');
+					sessionStorage.setItem('sessionKey', 'wrong key');
+					setCorrectKey(false);
+
+					return false;
+				}
+			} else {
+				sessionStorage.setItem('sessionKey', 'wrong key');
+				setMsgVariant('danger');
+				setMsg('Fel nyckel! Vänligen försök igen');
+				history.push('/');
+				return true;
+			}
+		});
 	}
 
 	/* --- Get all keys from firestore --- */
 	async function getKeys() {
 		try {
 			const querySnapshot = await getDocs(collection(db, 'keys'));
-			const allDocs = [];
 			querySnapshot.forEach((doc) => {
 				const data = doc.data();
 				allDocs.push(data);
@@ -451,6 +458,8 @@ export function AuthProvider({ children }) {
 		isDeleting,
 		lockingUp,
 		setLockingUp,
+		correctKey,
+		setCorrectKey,
 	};
 
 	return (
