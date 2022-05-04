@@ -102,10 +102,10 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 		}
 	}, [window.location.href]);
 
-	/* --- Check if you have started chatting with Aida and enable ChatMenu --- */
+	/* --- Check if you have started chatting with Emely and enable ChatMenu --- */
 	useEffect(() => {
 		try {
-			if (window.location.href.indexOf('aida-chat') > -1) {
+			if (window.location.href.indexOf('emely-chat') > -1) {
 				showInstructions(currentUser.uid);
 				return setEnableChatMenu(true);
 			} else {
@@ -160,7 +160,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 									>{`Instruktioner`}</Popover.Header>
 									<Popover.Body style={{ fontSize: '0.7rem' }}>
 										Klicka på frågetecknet för att få tips och instruktioner
-										kring interaktionen med Aida.
+										kring interaktionen med Emely.
 									</Popover.Body>
 								</Popover>
 							}
@@ -177,7 +177,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 				</div>
 			</HideScroll>
 
-			{/* --- If you are chatting with Aida render ChatMenu --- */}
+			{/* --- If you are chatting with Emely render ChatMenu --- */}
 			{enableChatMenu ? <ChatMenu /> : null}
 
 			{/* --- Render page if you are logged in & sessionKey is correct, else redirect back to login --- */}
