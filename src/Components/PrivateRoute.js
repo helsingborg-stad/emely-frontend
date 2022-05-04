@@ -22,11 +22,16 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 		getKeys,
 		isGuest,
 		msg,
+		setMsg,
+		setMsgVariant,
 		msgVariant,
 		userDetails,
 		showInstructions,
+		checkKey,
+		correctKey,
+		setCorrectKey,
 	} = useAuth();
-	const [isCorrectKey] = useState(sessionStorage.getItem('sessionKey'));
+
 	const [enableChatMenu, setEnableChatMenu] = useState(false);
 	const [disableHelp, setDisableHelp] = useState(false);
 	const history = useHistory();
@@ -97,10 +102,10 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 		}
 	}, [window.location.href]);
 
-	/* --- Check if you have started chatting with Emely and enable ChatMenu --- */
+	/* --- Check if you have started chatting with Aida and enable ChatMenu --- */
 	useEffect(() => {
 		try {
-			if (window.location.href.indexOf('emely-chat') > -1) {
+			if (window.location.href.indexOf('aida-chat') > -1) {
 				showInstructions(currentUser.uid);
 				return setEnableChatMenu(true);
 			} else {
@@ -111,21 +116,30 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 		}
 	}, [window.location.href]);
 
-	/* --- Checking if the sessionKey is correct else redirects back to home --- */
+	/* Check if key matches database-key */
 	useEffect(() => {
-		try {
-			getKeys();
+		const date = new Date();
+		var dateInSeconds = date.getTime() / 1000;
 
-			/* Iterates through all keys */
-			for (let key of Object.keys(allKeys)) {
-				if (isCorrectKey === allKeys[key]) {
-					return history.push('/login');
+		try {
+			allKeys.every((key) => {
+				if (key.key === sessionStorage.getItem('sessionKey')) {
+					if (key.deadline.seconds >= dateInSeconds) {
+						setCorrectKey(true);
+						return false;
+					} else {
+						setCorrectKey(false);
+						return false;
+					}
+				} else {
+					setCorrectKey(false);
+					return true;
 				}
-			}
+			});
 		} catch (error) {
-			console.log(error);
+			console.log(error.message);
 		}
-	}, []);
+	}, [window.location.href]);
 
 	return (
 		<>
@@ -146,7 +160,7 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 									>{`Instruktioner`}</Popover.Header>
 									<Popover.Body style={{ fontSize: '0.7rem' }}>
 										Klicka på frågetecknet för att få tips och instruktioner
-										kring interaktionen med Emely.
+										kring interaktionen med Aida.
 									</Popover.Body>
 								</Popover>
 							}
@@ -163,17 +177,17 @@ export default function PrivateRoute({ component: Component, ...rest }) {
 				</div>
 			</HideScroll>
 
-			{/* --- If you are chatting with Emely render ChatMenu --- */}
+			{/* --- If you are chatting with Aida render ChatMenu --- */}
 			{enableChatMenu ? <ChatMenu /> : null}
 
 			{/* --- Render page if you are logged in & sessionKey is correct, else redirect back to login --- */}
 			<Route
 				{...rest}
 				render={(props) => {
-					return currentUser && isCorrectKey ? (
+					return currentUser && correctKey ? (
 						<Component {...props} />
 					) : (
-						<Redirect to="/login" />
+						history.push('/login')
 					);
 				}}
 			></Route>

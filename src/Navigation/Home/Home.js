@@ -24,17 +24,6 @@ export default function Login() {
 	}, [])
 
 
-/* --- Get the keys on page load --- */
-	useEffect(() => {
-		try {
-			getKeys();
-		} catch (error) {
-			console.log(error.code);
-		}
-	}, []);
-
-
-
 	/* --- Do this on submit button --- */
 	async function handleSubmit(e) {
 		e.preventDefault();
@@ -49,7 +38,7 @@ export default function Login() {
 				setLoading(false);
 
 				/* --- Check if the key is correct --- */
-				checkKey(keyRef.current.value, date);
+				checkKey(keyRef.current.value);
 
 			}, 1500);
 		} catch (error) {
