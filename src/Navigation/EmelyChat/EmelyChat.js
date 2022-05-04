@@ -26,12 +26,14 @@ export default function EmelyChat(props) {
 		sessionConversation,
 		setSessionConersation,
 		conversationId,
+		setCurrentProgress,
 	} = useContext(ConversationContext);
 
 	/* ---- Gets a user ID and starts a conversation with Emely from the beginning every  first rendering ---- */
 	useEffect(() => {
 		setSessionConersation([]);
-	}, []);
+		setCurrentProgress(0);
+	}, [persona]);
 
 	/* ---- Runs when userDetails has been known ---- */
 	useEffect(() => {
@@ -47,7 +49,7 @@ export default function EmelyChat(props) {
 		} catch (error) {
 			console.log(error.message);
 		}
-	}, [userDetails, currentUser, window.location.href]);
+	}, [window.location.href]);
 
 	/* ---- Tracks and renders new messages, scrolls them up ---- */
 	useEffect(() => {
