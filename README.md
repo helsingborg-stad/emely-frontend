@@ -16,7 +16,7 @@ Emely web app is the user interface part of Emely, consisting of this web app an
  $ npm install
  ```
 7. Navigate to the api folder in your prompt and do the '$ npm install' again.
-8. Aquire the files '.env.production', '.env.development' from OneDrive and put in the root-folder.
+8. Aquire the files '.env.production', '.env.development' and put in the root-folder.
 9. You are ready to run the project.
 
 ## Run project
