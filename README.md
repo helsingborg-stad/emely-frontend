@@ -1,5 +1,11 @@
 # Emely WebApp
 
+## Overview
+This project was developed by NordAxon for Helsingborg Stad 2021-2022, and open sourced in April 2023.
+
+Emely is a Conversational AI System for practicing job interviews in Swedish. The dialogue model is a finetuned Blenderbot 1.
+
+The project is separated in 3 repositories: [emely-frontend](https://github.com/helsingborg-stad/emely-frontend), [emely-backend](https://github.com/helsingborg-stad/emely-backend) & [emely-models](https://github.com/helsingborg-stad/emely-models).
 
 Emely web app is the user interface part of Emely, consisting of this web app and the Brain. The web app is mainly based on the JavaScript framework **React** but also uses GCP services such as Firebase Authentication, Firestore etc. There is some backend logic created in Python. 
 
