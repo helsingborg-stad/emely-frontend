@@ -14,7 +14,7 @@
     "dotenv": "^10.0.0",
     "file-saver": "^2.0.5",
     "firebase": "^9.1.2",
-    "firebase-tools": "^9.20.0",
+    "firebase-tools": "^12.4.2",
     "hashids": "^2.2.8",
     "html-react-parser": "^1.4.0",
     "intro.js": "^4.3.0",
